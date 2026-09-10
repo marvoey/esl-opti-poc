@@ -1,0 +1,86 @@
+.textLink {
+  display: inline-flex;
+  font-size: inherit;
+  line-height: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 5px;
+  cursor: pointer;
+  width: fit-content;
+  box-sizing: border-box;
+  transition: var(--transition-all);
+}
+
+.textLink:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Variant 1: Dark (Navy text on light backgrounds) */
+.dark {
+  color: var(--color-link-default);
+}
+
+.dark.underlineHover {
+  text-decoration-color: transparent;
+}
+
+.dark.underlineHover:hover {
+  color: var(--color-link-default);
+  text-decoration-color: var(--color-link-default);
+}
+
+.dark.underlineAlways {
+  text-decoration-color: var(--color-link-default);
+}
+
+.dark.underlineAlways:hover {
+  color: var(--color-link-default);
+  text-decoration-color: var(--color-link-default);
+}
+
+/* Variant 2: Light (White text for dark/inverted backgrounds, transitions to Turquoise) */
+.light {
+  color: var(--color-link-inverted);
+}
+
+.light.underlineHover {
+  text-decoration-color: transparent;
+}
+
+.light.underlineHover:hover {
+  color: var(--color-link-inverted-hover);
+  text-decoration-color: var(--color-link-inverted-hover);
+}
+
+.light.underlineAlways {
+  text-decoration-color: var(--color-link-inverted);
+}
+
+.light.underlineAlways:hover {
+  color: var(--color-link-inverted-hover);
+  text-decoration-color: var(--color-link-inverted-hover);
+}
+
+/* Variant: None (No underline on normal or hover) */
+.underlineNone {
+  text-decoration: none;
+}
+
+.dark.underlineNone {
+  text-decoration: none;
+}
+
+.dark.underlineNone:hover {
+  text-decoration: none;
+}
+
+.light.underlineNone {
+  text-decoration: none;
+}
+
+.light.underlineNone:hover {
+  text-decoration: none;
+  color: var(--color-link-inverted-hover);
+}

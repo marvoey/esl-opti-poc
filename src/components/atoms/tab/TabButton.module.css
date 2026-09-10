@@ -1,0 +1,82 @@
+.tabButton {
+  display: inline-flex;
+  align-items: center;
+  width: 100%;
+  min-height: 4rem; /* 64px strictly 4px rhythm (16x4px) */
+  padding: 1rem 1.5rem; /* 16px 24px */
+  gap: 1rem; /* 16px */
+  border-radius: var(--radius-lg); /* 12px */
+  cursor: pointer;
+  user-select: none;
+  box-sizing: border-box;
+  transition: var(--transition-all);
+  border: 2px solid transparent;
+  text-align: left;
+}
+
+.tabButton:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 3px;
+}
+
+.iconWrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: var(--transition-all);
+}
+
+.label {
+  flex: 1;
+}
+
+/* State 1: Inactive / Default */
+.inactive {
+  background-color: var(--color-tab-bg);
+  color: var(--color-tab-text);
+  border-color: var(--color-tab-border);
+  box-shadow: var(--shadow-sm);
+}
+
+.inactive .iconWrapper {
+  color: var(--color-tab-icon);
+}
+
+/* State 2: Hover / Second Variant (Mint Polar surface + 2px solid #68E0CC border) */
+.hover,
+.inactive:hover:not(:disabled) {
+  background-color: var(--color-tab-hover-bg);
+  border-color: var(--color-tab-hover-border);
+  color: var(--color-tab-hover-text);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.hover .iconWrapper,
+.inactive:hover:not(:disabled) .iconWrapper {
+  color: var(--color-tab-hover-icon);
+}
+
+/* State 3: Active / Selected */
+.active {
+  background-color: var(--color-tab-active-bg);
+  color: var(--color-tab-active-text);
+  border-color: var(--color-tab-active-border);
+  box-shadow: var(--shadow-elevation-md);
+}
+
+.active .iconWrapper {
+  color: var(--color-tab-active-icon);
+}
+
+.active:hover:not(:disabled) {
+  background-color: var(--color-tab-active-bg);
+  transform: translateY(-1px);
+}
+
+.tabButton:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  pointer-events: none;
+}

@@ -1,0 +1,63 @@
+.chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  min-height: 2.5rem; /* 40px strictly 4px rhythm */
+  padding: 0.375rem 1.25rem; /* 6px 20px */
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  user-select: none;
+  box-sizing: border-box;
+  transition: var(--transition-all);
+  border: 2px solid transparent;
+}
+
+.chip:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 3px;
+}
+
+.label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+/* State 1: Unselected / Default */
+.unselected {
+  background-color: var(--color-chip-bg);
+  color: var(--color-chip-text);
+  border-color: var(--color-chip-border);
+  box-shadow: var(--shadow-sm);
+}
+
+.unselected:hover:not(:disabled) {
+  border-color: var(--color-chip-border-hover);
+  background-color: var(--color-chip-bg);
+  color: var(--color-chip-text);
+  box-shadow: var(--shadow-chip-hover);
+  transform: translateY(-1px);
+}
+
+/* State 2: Selected / Active */
+.selected {
+  background-color: var(--color-chip-selected-bg);
+  color: var(--color-chip-selected-text);
+  border-color: var(--color-chip-selected-border);
+  box-shadow: var(--shadow-elevation-md);
+}
+
+.selected:hover:not(:disabled) {
+  background-color: var(--color-chip-selected-hover-bg);
+  border-color: var(--color-chip-selected-hover-border);
+  transform: translateY(-1px);
+}
+
+.chip:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  pointer-events: none;
+}

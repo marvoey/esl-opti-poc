@@ -1,0 +1,283 @@
+/* ==========================================================================
+   Design Tokens - Enterprise Intrinsic Design System
+   Media-Query Agnostic • Fluid Scales via clamp()
+   ========================================================================== */
+
+:root {
+  /* --- Tier 1: Primitives (Zero Semantic Meaning) --- */
+  --color-navy-950: #010E23; /* Footer gradient start */
+  --color-navy-900: #00395D;
+  --color-navy-850: #003E65;
+  --color-navy-800: #01375A; /* Footer gradient end */
+  --color-teal-700: #00A3A3;
+  --color-teal-500: #51BFB6; /* Figma: tab active border indicator */
+  --color-turquoise-400: #68E0CC;
+  --color-mint-50: #ECFBF8;
+  --color-mint-100: #EAF9F9; /* Figma: linear wash tint */
+  --color-white: #FFFFFF;
+  --color-black: #000000;
+
+  --color-blue-100: #D5E5F4; /* Figma: card/stroke */
+  --color-aqua-100: #D5F3F2; /* Figma: hero ambient glow */
+  --color-sky-300: #87CEF2;  /* Figma: card/shadowHover base */
+  --color-slate-200: #B8BFC7; /* Figma: process/neutral surface */
+  --color-slate-600: #4E5059; /* Figma: neutral/body description */
+
+  --color-white-10: rgba(255, 255, 255, 0.10);
+  --color-white-50: rgba(255, 255, 255, 0.50);
+  --color-white-80: rgba(255, 255, 255, 0.80);
+  --color-teal-alpha-20: rgba(0, 163, 163, 0.20);
+  --color-teal-alpha-30: rgba(0, 163, 163, 0.30);
+  --color-teal-alpha-40: rgba(0, 163, 163, 0.40);
+  --color-navy-alpha-04: rgba(0, 57, 93, 0.04);
+  --color-navy-alpha-06: rgba(0, 57, 93, 0.06);
+  --color-navy-alpha-08: rgba(0, 57, 93, 0.08);
+  --color-navy-alpha-12: rgba(0, 57, 93, 0.12);
+  --color-navy-alpha-15: rgba(0, 57, 93, 0.15);
+  --color-navy-alpha-18: rgba(0, 57, 93, 0.18);
+  --color-turquoise-alpha-25: rgba(104, 224, 204, 0.25);
+  --color-sky-alpha-50: rgba(135, 206, 242, 0.50);
+  --color-sky-alpha-65: rgba(135, 206, 242, 0.65);
+  --color-black-alpha-10: rgba(0, 0, 0, 0.10);
+
+  /* --- Tier 2: Semantic Roles (Theme & Layout Mappings) --- */
+  --color-bg: var(--color-white);
+  --color-surface: var(--color-mint-50);
+  --color-surface-raised: var(--color-white);
+  --color-surface-inverse: var(--color-navy-900);
+  --color-surface-muted: var(--color-slate-200);
+  --color-overlay-backdrop: rgba(0, 57, 93, 0.85);
+  --color-bg-dark: var(--color-navy-900);
+
+  --color-border: var(--color-teal-alpha-20);
+  --color-border-subtle: var(--color-navy-alpha-12);
+  --color-border-accent: var(--color-turquoise-400);
+  --color-border-tab-active: var(--color-teal-500); /* #51BFB6 */
+  --color-border-card: var(--color-blue-100);
+  --color-border-inverse-subtle: var(--color-white-10);
+
+  /* Gradients */
+  --gradient-hero-glow: radial-gradient(58.07% 88.19% at 17.99% 3.33%, var(--color-sky-300) 4.85%, var(--color-aqua-100) 50%, var(--color-white) 100%);
+  --gradient-ambient-sky: var(--gradient-hero-glow);
+  --gradient-mint-wash: linear-gradient(90deg, var(--color-white) 0%, var(--color-mint-100) 50%, var(--color-white) 100%);
+  --gradient-linear-wash: var(--gradient-mint-wash);
+  --gradient-footer: linear-gradient(135deg, var(--color-navy-950) 0%, var(--color-navy-800) 100%);
+
+  /* Footer Layout Spacing */
+  --space-footer-top: 4rem;         /* 64px */
+  --space-footer-bottom: 7.9375rem; /* 127px */
+  --space-footer-row-gap: 3rem;     /* 48px */
+  --space-footer-col-gap: 2.5rem;   /* 40px */
+
+  --color-text-primary: var(--color-navy-900);
+  --color-text-secondary: var(--color-slate-600);
+  --color-text-muted: rgba(0, 57, 93, 0.55);
+  --color-text-inverted: var(--color-white);
+  --color-text-inverted-muted: var(--color-white-80);
+
+  --color-primary: var(--color-navy-900);
+  --color-primary-hover: var(--color-teal-700);
+  --color-primary-contrast: var(--color-white);
+
+  --color-accent: var(--color-teal-700);
+  --color-accent-subtle: var(--color-mint-50);
+  --color-focus-ring: var(--color-teal-700);
+
+  /* --- Tier 3: Component Intent Tokens --- */
+  /* Eyebrows */
+  --color-eyebrow-brand: var(--color-primary);
+  --color-eyebrow-accent: var(--color-accent);
+  --color-eyebrow-vibrant: var(--color-border-accent);
+  --color-eyebrow-inverted: var(--color-text-inverted);
+  --color-eyebrow-guidance: var(--color-navy-850);
+
+  /* Buttons */
+  --color-btn-primary-bg: var(--color-primary);
+  --color-btn-primary-text: var(--color-text-inverted);
+  --color-btn-primary-hover-bg: var(--color-border-accent);
+  --color-btn-primary-hover-text: var(--color-primary);
+
+  --color-btn-secondary-bg: var(--color-surface);
+  --color-btn-secondary-text: var(--color-primary);
+  --color-btn-secondary-border: var(--color-primary);
+  --color-btn-secondary-hover-bg: var(--color-border-accent);
+  --color-btn-secondary-hover-border: var(--color-border-accent);
+  --color-btn-secondary-hover-text: var(--color-primary);
+
+  --color-btn-outline-border: var(--color-primary);
+  --color-btn-outline-text: var(--color-primary);
+  --color-btn-outline-hover-bg: var(--color-border-accent);
+  --color-btn-outline-hover-border: var(--color-border-accent);
+  --color-btn-outline-hover-text: var(--color-primary);
+
+  --color-btn-link-text: var(--color-primary);
+  --color-btn-link-hover-text: var(--color-primary-hover);
+
+  /* Editorial Text Links */
+  --color-link-default: var(--color-primary);
+  --color-link-default-hover: var(--color-primary);
+  --color-link-inverted: var(--color-text-inverted);
+  --color-link-inverted-hover: var(--color-border-accent);
+
+  /* Filter Chips */
+  --color-chip-bg: var(--color-surface-raised);
+  --color-chip-text: var(--color-text-primary);
+  --color-chip-border: var(--color-navy-alpha-18);
+  --color-chip-border-hover: var(--color-border-accent);
+  --color-chip-selected-bg: var(--color-primary);
+  --color-chip-selected-text: var(--color-text-inverted);
+  --color-chip-selected-border: var(--color-primary);
+  --color-chip-selected-hover-bg: var(--color-primary-hover);
+  --color-chip-selected-hover-border: var(--color-primary-hover);
+
+  /* Tab Buttons */
+  --color-tab-bg: var(--color-surface-raised);
+  --color-tab-text: var(--color-text-primary);
+  --color-tab-inactive: rgba(7, 69, 111, 0.75); /* #07456F at 75% opacity */
+  --color-tab-border: var(--color-border-subtle);
+  --color-tab-icon: var(--color-accent);
+  --color-tab-hover-bg: var(--color-surface);
+  --color-tab-hover-text: var(--color-text-primary);
+  --color-tab-hover-border: var(--color-border-accent); /* #68E0CC Vibrant Turquoise */
+  --color-tab-hover-icon: var(--color-accent);
+  --color-tab-active-bg: var(--color-primary);
+  --color-tab-active-text: var(--color-text-inverted);
+  --color-tab-active-border: var(--color-border-tab-active); /* #51BFB6 */
+  --color-tab-active-icon: var(--color-border-accent);
+
+  /* Badges */
+  --color-badge-aqua-bg: var(--color-surface);
+  --color-badge-aqua-text: var(--color-accent);
+  --color-badge-aqua-border: var(--color-teal-alpha-40);
+  --color-badge-neutral-bg: var(--color-surface-raised);
+  --color-badge-neutral-text: var(--color-text-primary);
+  --color-badge-neutral-border: var(--color-navy-alpha-15);
+
+  /* Cards (QuickLink & QuickLinkSimple) */
+  --color-card-bg: var(--color-surface-raised);
+  --color-card-stroke: var(--color-blue-100);
+  --color-card-bg-inverse: var(--color-surface-inverse);
+  --color-card-ring-hover: var(--color-border-accent);
+  --color-card-icon-badge-bg: var(--color-surface);
+  --color-card-icon-badge-bg-hover: var(--color-teal-alpha-20);
+  --color-card-icon-color: var(--color-primary);
+  --color-card-icon-color-hover: var(--color-border-accent);
+  --color-card-placeholder-bg: var(--color-navy-alpha-04);
+  --color-card-placeholder-border: var(--color-navy-alpha-08);
+  --color-card-placeholder-pattern: var(--color-navy-alpha-06);
+
+  /* Footer */
+  --footer-bg: var(--gradient-footer);
+  --footer-text-primary: var(--color-text-inverted);         /* #FFFFFF */
+  --footer-text-muted: var(--color-text-inverted-muted);     /* rgba(255, 255, 255, 0.80) */
+  --footer-link-hover: var(--color-turquoise-400);           /* #68E0CC */
+  --footer-border-subtle: var(--color-white-10);             /* rgba(255, 255, 255, 0.10) */
+
+  /* Shadows (Figma Elevation Tokens) */
+  --shadow-elevation-sm: 0 1px 2px 0 var(--color-black-alpha-10);
+  --shadow-elevation-md: 0 4px 12px 0 var(--color-black-alpha-10);
+  --shadow-card-hover: 0 10px 14px 0 var(--color-sky-alpha-50);
+  --shadow-card-hover-intense: 0 14px 20px 0 var(--color-sky-alpha-65);
+  --shadow-chip-hover: 0 2px 8px var(--color-turquoise-alpha-25);
+
+  /* --- Typography Families --- */
+  --font-family-sans: var(--font-albert-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-family-display: var(--font-albert-sans), sans-serif;
+  --font-family-eyebrow: var(--font-league-spartan), sans-serif;
+  --font-family-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* --- Font Sizes (Fluid Clamp: 768px Mobile -> 1200px Desktop) --- */
+  --font-size-micro: 0.75rem;                                              /* 12px */
+  --font-size-caption: 0.875rem;                                           /* 14px */
+  --font-size-body-sm: 0.875rem;                                           /* 14px */
+  --font-size-body: 1rem;                                                  /* 16px */
+  --font-size-btn: 1rem;                                                   /* 16px (Figma: Button Label) */
+  --font-size-button: var(--font-size-btn);
+  --font-size-body-lg: clamp(1.125rem, 0.902rem + 0.46vw, 1.25rem);          /* 18px -> 20px */
+  --font-size-subhead: clamp(1.125rem, 0.463rem + 1.39vw, 1.5rem);         /* 18px -> 24px */
+  --font-size-label: 1.125rem;                                             /* 18px */
+  --font-size-h4: 1.25rem;                                                 /* 20px */
+  --font-size-h3: clamp(1.375rem, 0.708rem + 1.39vw, 1.75rem);             /* 22px -> 28px */
+  --font-size-h2: clamp(1.75rem, 0.417rem + 2.78vw, 2.5rem);               /* 28px -> 40px */
+  --font-size-h1: clamp(2.125rem, 0.125rem + 4.17vw, 3.25rem);             /* 34px -> 52px */
+  --font-size-stat: clamp(2.5rem, 0.278rem + 4.63vw, 3.75rem);             /* 40px -> 60px */
+  --font-size-hero-h2: clamp(2rem, 0.444rem + 6.48vw, 4.5rem);             /* 32px (mobile) -> 72px (desktop) */
+  --font-size-eyebrow: 1rem;                                               /* 16px */
+  --font-size-footer-title-mobile: 0.71875rem;                             /* 11.5px */
+  --font-size-footer-title-desktop: 1.125rem;                              /* 18px */
+
+  /* --- Line Heights (Strict 4px Vertical Rhythm Grid) --- */
+  --line-height-micro: 1rem;                                               /* 16px (4x4) */
+  --line-height-caption: 1rem;                                             /* 16px (4x4) */
+  --line-height-body-sm: 1.25rem;                                          /* 20px (5x4) */
+  --line-height-btn: 1.25rem;                                              /* 20px (5x4 - Figma: Button Label) */
+  --line-height-button: var(--line-height-btn);
+  --line-height-body: 1.5rem;                                              /* 24px (6x4) */
+  --line-height-h4: 1.5rem;                                                /* 24px (6x4) */
+  --line-height-body-lg: 1.6875rem;                                        /* 27px */
+  --line-height-label: 1.75rem;                                            /* 28px (7x4) */
+  --line-height-eyebrow: 1.25rem;                                          /* 20px (5x4, normalized from 18px) */
+  --line-height-subhead: clamp(1.75rem, 0.86rem + 1.85vw, 2rem);           /* 28px -> 32px (4x grid) */
+  --line-height-h3: clamp(1.75rem, 0.86rem + 1.85vw, 2.25rem);             /* 28px -> 36px (4x grid) */
+  --line-height-h2: clamp(2.25rem, 0.917rem + 2.78vw, 3rem);               /* 36px -> 48px (4x grid) */
+  --line-height-h1: clamp(2.5rem, -1.056rem + 7.41vw, 3.75rem);            /* 40px -> 60px (4x grid) */
+  --line-height-stat: clamp(2.75rem, 0.528rem + 4.63vw, 4rem);             /* 44px -> 64px (4x grid) */
+  --line-height-display: clamp(2.75rem, -2.861rem + 11.8vw, 4.75rem);       /* 44px -> 76px (4x grid) */
+  --line-height-hero-h2: clamp(2rem, 0.389rem + 6.71vw, 4.75rem);           /* 32px (mobile 100%) -> 76px (desktop) */
+  --line-height-footer-title-mobile: 1.078125rem;                            /* 17.25px */
+  --line-height-footer-title-desktop: 1.75rem;                               /* 28px (7x4 grid) */
+
+  /* --- Tracking (Letter Spacing) --- */
+  --tracking-display: -0.4px;
+  --tracking-hero-h2-desktop: -0.01em;
+  --tracking-hero-h2-mobile: -0.4px;
+  --tracking-h1: -0.32px;
+  --tracking-h2: -0.24px;
+  --tracking-h3: -0.16px;
+  --tracking-stat: -0.16px;
+  --tracking-normal: 0;
+  --tracking-eyebrow: 2.2px;
+  --tracking-footer-title-mobile: 1.035px;
+  --tracking-footer-title-desktop: 0px;
+
+  /* --- Font Weights --- */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-black: 800;
+
+  /* --- Fluid Spacing Scale (clamp: min, preferred, max) --- */
+  --space-3xs: clamp(0.125rem, 0.1rem + 0.1vw, 0.25rem);
+  --space-2xs: clamp(0.25rem, 0.2rem + 0.25vw, 0.375rem);
+  --space-xs: clamp(0.5rem, 0.45rem + 0.25vw, 0.625rem);
+  --space-sm: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+  --space-md: 1rem;
+  --space-lg: clamp(1.5rem, 1.35rem + 0.75vw, 1.875rem);
+  --space-xl: clamp(2rem, 1.75rem + 1.25vw, 2.75rem);
+  --space-2xl: clamp(3rem, 2.5rem + 2.5vw, 4.5rem);
+  --space-3xl: clamp(4rem, 3.25rem + 3.75vw, 6rem);
+
+  /* --- Layout & Container Widths --- */
+  --container-max-w: 1280px;
+  --container-gutter: clamp(1rem, 0.75rem + 1.25vw, 2.5rem);
+
+  /* --- Radii --- */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-full: 9999px;
+
+  /* --- Elevations (Shadows) --- */
+  --shadow-sm: 0 1px 2px 0 hsl(220 25% 10% / 0.05);
+  --shadow-md: 0 4px 6px -1px hsl(220 25% 10% / 0.08), 0 2px 4px -2px hsl(220 25% 10% / 0.06);
+  --shadow-lg: 0 10px 15px -3px hsl(220 25% 10% / 0.08), 0 4px 6px -4px hsl(220 25% 10% / 0.05);
+
+  /* --- Transitions & Timing (Figma Smart Animate 300ms Ease-Out) --- */
+  --ease-out-smart: cubic-bezier(0, 0, 0.2, 1);
+  --duration-smart: 300ms;
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-all: all var(--duration-smart) var(--ease-out-smart);
+}

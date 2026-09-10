@@ -1,0 +1,162 @@
+/* ==========================================================================
+   Icon Content Card Atom / Molecule Component
+   Figma: "Icon content cards" (Default & Inverse Variants)
+   Strict 3-Tier Design Tokens • WCAG 2.2 AAA Contrast
+   ========================================================================== */
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  width: 220px;
+  max-width: 100%;
+  padding: 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: var(--transition-all);
+  position: relative;
+  background-clip: padding-box;
+}
+
+.card:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 3px;
+}
+
+/* Icon Badge */
+.iconBadge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+  margin-bottom: 16px;
+  transition: var(--transition-all);
+}
+
+/* Content */
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3xs);
+  margin-bottom: 8px;
+}
+
+.title {
+  margin: 0;
+  transition: color var(--duration-smart) var(--ease-out-smart);
+}
+
+.description {
+  margin: 0;
+  transition: color var(--duration-smart) var(--ease-out-smart);
+}
+
+/* CTA */
+.ctaWrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  transition: color var(--duration-smart) var(--ease-out-smart);
+}
+
+.arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--duration-smart) var(--ease-out-smart);
+}
+
+/* --- Variant 1: Default (White Surface, transitions to Inverse on hover) --- */
+.default {
+  background-color: var(--color-card-bg);
+  border: 1px solid var(--color-card-stroke);
+  box-shadow: var(--shadow-elevation-sm);
+}
+
+.default .iconBadge {
+  background-color: var(--color-card-icon-badge-bg);
+  color: var(--color-card-icon-color);
+}
+
+.default .title {
+  color: var(--color-text-primary);
+}
+
+.default .description {
+  color: var(--color-text-secondary);
+}
+
+.default .ctaWrapper {
+  color: var(--color-link-default);
+}
+
+.default:hover {
+  background-color: var(--color-card-bg-inverse);
+  border-color: var(--color-card-ring-hover);
+  box-shadow: 0 0 0 1px var(--color-card-ring-hover), var(--shadow-card-hover);
+  transform: translateY(-2px);
+}
+
+.default:hover .iconBadge {
+  background-color: var(--color-card-icon-badge-bg-hover);
+  color: var(--color-card-icon-color-hover);
+}
+
+.default:hover .title {
+  color: var(--color-text-inverted);
+}
+
+.default:hover .description {
+  color: var(--color-text-inverted-muted);
+}
+
+.default:hover .ctaWrapper {
+  color: var(--color-link-inverted-hover);
+}
+
+.default:hover .arrow {
+  transform: translateX(4px);
+}
+
+/* --- Variant 2: Inverse (Navy Surface with Luminous Turquoise Ring) --- */
+.inverse {
+  background-color: var(--color-card-bg-inverse);
+  border: 1px solid var(--color-card-ring-hover);
+  box-shadow: 0 0 0 1px var(--color-card-ring-hover), var(--shadow-card-hover);
+}
+
+.inverse .iconBadge {
+  background-color: var(--color-card-icon-badge-bg-hover);
+  color: var(--color-card-icon-color-hover);
+}
+
+.inverse .title {
+  color: var(--color-text-inverted);
+}
+
+.inverse .description {
+  color: var(--color-text-inverted-muted);
+}
+
+.inverse .ctaWrapper {
+  color: var(--color-link-inverted-hover);
+}
+
+.inverse:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 0 1px var(--color-card-ring-hover), var(--shadow-card-hover-intense);
+}
+
+.inverse:hover .arrow {
+  transform: translateX(4px);
+}
+
+.card:active {
+  transform: scale(0.985) translateY(0);
+}

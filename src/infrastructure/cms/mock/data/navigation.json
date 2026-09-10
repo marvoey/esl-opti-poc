@@ -1,0 +1,24 @@
+{
+  "brandName": "ESL Architecture",
+  "brandHref": "/",
+  "items": [
+    {
+      "id": "nav-specs",
+      "label": "Specifications",
+      "href": "/specs",
+      "isExternal": false
+    },
+    {
+      "id": "nav-docs",
+      "label": "Architecture",
+      "href": "/docs",
+      "isExternal": false
+    },
+    {
+      "id": "nav-cms",
+      "label": "CMS Integration",
+      "href": "/cms",
+      "isExternal": false
+    }
+  ]
+}

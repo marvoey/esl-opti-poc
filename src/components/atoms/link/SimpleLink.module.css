@@ -1,0 +1,19 @@
+.simpleLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  color: inherit;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  text-decoration: none;
+}
+
+.arrow {
+  transition: transform var(--transition-fast);
+}
+
+.simpleLink:hover .arrow {
+  transform: translateX(4px);
+}

@@ -1,0 +1,200 @@
+.footerSection {
+  background: var(--footer-bg);
+  padding-top: var(--space-footer-top);
+  padding-bottom: var(--space-footer-bottom);
+  color: var(--footer-text-muted);
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 2 Rows Grid Container with 48px row gap */
+.gridContainer {
+  display: grid;
+  grid-template-rows: auto auto;
+  row-gap: var(--space-footer-row-gap); /* 48px */
+  width: 100%;
+}
+
+/* Row 1 Layout: Mobile 2-column grid (50% each with 20px gap); brand col spans 100% */
+.row1 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 20px; /* Strict 20px gap between 50% width nav columns */
+  row-gap: var(--space-xl); /* 32px vertical gap */
+}
+
+/* Desktop: Strict 5 Columns with 40px column gap */
+@media (min-width: 1024px) {
+  .row1 {
+    grid-template-columns: 1.4fr repeat(4, 1fr);
+    column-gap: var(--space-footer-col-gap); /* 40px column gap on desktop */
+    row-gap: 0;
+  }
+}
+
+/* Column 1: Brand Stack (100% width on mobile, 1 col on desktop) */
+.brandCol {
+  grid-column: 1 / -1; /* Spans full width (100%) on mobile */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-md); /* 16px */
+}
+
+@media (min-width: 1024px) {
+  .brandCol {
+    grid-column: auto;
+    width: auto;
+  }
+}
+
+.brandLogo {
+  display: inline-flex;
+  align-items: center;
+  color: var(--text-inverted, #ffffff);
+  text-decoration: none;
+  width: 83px;
+  height: 50px;
+}
+
+.brandLogo:focus-visible {
+  outline: 2px solid var(--footer-link-hover);
+  outline-offset: 2px;
+}
+
+.brandText {
+  color: var(--footer-text-primary);
+  margin: 0;
+}
+
+.brandButton {
+  margin-top: var(--space-xs);
+}
+
+/* Columns 2-5: Navigation Columns */
+.navCol {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.navTitle {
+  color: var(--footer-text-primary);
+  margin: 0;
+}
+
+.navList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px; /* Strict 8px vertical row gap between links */
+}
+
+.footerLink {
+  text-decoration: none;
+  font-weight: var(--font-weight-regular);
+  color: var(--footer-text-muted);
+  opacity: 0.7; /* 70% opacity on mobile */
+  transition: color var(--duration-smart) var(--ease-out-smart),
+              opacity var(--duration-smart) var(--ease-out-smart);
+}
+
+.footerLink:hover {
+  text-decoration: none;
+  color: var(--footer-link-hover);
+  opacity: 1;
+}
+
+@media (min-width: 1024px) {
+  .footerLink {
+    opacity: 0.9; /* 90% opacity on desktop */
+  }
+}
+
+/* Row 2: 1 Full-Width Column */
+.row2 {
+  grid-column: 1 / -1;
+  border-top: 1px solid var(--footer-border-subtle);
+  padding-top: var(--space-lg); /* 24px */
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.legalFirstRow {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-xs); /* 8px */
+}
+
+.legalAddress {
+  margin: 0;
+}
+
+.legalLinksList {
+  list-style: none;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: inline-flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-xs); /* 8px */
+}
+
+.legalLinkItem {
+  list-style: none;
+  list-style-type: none;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs); /* 8px */
+}
+
+.legalPipe {
+  color: var(--footer-text-muted);
+  opacity: 0.5;
+  user-select: none;
+}
+
+.legalLink {
+  text-decoration: none;
+  font-weight: var(--font-weight-regular);
+  color: var(--footer-text-muted);
+  opacity: 0.7; /* 70% mobile */
+  transition: color var(--duration-smart) var(--ease-out-smart),
+              opacity var(--duration-smart) var(--ease-out-smart);
+}
+
+.legalLink:hover {
+  text-decoration: none;
+  color: var(--footer-link-hover);
+  opacity: 1;
+}
+
+@media (min-width: 1024px) {
+  .legalLink {
+    opacity: 0.9; /* 90% desktop */
+  }
+}
+
+.legalServiceMarks {
+  margin: 0;
+}
+
+.copyrightText {
+  margin: 0;
+}
+
+/* Keyboard focus rings for interactive elements per WCAG 2.2 AA */
+.footerSection a:focus-visible,
+.footerSection button:focus-visible {
+  outline: 2px solid var(--footer-link-hover);
+  outline-offset: 2px;
+}

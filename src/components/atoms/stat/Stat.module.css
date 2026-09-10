@@ -1,0 +1,10 @@
+.stat {
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-stat);
+  line-height: var(--line-height-stat);
+  letter-spacing: var(--tracking-stat);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  margin: 0;
+  display: block;
+}

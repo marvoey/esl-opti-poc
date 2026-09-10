@@ -1,0 +1,76 @@
+/* ==========================================================================
+   Process Card Atom Component
+   Exact reproduction of Figma "❖ Process" component
+   ========================================================================== */
+
+.card {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 588px;
+  min-height: 84px;
+  padding: 18px 24px;
+  gap: 16px;
+  border-radius: var(--radius-xl);
+  box-sizing: border-box;
+  text-decoration: none;
+  transition: var(--transition-all);
+  position: relative;
+}
+
+.card:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 3px;
+}
+
+.badge {
+  /* Layout is handled by StepBadge component */
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+
+/* --- Variant 1: Mint (Default Light Surface) --- */
+.mint {
+  background-color: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+}
+
+.mint .badge {
+  background-color: var(--color-surface-raised);
+  color: var(--color-accent);
+}
+
+
+.mint:hover {
+  border-color: var(--color-border-accent);
+  transform: translateY(-1px);
+}
+
+/* --- Variant 2: Neutral (Slate / Neutral Surface with Turquoise Badge) --- */
+.neutral {
+  background-color: var(--color-surface-muted);
+  border: 1.5px solid transparent;
+}
+
+.neutral .badge {
+  background-color: var(--color-border-accent);
+  color: var(--color-surface-muted);
+}
+
+
+.neutral:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.03);
+}
+
+.card:active {
+  transform: scale(0.99) translateY(0);
+}

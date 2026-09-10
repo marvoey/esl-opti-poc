@@ -1,0 +1,229 @@
+/* ==========================================================================
+   Testimonial Card Atom Component
+   Exact reproduction of Figma "❖ Testimonial card" with Video Lightbox Facade
+   ========================================================================== */
+
+.card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 376px;
+  min-height: 408px;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  background-color: var(--color-surface-raised);
+  border: 1px solid var(--color-border-card);
+  box-shadow: var(--shadow-elevation-sm);
+  transition: var(--transition-all);
+  box-sizing: border-box;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-elevation-md);
+  border-color: var(--color-border-accent);
+}
+
+.mediaWrapper {
+  position: relative;
+  width: 100%;
+  height: 210px;
+  overflow: hidden;
+  background-color: var(--color-surface);
+  flex-shrink: 0;
+}
+
+.clickableMedia {
+  cursor: pointer;
+}
+
+.clickableMedia:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: -2px;
+}
+
+.thumbnail {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform var(--duration-smart) var(--ease-out-smart);
+}
+
+.clickableMedia:hover .thumbnail {
+  transform: scale(1.03);
+}
+
+.playOverlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.playCircle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-surface-raised);
+  box-shadow: var(--shadow-elevation-md);
+  transition: transform var(--duration-smart) var(--ease-out-smart),
+              background-color var(--duration-smart) var(--ease-out-smart);
+}
+
+.clickableMedia:hover .playCircle {
+  transform: scale(1.1);
+  background-color: var(--color-white-80);
+}
+
+.playIcon {
+  color: var(--color-primary);
+  margin-left: 3px; /* Optically center triangle within circle */
+}
+
+.content {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+  box-sizing: border-box;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.iconWrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-accent);
+  flex-shrink: 0;
+}
+
+.title {
+  margin: 0;
+  overflow-wrap: break-word;
+}
+
+.quoteWrapper {
+  margin: 0;
+  padding: 0;
+}
+
+.quote {
+  margin: 0;
+  font-style: italic;
+  overflow-wrap: break-word;
+}
+
+.authorRow {
+  margin-top: auto;
+  overflow-wrap: break-word;
+}
+
+.authorMeta {
+  line-height: 21px;
+}
+
+/* ==========================================================================
+   Accessible Lightbox Video Modal Styles
+   ========================================================================== */
+
+.lightboxBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background-color: var(--color-overlay-backdrop);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  box-sizing: border-box;
+  animation: fadeIn 200ms var(--ease-out-smart);
+}
+
+.lightboxContainer {
+  position: relative;
+  width: 100%;
+  max-width: 880px;
+  aspect-ratio: 16 / 9;
+  background-color: var(--color-black);
+  border-radius: var(--radius-lg);
+  overflow: visible;
+  box-shadow: var(--shadow-elevation-md);
+  animation: scaleUp 250ms var(--ease-out-smart);
+}
+
+.closeButton {
+  position: absolute;
+  top: -48px;
+  right: 0;
+  background: transparent;
+  border: none;
+  color: var(--color-white);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  transition: transform var(--duration-smart) var(--ease-out-smart),
+              color var(--duration-smart) var(--ease-out-smart);
+}
+
+.closeButton:hover {
+  transform: scale(1.15);
+  color: var(--color-border-accent);
+}
+
+.closeButton:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+.videoWrapper {
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background-color: var(--color-black);
+}
+
+.videoElement,
+.iframeElement {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

@@ -1,0 +1,21 @@
+.menuList {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  list-style: none;
+}
+
+.menuItemLink {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  transition: color var(--transition-fast);
+  padding: var(--space-2xs) var(--space-xs);
+  border-radius: var(--radius-sm);
+}
+
+.menuItemLink:hover,
+.menuItemLink:focus-visible {
+  color: var(--color-primary);
+  background-color: var(--color-surface);
+}

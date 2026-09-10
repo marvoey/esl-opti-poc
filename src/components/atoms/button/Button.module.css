@@ -1,0 +1,157 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  max-width: 100%;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  box-sizing: border-box;
+  user-select: none;
+  border: 1.5px solid transparent;
+
+  /* Reusable smooth transition token across all states */
+  transition: var(--transition-all);
+  will-change: transform, box-shadow, background-color, color, border-color;
+}
+
+/* Micro-interaction for active/pressed state */
+.button:active:not(:disabled) {
+  transform: scale(0.985) translateY(1px);
+}
+
+/* --- WCAG 2.2 AA High Contrast Focus Indicator --- */
+.button:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 3px;
+}
+
+/* --- Sizes & Intrinsic Floors --- */
+.sizeMd {
+  min-height: 3.25rem; /* 52px strictly 4px grid floor (13x4px) */
+  padding: 0.5rem 1.5rem; /* 8px 24px per Figma */
+  gap: 0.5rem; /* 8px */
+}
+
+.sizeSm {
+  min-height: 2.75rem; /* 44px compact card floor (11x4px) */
+  padding: 0.375rem 1.125rem; /* 6px 18px */
+  gap: 0.375rem; /* 6px */
+}
+
+/* --- Shapes --- */
+.pill {
+  border-radius: var(--radius-full); /* 9999px */
+}
+
+.rounded {
+  border-radius: var(--radius-md); /* 8px */
+}
+
+.fullWidth {
+  display: flex;
+  width: 100%;
+}
+
+/* --- Slots & Icon Transitions --- */
+/* Typography Name: Button Label (16px / 20px LH / 700 Bold / Albert Sans) */
+.label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  transition: var(--transition-all);
+}
+
+.iconLeft,
+.iconRight {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: inherit;
+  transition: var(--transition-all);
+}
+
+/* Smooth arrow micro-interaction on hover */
+.button:hover:not(:disabled) .iconRight {
+  transform: translateX(3px);
+}
+
+/* --- Variants & Hover Animations --- */
+
+/* 1. Primary Variant (Navy -> Turquoise Hover + elevation/md) */
+.primary {
+  background-color: var(--color-btn-primary-bg);
+  color: var(--color-btn-primary-text);
+  border-color: var(--color-btn-primary-bg);
+}
+
+.primary:hover:not(:disabled) {
+  background-color: var(--color-btn-primary-hover-bg);
+  color: var(--color-btn-primary-hover-text);
+  border-color: var(--color-btn-primary-hover-bg);
+  box-shadow: var(--shadow-elevation-md);
+  transform: translateY(-1px);
+}
+
+/* 2. Secondary Variant (Mint Polar -> Turquoise Hover + elevation/md) */
+.secondary {
+  background-color: var(--color-btn-secondary-bg);
+  color: var(--color-btn-secondary-text);
+  border-color: var(--color-btn-secondary-border);
+}
+
+.secondary:hover:not(:disabled) {
+  background-color: var(--color-btn-secondary-hover-bg);
+  color: var(--color-btn-secondary-hover-text);
+  border-color: var(--color-btn-secondary-hover-border);
+  box-shadow: var(--shadow-elevation-md);
+  transform: translateY(-1px);
+}
+
+/* 3. Outline & Tertiary Variant (Navy Border -> Turquoise Hover + elevation/md) */
+.outline,
+.tertiary {
+  background-color: transparent;
+  color: var(--color-btn-outline-text);
+  border-color: var(--color-btn-outline-border);
+}
+
+.outline:hover:not(:disabled),
+.tertiary:hover:not(:disabled) {
+  background-color: var(--color-btn-outline-hover-bg);
+  color: var(--color-btn-outline-hover-text);
+  border-color: var(--color-btn-outline-hover-border);
+  box-shadow: var(--shadow-elevation-md);
+  transform: translateY(-1px);
+}
+
+/* 4. Simple Link Variant (Text + arrow, zero background, Navy -> Teal hover) */
+.link {
+  background-color: transparent;
+  color: var(--color-btn-link-text);
+  border-color: transparent;
+  padding: 0.25rem 0.125rem;
+  min-height: auto;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.link:hover:not(:disabled) {
+  background-color: transparent;
+  color: var(--color-btn-link-hover-text);
+  border-color: transparent;
+  box-shadow: none;
+  transform: none;
+}
+
+/* --- Disabled & Loading States --- */
+.button:disabled,
+.button[aria-disabled="true"] {
+  opacity: 0.55;
+  cursor: not-allowed;
+  pointer-events: none;
+  box-shadow: none;
+}

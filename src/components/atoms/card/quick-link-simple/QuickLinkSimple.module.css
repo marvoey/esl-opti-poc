@@ -1,0 +1,91 @@
+/* ==========================================================================
+   Quick Link Simple Atom Component
+   Exact reproduction of Figma "Quick Link Simple" component
+   ========================================================================== */
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 152px;
+  padding: 24px 16px;
+  gap: 24px;
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  cursor: pointer;
+  box-sizing: border-box;
+  text-align: center;
+  transition: var(--transition-all);
+  position: relative;
+  background-clip: padding-box;
+}
+
+.card:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 3px;
+}
+
+.title {
+  transition: color var(--duration-smart) var(--ease-out-smart);
+  overflow-wrap: break-word;
+}
+
+.iconCircle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+  transition: var(--transition-all);
+}
+
+/* --- Variant 1: Default (White Surface, transitions to Inverse on hover) --- */
+.default {
+  background-color: var(--color-card-bg);
+  border: 1px solid var(--color-card-stroke);
+  box-shadow: var(--shadow-elevation-sm);
+  color: var(--color-text-primary);
+}
+
+.default .iconCircle {
+  background-color: var(--color-card-icon-badge-bg);
+  color: var(--color-card-icon-color);
+}
+
+.default:hover {
+  background-color: var(--color-card-bg-inverse);
+  border-color: var(--color-card-ring-hover);
+  box-shadow: 0 0 0 1px var(--color-card-ring-hover), var(--shadow-card-hover);
+  color: var(--color-text-inverted);
+  transform: translateY(-2px);
+}
+
+.default:hover .iconCircle {
+  background-color: var(--color-card-icon-badge-bg-hover);
+  color: var(--color-card-icon-color-hover);
+}
+
+/* --- Variant 2: Inverse (Navy Surface with Luminous Turquoise Ring) --- */
+.inverse {
+  background-color: var(--color-card-bg-inverse);
+  border: 1px solid var(--color-card-ring-hover);
+  box-shadow: 0 0 0 1px var(--color-card-ring-hover), var(--shadow-card-hover);
+  color: var(--color-text-inverted);
+}
+
+.inverse .iconCircle {
+  background-color: var(--color-card-icon-badge-bg-hover);
+  color: var(--color-card-icon-color-hover);
+}
+
+.inverse:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 0 1px var(--color-card-ring-hover), var(--shadow-card-hover-intense);
+}
+
+.card:active {
+  transform: scale(0.985) translateY(0);
+}

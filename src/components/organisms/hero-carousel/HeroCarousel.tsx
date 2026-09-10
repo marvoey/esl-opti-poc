@@ -1,0 +1,223 @@
+"use client";
+
+import React, { useState, useCallback, useEffect } from "react";
+import Image from "next/image";
+import { ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
+import type { EmblaCarouselType } from "embla-carousel";
+import { Carousel, CarouselSlide } from "@/components/molecules/carousel/Carousel";
+import { Text } from "@/components/atoms/text/Text";
+import { Button } from "@/components/atoms/button/Button";
+import { UserIcon } from "@/components/atoms/icons";
+import styles from "./HeroCarousel.module.css";
+
+export interface HeroCarouselProps {
+  className?: string;
+  ariaLabel?: string;
+  slides?: SlideItem[];
+  editProps?: {
+    eyebrow?: Record<string, any>;
+    heading?: Record<string, any>;
+    description?: Record<string, any>;
+    primaryCta?: Record<string, any>;
+    primaryCtaText?: Record<string, any>;
+  };
+}
+
+import { HERO_SLIDES, type SlideItem } from "./heroSlides";
+export { HERO_SLIDES, type SlideItem };
+
+export function HeroCarousel({
+  className,
+  ariaLabel = "Featured hero slider",
+  slides = HERO_SLIDES,
+  editProps,
+}: HeroCarouselProps) {
+  const [api, setApi] = useState<EmblaCarouselType>();
+  const [isPlaying, setIsPlaying] = useState(true);
+
+  const scrollPrev = useCallback(() => {
+    if (api) api.scrollPrev();
+  }, [api]);
+
+  const scrollNext = useCallback(() => {
+    if (api) api.scrollNext();
+  }, [api]);
+
+  const togglePlay = useCallback(() => {
+    setIsPlaying((prev) => !prev);
+  }, []);
+
+  // Simple interval autoplay when enabled and multiple slides exist
+  useEffect(() => {
+    if (!api || !isPlaying || (slides && slides.length <= 1)) return;
+
+    const intervalId = setInterval(() => {
+      api.scrollNext();
+    }, 6000);
+
+    return () => clearInterval(intervalId);
+  }, [api, isPlaying, slides]);
+
+  const activeSlides = slides && slides.length > 0 ? slides : [];
+
+  if (activeSlides.length === 0) {
+    return null;
+  }
+
+  const combinedClass = className
+    ? `${styles.heroCarousel} ${className}`
+    : styles.heroCarousel;
+
+  return (
+    <div className={combinedClass}>
+      <Carousel
+        ariaLabel={ariaLabel}
+        className="container"
+        containerClassName={styles.slideTrack}
+        setApi={setApi}
+        options={{
+          align: "start",
+          loop: true,
+          skipSnaps: false,
+        }}
+      >
+        {activeSlides.map((slide, index) => {
+          const isFirst = index === 0;
+          return (
+            <CarouselSlide key={slide.id} className={styles.slideItem}>
+              <article className={styles.slideContent}>
+                <div className={styles.textGroup}>
+                  {/* 1. Eyebrow */}
+                  <div
+                    className={styles.eyebrowArea}
+                    {...(isFirst && editProps?.eyebrow ? editProps.eyebrow : {})}
+                  >
+                    <Text as="p" variant="eyebrow" color="guidance">
+                      {slide.eyebrow}
+                    </Text>
+                  </div>
+
+                  {/* 2. Heading with custom typography tokens */}
+                  <div
+                    className={styles.headingArea}
+                    {...(isFirst && editProps?.heading ? editProps.heading : {})}
+                  >
+                    <Text as="h2" variant="hero-h2" color="primary">
+                      {slide.titleLine1}
+                      {slide.titleLine2 && (
+                        <>
+                          <br />
+                          {slide.titleLine2}
+                        </>
+                      )}
+                    </Text>
+                  </div>
+
+                  {/* 3. Body text */}
+                  <div
+                    className={styles.bodyArea}
+                    {...(isFirst && editProps?.description ? editProps.description : {})}
+                  >
+                    <Text as="div" variant="subhead" color="primary">
+                      {slide.body}
+                    </Text>
+                  </div>
+
+                  {/* 5. Actions */}
+                  <div className={styles.actionsArea}>
+                    {slide.primaryCta && (
+                      <div {...(isFirst && (editProps?.primaryCta || editProps?.primaryCtaText) ? (editProps.primaryCta || editProps.primaryCtaText) : {})}>
+                        <Button
+                          variant="primary"
+                          leftIcon={<UserIcon />}
+                          className={styles.actionBtn}
+                          href={slide.primaryCtaHref || undefined}
+                          target={slide.primaryCtaTarget || undefined}
+                          rel={slide.primaryCtaRel || undefined}
+                        >
+                          {slide.primaryCta}
+                        </Button>
+                      </div>
+                    )}
+                    {slide.secondaryCta && (
+                      <Button
+                        variant="secondary"
+                        leftIcon={<UserIcon />}
+                        className={styles.actionBtn}
+                        href={slide.secondaryCtaHref || undefined}
+                        target={slide.secondaryCtaTarget || undefined}
+                        rel={slide.secondaryCtaRel || undefined}
+                      >
+                        {slide.secondaryCta}
+                      </Button>
+                    )}
+                  </div>
+                </div>
+
+                {/* 4. Circular Responsive Image & Badge */}
+                {slide.imageSrc && (
+                  <div className={styles.mediaArea}>
+                    <div className={styles.imageWrapper}>
+                      <Image
+                        src={slide.imageSrc}
+                        alt={slide.imageAlt || ""}
+                        width={440}
+                        height={440}
+                        className={styles.image}
+                        priority
+                        unoptimized={Boolean(slide.imageSrc.startsWith("http"))}
+                      />
+                      {(slide.badgeStat || slide.badgeLabel) && (
+                        <div className={styles.badge} aria-hidden="true">
+                          {slide.badgeStat && <span className={styles.badgePercent}>{slide.badgeStat}</span>}
+                          {slide.badgeLabel && <span className={styles.badgeLabel}>{slide.badgeLabel}</span>}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </article>
+            </CarouselSlide>
+          );
+        })}
+      </Carousel>
+
+      {/* Accessible Navigation Controls (only shown when multiple slides exist) */}
+      {activeSlides.length > 1 && (
+        <nav className={styles.controls} aria-label="Hero carousel navigation">
+          <button
+            type="button"
+            onClick={scrollPrev}
+            className={styles.controlBtn}
+            aria-label="Previous slide"
+          >
+            <ChevronLeft size={20} aria-hidden="true" />
+          </button>
+
+          <button
+            type="button"
+            onClick={togglePlay}
+            className={styles.controlBtn}
+            aria-label={isPlaying ? "Pause carousel" : "Play carousel"}
+            aria-pressed={!isPlaying}
+          >
+            {isPlaying ? (
+              <Pause size={18} aria-hidden="true" />
+            ) : (
+              <Play size={18} aria-hidden="true" />
+            )}
+          </button>
+
+          <button
+            type="button"
+            onClick={scrollNext}
+            className={styles.controlBtn}
+            aria-label="Next slide"
+          >
+            <ChevronRight size={20} aria-hidden="true" />
+          </button>
+        </nav>
+      )}
+    </div>
+  );
+}

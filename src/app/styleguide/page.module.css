@@ -1,0 +1,194 @@
+.mainWrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.contentContainer {
+  flex: 1;
+  max-width: var(--container-max-w);
+  margin-inline: auto;
+  padding: var(--space-xl) var(--container-gutter);
+  width: 100%;
+}
+
+.heroSection {
+  margin-bottom: var(--space-2xl);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.heroSubtitle {
+  max-width: 65ch;
+  margin-inline: auto;
+}
+
+/* 2D Responsive Macro-Grid (Zero Media Queries, Pure Intrinsic Grid) */
+.pillarsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-md);
+  margin-bottom: var(--space-2xl);
+}
+
+.pillarCard {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  transition: transform var(--transition-fast), border-color var(--transition-fast);
+}
+
+.pillarCard:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-primary);
+}
+
+.pillarHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.pillarIndex {
+  font-size: var(--font-size-micro);
+  font-weight: var(--font-weight-bold);
+  font-family: var(--font-family-mono);
+  color: var(--color-primary);
+}
+
+/* Typography Specimen Section */
+.specimenSection {
+  margin-top: var(--space-3xl);
+  padding-top: var(--space-xl);
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.specimenHeader {
+  margin-bottom: var(--space-sm);
+}
+
+.specimenCard {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.specimenRow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+  padding-bottom: var(--space-sm);
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.specimenRow:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.specimenMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--color-text-muted);
+}
+
+.buttonGroup {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+  margin-top: var(--space-xs);
+}
+
+.eyebrowGroup {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+
+.footerBar {
+  border-top: 1px solid var(--color-border);
+  padding: var(--space-md) var(--container-gutter);
+  text-align: center;
+}
+
+/* Button Showcase Grid */
+.buttonShowcaseGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-md);
+  margin-top: var(--space-sm);
+}
+
+.buttonCard {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.buttonCardDark {
+  background-color: var(--color-surface-inverse);
+  border-color: var(--color-border-inverse-subtle);
+  color: var(--color-text-inverted);
+}
+
+.buttonCardDark h4 {
+  color: var(--color-text-inverted);
+}
+
+.buttonCardDark small,
+.buttonCardDark p {
+  color: var(--color-text-inverted-muted);
+}
+
+.buttonCardHeader {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3xs);
+  width: 100%;
+}
+
+.componentStack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  width: 100%;
+}
+
+.componentRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.mobileFrame {
+  max-width: 360px;
+  width: 100%;
+  border: 1px dashed var(--color-border-card);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  background-color: var(--color-surface);
+  box-sizing: border-box;
+}

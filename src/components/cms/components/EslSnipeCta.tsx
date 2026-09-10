@@ -1,0 +1,27 @@
+import { contentType } from '@optimizely/cms-sdk';
+
+export const EslSnipeCtaContentType = contentType({
+  key: 'EslSnipeCta',
+  displayName: 'ESL Snipe CTA',
+  baseType: '_component',
+  properties: {
+    title: {
+      type: 'string',
+      displayName: 'Title',
+      group: 'content',
+      sortOrder: 10,
+    },
+    description: {
+      type: 'string',
+      displayName: 'Description',
+      group: 'content',
+      sortOrder: 20,
+    },
+    link: {
+      type: 'link',
+      displayName: 'Link',
+      group: 'content',
+      sortOrder: 30,
+    },
+  },
+});

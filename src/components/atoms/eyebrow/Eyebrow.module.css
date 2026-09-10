@@ -1,0 +1,26 @@
+.eyebrow {
+  font-family: var(--font-family-eyebrow);
+  font-size: var(--font-size-eyebrow);
+  line-height: var(--line-height-eyebrow);
+  letter-spacing: var(--tracking-eyebrow);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  margin: 0;
+  display: inline-block;
+}
+
+.brand {
+  color: var(--color-eyebrow-brand);
+}
+
+.accent {
+  color: var(--color-eyebrow-accent);
+}
+
+.vibrant {
+  color: var(--color-eyebrow-vibrant);
+}
+
+.inverted {
+  color: var(--color-eyebrow-inverted);
+}

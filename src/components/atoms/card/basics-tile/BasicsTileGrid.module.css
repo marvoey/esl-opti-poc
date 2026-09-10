@@ -1,0 +1,140 @@
+.container {
+  width: 100%;
+  container-type: inline-size;
+  box-sizing: border-box;
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-xs) var(--space-sm);
+  margin-bottom: 1rem;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-h3);
+  color: var(--color-text-primary);
+}
+
+.subtitle {
+  margin: 0;
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-body-sm);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-body-sm);
+  color: var(--color-text-secondary);
+}
+
+.gridTrack {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ==========================================================================
+   Mode 1: Row Layout (Desktop Large Set of Tiles - Image 2)
+   Horizontal flex track with vertical dividers between all adjacent tiles.
+   ========================================================================== */
+.layoutRow {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.layoutRow > * {
+  flex: 1 1 0;
+  min-width: 0;
+  border-right: 1px solid var(--color-border-card);
+  border-bottom: none;
+}
+
+.layoutRow > *:last-child {
+  border-right: none;
+}
+
+/* ==========================================================================
+   Mode 2: 2-Column Grid Layout (Mobile Approach - Image 3)
+   Interior crosshair dividers (vertical down the center, horizontal across rows).
+   No outer borders.
+   ========================================================================== */
+.layoutGrid2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  width: 100%;
+}
+
+.layoutGrid2 > * {
+  border-bottom: 1px solid var(--color-border-card);
+}
+
+/* Vertical divider between column 1 and column 2 */
+.layoutGrid2 > *:nth-child(odd) {
+  border-right: 1px solid var(--color-border-card);
+}
+
+.layoutGrid2 > *:nth-child(odd):last-child {
+  border-right: none;
+}
+
+/* Remove bottom borders on the last row items */
+.layoutGrid2 > *:nth-last-child(2):nth-child(odd),
+.layoutGrid2 > *:nth-last-child(2):nth-child(odd) ~ * {
+  border-bottom: none;
+}
+
+.layoutGrid2 > *:nth-last-child(1):nth-child(odd) {
+  border-bottom: none;
+}
+
+/* ==========================================================================
+   Mode 3: Responsive Auto Layout
+   Mobile 2-column grid -> Desktop single row via Container Query
+   ========================================================================== */
+.layoutAuto {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  width: 100%;
+}
+
+.layoutAuto > * {
+  border-bottom: 1px solid var(--color-border-card);
+}
+
+.layoutAuto > *:nth-child(odd) {
+  border-right: 1px solid var(--color-border-card);
+}
+
+.layoutAuto > *:nth-child(odd):last-child {
+  border-right: none;
+}
+
+.layoutAuto > *:nth-last-child(2):nth-child(odd),
+.layoutAuto > *:nth-last-child(2):nth-child(odd) ~ * {
+  border-bottom: none;
+}
+
+.layoutAuto > *:nth-last-child(1):nth-child(odd) {
+  border-bottom: none;
+}
+
+@container (min-width: 640px) {
+  .layoutAuto {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .layoutAuto > * {
+    flex: 1 1 0;
+    min-width: 0;
+    border-bottom: none;
+    border-right: 1px solid var(--color-border-card);
+  }
+
+  .layoutAuto > *:last-child {
+    border-right: none;
+  }
+}

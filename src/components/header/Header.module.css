@@ -1,0 +1,47 @@
+.headerContainer {
+  container-type: inline-size;
+  width: 100%;
+  border-bottom: 1px solid var(--color-border);
+  background-color: var(--color-surface-raised);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(8px);
+}
+
+.headerInner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: var(--container-max-w);
+  margin-inline: auto;
+  padding: var(--space-sm) var(--container-gutter);
+}
+
+.brandLink {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.brandBadge {
+  font-family: var(--font-family-eyebrow);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  padding: var(--space-3xs) var(--space-2xs);
+  background-color: var(--color-accent-subtle);
+  color: var(--color-accent);
+  border-radius: var(--radius-sm);
+}
+
+/* Intrinsic Container Query Adaptation */
+@container (max-width: 600px) {
+  .headerInner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-xs);
+  }
+}

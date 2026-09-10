@@ -1,0 +1,19 @@
+.badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+  transition: var(--transition-all);
+}
+
+.stepNumber {
+  font-weight: var(--font-weight-black);
+  font-size: 17px;
+  line-height: 25.5px;
+  letter-spacing: 0;
+  text-align: center;
+  vertical-align: middle;
+}
