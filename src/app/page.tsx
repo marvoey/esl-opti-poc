@@ -7,6 +7,14 @@ import {
   DEFAULT_CIRCULAR_IMAGE_METRIC_ROW,
 } from "@/components/organisms/circular-image-metric-row";
 import {
+  MetricCardRow,
+  DEFAULT_METRIC_CARD_ROW,
+} from "@/components/organisms/metric-card-row";
+import {
+  VideoStoryCardRow,
+  DEFAULT_VIDEO_STORY_CARD_ROW,
+} from "@/components/organisms/video-story-card-row";
+import {
   SplitContentImage,
   DEFAULT_SPLIT_CONTENT,
 } from "@/components/organisms/split-content-image";
@@ -205,6 +213,8 @@ export default async function Home() {
       <main>
         <OptimizelyComponent content={activeContent} />
         <CircularImageMetricRow {...DEFAULT_CIRCULAR_IMAGE_METRIC_ROW} />
+        <MetricCardRow {...DEFAULT_METRIC_CARD_ROW} />
+        <VideoStoryCardRow {...DEFAULT_VIDEO_STORY_CARD_ROW} />
         <SideBySide {...homeMockData.sideBySidePromo} />
         {homeMockData.sideBySidePromoSecondary && (
           <SideBySide {...homeMockData.sideBySidePromoSecondary} />
