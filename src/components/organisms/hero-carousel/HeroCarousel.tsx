@@ -164,7 +164,8 @@ export function HeroCarousel({
                         width={440}
                         height={440}
                         className={styles.image}
-                        priority
+                        priority={isFirst}
+                        loading={isFirst ? "eager" : "lazy"}
                         unoptimized={Boolean(slide.imageSrc.startsWith("http"))}
                       />
                       {(slide.badgeStat || slide.badgeLabel) && (

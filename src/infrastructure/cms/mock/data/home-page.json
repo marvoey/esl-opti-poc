@@ -1,0 +1,108 @@
+{
+  "heroSlider": {
+    "slides": [
+      {
+        "id": "slide-1",
+        "eyebrow": "Banking with guidance",
+        "titleLine1": "Move forward",
+        "titleLine2": "with confidence.",
+        "body": "From your first account to planning for retirement, we're here to help at every step.",
+        "primaryCta": "Become a member",
+        "primaryCtaHref": "/join",
+        "secondaryCta": "Sign In",
+        "secondaryCtaHref": "/signin",
+        "imageSrc": "/images/hero/family.jpg",
+        "imageAlt": "Three-generation Hispanic family smiling together outdoors",
+        "badgeStat": "100%",
+        "badgeLabel": "Peace of mind"
+      },
+      {
+        "id": "slide-2",
+        "eyebrow": "Banking with guidance",
+        "titleLine1": "Move forward",
+        "titleLine2": "with confidence.",
+        "body": "From your first account to planning for retirement, we're here to help at every step.",
+        "primaryCta": "Become a member",
+        "primaryCtaHref": "/join",
+        "secondaryCta": "Sign In",
+        "secondaryCtaHref": "/signin",
+        "imageSrc": "/images/hero/family.jpg",
+        "imageAlt": "Three-generation Hispanic family smiling together outdoors",
+        "badgeStat": "100%",
+        "badgeLabel": "Peace of mind"
+      },
+      {
+        "id": "slide-3",
+        "eyebrow": "Banking with guidance",
+        "titleLine1": "Move forward",
+        "titleLine2": "with confidence.",
+        "body": "From your first account to planning for retirement, we're here to help at every step.",
+        "primaryCta": "Become a member",
+        "primaryCtaHref": "/join",
+        "secondaryCta": "Sign In",
+        "secondaryCtaHref": "/signin",
+        "imageSrc": "/images/hero/family.jpg",
+        "imageAlt": "Three-generation Hispanic family smiling together outdoors",
+        "badgeStat": "100%",
+        "badgeLabel": "Peace of mind"
+      }
+    ]
+  },
+  "snipeCta": {
+    "title": "Can you join?",
+    "description": "If you live, work, worship, or attend school in our region — yes!",
+    "linkLabel": "Check your eligibility",
+    "linkHref": "/eligibility"
+  },
+  "tabbedSolutions": {
+    "heading": "Explore Our Solutions",
+    "tabs": [
+      {
+        "id": "personal",
+        "label": "Personal",
+        "cards": [
+          { "id": "personal-checking", "title": "Checking Accounts", "href": "/personal/checking" },
+          { "id": "personal-savings", "title": "Savings Accounts", "href": "/personal/savings" },
+          { "id": "personal-loans", "title": "Personal Loans", "href": "/personal/loans" },
+          { "id": "personal-cards", "title": "Credit Cards", "href": "/personal/cards" },
+          { "id": "personal-mortgage", "title": "Mortgages", "href": "/personal/mortgage" },
+          { "id": "personal-auto", "title": "Auto Loans", "href": "/personal/auto-loans" },
+          { "id": "personal-investing", "title": "Investments", "href": "/personal/investments" }
+        ]
+      },
+      {
+        "id": "business",
+        "label": "Business",
+        "cards": [
+          { "id": "business-checking", "title": "Business Checking", "href": "/business/checking" },
+          { "id": "business-loans", "title": "Business Loans", "href": "/business/loans" },
+          { "id": "business-cards", "title": "Business Credit Cards", "href": "/business/cards" },
+          { "id": "business-treasury", "title": "Treasury Services", "href": "/business/treasury" },
+          { "id": "business-merchant", "title": "Merchant Services", "href": "/business/merchant" },
+          { "id": "business-payroll", "title": "Payroll Solutions", "href": "/business/payroll" },
+          { "id": "business-insurance", "title": "Business Insurance", "href": "/business/insurance" }
+        ]
+      }
+    ]
+  },
+  "sideBySidePromo": {
+    "variant": "dark",
+    "eyebrow": "Member savings",
+    "headline": "Earn more with a Share Certificate",
+    "body": "Lock in a guaranteed rate and watch your savings grow with terms built around your goals.",
+    "ctaLabel": "Explore certificates",
+    "ctaUrl": "/personal/savings/certificates",
+    "imageSrc": "/images/hero/family.jpg",
+    "imageAlt": "Three-generation Hispanic family smiling together outdoors"
+  },
+  "sideBySidePromoSecondary": {
+    "variant": "light",
+    "eyebrow": "Checking & debit",
+    "headline": "Banking that fits your life and your goals",
+    "body": "Open a checking account today with no monthly service fees, early direct deposit, and access to thousands of fee-free ATMs.",
+    "ctaLabel": "Open an account",
+    "ctaUrl": "/personal/checking",
+    "imageSrc": "/images/hero/family.jpg",
+    "imageAlt": "ESL member reviewing accounts on digital banking"
+  }
+}
