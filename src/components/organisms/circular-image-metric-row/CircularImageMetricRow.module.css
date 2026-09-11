@@ -1,0 +1,150 @@
+.section {
+  width: 100%;
+  background: var(--color-bg);
+  padding-block: 4rem; /* 64px on desktop */
+}
+
+@media (width < 768px) {
+  .section {
+    padding-block: 2rem; /* 32px on mobile */
+  }
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: var(--container-max-w);
+  margin-inline: auto;
+  padding-inline: var(--container-gutter);
+}
+
+/* Div 1: Header Row */
+.headerRow {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: var(--space-xl);
+}
+
+@media (width < 768px) {
+  .headerRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-lg);
+  }
+}
+
+/* Col 1: Text Section */
+.headerContent {
+  width: 100%;
+  max-width: 36.5625rem; /* 585px */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  gap: var(--space-md); /* 16px gap between texts */
+}
+
+.eyebrow {
+  color: var(--color-teal-700); /* #00A3A3 */
+  margin: 0;
+}
+
+.title {
+  color: var(--color-navy-900); /* #00395D */
+  margin: 0;
+}
+
+.description {
+  color: var(--color-navy-900); /* #00395D */
+  margin: 0;
+  font-size: var(--font-size-body-lg);
+  line-height: var(--line-height-body-lg, 1.5);
+}
+
+/* Col 2: CTA Column */
+.headerCta {
+  flex-shrink: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+@media (width < 768px) {
+  .headerCta {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
+
+/* Div 2: Metrics Row */
+.metricsRow {
+  width: 100%;
+  margin-top: 3rem; /* 48px */
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  align-items: start;
+}
+
+@media (width < 768px) {
+  .metricsRow {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    justify-items: center;
+  }
+}
+
+/* Metric Column Card */
+.metricCard {
+  width: 100%;
+  max-width: 18.75rem; /* 300px */
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* Full Circle Image */
+.imageWrapper {
+  width: 11.25rem; /* 180px */
+  height: 11.25rem; /* 180px */
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: var(--space-md); /* 16px */
+  position: relative;
+  flex-shrink: 0;
+}
+
+.circleImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
+
+/* Stat Typography */
+.stat {
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-stat);
+  line-height: var(--line-height-stat, 1.1);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-teal-700); /* #00A3A3 */
+  text-align: center;
+  margin: 0 0 0.5rem;
+  display: block;
+}
+
+/* Metric Label Typography */
+.metricLabel {
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  color: var(--color-navy-900); /* #00395D */
+  text-align: center;
+  margin: 0;
+}
