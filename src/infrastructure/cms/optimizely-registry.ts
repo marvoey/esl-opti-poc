@@ -5,6 +5,10 @@ import { EslHeroSliderContentType } from '@/components/cms/components/EslHeroSli
 import { EslHeroSlideContentType } from '@/components/cms/components/EslHeroSlide';
 import { EslQuickLinkCardContentType } from '@/components/cms/components/EslQuickLinkCard';
 import { EslSnipeCtaContentType } from '@/components/cms/components/EslSnipeCta';
+import { EslFooterNavColumnContentType } from '@/components/cms/components/EslFooterNavColumn';
+import { EslFooterContentType } from '@/components/cms/components/EslFooter';
+import EslSiteSettings, { EslSiteSettingsContentType } from '@/components/cms/pages/EslSiteSettings';
+import EslStartPage, { EslStartPageContentType } from '@/components/cms/pages/EslStartPage';
 
 let isRegistered = false;
 
@@ -17,11 +21,17 @@ export function ensureOptimizelyRegistry() {
     EslHeroSlideContentType,
     EslQuickLinkCardContentType,
     EslSnipeCtaContentType,
+    EslFooterNavColumnContentType,
+    EslFooterContentType,
+    EslSiteSettingsContentType,
+    EslStartPageContentType,
   ]);
 
   initReactComponentRegistry({
     resolver: {
       EslHomePage,
+      EslSiteSettings,
+      EslStartPage,
     },
   });
 

@@ -4,7 +4,6 @@ import { Text } from "@/components/atoms/text/Text";
 import { TextLink } from "@/components/atoms/link/TextLink";
 import { Button, ButtonVariant } from "@/components/atoms/button/Button";
 import { BrandLogo } from "@/components/atoms/logo";
-import { defaultFooterData } from "./footerData";
 import styles from "./Footer.module.css";
 
 export interface FooterLinkItem {
@@ -29,7 +28,7 @@ export interface FooterBrandSection {
   wordmark?: string;
   wordmarkHref?: string;
   text: string;
-  button: {
+  button?: {
     label: string;
     href: string;
     variant?: ButtonVariant;
@@ -66,13 +65,13 @@ export interface FooterProps {
  * legal/copyright row.
  */
 export function Footer({
-  brand = defaultFooterData.brand,
-  columns = defaultFooterData.columns,
-  addressText = defaultFooterData.addressText,
-  legalLinks = defaultFooterData.legalLinks,
-  serviceMarksText = defaultFooterData.serviceMarksText,
+  brand,
+  columns = [],
+  addressText,
+  legalLinks = [],
+  serviceMarksText,
   disclaimerText,
-  copyrightText = defaultFooterData.copyrightText,
+  copyrightText,
   bottomContent,
   className = "",
 }: FooterProps) {
@@ -88,34 +87,40 @@ export function Footer({
       <div className="container">
         <div className={styles.gridContainer}>
           <div className={styles.row1}>
-            <div className={styles.brandCol}>
-              <Link
-                href={brand.wordmarkHref || "/"}
-                className={styles.brandLogo}
-                aria-label={brand.wordmark || "ESL"}
-              >
-                {brand.logo ?? <BrandLogo aria-hidden="true" />}
-              </Link>
-              <Text
-                as="p"
-                variant="body-sm"
-                color="inverted"
-                className={styles.brandText}
-              >
-                {brand.text}
-              </Text>
-              <Button
-                href={brand.button.href}
-                variant={brand.button.variant || "secondary"}
-                shape="pill"
-                className={styles.brandButton}
-                {...(brand.button.external
-                  ? { target: "_blank", rel: "noopener noreferrer" }
-                  : {})}
-              >
-                {brand.button.label}
-              </Button>
-            </div>
+            {brand ? (
+              <div className={styles.brandCol}>
+                <Link
+                  href={brand.wordmarkHref || "/"}
+                  className={styles.brandLogo}
+                  aria-label={brand.wordmark || "ESL"}
+                >
+                  {brand.logo ?? <BrandLogo aria-hidden="true" />}
+                </Link>
+                {brand.text ? (
+                  <Text
+                    as="p"
+                    variant="body-sm"
+                    color="inverted"
+                    className={styles.brandText}
+                  >
+                    {brand.text}
+                  </Text>
+                ) : null}
+                {brand.button ? (
+                  <Button
+                    href={brand.button.href}
+                    variant={brand.button.variant || "secondary"}
+                    shape="pill"
+                    className={styles.brandButton}
+                    {...(brand.button.external
+                      ? { target: "_blank", rel: "noopener noreferrer" }
+                      : {})}
+                  >
+                    {brand.button.label}
+                  </Button>
+                ) : null}
+              </div>
+            ) : null}
 
             {columns.map((column) => (
               <nav
@@ -154,68 +159,78 @@ export function Footer({
             ))}
           </div>
 
-          <div className={styles.row2}>
-            {bottomContent ?? (
-              <>
-                <div className={styles.legalFirstRow}>
-                  <Text
-                    as="p"
-                    variant="body-sm"
-                    color="inverted-muted"
-                    className={styles.legalAddress}
-                  >
-                    {addressText}
-                  </Text>
-                  <ul className={styles.legalLinksList} aria-label="Legal Information">
-                    {legalLinks.map((link) => (
-                      <li key={link.id} className={styles.legalLinkItem}>
+          {(addressText || (legalLinks && legalLinks.length > 0) || effectiveServiceMarks || copyrightText || bottomContent) ? (
+            <div className={styles.row2}>
+              {bottomContent ?? (
+                <>
+                  {(addressText || (legalLinks && legalLinks.length > 0)) ? (
+                    <div className={styles.legalFirstRow}>
+                      {addressText ? (
                         <Text
-                          as="span"
+                          as="p"
                           variant="body-sm"
                           color="inverted-muted"
-                          className={styles.legalPipe}
-                          aria-hidden="true"
+                          className={styles.legalAddress}
                         >
-                          |
+                          {addressText}
                         </Text>
-                        <TextLink
-                          href={link.href}
-                          variant="light"
-                          underline="none"
-                          textVariant="body-sm"
-                          weight="regular"
-                          external={link.external}
-                          target={link.target}
-                          rel={link.rel}
-                          className={styles.legalLink}
-                        >
-                          {link.label}
-                        </TextLink>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <Text
-                  as="p"
-                  variant="body-sm"
-                  color="inverted-muted"
-                  className={styles.legalServiceMarks}
-                >
-                  {effectiveServiceMarks}
-                </Text>
-                {copyrightText && (
-                  <Text
-                    as="p"
-                    variant="body-sm"
-                    color="inverted-muted"
-                    className={styles.copyrightText}
-                  >
-                    {copyrightText}
-                  </Text>
-                )}
-              </>
-            )}
-          </div>
+                      ) : null}
+                      {legalLinks && legalLinks.length > 0 ? (
+                        <ul className={styles.legalLinksList} aria-label="Legal Information">
+                          {legalLinks.map((link) => (
+                            <li key={link.id} className={styles.legalLinkItem}>
+                              <Text
+                                as="span"
+                                variant="body-sm"
+                                color="inverted-muted"
+                                className={styles.legalPipe}
+                                aria-hidden="true"
+                              >
+                                |
+                              </Text>
+                              <TextLink
+                                href={link.href}
+                                variant="light"
+                                underline="none"
+                                textVariant="body-sm"
+                                weight="regular"
+                                external={link.external}
+                                target={link.target}
+                                rel={link.rel}
+                                className={styles.legalLink}
+                              >
+                                {link.label}
+                              </TextLink>
+                            </li>
+                          ))}
+                        </ul>
+                      ) : null}
+                    </div>
+                  ) : null}
+                  {effectiveServiceMarks ? (
+                    <Text
+                      as="p"
+                      variant="body-sm"
+                      color="inverted-muted"
+                      className={styles.legalServiceMarks}
+                    >
+                      {effectiveServiceMarks}
+                    </Text>
+                  ) : null}
+                  {copyrightText ? (
+                    <Text
+                      as="p"
+                      variant="body-sm"
+                      color="inverted-muted"
+                      className={styles.copyrightText}
+                    >
+                      {copyrightText}
+                    </Text>
+                  ) : null}
+                </>
+              )}
+            </div>
+          ) : null}
         </div>
       </div>
     </section>

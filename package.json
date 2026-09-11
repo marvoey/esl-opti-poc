@@ -9,7 +9,7 @@
     "lint": "eslint",
     "lint:css": "stylelint \"src/**/*.css\"",
     "test": "vitest run",
-    "cms:push": "optimizely-cms-cli config push"
+    "cms:push": "optimizely-cms-cli config push --force"
   },
   "dependencies": {
     "@optimizely/cms-sdk": "^2.2.0",

@@ -3,6 +3,7 @@ import { Albert_Sans, League_Spartan } from "next/font/google";
 import "@/infrastructure/cms/optimizely-registry";
 import "./globals.css";
 import { Footer } from "@/components/organisms/footer/Footer";
+import { resolveFooterContent } from "@/infrastructure/cms/resolveFooterContent";
 
 const albertSans = Albert_Sans({
   subsets: ["latin"],
@@ -22,16 +23,18 @@ export const metadata: Metadata = {
   description: "Enterprise Next.js architecture with Pragmatic Hexagonal Design, CMS Anti-Corruption Layer, and Intrinsic CSS Tokens",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const footerProps = await resolveFooterContent();
+
   return (
     <html lang="en" className={`${albertSans.variable} ${leagueSpartan.variable}`}>
       <body>
         {children}
-        <Footer />
+        {footerProps && <Footer {...footerProps} />}
       </body>
     </html>
   );

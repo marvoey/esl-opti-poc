@@ -66,6 +66,7 @@ export const SideBySidePromoSchema = z.object({
 export const HomePageSchema = z.object({
   heroSlider: HeroSliderSchema,
   snipeCta: SnipeCtaSchema,
+  showExploreSolutions: z.boolean().optional(),
   tabbedSolutions: TabbedSolutionsSchema,
   sideBySidePromo: SideBySidePromoSchema,
   sideBySidePromoSecondary: SideBySidePromoSchema.optional(),

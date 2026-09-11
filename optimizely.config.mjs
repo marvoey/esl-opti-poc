@@ -6,11 +6,11 @@ export default buildConfig({
     {
       key: 'heroSlider',
       displayName: 'Hero Slider',
-      sortOrder: 10,
+      sortOrder: -10,
     },
     {
-      key: 'snipeCta',
-      displayName: 'Snipe CTA Banner',
+      key: 'footer',
+      displayName: 'Footer',
       sortOrder: 20,
     },
   ],

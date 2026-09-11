@@ -2,7 +2,6 @@ import React from "react";
 import { notFound } from "next/navigation";
 import { GraphClient } from "@optimizely/cms-sdk";
 import { OptimizelyComponent } from "@optimizely/cms-sdk/react/server";
-import { TabbedIconCards } from "@/components/organisms/tabbed-icon-cards";
 import {
   SplitContentImage,
   DEFAULT_SPLIT_CONTENT,
@@ -28,12 +27,26 @@ async function resolveHomeContent() {
       host,
     });
 
-    // If the root is a StartPage container or has no registered component, resolve the child ESL Home Page (/home or /new-page)
-    if (!content || content.length === 0 || content[0]?._metadata?.types?.includes("StartPage")) {
+    // If the root is an EslStartPage container, resolve its child ESL Home Page
+    if (
+      !content ||
+      content.length === 0 ||
+      content[0]?._metadata?.types?.includes("EslStartPage")
+    ) {
+      const eslStartPageKey = content?.[0]?._metadata?.key;
       try {
         const homeContent = await client.getContentByPath("/home", { host });
         if (homeContent && homeContent.length > 0) {
-          content = homeContent;
+          // Exclusively match Home pages belonging to the EslStartPage site
+          const matched = eslStartPageKey
+            ? homeContent.filter((item: any) => {
+                const container = item._metadata?.container;
+                const path = item._metadata?.path;
+                return container === eslStartPageKey || (Array.isArray(path) && path.includes(eslStartPageKey));
+              })
+            : homeContent;
+
+          content = matched.length > 0 ? matched : homeContent;
         } else {
           const childContent = await client.getContentByPath("/new-page", { host });
           if (childContent && childContent.length > 0) {
@@ -52,20 +65,33 @@ async function resolveHomeContent() {
   }
 }
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
+function selectActiveHomeContent(items?: any[] | null) {
+  if (!items || items.length === 0) return null;
+  if (items.length === 1) return items[0];
+
+  // Pick the latest modified version
+  return [...items].sort((a, b) => {
+    const timeA = new Date(a._metadata?.lastModified || 0).getTime();
+    const timeB = new Date(b._metadata?.lastModified || 0).getTime();
+    return timeB - timeA;
+  })[0];
+}
+
 export default async function Home() {
   const [content, homeMockData] = await Promise.all([
     resolveHomeContent(),
     getHomePageQuery(),
   ]);
 
-  if (content) {
+  const activeContent = selectActiveHomeContent(content);
+
+  if (activeContent) {
     return (
       <main>
-        <OptimizelyComponent content={content[0]} />
-        <TabbedIconCards
-          heading={homeMockData.tabbedSolutions.heading}
-          tabs={homeMockData.tabbedSolutions.tabs}
-        />
+        <OptimizelyComponent content={activeContent} />
         <SplitContentImage {...DEFAULT_SPLIT_CONTENT} />
         <SideBySide {...homeMockData.sideBySidePromo} />
         {homeMockData.sideBySidePromoSecondary && (

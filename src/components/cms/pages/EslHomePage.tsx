@@ -4,6 +4,10 @@ import { getPreviewUtils } from '@optimizely/cms-sdk/react/server';
 import { RichText } from '@optimizely/cms-sdk/react/richText';
 import { HeroCarousel } from '@/components/organisms/hero-carousel/HeroCarousel';
 import { SnipeCta } from '@/components/organisms/snipe-cta/SnipeCta';
+import {
+  TabbedIconCards,
+  defaultTabbedSolutionsData,
+} from '@/components/organisms/tabbed-icon-cards';
 import { EslHeroSliderContentType } from '@/components/cms/components/EslHeroSlider';
 import { EslSnipeCtaContentType } from '@/components/cms/components/EslSnipeCta';
 
@@ -11,18 +15,27 @@ export const EslHomePageContentType = contentType({
   key: 'EslHomePage',
   displayName: 'ESL Home Page',
   baseType: '_page',
+  mayContainTypes: ['*'],
   properties: {
     heroSlider: {
       type: 'component',
       contentType: EslHeroSliderContentType,
       displayName: 'Content',
       group: 'heroSlider',
+      sortOrder: 10,
     },
     snipeCta: {
       type: 'component',
       contentType: EslSnipeCtaContentType,
-      displayName: 'Content',
-      group: 'snipeCta',
+      displayName: 'Snipe CTA Banner',
+      group: 'content',
+      sortOrder: 20,
+    },
+    showExploreSolutions: {
+      type: 'boolean',
+      displayName: 'Show Explore Our Solutions',
+      group: 'content',
+      sortOrder: 30,
     },
   },
 });
@@ -171,6 +184,16 @@ export default function EslHomePage({ content = {} }: Props) {
             linkHref={snipeLink.url}
             linkTarget={snipeLink.target}
             linkRel={snipeLink.rel}
+          />
+        </div>
+      )}
+
+      {/* Explore Our Solutions Organism - visibility controlled by CMS toggle, static POC content */}
+      {content.showExploreSolutions !== false && (
+        <div {...pa('showExploreSolutions')}>
+          <TabbedIconCards
+            heading={defaultTabbedSolutionsData.heading}
+            tabs={defaultTabbedSolutionsData.tabs}
           />
         </div>
       )}
