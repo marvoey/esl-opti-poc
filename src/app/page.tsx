@@ -4,6 +4,10 @@ import { GraphClient } from "@optimizely/cms-sdk";
 import { OptimizelyComponent } from "@optimizely/cms-sdk/react/server";
 import { TabbedIconCards } from "@/components/organisms/tabbed-icon-cards";
 import {
+  CircularImageMetricRow,
+  DEFAULT_CIRCULAR_IMAGE_METRIC_ROW,
+} from "@/components/organisms/circular-image-metric-row";
+import {
   SplitContentImage,
   DEFAULT_SPLIT_CONTENT,
 } from "@/components/organisms/split-content-image";
@@ -66,6 +70,7 @@ export default async function Home() {
           heading={homeMockData.tabbedSolutions.heading}
           tabs={homeMockData.tabbedSolutions.tabs}
         />
+        <CircularImageMetricRow {...DEFAULT_CIRCULAR_IMAGE_METRIC_ROW} />
         <SplitContentImage {...DEFAULT_SPLIT_CONTENT} />
         <SideBySide {...homeMockData.sideBySidePromo} />
         {homeMockData.sideBySidePromoSecondary && (
