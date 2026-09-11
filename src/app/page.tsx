@@ -204,7 +204,7 @@ export default async function Home() {
   if (activeContent) {
     return (
       <main>
-        <OptimizelyComponent content={content[0]} />
+        <OptimizelyComponent content={activeContent} />
         <TabbedIconCards
           heading={homeMockData.tabbedSolutions.heading}
           tabs={homeMockData.tabbedSolutions.tabs}
