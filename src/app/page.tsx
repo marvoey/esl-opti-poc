@@ -2,7 +2,6 @@ import React from "react";
 import { notFound } from "next/navigation";
 import { GraphClient } from "@optimizely/cms-sdk";
 import { OptimizelyComponent } from "@optimizely/cms-sdk/react/server";
-import { TabbedIconCards } from "@/components/organisms/tabbed-icon-cards";
 import {
   CircularImageMetricRow,
   DEFAULT_CIRCULAR_IMAGE_METRIC_ROW,
@@ -205,10 +204,6 @@ export default async function Home() {
     return (
       <main>
         <OptimizelyComponent content={activeContent} />
-        <TabbedIconCards
-          heading={homeMockData.tabbedSolutions.heading}
-          tabs={homeMockData.tabbedSolutions.tabs}
-        />
         <CircularImageMetricRow {...DEFAULT_CIRCULAR_IMAGE_METRIC_ROW} />
         <SplitContentImage {...DEFAULT_SPLIT_CONTENT} />
         <SideBySide {...homeMockData.sideBySidePromo} />
