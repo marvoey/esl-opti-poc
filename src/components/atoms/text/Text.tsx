@@ -20,6 +20,7 @@ export type TextColor =
   | "secondary"
   | "muted"
   | "accent"
+  | "vibrant"
   | "inverted"
   | "inverted-muted"
   | "guidance"
@@ -60,6 +61,7 @@ const colorClassMap: Record<TextColor, string> = {
   secondary: styles.colorSecondary,
   muted: styles.colorMuted,
   accent: styles.colorAccent,
+  vibrant: styles.colorVibrant,
   inverted: styles.colorInverted,
   "inverted-muted": styles.colorInvertedMuted,
   guidance: styles.colorGuidance,
@@ -85,7 +87,7 @@ export function Text({
 }: TextProps) {
   // Default tag heuristics based on variant
   const defaultTag: TextTag =
-    variant === "button"
+    variant === "button" || variant === "eyebrow"
       ? "span"
       : variant === "label"
       ? "label"
@@ -113,6 +115,13 @@ export function Text({
       {children}
     </Component>
   );
+}
+
+/**
+ * Shorthand Eyebrow Typography Atom
+ */
+export function Eyebrow(props: Omit<TextProps, "variant">) {
+  return <Text variant="eyebrow" as="span" {...props} />;
 }
 
 /**

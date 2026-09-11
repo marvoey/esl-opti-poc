@@ -1,0 +1,81 @@
+import React from "react";
+import Image from "next/image";
+import { Badge } from "@/components/atoms/badge/Badge";
+import { ArrowRightIcon } from "@/components/atoms/icons";
+import styles from "./MediaCard.module.css";
+
+export interface MediaCardProps {
+  id?: string;
+  imageSrc: string;
+  imageAlt?: string;
+  badge?: string;
+  title: string;
+  description: string;
+  ctaText?: string;
+  href: string;
+  external?: boolean;
+  className?: string;
+}
+
+/**
+ * MediaCard Atom Component
+ * Renders an interactive promotional card on a dark surface featuring:
+ * - 16:9 media banner thumbnail
+ * - "Limited Time" pill badge
+ * - White bold card title
+ * - Muted white body description
+ * - Turquoise action link with animated trailing arrow icon
+ */
+export function MediaCard({
+  id,
+  imageSrc,
+  imageAlt = "Promotional offer",
+  badge = "Limited Time",
+  title,
+  description,
+  ctaText = "Learn more",
+  href,
+  external = false,
+  className = "",
+}: MediaCardProps) {
+  const externalProps = external
+    ? { target: "_blank" as const, rel: "noopener noreferrer" }
+    : {};
+
+  const cardClasses = [styles.card, className].filter(Boolean).join(" ");
+
+  return (
+    <article id={id} className={cardClasses}>
+      {/* 1. Media Banner */}
+      <div className={styles.mediaWrapper}>
+        <Image
+          src={imageSrc}
+          alt={imageAlt}
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          className={styles.thumbnail}
+        />
+      </div>
+
+      {/* 2. Card Content */}
+      <div className={styles.content}>
+        {badge && (
+          <div className={styles.badge}>
+            <Badge variant="aqua">{badge}</Badge>
+          </div>
+        )}
+
+        <h3 className={styles.title}>{title}</h3>
+
+        <p className={styles.description}>{description}</p>
+
+        <a href={href} className={styles.cta} {...externalProps}>
+          <span>{ctaText}</span>
+          <span className={styles.ctaIcon} aria-hidden="true">
+            <ArrowRightIcon size={16} />
+          </span>
+        </a>
+      </div>
+    </article>
+  );
+}

@@ -1,7 +1,6 @@
 export { Display, type DisplayProps } from "./display/Display";
 export { Heading, type HeadingProps, type HeadingLevel, type HeadingTag } from "./heading/Heading";
-export { Text, Micro, Caption, ButtonLabel, type TextProps, type TextVariant, type TextColor, type TextWeight, type TextTag } from "./text/Text";
-export { Eyebrow, type EyebrowProps, type EyebrowColor } from "./eyebrow/Eyebrow";
+export { Text, Micro, Caption, ButtonLabel, Eyebrow, type TextProps, type TextVariant, type TextColor, type TextWeight, type TextTag } from "./text/Text";
 export { CircleCheck, type CircleCheckProps } from "./circle-check/CircleCheck";
 export { Stat, type StatProps } from "./stat/Stat";
 export {
@@ -46,6 +45,8 @@ export {
   type BasicsTileOrder,
   type BasicsTileGridProps,
   type BasicsTileGridLayout,
+  MediaCard,
+  type MediaCardProps,
 } from "./card";
 export { TextLink, type TextLinkProps, type TextLinkVariant, type TextLinkUnderline } from "./link/TextLink";
 export { SimpleLink, type SimpleLinkProps } from "./link/SimpleLink";
