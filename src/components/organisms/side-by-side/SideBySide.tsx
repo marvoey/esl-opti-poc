@@ -75,7 +75,7 @@ export function SideBySide({
 
   return (
     <section id={id} className={combinedSectionClass} aria-labelledby={headingId}>
-      <div className="container">
+      <div className={`container ${styles.container}`}>
         <article className={cardClass}>
           <div className={contentClass}>
             <Eyebrow

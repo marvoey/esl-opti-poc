@@ -151,7 +151,7 @@ export function TabbedIconCards({
 
   return (
     <section className={combinedSectionClass}>
-      <div className="container">
+      <div className={`container ${styles.container}`}>
         {heading ? (
           <Heading level="h3" className={styles.heading}>
             {heading}

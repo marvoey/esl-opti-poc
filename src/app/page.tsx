@@ -205,11 +205,11 @@ export default async function Home() {
       <main>
         <OptimizelyComponent content={activeContent} />
         <CircularImageMetricRow {...DEFAULT_CIRCULAR_IMAGE_METRIC_ROW} />
-        <SplitContentImage {...DEFAULT_SPLIT_CONTENT} />
         <SideBySide {...homeMockData.sideBySidePromo} />
         {homeMockData.sideBySidePromoSecondary && (
           <SideBySide {...homeMockData.sideBySidePromoSecondary} />
         )}
+        <SplitContentImage {...DEFAULT_SPLIT_CONTENT} />
       </main>
     );
   }

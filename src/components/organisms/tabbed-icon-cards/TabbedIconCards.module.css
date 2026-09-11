@@ -1,6 +1,9 @@
 .section {
   width: 100%;
   container-type: inline-size;
+}
+
+.container {
   padding-block: 2rem; /* 32px mobile */
 }
 
@@ -138,7 +141,7 @@
 }
 
 @media (width >= 860px) {
-  .section {
+  .container {
     padding-block: 4rem; /* 64px desktop */
   }
 
