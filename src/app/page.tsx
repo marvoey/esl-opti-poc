@@ -15,6 +15,10 @@ import {
   DEFAULT_VIDEO_STORY_CARD_ROW,
 } from "@/components/organisms/video-story-card-row";
 import {
+  MediaCardGrid,
+  DEFAULT_MEDIA_CARD_GRID,
+} from "@/components/organisms/media-card-grid";
+import {
   SplitContentImage,
   DEFAULT_SPLIT_CONTENT,
 } from "@/components/organisms/split-content-image";
@@ -215,6 +219,7 @@ export default async function Home() {
         <CircularImageMetricRow {...DEFAULT_CIRCULAR_IMAGE_METRIC_ROW} />
         <MetricCardRow {...DEFAULT_METRIC_CARD_ROW} />
         <VideoStoryCardRow {...DEFAULT_VIDEO_STORY_CARD_ROW} />
+        <MediaCardGrid {...DEFAULT_MEDIA_CARD_GRID} />
         <SideBySide {...homeMockData.sideBySidePromo} />
         {homeMockData.sideBySidePromoSecondary && (
           <SideBySide {...homeMockData.sideBySidePromoSecondary} />

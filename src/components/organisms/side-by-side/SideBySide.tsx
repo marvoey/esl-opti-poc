@@ -1,8 +1,7 @@
 import React, { useId } from "react";
 import Image from "next/image";
-import { Eyebrow, type EyebrowColor } from "@/components/atoms/eyebrow/Eyebrow";
 import { Heading } from "@/components/atoms/heading/Heading";
-import { Text } from "@/components/atoms/text/Text";
+import { Text, type TextColor } from "@/components/atoms/text/Text";
 import { Button } from "@/components/atoms/button/Button";
 import styles from "./SideBySide.module.css";
 
@@ -10,7 +9,7 @@ export interface SideBySideProps {
   id?: string;
   variant?: "dark" | "light";
   eyebrow: string;
-  eyebrowColor?: EyebrowColor;
+  eyebrowColor?: TextColor;
   headline: React.ReactNode;
   headingLevel?: "h1" | "h2" | "h3" | "h4";
   body: string | React.ReactNode;
@@ -78,12 +77,14 @@ export function SideBySide({
       <div className={`container ${styles.container}`}>
         <article className={cardClass}>
           <div className={contentClass}>
-            <Eyebrow
+            <Text
+              as="span"
+              variant="eyebrow"
               color={resolvedEyebrowColor}
               className={styles.eyebrow}
             >
               {eyebrow}
-            </Eyebrow>
+            </Text>
             <Heading
               level={headingLevel}
               id={headingId}

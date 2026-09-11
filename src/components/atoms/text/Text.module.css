@@ -78,6 +78,8 @@
   letter-spacing: var(--tracking-eyebrow);
   font-weight: var(--font-weight-bold);
   text-transform: uppercase;
+  margin: 0;
+  display: inline-block;
 }
 
 .heroH2 {
@@ -129,6 +131,10 @@
 
 .colorAccent {
   color: var(--color-accent);
+}
+
+.colorVibrant {
+  color: var(--color-border-accent); /* #68E0CC Vibrant Turquoise */
 }
 
 .colorInverted {

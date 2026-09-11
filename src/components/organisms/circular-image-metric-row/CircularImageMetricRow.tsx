@@ -1,6 +1,5 @@
 import React, { useId } from "react";
 import Image from "next/image";
-import { Eyebrow } from "@/components/atoms/eyebrow/Eyebrow";
 import { Heading, type HeadingLevel } from "@/components/atoms/heading/Heading";
 import { Text } from "@/components/atoms/text/Text";
 import { Button } from "@/components/atoms/button/Button";
@@ -119,9 +118,9 @@ export function CircularImageMetricRow({
         {/* Div 1: Header Row (100% Width) */}
         <div className={styles.headerRow}>
           <div className={styles.headerContent}>
-            <Eyebrow color="accent" className={styles.eyebrow}>
+            <Text as="span" variant="eyebrow" color="accent" className={styles.eyebrow}>
               {eyebrow}
-            </Eyebrow>
+            </Text>
             <Heading level={headingLevel} id={headingId} className={styles.title}>
               {title}
             </Heading>

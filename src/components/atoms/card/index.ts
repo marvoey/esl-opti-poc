@@ -57,3 +57,8 @@ export {
   type BasicsTileGridProps,
   type BasicsTileGridLayout,
 } from "./basics-tile";
+
+export {
+  MediaCard,
+  type MediaCardProps,
+} from "./media-card";

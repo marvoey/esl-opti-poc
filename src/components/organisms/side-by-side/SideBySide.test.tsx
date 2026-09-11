@@ -31,7 +31,7 @@ describe("SideBySide Organism", () => {
     ).toBeDefined();
 
     const eyebrow = screen.getByText(BASE_PROPS.eyebrow);
-    expect(eyebrow.className).toContain("vibrant");
+    expect(eyebrow.className).toMatch(/vibrant/i);
   });
 
   it("renders Variant B (Light) with mirrored layout and correct typography tokens", () => {
@@ -50,7 +50,7 @@ describe("SideBySide Organism", () => {
     expect(heading.className).toContain("headlineLight");
 
     const eyebrow = screen.getByText(BASE_PROPS.eyebrow);
-    expect(eyebrow.className).toContain("accent");
+    expect(eyebrow.className).toMatch(/accent/i);
   });
 
   it("renders CTA button with correct link href and accessibility labels", () => {
