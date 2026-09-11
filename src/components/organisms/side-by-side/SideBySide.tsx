@@ -1,6 +1,6 @@
 import React, { useId } from "react";
 import Image from "next/image";
-import { Eyebrow } from "@/components/atoms/eyebrow/Eyebrow";
+import { Eyebrow, type EyebrowColor } from "@/components/atoms/eyebrow/Eyebrow";
 import { Heading } from "@/components/atoms/heading/Heading";
 import { Text } from "@/components/atoms/text/Text";
 import { Button } from "@/components/atoms/button/Button";
@@ -10,6 +10,7 @@ export interface SideBySideProps {
   id?: string;
   variant?: "dark" | "light";
   eyebrow: string;
+  eyebrowColor?: EyebrowColor;
   headline: React.ReactNode;
   headingLevel?: "h1" | "h2" | "h3" | "h4";
   body: string | React.ReactNode;
@@ -27,6 +28,7 @@ export function SideBySide({
   id,
   variant = "dark",
   eyebrow,
+  eyebrowColor,
   headline,
   headingLevel = "h3",
   body,
@@ -42,6 +44,7 @@ export function SideBySide({
   const isDark = variant === "dark";
   const autoId = useId();
   const headingId = `${id ?? autoId}-heading`;
+  const resolvedEyebrowColor = eyebrowColor ?? (isDark ? "vibrant" : "accent");
 
   const combinedSectionClass = className
     ? `${styles.section} ${className}`
@@ -76,7 +79,7 @@ export function SideBySide({
         <article className={cardClass}>
           <div className={contentClass}>
             <Eyebrow
-              color={isDark ? "vibrant" : "brand"}
+              color={resolvedEyebrowColor}
               className={styles.eyebrow}
             >
               {eyebrow}

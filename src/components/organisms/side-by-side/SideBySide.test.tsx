@@ -29,6 +29,9 @@ describe("SideBySide Organism", () => {
     expect(
       screen.getByRole("heading", { level: 3, name: BASE_PROPS.headline })
     ).toBeDefined();
+
+    const eyebrow = screen.getByText(BASE_PROPS.eyebrow);
+    expect(eyebrow.className).toContain("vibrant");
   });
 
   it("renders Variant B (Light) with mirrored layout and correct typography tokens", () => {
@@ -45,6 +48,9 @@ describe("SideBySide Organism", () => {
 
     const heading = screen.getByRole("heading", { level: 3 });
     expect(heading.className).toContain("headlineLight");
+
+    const eyebrow = screen.getByText(BASE_PROPS.eyebrow);
+    expect(eyebrow.className).toContain("accent");
   });
 
   it("renders CTA button with correct link href and accessibility labels", () => {
