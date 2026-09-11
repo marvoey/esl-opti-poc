@@ -7,6 +7,8 @@ import type { FooterBrandSection, FooterNavColumn, FooterLinkItem } from "./Foot
  * at a nonexistent file.
  */
 export const defaultBrand: FooterBrandSection = {
+  logoUrl: "/images/esl-logo.svg",
+  logoAlt: "ESL",
   wordmark: "ESL",
   wordmarkHref: "/",
   text: "Member-owned banking, built around the people and places we call home.",

@@ -3,7 +3,6 @@ import Link from "next/link";
 import { Text } from "@/components/atoms/text/Text";
 import { TextLink } from "@/components/atoms/link/TextLink";
 import { Button, ButtonVariant } from "@/components/atoms/button/Button";
-import { BrandLogo } from "@/components/atoms/logo";
 import styles from "./Footer.module.css";
 
 export interface FooterLinkItem {
@@ -24,6 +23,10 @@ export interface FooterNavColumn {
 export interface FooterBrandSection {
   /** Optional custom logo element. Defaults to the optimized BrandLogo SVG */
   logo?: React.ReactNode;
+  /** Optional custom logo image URL (e.g. from CMS media asset) */
+  logoUrl?: string;
+  /** Optional alt text for custom logo image */
+  logoAlt?: string;
   /** Accessible wordmark name (defaults to ESL) */
   wordmark?: string;
   wordmarkHref?: string;
@@ -89,13 +92,23 @@ export function Footer({
           <div className={styles.row1}>
             {brand ? (
               <div className={styles.brandCol}>
-                <Link
-                  href={brand.wordmarkHref || "/"}
-                  className={styles.brandLogo}
-                  aria-label={brand.wordmark || "ESL"}
-                >
-                  {brand.logo ?? <BrandLogo aria-hidden="true" />}
-                </Link>
+                {brand.logo || brand.logoUrl ? (
+                  <Link
+                    href={brand.wordmarkHref || "/"}
+                    className={styles.brandLogo}
+                    aria-label={brand.wordmark || "ESL"}
+                  >
+                    {brand.logo ? (
+                      brand.logo
+                    ) : (
+                      <img
+                        src={brand.logoUrl}
+                        alt={brand.logoAlt || brand.wordmark || "ESL"}
+                        className={styles.logoImage}
+                      />
+                    )}
+                  </Link>
+                ) : null}
                 {brand.text ? (
                   <Text
                     as="p"

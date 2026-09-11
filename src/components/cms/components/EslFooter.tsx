@@ -6,6 +6,19 @@ export const EslFooterContentType = contentType({
   displayName: 'ESL Footer',
   baseType: '_component',
   properties: {
+    brandLogo: {
+      type: 'contentReference',
+      displayName: 'Brand Logo Image',
+      group: 'content',
+      sortOrder: 5,
+      allowedTypes: ['_image'],
+    },
+    brandLogoAlt: {
+      type: 'string',
+      displayName: 'Brand Logo Alt Text',
+      group: 'content',
+      sortOrder: 6,
+    },
     brandText: {
       type: 'string',
       displayName: 'Brand Description',

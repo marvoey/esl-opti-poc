@@ -116,6 +116,7 @@ describe("Footer Organism", () => {
         brand={{
           wordmark: "Custom",
           wordmarkHref: "/home",
+          logoUrl: "/custom-logo.svg",
           text: "Custom description",
           button: { label: "Join now", href: "/join" },
         }}
@@ -136,6 +137,37 @@ describe("Footer Organism", () => {
     expect(screen.getByText("Custom Column")).toBeDefined();
     expect(screen.getByText("Custom Link")).toBeDefined();
     expect(screen.getByText("Custom copyright")).toBeDefined();
+  });
+
+  it("renders custom brand logo image when logoUrl is provided", () => {
+    render(
+      <Footer
+        brand={{
+          wordmark: "ESL Federal Credit Union",
+          logoUrl: "https://cdn.example.com/esl-logo.png",
+          logoAlt: "ESL Logo",
+          text: "Banking for Rochester.",
+        }}
+      />
+    );
+
+    const img = screen.getByRole("img", { name: "ESL Logo" });
+    expect(img).toBeDefined();
+    expect(img.getAttribute("src")).toBe("https://cdn.example.com/esl-logo.png");
+  });
+
+  it("does not render brand logo link or image when neither logo nor logoUrl is provided", () => {
+    render(
+      <Footer
+        brand={{
+          text: "Banking for Rochester.",
+          button: { label: "Join", href: "/join" },
+        }}
+      />
+    );
+
+    expect(screen.queryByRole("img")).toBeNull();
+    expect(screen.queryByRole("link", { name: "ESL" })).toBeNull();
   });
 
   it("renders empty when rendered without props and never leaks mock data", () => {

@@ -65,6 +65,12 @@ describe('footerMapper', () => {
         })
       ).toBe(true);
       expect(hasCmsFooterContent({ addressText: '225 Chestnut' })).toBe(true);
+      expect(
+        hasCmsFooterContent({
+          brandLogo: { url: { default: 'https://cdn.example.com/logo.png' } },
+        })
+      ).toBe(true);
+      expect(hasCmsFooterContent({ brandLogoAlt: 'ESL Federal Credit Union' })).toBe(true);
     });
   });
 
@@ -126,6 +132,20 @@ describe('footerMapper', () => {
       expect(result?.brand?.text).toBe('Custom brand description text.');
       expect(result?.brand?.button?.label).toBe('Join Us Today');
       expect(result?.brand?.button?.href).toBe('/join-now');
+    });
+
+    it('maps brand logo and alt text cleanly', () => {
+      const rawCms: RawCmsFooter = {
+        brandLogo: {
+          url: { default: 'https://cdn.example.com/logo.svg' },
+        },
+        brandLogoAlt: 'ESL Official Logo',
+      };
+
+      const result = mapCmsFooterToProps(rawCms);
+      expect(result).not.toBeNull();
+      expect(result?.brand?.logoUrl).toBe('https://cdn.example.com/logo.svg');
+      expect(result?.brand?.logoAlt).toBe('ESL Official Logo');
     });
 
     it('maps custom address, service marks, and copyright strings', () => {

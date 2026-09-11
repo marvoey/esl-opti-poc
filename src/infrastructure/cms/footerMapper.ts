@@ -22,7 +22,22 @@ export type RawCmsNavColumn = {
   links?: RawCmsLink[] | null;
 };
 
+export type RawCmsMedia = {
+  key?: string | null;
+  url?: {
+    default?: string | null;
+    hierarchical?: string | null;
+    base?: string | null;
+    internal?: string | null;
+  } | null;
+  item?: {
+    Url?: string | null;
+  } | null;
+};
+
 export type RawCmsFooter = {
+  brandLogo?: RawCmsMedia | null;
+  brandLogoAlt?: string | null;
   brandText?: string | null;
   brandCta?: RawCmsLink | null;
   columns?: RawCmsNavColumn[] | null;
@@ -67,11 +82,36 @@ export function resolveCmsLink(linkObj?: RawCmsLink | null, fallbackLabel = '', 
 }
 
 /**
+ * Resolves a CMS media reference into a clean public URL.
+ */
+export function resolveCmsMediaUrl(media?: RawCmsMedia | null): string {
+  if (!media) return '';
+
+  const url =
+    media.item?.Url ||
+    media.url?.default ||
+    media.url?.hierarchical ||
+    media.url?.base ||
+    media.url?.internal ||
+    '';
+
+  if (!url) return '';
+
+  if (url.startsWith('/') && !url.startsWith('/images/')) {
+    const cmsBase = process.env.OPTIMIZELY_CMS_URL || '';
+    return cmsBase ? `${cmsBase.replace(/\/$/, '')}${url}` : url;
+  }
+
+  return url;
+}
+
+/**
  * Checks if raw CMS footer has any actual content populated by an editor.
  */
 export function hasCmsFooterContent(cmsFooter?: RawCmsFooter | null): boolean {
   if (!cmsFooter) return false;
 
+  const hasBrandLogo = Boolean(resolveCmsMediaUrl(cmsFooter.brandLogo) || cmsFooter.brandLogoAlt?.trim());
   const hasBrandText = Boolean(cmsFooter.brandText?.trim());
   const hasBrandCta = Boolean(
     cmsFooter.brandCta?.text?.trim() ||
@@ -86,6 +126,7 @@ export function hasCmsFooterContent(cmsFooter?: RawCmsFooter | null): boolean {
   const hasCopyright = Boolean(cmsFooter.copyrightText?.trim());
 
   return (
+    hasBrandLogo ||
     hasBrandText ||
     hasBrandCta ||
     hasColumns ||
@@ -110,7 +151,12 @@ export function mapCmsFooterToProps(cmsFooter?: RawCmsFooter | null): FooterProp
 
   // 1. Map Brand Section
   const brandCta = cmsFooter?.brandCta ? resolveCmsLink(cmsFooter.brandCta, '', '') : null;
+  const logoUrl = resolveCmsMediaUrl(cmsFooter?.brandLogo) || undefined;
+  const logoAlt = cmsFooter?.brandLogoAlt?.trim() || undefined;
+
   const brand: FooterBrandSection = {
+    logoUrl,
+    logoAlt,
     wordmark: 'ESL',
     wordmarkHref: '/',
     text: cmsFooter?.brandText?.trim() || '',

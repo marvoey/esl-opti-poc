@@ -23,10 +23,12 @@ export const FooterBrandButtonSchema = z.object({
 });
 
 export const FooterBrandSectionSchema = z.object({
+  logoUrl: z.string().optional(),
+  logoAlt: z.string().optional(),
   wordmark: z.string().optional(),
   wordmarkHref: z.string().optional(),
   text: z.string(),
-  button: FooterBrandButtonSchema,
+  button: FooterBrandButtonSchema.optional(),
 });
 
 export const FooterModelSchema = z.object({

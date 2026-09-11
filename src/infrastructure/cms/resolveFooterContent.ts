@@ -8,6 +8,16 @@ const START_PAGE_FOOTER_QUERY = `
     EslStartPage {
       items {
         footer {
+          brandLogo {
+            key
+            url {
+              default
+              hierarchical
+              base
+              internal
+            }
+          }
+          brandLogoAlt
           brandText
           brandCta {
             text
@@ -59,6 +69,16 @@ const SITE_SETTINGS_FOOTER_QUERY = `
     EslSiteSettings {
       items {
         footer {
+          brandLogo {
+            key
+            url {
+              default
+              hierarchical
+              base
+              internal
+            }
+          }
+          brandLogoAlt
           brandText
           brandCta {
             text

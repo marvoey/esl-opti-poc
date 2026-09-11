@@ -10,6 +10,97 @@ import { SideBySide } from "@/components/organisms/side-by-side";
 import { getHomePageQuery } from "@/application/queries/getHomePageQuery";
 import "@/infrastructure/cms/optimizely-registry";
 
+const ESL_HOME_PAGE_QUERY = `
+  query GetEslHomePage($host: String) {
+    EslHomePage(
+      where: {
+        _metadata: {
+          url: {
+            base: { eq: $host }
+          }
+        }
+      }
+    ) {
+      items {
+        _id
+        _metadata {
+          key
+          status
+          displayName
+          types
+          lastModified
+          container
+          path
+          url {
+            default
+            base
+          }
+        }
+        heroSlider {
+          slides {
+            eyebrow
+            heading
+            body {
+              html
+              json
+            }
+            image {
+              key
+              url {
+                default
+                hierarchical
+                base
+                internal
+              }
+            }
+            imageAlt
+            primaryCta {
+              text
+              title
+              target
+              url {
+                default
+                hierarchical
+                base
+                internal
+              }
+            }
+            secondaryCta {
+              text
+              title
+              target
+              url {
+                default
+                hierarchical
+                base
+                internal
+              }
+            }
+            badgeStat
+            badgeLabel
+          }
+        }
+        snipeCta {
+          title
+          description
+          link {
+            text
+            title
+            target
+            url {
+              default
+              hierarchical
+              base
+              internal
+            }
+          }
+        }
+        showExploreSolutions
+      }
+    }
+  }
+`;
+
 async function resolveHomeContent() {
   const host = process.env.OPTIMIZELY_APP_HOST || "http://localhost:5002";
   const apiKey = process.env.OPTIMIZELY_GRAPH_SINGLE_KEY;
@@ -23,6 +114,23 @@ async function resolveHomeContent() {
       graphUrl: process.env.OPTIMIZELY_GRAPH_GATEWAY,
     });
 
+    // 1. Direct query for published EslHomePage items (bypasses Graph SDK _Content.item metadata bug)
+    try {
+      const directResult = (await client.request(
+        ESL_HOME_PAGE_QUERY,
+        { host },
+        undefined,
+        false
+      )) as { EslHomePage?: { items?: any[] } } | undefined;
+      const directItems = directResult?.EslHomePage?.items;
+      if (directItems && directItems.length > 0) {
+        return directItems;
+      }
+    } catch {
+      // ignore and try path-based resolution
+    }
+
+    // 2. Fallback to getContentByPath
     let content = await client.getContentByPath("/", {
       host,
     });
