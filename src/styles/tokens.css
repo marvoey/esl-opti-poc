@@ -36,6 +36,9 @@
   --color-navy-alpha-15: rgba(0, 57, 93, 0.15);
   --color-navy-alpha-18: rgba(0, 57, 93, 0.18);
   --color-turquoise-alpha-25: rgba(104, 224, 204, 0.25);
+  --color-sky-alpha-25: rgba(135, 206, 242, 0.25);
+  --color-aqua-alpha-25: rgba(213, 243, 242, 0.25);
+  --color-white-alpha-25: rgba(255, 255, 255, 0.25);
   --color-sky-alpha-50: rgba(135, 206, 242, 0.50);
   --color-sky-alpha-65: rgba(135, 206, 242, 0.65);
   --color-black-alpha-10: rgba(0, 0, 0, 0.10);
@@ -62,6 +65,7 @@
   --gradient-mint-wash: linear-gradient(90deg, var(--color-white) 0%, var(--color-mint-100) 50%, var(--color-white) 100%);
   --gradient-linear-wash: var(--gradient-mint-wash);
   --gradient-footer: linear-gradient(135deg, var(--color-navy-950) 0%, var(--color-navy-800) 100%);
+  --gradient-split-radial: radial-gradient(69.11% 69.11% at 50.26% 14.87%, var(--color-sky-alpha-25) 0%, var(--color-aqua-alpha-25) 50%, var(--color-white-alpha-25) 100%);
 
   /* Footer Layout Spacing */
   --space-footer-top: 4rem;         /* 64px */

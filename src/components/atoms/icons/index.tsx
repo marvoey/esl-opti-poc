@@ -9,6 +9,7 @@ import {
   Play,
   X,
   Car,
+  Check,
   type LucideProps,
   type LucideIcon,
 } from "lucide-react";
@@ -22,7 +23,8 @@ export type IconName =
   | "store"
   | "play"
   | "close"
-  | "car";
+  | "car"
+  | "check";
 
 export interface IconProps extends Omit<LucideProps, "ref"> {
   size?: number | string;
@@ -40,6 +42,7 @@ const iconRegistry: Record<IconName, LucideIcon> = {
   play: Play,
   close: X,
   car: Car,
+  check: Check,
 };
 
 /**
@@ -92,5 +95,9 @@ export function CloseIcon(props: IconProps) {
 
 export function CarIcon(props: IconProps) {
   return <Car size={props.size ?? 20} aria-hidden={true} {...props} />;
+}
+
+export function CheckIcon(props: IconProps) {
+  return <Check size={props.size ?? 16} aria-hidden={true} {...props} />;
 }
 
