@@ -3,6 +3,10 @@ import { notFound } from "next/navigation";
 import { GraphClient } from "@optimizely/cms-sdk";
 import { OptimizelyComponent } from "@optimizely/cms-sdk/react/server";
 import { TabbedIconCards } from "@/components/organisms/tabbed-icon-cards";
+import {
+  SplitContentImage,
+  DEFAULT_SPLIT_CONTENT,
+} from "@/components/organisms/split-content-image";
 import { SideBySide } from "@/components/organisms/side-by-side";
 import { getHomePageQuery } from "@/application/queries/getHomePageQuery";
 import "@/infrastructure/cms/optimizely-registry";
@@ -62,6 +66,7 @@ export default async function Home() {
           heading={homeMockData.tabbedSolutions.heading}
           tabs={homeMockData.tabbedSolutions.tabs}
         />
+        <SplitContentImage {...DEFAULT_SPLIT_CONTENT} />
         <SideBySide {...homeMockData.sideBySidePromo} />
         {homeMockData.sideBySidePromoSecondary && (
           <SideBySide {...homeMockData.sideBySidePromoSecondary} />

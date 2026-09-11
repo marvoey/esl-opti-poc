@@ -10,6 +10,7 @@ import {
   X,
   Car,
   Check,
+  CircleCheck as LucideCircleCheck,
   type LucideProps,
   type LucideIcon,
 } from "lucide-react";
@@ -24,7 +25,8 @@ export type IconName =
   | "play"
   | "close"
   | "car"
-  | "check";
+  | "check"
+  | "circle-check";
 
 export interface IconProps extends Omit<LucideProps, "ref"> {
   size?: number | string;
@@ -43,6 +45,7 @@ const iconRegistry: Record<IconName, LucideIcon> = {
   close: X,
   car: Car,
   check: Check,
+  "circle-check": LucideCircleCheck,
 };
 
 /**
@@ -99,5 +102,9 @@ export function CarIcon(props: IconProps) {
 
 export function CheckIcon(props: IconProps) {
   return <Check size={props.size ?? 16} aria-hidden={true} {...props} />;
+}
+
+export function CircleCheckIcon(props: IconProps) {
+  return <LucideCircleCheck size={props.size ?? 16} aria-hidden={true} {...props} />;
 }
 

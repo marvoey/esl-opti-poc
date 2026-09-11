@@ -11,14 +11,14 @@
 
 The **Split Content + Image** component is a hero/intro-style editorial organism featuring a full-width container with a soft radial-gradient background, split into two primary columns:
 - **Left Column (Content)**: Heading, body description, dual CTA buttons (primary with user icon, secondary with arrow icon), and an optional micro eligibility note with check icon.
-- **Right Column (Visual)**: A 3-column × 2-row staggered portrait photo collage (6 image tiles) representing members and community.
+- **Right Column (Visual)**: A single optimized WebP portrait collage image (`/images/split-content/community-collage.webp`, 933×1024) representing members and community.
 
-### Key Architectural Adaptations (vs. Initial Spec)
-1. **Typography Composition Law (`FRONTEND.md`)**: Raw `<h2>` and `<p>` tags with custom font sizes were adapted to design system typography atoms (`<Heading level="h2">`, `<Text variant="body-lg">`, and `<Text variant="micro">`).
-2. **3-Tier Design Tokens (`tokens.css`)**: Raw `rgba()` values and unsupported CSS rotation angles were replaced by semantic primitive and composite gradient tokens (`--color-sky-alpha-25`, `--color-aqua-alpha-25`, `--color-white-alpha-25`, and `--gradient-split-radial`).
-3. **Button Component Interface**: Adapted external `@/components/ui/Button` to the project's atomic Button (`@/components/atoms/button/Button`), utilizing `leftIcon={<UserIcon />}` and `rightIcon={<ArrowRightIcon />}` with `variant="primary"` and `variant="secondary"`.
-4. **Icons Atom (`src/components/atoms/icons/index.tsx`)**: Registered `Check` from `lucide-react` as `CheckIcon`.
-5. **Next.js Image Contract**: Added `position: relative` to `.photoTile` to ensure `<Image fill>` scales without layout collapse.
+### Key Architectural Adaptations
+1. **Single Responsive WebP Image**: Replaced ad-hoc 6-tile grid with a single, high-fidelity WebP collage asset (`/images/split-content/community-collage.webp`) for superior performance, simpler DOM structure, and clean responsive scaling.
+2. **Typography Composition Law (`FRONTEND.md`)**: Composed with design system typography atoms (`<Heading level="h2">`, `<Text variant="body-lg">`, and `<Text variant="micro">`).
+3. **3-Tier Design Tokens (`tokens.css`)**: Tokenized semantic radial gradient `--gradient-split-radial` using primitives `--color-sky-alpha-25`, `--color-aqua-alpha-25`, and `--color-white-alpha-25`.
+4. **Button Component Interface**: Atomic Button (`@/components/atoms/button/Button`), utilizing `leftIcon={<UserIcon />}` and `rightIcon={<ArrowRightIcon />}` with `variant="primary"` and `variant="secondary"`.
+5. **Icons Atom (`src/components/atoms/icons/index.tsx`)**: Registered `Check` from `lucide-react` as `CheckIcon`.
 
 ---
 
@@ -53,18 +53,16 @@ The **Split Content + Image** component is a hero/intro-style editorial organism
     </div>
 
     <div className={styles.imageColumn}>
-      <div className={styles.photoGrid}>
-        {photos.slice(0, 6).map((photo, i) => (
-          <div className={styles.photoTile} key={`${photo.src}-${i}`}>
-            <Image
-              src={photo.src}
-              alt={photo.alt}
-              fill
-              sizes="(max-width: 767px) 33vw, 16vw"
-              className={styles.photoImage}
-            />
-          </div>
-        ))}
+      <div className={styles.imageWrapper}>
+        <Image
+          src={image.src}
+          alt={image.alt}
+          width={image.width ?? 933}
+          height={image.height ?? 1024}
+          sizes="(max-width: 767px) 100vw, 50vw"
+          className={styles.image}
+          priority={false}
+        />
       </div>
     </div>
   </div>
@@ -134,7 +132,7 @@ The **Split Content + Image** component is a hero/intro-style editorial organism
 
 @media (width < 768px) {
   .contentColumn {
-    order: 2; /* Mobile: content sits below image collage */
+    order: 2; /* Mobile: content sits below image */
   }
 }
 
@@ -170,6 +168,9 @@ The **Split Content + Image** component is a hero/intro-style editorial organism
 .imageColumn {
   position: relative;
   width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 @media (width < 768px) {
@@ -178,27 +179,20 @@ The **Split Content + Image** component is a hero/intro-style editorial organism
   }
 }
 
-.photoGrid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-md);
-}
-
-/* Stagger outer columns (1 and 3) downward */
-.photoGrid > *:nth-child(3n + 1),
-.photoGrid > *:nth-child(3n + 3) {
-  transform: translateY(0.75rem); /* 12px */
-}
-
-.photoTile {
+.imageWrapper {
   position: relative;
-  border-radius: var(--radius-lg); /* 12px */
+  width: 100%;
+  max-width: 34rem;
+  border-radius: var(--radius-xl);
   overflow: hidden;
-  aspect-ratio: 3 / 4;
 }
 
-.photoImage {
+.image {
+  width: 100%;
+  height: auto;
+  display: block;
   object-fit: cover;
+  border-radius: var(--radius-xl);
 }
 ```
 
@@ -207,9 +201,11 @@ The **Split Content + Image** component is a hero/intro-style editorial organism
 ## 4. Component TypeScript API
 
 ```ts
-export interface PhotoTile {
+export interface SplitContentImageMedia {
   src: string;
   alt: string;
+  width?: number;
+  height?: number;
 }
 
 export interface SplitContentImageCta {
@@ -226,7 +222,7 @@ export interface SplitContentImageProps {
   primaryCta: SplitContentImageCta;
   secondaryCta: SplitContentImageCta;
   eligibilityNote?: string;
-  photos: PhotoTile[];
+  image?: SplitContentImageMedia;
   className?: string;
 }
 ```
@@ -241,8 +237,7 @@ export interface SplitContentImageProps {
 | Column Gap | `6.25rem` (100px) | `3.125rem` (50px) |
 | Layout Order | Content (Left), Image (Right) | Image (`order: 1`), Content (`order: 2`) |
 | Grid Columns | 2 columns (`1fr 1fr`) | 1 column (`1fr`) |
-| Photo Collage Grid | 3 cols × 2 rows (staggered) | 3 cols × 2 rows (staggered, scaled) |
-| Photo Tile Aspect Ratio | `3 / 4` | `3 / 4` |
+| Visual Media | Single WebP collage (Max 34rem) | Single WebP collage (Full width) |
 
 ---
 
@@ -250,6 +245,5 @@ export interface SplitContentImageProps {
 
 - **Semantic Landmark & Headings**: Section rendered with `aria-labelledby={headingId}` linked directly to `<Heading>`. Real heading level defaults to `h2` and is configurable via `headingLevel`.
 - **Keyboard & Links**: CTAs consume atomic `<Button>` with full keyboard navigation, accessible states, and external link security (`target="_blank"` with `rel="noopener noreferrer"`).
-- **Decorative Stagger Isolation**: Stagger offset uses GPU CSS `transform: translateY(12px)` which preserves logical DOM tab and reading order.
-- **Alt Text Integrity**: Every tile requires non-empty alt text unless verified as purely atmospheric (`alt=""`).
+- **Alt Text Integrity**: Meaningful alt text descriptive of community diversity is provided by default.
 - **Contrast Ratios**: Verified WCAG 2.2 AA compliant against the lightest gradient surface (minimum 4.5:1 for body copy and 3:1 for large text).

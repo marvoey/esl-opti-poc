@@ -6,9 +6,11 @@ import { Button } from "@/components/atoms/button/Button";
 import { UserIcon, ArrowRightIcon, CheckIcon } from "@/components/atoms/icons";
 import styles from "./SplitContentImage.module.css";
 
-export interface PhotoTile {
+export interface SplitContentImageMedia {
   src: string;
   alt: string;
+  width?: number;
+  height?: number;
 }
 
 export interface SplitContentImageCta {
@@ -25,15 +27,15 @@ export interface SplitContentImageProps {
   primaryCta: SplitContentImageCta;
   secondaryCta: SplitContentImageCta;
   eligibilityNote?: string;
-  photos: PhotoTile[];
+  image?: SplitContentImageMedia;
   className?: string;
 }
 
 /**
  * SplitContentImage Organism
  * A full-width section with a soft radial-gradient background, split into two columns:
- * text/CTA content on the left, a 3x2 staggered photo collage on the right.
- * Mobile layout flips the visual order (image on top, content below) and retains the 3x2 grid.
+ * text/CTA content on the left, a single optimized portrait collage image on the right.
+ * Mobile layout flips the visual order (image on top, content below).
  */
 export function SplitContentImage({
   id,
@@ -43,7 +45,12 @@ export function SplitContentImage({
   primaryCta,
   secondaryCta,
   eligibilityNote,
-  photos,
+  image = {
+    src: "/images/split-content/community-collage.webp",
+    alt: "Diverse ESL members and families representing the community",
+    width: 933,
+    height: 1024,
+  },
   className = "",
 }: SplitContentImageProps) {
   const autoId = useId();
@@ -80,7 +87,7 @@ export function SplitContentImage({
           <Text
             as="p"
             variant="body-lg"
-            color="secondary"
+            color="primary"
             className={styles.description}
           >
             {description}
@@ -120,24 +127,19 @@ export function SplitContentImage({
         </div>
 
         <div className={styles.imageColumn}>
-          <div className={styles.photoGrid}>
-            {photos.slice(0, 6).map((photo, index) => (
-              <div
-                key={`${photo.src}-${index}`}
-                className={styles.photoTile}
-              >
-                <Image
-                  src={photo.src}
-                  alt={photo.alt}
-                  fill
-                  sizes="(max-width: 767px) 33vw, 16vw"
-                  className={styles.photoImage}
-                />
-              </div>
-            ))}
+          <div className={styles.imageWrapper}>
+            <Image
+              src={image.src}
+              alt={image.alt}
+              width={image.width ?? 933}
+              height={image.height ?? 1024}
+              className={styles.image}
+              unoptimized
+            />
           </div>
         </div>
       </div>
     </section>
   );
 }
+

@@ -1,17 +1,10 @@
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import React from "react";
-import { SplitContentImage, type SplitContentImageProps } from "./SplitContentImage";
-
-const MOCK_PHOTOS = [
-  { src: "/images/photo1.jpg", alt: "Community member smiling outdoors" },
-  { src: "/images/photo2.jpg", alt: "Member consulting on mobile phone" },
-  { src: "/images/photo3.jpg", alt: "Family reviewing financial documents" },
-  { src: "/images/photo4.jpg", alt: "Small business owner at their storefront" },
-  { src: "/images/photo5.jpg", alt: "Student preparing college budget" },
-  { src: "/images/photo6.jpg", alt: "Senior couple enjoying retirement" },
-  { src: "/images/photo7.jpg", alt: "Extra photo should be truncated" },
-];
+import {
+  SplitContentImage,
+  type SplitContentImageProps,
+} from "./SplitContentImage";
 
 const BASE_PROPS: SplitContentImageProps = {
   title: "Let's figure out what's next, together.",
@@ -26,12 +19,19 @@ const BASE_PROPS: SplitContentImageProps = {
     href: "/contact",
   },
   eligibilityNote: "Open to anyone who lives, works, or worships in our community.",
-  photos: MOCK_PHOTOS,
+  image: {
+    src: "/images/split-content/community-collage.webp",
+    alt: "Diverse ESL members and families representing the community",
+    width: 933,
+    height: 1024,
+  },
 };
 
 describe("SplitContentImage Organism", () => {
   it("renders heading, description, and accessible section labelledby", () => {
-    const { container } = render(<SplitContentImage {...BASE_PROPS} id="intro-split" />);
+    const { container } = render(
+      <SplitContentImage {...BASE_PROPS} id="intro-split" />
+    );
 
     const section = container.querySelector("section");
     expect(section).toBeDefined();
@@ -57,7 +57,9 @@ describe("SplitContentImage Organism", () => {
     const primaryLink = screen.getByRole("link", { name: /become a member/i });
     expect(primaryLink.getAttribute("href")).toBe("/join");
 
-    const secondaryLink = screen.getByRole("link", { name: /talk to someone first/i });
+    const secondaryLink = screen.getByRole("link", {
+      name: /talk to someone first/i,
+    });
     expect(secondaryLink.getAttribute("href")).toBe("/contact");
   });
 
@@ -65,8 +67,16 @@ describe("SplitContentImage Organism", () => {
     render(
       <SplitContentImage
         {...BASE_PROPS}
-        primaryCta={{ label: "External Portal", href: "https://example.com", external: true }}
-        secondaryCta={{ label: "External Docs", href: "https://docs.example.com", external: true }}
+        primaryCta={{
+          label: "External Portal",
+          href: "https://example.com",
+          external: true,
+        }}
+        secondaryCta={{
+          label: "External Docs",
+          href: "https://docs.example.com",
+          external: true,
+        }}
       />
     );
 
@@ -79,25 +89,33 @@ describe("SplitContentImage Organism", () => {
     expect(secondaryLink.getAttribute("rel")).toBe("noopener noreferrer");
   });
 
-  it("renders eligibility note when provided and omits it when undefined", () => {
-    const { rerender } = render(<SplitContentImage {...BASE_PROPS} />);
+  it("renders eligibility note with check icon when provided and omits it when undefined", () => {
+    const { container, rerender } = render(<SplitContentImage {...BASE_PROPS} />);
     expect(
-      screen.getByText("Open to anyone who lives, works, or worships in our community.")
+      screen.getByText(
+        "Open to anyone who lives, works, or worships in our community."
+      )
     ).toBeDefined();
+    const icon = container.querySelector(".lucide-check");
+    expect(icon).toBeDefined();
+    expect(icon).not.toBeNull();
 
     rerender(<SplitContentImage {...BASE_PROPS} eligibilityNote={undefined} />);
     expect(
-      screen.queryByText("Open to anyone who lives, works, or worships in our community.")
+      screen.queryByText(
+        "Open to anyone who lives, works, or worships in our community."
+      )
     ).toBeNull();
   });
 
-  it("renders exactly 6 photos even if more are supplied", () => {
+  it("renders single collage image with correct attributes", () => {
     render(<SplitContentImage {...BASE_PROPS} />);
 
-    const images = screen.getAllByRole("img");
-    expect(images.length).toBe(6);
-    expect(images[0].getAttribute("alt")).toBe(MOCK_PHOTOS[0].alt);
-    expect(images[5].getAttribute("alt")).toBe(MOCK_PHOTOS[5].alt);
+    const image = screen.getByRole("img", {
+      name: "Diverse ESL members and families representing the community",
+    });
+    expect(image).toBeDefined();
+    expect(image.getAttribute("src")).toContain("community-collage.webp");
   });
 
   it("supports custom heading levels", () => {

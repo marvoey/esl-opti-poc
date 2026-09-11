@@ -42,12 +42,14 @@
 }
 
 .title {
-  margin: 0 0 var(--space-md);
+  margin: 0;
 }
 
 .description {
-  margin: 0 0 var(--space-xl);
+  margin-block: 1.5rem; /* 24px */
+  margin-inline: 0;
   max-width: 28.75rem; /* ~460px */
+  color: var(--color-text-primary);
 }
 
 .buttonGroup {
@@ -73,6 +75,9 @@
 .imageColumn {
   position: relative;
   width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 @media (width < 768px) {
@@ -81,25 +86,18 @@
   }
 }
 
-.photoGrid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-md);
-}
-
-/* Stagger outer columns (1 and 3) downward */
-.photoGrid > *:nth-child(3n + 1),
-.photoGrid > *:nth-child(3n + 3) {
-  transform: translateY(0.75rem); /* 12px */
-}
-
-.photoTile {
+.imageWrapper {
   position: relative;
-  border-radius: var(--radius-lg); /* 12px */
+  width: 100%;
+  max-width: 34rem;
+  border-radius: var(--radius-xl);
   overflow: hidden;
-  aspect-ratio: 3 / 4;
 }
 
-.photoImage {
+.image {
+  width: 100%;
+  height: auto;
+  display: block;
   object-fit: cover;
+  border-radius: var(--radius-xl);
 }
