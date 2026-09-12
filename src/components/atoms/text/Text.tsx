@@ -18,6 +18,7 @@ export type TextVariant =
 export type TextColor =
   | "primary"
   | "secondary"
+  | "brand"
   | "muted"
   | "accent"
   | "vibrant"
@@ -59,6 +60,7 @@ const variantClassMap: Record<TextVariant, string> = {
 const colorClassMap: Record<TextColor, string> = {
   primary: styles.colorPrimary,
   secondary: styles.colorSecondary,
+  brand: styles.colorBrand,
   muted: styles.colorMuted,
   accent: styles.colorAccent,
   vibrant: styles.colorVibrant,

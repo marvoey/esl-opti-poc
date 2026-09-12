@@ -125,6 +125,10 @@
   color: var(--color-text-secondary);
 }
 
+.colorBrand {
+  color: var(--color-eyebrow-brand, var(--color-text-primary));
+}
+
 .colorMuted {
   color: var(--color-text-muted);
 }

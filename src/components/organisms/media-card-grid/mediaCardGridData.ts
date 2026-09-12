@@ -38,3 +38,12 @@ export const DEFAULT_MEDIA_CARD_GRID: MediaCardGridProps = {
   title: "A few offers worth a look.",
   cards: DEFAULT_MEDIA_CARD_GRID_ITEMS,
 };
+
+export const DEFAULT_MEDIA_CARD_GRID_2_CARDS: MediaCardGridProps = {
+  eyebrow: "WHAT'S NEW RIGHT NOW",
+  title: "A few offers worth a look.",
+  cards: [
+    DEFAULT_MEDIA_CARD_GRID_ITEMS[0],
+    DEFAULT_MEDIA_CARD_GRID_ITEMS[2],
+  ],
+};
