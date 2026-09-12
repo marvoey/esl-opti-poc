@@ -19,6 +19,7 @@ import {
   DEFAULT_MEDIA_CARD_GRID,
   DEFAULT_MEDIA_CARD_GRID_2_CARDS,
 } from "@/components/organisms/media-card-grid";
+import { OfferCardRow } from "@/components/organisms/offer-card-row";
 import {
   SplitContentImage,
   DEFAULT_SPLIT_CONTENT,
@@ -222,6 +223,7 @@ export default async function Home() {
         <VideoStoryCardRow {...DEFAULT_VIDEO_STORY_CARD_ROW} />
         <MediaCardGrid {...DEFAULT_MEDIA_CARD_GRID} />
         <MediaCardGrid {...DEFAULT_MEDIA_CARD_GRID_2_CARDS} id="media-card-grid-2" />
+        <OfferCardRow id="offer-card-row" />
         <SideBySide {...homeMockData.sideBySidePromo} />
         {homeMockData.sideBySidePromoSecondary && (
           <SideBySide {...homeMockData.sideBySidePromoSecondary} />
