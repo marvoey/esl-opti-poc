@@ -24,6 +24,7 @@ import {
   SplitContentImage,
   DEFAULT_SPLIT_CONTENT,
 } from "@/components/organisms/split-content-image";
+import { SplitContentCards } from "@/components/organisms/split-content-cards";
 import { SideBySide } from "@/components/organisms/side-by-side";
 import { getHomePageQuery } from "@/application/queries/getHomePageQuery";
 import "@/infrastructure/cms/optimizely-registry";
@@ -224,6 +225,7 @@ export default async function Home() {
         <MediaCardGrid {...DEFAULT_MEDIA_CARD_GRID} />
         <MediaCardGrid {...DEFAULT_MEDIA_CARD_GRID_2_CARDS} id="media-card-grid-2" />
         <OfferCardRow id="offer-card-row" />
+        <SplitContentCards id="split-content-cards" />
         <SideBySide {...homeMockData.sideBySidePromo} />
         {homeMockData.sideBySidePromoSecondary && (
           <SideBySide {...homeMockData.sideBySidePromoSecondary} />

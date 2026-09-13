@@ -1,0 +1,186 @@
+.section {
+  width: 100%;
+  position: relative;
+  background-color: var(--color-bg-white, #ffffff);
+  background-image: url("/images/guidance/skyline-illustration.svg");
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  background-size: cover;
+  overflow: hidden;
+}
+
+.container {
+  max-width: var(--container-max-w, 1280px);
+  margin-inline: auto;
+  padding-inline: var(--container-gutter, 1.5rem);
+  padding-block: var(--space-4xl, 4rem);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  gap: var(--space-4xl, 4rem);
+  align-items: center;
+}
+
+.contentColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.eyebrow {
+  margin: 0 0 var(--space-md, 1rem);
+  display: block;
+  letter-spacing: var(--tracking-wider, 0.08em);
+  text-transform: uppercase;
+  font-weight: var(--font-weight-bold, 700);
+}
+
+.title {
+  margin: 0 0 var(--space-md, 1rem);
+  color: var(--color-text-primary, #012642);
+  font-size: clamp(2rem, 3.5vw, 2.75rem);
+  line-height: var(--line-height-tight, 1.15);
+  font-weight: var(--font-weight-bold, 700);
+  font-family: var(--font-family-display, var(--font-family-base));
+}
+
+.description {
+  margin: 0 0 var(--space-2xl, 2rem);
+  color: var(--color-text-secondary, #4a5568);
+  font-size: var(--font-size-body-lg, 1.125rem);
+  line-height: var(--line-height-relaxed, 1.6);
+  max-width: 540px;
+}
+
+.ctaWrapper {
+  margin: 0;
+}
+
+.cardsColumn {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md, 1rem);
+  width: 100%;
+}
+
+/* Frosted Glass Hero Card */
+.heroCard {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  padding: 1.75rem 2rem;
+  background-color: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(1, 38, 66, 0.08);
+  border-radius: var(--radius-xl, 16px);
+  box-shadow: 0 4px 20px rgba(1, 38, 66, 0.04);
+}
+
+.heroSubhead {
+  font-size: var(--font-size-micro, 0.75rem);
+  font-weight: var(--font-weight-bold, 700);
+  letter-spacing: var(--tracking-wider, 0.06em);
+  text-transform: uppercase;
+  color: var(--color-text-primary, #012642);
+  margin-bottom: var(--space-xs, 0.5rem);
+  display: block;
+}
+
+.heroStatGroup {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-xs, 0.5rem);
+  margin-bottom: var(--space-xs, 0.5rem);
+}
+
+.heroStatValue {
+  color: var(--color-accent, #00a3ad) !important;
+  font-size: clamp(2.5rem, 4vw, 3.25rem);
+  font-weight: var(--font-weight-bold, 700);
+  line-height: 1;
+  font-family: var(--font-family-display);
+}
+
+.heroStatUnit {
+  color: var(--color-text-primary, #012642);
+  font-size: 1.25rem;
+  font-weight: var(--font-weight-bold, 700);
+  line-height: 1;
+}
+
+.heroDescription {
+  margin: 0;
+  color: var(--color-text-secondary, #4a5568);
+  font-size: var(--font-size-body-sm, 0.875rem);
+  line-height: var(--line-height-normal, 1.5);
+}
+
+/* Dual Stat Cards Row */
+.dualStatsRow {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-md, 1rem);
+  width: 100%;
+}
+
+.statCard {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 1.5rem;
+  background-color: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(1, 38, 66, 0.08);
+  border-radius: var(--radius-xl, 16px);
+  box-shadow: 0 4px 20px rgba(1, 38, 66, 0.04);
+}
+
+.statValue {
+  color: var(--color-accent, #00a3ad) !important;
+  font-size: clamp(2rem, 3.5vw, 2.75rem);
+  font-weight: var(--font-weight-bold, 700);
+  line-height: 1;
+  margin-bottom: var(--space-xs, 0.5rem);
+  font-family: var(--font-family-display);
+}
+
+.statLabel {
+  margin: 0;
+  color: var(--color-text-secondary, #4a5568);
+  font-size: var(--font-size-body-sm, 0.875rem);
+  line-height: 1.4;
+}
+
+/* Responsive Media Queries */
+@media (max-width: 1023px) {
+  .container {
+    grid-template-columns: 1fr;
+    gap: var(--space-3xl, 3rem);
+    padding-block: var(--space-3xl, 3rem);
+  }
+}
+
+@media (max-width: 767px) {
+  .container {
+    gap: var(--space-2xl, 2rem);
+    padding-block: var(--space-2xl, 2rem);
+  }
+
+  .heroCard {
+    padding: 1.25rem 1.5rem;
+  }
+
+  .statCard {
+    padding: 1.25rem;
+  }
+}
+
+@media (max-width: 479px) {
+  .dualStatsRow {
+    grid-template-columns: 1fr;
+  }
+}

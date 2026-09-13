@@ -1,0 +1,140 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 450" fill="none" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+  <defs>
+    <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00A3AD" stop-opacity="0.12" />
+      <stop offset="50%" stop-color="#012642" stop-opacity="0.08" />
+      <stop offset="100%" stop-color="#00A3AD" stop-opacity="0.14" />
+    </linearGradient>
+  </defs>
+
+  <g stroke="url(#lineGrad)" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Ground / Promenade baseline -->
+    <path d="M0 430 L1440 430" stroke-width="1.5" stroke-opacity="0.2" />
+    <path d="M0 438 L1440 438" stroke-width="0.75" stroke-opacity="0.1" />
+
+    <!-- Far Background Buildings Silhouette -->
+    <!-- Mid-rise building left -->
+    <rect x="70" y="110" width="160" height="320" rx="3" />
+    <line x1="90" y1="140" x2="110" y2="140" /><line x1="130" y1="140" x2="150" y2="140" /><line x1="170" y1="140" x2="190" y2="140" /><line x1="210" y1="140" x2="210" y2="140" />
+    <line x1="90" y1="170" x2="110" y2="170" /><line x1="130" y1="170" x2="150" y2="170" /><line x1="170" y1="170" x2="190" y2="170" />
+    <line x1="90" y1="200" x2="110" y2="200" /><line x1="130" y1="200" x2="150" y2="200" /><line x1="170" y1="200" x2="190" y2="200" />
+    <line x1="90" y1="230" x2="110" y2="230" /><line x1="130" y1="230" x2="150" y2="230" /><line x1="170" y1="230" x2="190" y2="230" />
+    <line x1="90" y1="260" x2="110" y2="260" /><line x1="130" y1="260" x2="150" y2="260" /><line x1="170" y1="260" x2="190" y2="260" />
+    <line x1="90" y1="290" x2="110" y2="290" /><line x1="130" y1="290" x2="150" y2="290" /><line x1="170" y1="290" x2="190" y2="290" />
+    <line x1="90" y1="320" x2="110" y2="320" /><line x1="130" y1="320" x2="150" y2="320" /><line x1="170" y1="320" x2="190" y2="320" />
+    <!-- Clock / spire top -->
+    <path d="M130 110 L150 70 L170 110" />
+    <line x1="150" y1="70" x2="150" y2="40" />
+
+    <!-- Rochester Times Square Building with Wings of Progress (Center Left) -->
+    <rect x="360" y="90" width="110" height="340" />
+    <!-- Spires / Wings -->
+    <path d="M380 90 L395 30 L405 90" />
+    <path d="M425 90 L435 30 L450 90" />
+    <path d="M365 75 L380 90" />
+    <path d="M465 75 L450 90" />
+    <line x1="380" y1="120" x2="450" y2="120" />
+    <line x1="380" y1="150" x2="450" y2="150" />
+    <line x1="380" y1="180" x2="450" y2="180" />
+    <line x1="380" y1="210" x2="450" y2="210" />
+    <line x1="380" y1="240" x2="450" y2="240" />
+    <line x1="380" y1="270" x2="450" y2="270" />
+
+    <!-- Center Arched Bridge (Broad St Aqueduct / River Bridge) -->
+    <path d="M480 370 Q 560 310 640 370 Q 720 310 800 370 Q 880 310 960 370" />
+    <path d="M470 385 Q 560 325 650 385 Q 720 325 790 385 Q 880 325 970 385" />
+    <line x1="560" y1="370" x2="560" y2="430" />
+    <line x1="720" y1="370" x2="720" y2="430" />
+    <line x1="880" y1="370" x2="880" y2="430" />
+
+    <!-- First Federal Building with round top (Right Center) -->
+    <rect x="730" y="115" width="125" height="315" />
+    <!-- Circular restaurant dome on top -->
+    <ellipse cx="792" cy="115" rx="72" ry="16" />
+    <ellipse cx="792" cy="102" rx="55" ry="12" />
+    <line x1="792" y1="90" x2="792" y2="60" />
+    <!-- Facet vertical lines -->
+    <line x1="755" y1="131" x2="755" y2="430" />
+    <line x1="780" y1="131" x2="780" y2="430" />
+    <line x1="805" y1="131" x2="805" y2="430" />
+    <line x1="830" y1="131" x2="830" y2="430" />
+
+    <!-- Xerox Tower / Office High-rise (Right) -->
+    <rect x="1100" y="80" width="130" height="350" />
+    <line x1="1120" y1="110" x2="1210" y2="110" />
+    <line x1="1120" y1="140" x2="1210" y2="140" />
+    <line x1="1120" y1="170" x2="1210" y2="170" />
+    <line x1="1120" y1="200" x2="1210" y2="200" />
+    <line x1="1120" y1="230" x2="1210" y2="230" />
+    <line x1="1120" y1="260" x2="1210" y2="260" />
+    <line x1="1120" y1="290" x2="1210" y2="290" />
+    <line x1="1120" y1="320" x2="1210" y2="320" />
+    <line x1="1120" y1="350" x2="1210" y2="350" />
+
+    <!-- Rochester City Flag & Mast (Far Right) -->
+    <line x1="1260" y1="30" x2="1260" y2="430" stroke-width="2" />
+    <!-- Waving Flag -->
+    <path d="M1260 40 C 1320 25, 1360 65, 1420 45 L 1420 165 C 1360 185, 1320 145, 1260 160 Z" />
+    <!-- Rochester 5-petal flower / lilac emblem -->
+    <circle cx="1340" cy="100" r="28" stroke-dasharray="3 3" />
+    <path d="M1340 80 L1340 120 M1320 100 L1360 100 M1326 86 L1354 114 M1326 114 L1354 86" />
+    <text x="1340" y="142" font-family="sans-serif" font-size="8" text-anchor="middle" fill="#00A3AD" fill-opacity="0.3" stroke="none">CITY OF ROCHESTER, N.Y.</text>
+
+    <!-- Foliage / Trees on Left and Right -->
+    <!-- Tree 1 Left -->
+    <path d="M35 430 Q 45 370 50 340 Q 20 330 20 290 Q 20 250 55 240 Q 70 210 110 220 Q 140 230 140 270 Q 155 300 130 330 Q 110 350 65 370 L 60 430" />
+    <!-- Street Lamp Post Left -->
+    <line x1="280" y1="280" x2="280" y2="430" />
+    <path d="M265 280 C 265 260, 295 260, 295 280 Z" />
+
+    <!-- Community Members (Human Outlines) -->
+    <!-- Person with backpack walking left -->
+    <g transform="translate(100, 250)">
+      <!-- Head -->
+      <circle cx="28" cy="20" r="10" />
+      <!-- Body & Backpack -->
+      <path d="M22 30 C 12 36, 10 55, 14 75 L 30 75 C 33 55, 33 36, 25 30" />
+      <path d="M12 40 C 4 44, 4 60, 10 68" />
+      <!-- Legs walking -->
+      <path d="M16 75 L 8 135 L 2 175" />
+      <path d="M26 75 L 42 120 L 56 175" />
+      <!-- Arm -->
+      <path d="M24 35 L 20 70 L 25 90" />
+    </g>
+
+    <!-- Parent with baby stroller (Center) -->
+    <g transform="translate(680, 290)">
+      <!-- Parent Head & Body -->
+      <circle cx="20" cy="18" r="9" />
+      <path d="M14 28 L 10 70 L 25 70 L 23 28 Z" />
+      <!-- Legs -->
+      <path d="M13 70 L 10 135" />
+      <path d="M22 70 L 28 135" />
+      <!-- Arms pushing stroller -->
+      <path d="M18 36 L 40 55 L 55 58" />
+      <!-- Stroller -->
+      <path d="M55 58 L 70 85 L 105 85 L 115 65 L 85 55 Z" />
+      <circle cx="75" cy="130" r="9" />
+      <circle cx="108" cy="130" r="9" />
+      <line x1="75" y1="130" x2="88" y2="90" />
+      <line x1="108" y1="130" x2="98" y2="90" />
+    </g>
+
+    <!-- Walking Figures (Right) -->
+    <g transform="translate(1180, 245)">
+      <!-- Person 1 -->
+      <circle cx="30" cy="20" r="10" />
+      <path d="M22 31 L 18 80 L 36 80 L 34 31 Z" />
+      <path d="M22 80 L 15 140 L 8 185" />
+      <path d="M32 80 L 45 135 L 58 185" />
+      <!-- Person 2 beside -->
+      <circle cx="65" cy="24" r="9" />
+      <path d="M58 34 L 54 82 L 72 82 L 70 34 Z" />
+      <path d="M58 82 L 54 185" />
+      <path d="M68 82 L 76 185" />
+      <!-- Shopping bag / briefcase -->
+      <rect x="80" y="80" width="16" height="22" rx="2" />
+      <path d="M84 80 C 84 72, 92 72, 92 80" />
+    </g>
+  </g>
+</svg>
