@@ -66,6 +66,7 @@
   --gradient-dark-navy: linear-gradient(135deg, var(--color-navy-950) 0%, var(--color-navy-800) 100%);
   --gradient-footer: var(--gradient-dark-navy);
   --gradient-split-radial: radial-gradient(69.11% 69.11% at 50.26% 14.87%, var(--color-sky-alpha-25) 0%, var(--color-aqua-alpha-25) 50%, var(--color-white-alpha-25) 100%);
+  --gradient-vertical-selector: radial-gradient(44.47% 44.21% at 54.11% 55.27%, var(--color-sky-300) 7.67%, var(--color-aqua-100) 50%, var(--color-white) 100%);
 
   /* Footer Layout Spacing */
   --space-footer-top: 4rem;         /* 64px */
@@ -170,6 +171,9 @@
   --color-card-placeholder-border: var(--color-navy-alpha-08);
   --color-card-placeholder-pattern: var(--color-navy-alpha-06);
 
+  /* Vertical Selector */
+  --color-vertical-selector-bg: var(--gradient-vertical-selector);
+
   /* Footer */
   --footer-bg: var(--gradient-footer);
   --footer-text-primary: var(--color-text-inverted);         /* #FFFFFF */
@@ -180,6 +184,7 @@
   /* Shadows (Figma Elevation Tokens) */
   --shadow-elevation-sm: 0 1px 2px 0 var(--color-black-alpha-10);
   --shadow-elevation-md: 0 4px 12px 0 var(--color-black-alpha-10);
+  --shadow-card: 0 4px 20px 0 rgba(1, 38, 66, 0.06);
   --shadow-card-hover: 0 10px 14px 0 var(--color-sky-alpha-50);
   --shadow-card-hover-intense: 0 14px 20px 0 var(--color-sky-alpha-65);
   --shadow-chip-hover: 0 2px 8px var(--color-turquoise-alpha-25);

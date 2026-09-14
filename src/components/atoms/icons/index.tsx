@@ -11,6 +11,13 @@ import {
   Car,
   Check,
   CircleCheck as LucideCircleCheck,
+  Sprout,
+  Sparkles,
+  ShieldCheck,
+  Home,
+  Baby,
+  GraduationCap,
+  Sailboat,
   type LucideProps,
   type LucideIcon,
 } from "lucide-react";
@@ -26,7 +33,14 @@ export type IconName =
   | "close"
   | "car"
   | "check"
-  | "circle-check";
+  | "circle-check"
+  | "sprout"
+  | "sparkles"
+  | "shield-check"
+  | "home"
+  | "baby"
+  | "graduation-cap"
+  | "sailboat";
 
 export interface IconProps extends Omit<LucideProps, "ref"> {
   size?: number | string;
@@ -46,6 +60,13 @@ const iconRegistry: Record<IconName, LucideIcon> = {
   car: Car,
   check: Check,
   "circle-check": LucideCircleCheck,
+  sprout: Sprout,
+  sparkles: Sparkles,
+  "shield-check": ShieldCheck,
+  home: Home,
+  baby: Baby,
+  "graduation-cap": GraduationCap,
+  sailboat: Sailboat,
 };
 
 /**
@@ -106,5 +127,33 @@ export function CheckIcon(props: IconProps) {
 
 export function CircleCheckIcon(props: IconProps) {
   return <LucideCircleCheck size={props.size ?? 16} aria-hidden={true} {...props} />;
+}
+
+export function SproutIcon(props: IconProps) {
+  return <Sprout size={props.size ?? 20} aria-hidden={true} {...props} />;
+}
+
+export function SparklesIcon(props: IconProps) {
+  return <Sparkles size={props.size ?? 20} aria-hidden={true} {...props} />;
+}
+
+export function ShieldCheckIcon(props: IconProps) {
+  return <ShieldCheck size={props.size ?? 20} aria-hidden={true} {...props} />;
+}
+
+export function HomeIcon(props: IconProps) {
+  return <Home size={props.size ?? 20} aria-hidden={true} {...props} />;
+}
+
+export function BabyIcon(props: IconProps) {
+  return <Baby size={props.size ?? 20} aria-hidden={true} {...props} />;
+}
+
+export function GraduationCapIcon(props: IconProps) {
+  return <GraduationCap size={props.size ?? 20} aria-hidden={true} {...props} />;
+}
+
+export function SailboatIcon(props: IconProps) {
+  return <Sailboat size={props.size ?? 20} aria-hidden={true} {...props} />;
 }
 
