@@ -50,6 +50,7 @@
   --color-surface-inverse: var(--color-navy-900);
   --color-surface-muted: var(--color-slate-200);
   --color-overlay-backdrop: rgba(0, 57, 93, 0.85);
+  --color-overlay-white: rgba(255, 255, 255, 0.85);
   --color-bg-dark: var(--color-navy-900);
 
   --color-border: var(--color-teal-alpha-20);

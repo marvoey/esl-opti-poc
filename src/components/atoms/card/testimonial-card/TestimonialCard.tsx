@@ -226,15 +226,20 @@ export function TestimonialCard({
             className={styles.lightboxContainer}
             onClick={(e) => e.stopPropagation()}
           >
-            <button
-              ref={closeButtonRef}
-              type="button"
-              className={styles.closeButton}
-              onClick={closeLightbox}
-              aria-label="Close video player"
-            >
-              <CloseIcon size={24} />
-            </button>
+            <div className={styles.lightboxHeader}>
+              <h3 className={styles.lightboxTitle}>
+                {videoTitle || title || "Member story"}
+              </h3>
+              <button
+                ref={closeButtonRef}
+                type="button"
+                className={styles.closeButton}
+                onClick={closeLightbox}
+                aria-label="Close video player"
+              >
+                <CloseIcon size={16} />
+              </button>
+            </div>
 
             <div className={styles.videoWrapper}>
               {videoSource.type === "local" ? (
