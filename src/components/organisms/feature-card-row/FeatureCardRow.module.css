@@ -1,0 +1,82 @@
+.section {
+  width: 100%;
+  background-color: #F7F9FB;
+}
+
+.container {
+  padding-block: 4rem; /* 64px desktop */
+  max-width: var(--container-max-w, 1280px);
+  margin: 0 auto;
+  padding-inline: var(--container-gutter, 2.5rem);
+}
+
+@media (width < 768px) {
+  .container {
+    padding-block: 2.5rem; /* 40px mobile */
+  }
+}
+
+.header {
+  margin-bottom: 2.5rem; /* 40px */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-xs, 8px);
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--color-accent, #00A3A3);
+}
+
+.sectionTitle {
+  margin: 0;
+  color: var(--color-primary, #00395d);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem; /* 32px mobile */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media (width >= 768px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem; /* 40px desktop */
+  }
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.iconBadge {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full, 9999px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem; /* 16px */
+  flex-shrink: 0;
+  padding: 0; /* Override any badge padding */
+  background-color: var(--color-grey-95, #ECFBF8) !important;
+  color: var(--color-primary, #00395D) !important;
+  box-shadow: none !important;
+}
+
+.cardTitle {
+  margin: 0 0 0.5rem; /* 8px */
+  color: var(--color-primary, #00395d);
+}
+
+.cardDescription {
+  margin: 0;
+  color: var(--color-primary, #00395D);
+}

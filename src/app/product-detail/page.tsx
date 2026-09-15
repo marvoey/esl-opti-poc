@@ -4,6 +4,8 @@ import { HeroCarousel } from "@/components/organisms/hero-carousel/HeroCarousel"
 import { PRODUCT_DETAIL_HERO_SLIDES } from "@/components/organisms/hero-carousel/heroSlides";
 import { SnipeCta } from "@/components/organisms/snipe-cta/SnipeCta";
 import { KeyFactsRow } from "@/components/organisms/key-facts-row";
+import { FeatureCardRow } from "@/components/organisms/feature-card-row";
+import { DEFAULT_FEATURE_CARD_ROW_PROPS } from "@/components/organisms/feature-card-row/featureCardRowData";
 import styles from "./product-detail.module.css";
 
 export const metadata: Metadata = {
@@ -26,6 +28,7 @@ export default function ProductDetailPage() {
         title="Details at a glance"
         subtitle="Applies to both checking accounts"
       />
+      <FeatureCardRow {...DEFAULT_FEATURE_CARD_ROW_PROPS} />
     </main>
   );
 }

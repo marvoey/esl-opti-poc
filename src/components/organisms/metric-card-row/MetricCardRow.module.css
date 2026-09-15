@@ -52,8 +52,10 @@
   margin: 0;
 }
 
-.title {
-  color: var(--color-text-inverted); /* White */
+.title,
+.headerContent .title,
+.headerRow h2 {
+  color: var(--color-text-inverted, #ffffff) !important;
   margin: 0;
 }
 

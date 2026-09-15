@@ -34,9 +34,11 @@
   margin: 0 0 1rem;
 }
 
-.title {
+.title,
+.headerRow .title,
+.headerRow h2 {
   margin: 0;
-  color: var(--color-text-inverted, #fff);
+  color: var(--color-text-inverted, #ffffff) !important;
 }
 
 .carouselWrapper {

@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import { Badge } from "@/components/atoms/badge/Badge";
+import { Badge, type BadgeVariant } from "@/components/atoms/badge/Badge";
 import { ArrowRightIcon } from "@/components/atoms/icons";
 import styles from "./MediaCard.module.css";
 
@@ -9,6 +9,7 @@ export interface MediaCardProps {
   imageSrc: string;
   imageAlt?: string;
   badge?: string;
+  badgeVariant?: BadgeVariant;
   title: string;
   description: string;
   ctaText?: string;
@@ -31,6 +32,7 @@ export function MediaCard({
   imageSrc,
   imageAlt = "Promotional offer",
   badge = "Limited Time",
+  badgeVariant = "dark",
   title,
   description,
   ctaText = "Learn more",
@@ -61,7 +63,7 @@ export function MediaCard({
       <div className={styles.content}>
         {badge && (
           <div className={styles.badge}>
-            <Badge variant="aqua">{badge}</Badge>
+            <Badge variant={badgeVariant}>{badge}</Badge>
           </div>
         )}
 

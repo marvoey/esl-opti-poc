@@ -25,3 +25,12 @@
   border-color: var(--color-badge-neutral-border);
   color: var(--color-badge-neutral-text);
 }
+
+/* Variant 3: Dark Taxonomy (box-shadow inset + Turquoise text) */
+.dark,
+.tealOutline {
+  background-color: transparent;
+  border-color: transparent;
+  box-shadow: 0px 0px 0px 0.91px #00A3A366 inset;
+  color: #68E0CC;
+}

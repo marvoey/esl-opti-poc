@@ -18,6 +18,7 @@ import {
   Baby,
   GraduationCap,
   Sailboat,
+  CreditCard,
   type LucideProps,
   type LucideIcon,
 } from "lucide-react";
@@ -40,7 +41,8 @@ export type IconName =
   | "home"
   | "baby"
   | "graduation-cap"
-  | "sailboat";
+  | "sailboat"
+  | "credit-card";
 
 export interface IconProps extends Omit<LucideProps, "ref"> {
   size?: number | string;
@@ -67,6 +69,7 @@ const iconRegistry: Record<IconName, LucideIcon> = {
   baby: Baby,
   "graduation-cap": GraduationCap,
   sailboat: Sailboat,
+  "credit-card": CreditCard,
 };
 
 /**
@@ -155,5 +158,9 @@ export function GraduationCapIcon(props: IconProps) {
 
 export function SailboatIcon(props: IconProps) {
   return <Sailboat size={props.size ?? 20} aria-hidden={true} {...props} />;
+}
+
+export function CreditCardIcon(props: IconProps) {
+  return <CreditCard size={props.size ?? 20} aria-hidden={true} {...props} />;
 }
 

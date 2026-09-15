@@ -2,7 +2,7 @@ import React from "react";
 import { Text } from "../text/Text";
 import styles from "./Badge.module.css";
 
-export type BadgeVariant = "aqua" | "neutral";
+export type BadgeVariant = "aqua" | "neutral" | "dark" | "teal-outline";
 
 export interface BadgeProps
   extends Omit<React.HTMLAttributes<HTMLSpanElement>, "color"> {
@@ -22,7 +22,10 @@ export function Badge({
   className = "",
   ...rest
 }: BadgeProps) {
-  const variantClass = styles[variant] || styles.aqua;
+  const variantClass =
+    variant === "teal-outline"
+      ? styles.tealOutline
+      : styles[variant] || styles.aqua;
   const classes = [styles.badge, variantClass, className]
     .filter(Boolean)
     .join(" ");
