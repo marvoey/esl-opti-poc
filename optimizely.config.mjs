@@ -1,7 +1,10 @@
 import { buildConfig } from '@optimizely/cms-sdk';
 
 export default buildConfig({
-  components: ['./src/components/cms/**/*.tsx'],
+  components: [
+    './src/components/cms/**/*.tsx',
+    '!./src/components/cms/**/*.test.tsx',
+  ],
   propertyGroups: [
     {
       key: 'heroSlider',

@@ -26,8 +26,6 @@ import {
 } from "@/components/organisms/split-content-image";
 import { SplitContentCards } from "@/components/organisms/split-content-cards";
 import { VerticalSelectorFeatureCard } from "@/components/organisms/vertical-selector-feature-card";
-import { SideBySide } from "@/components/organisms/side-by-side";
-import { getHomePageQuery } from "@/application/queries/getHomePageQuery";
 import "@/infrastructure/cms/optimizely-registry";
 
 const ESL_HOME_PAGE_EXPERIENCE_QUERY = `
@@ -132,6 +130,37 @@ const ESL_HOME_PAGE_EXPERIENCE_QUERY = `
                 ... on EslTabbedSolutions {
                   showExploreSolutions
                   heading
+                }
+                ... on EslSideBySide {
+                  eyebrow
+                  headline
+                  body {
+                    html
+                    json
+                  }
+                  image {
+                    key
+                    url {
+                      default
+                      hierarchical
+                      base
+                      internal
+                    }
+                  }
+                  imageAlt
+                  cta {
+                    text
+                    title
+                    target
+                    url {
+                      default
+                      hierarchical
+                      base
+                      internal
+                    }
+                  }
+                  imagePosition
+                  colorVariant
                 }
               }
             }
@@ -380,11 +409,7 @@ function selectActiveHomeContent(
 }
 
 export default async function Home() {
-  const [content, homeMockData] = await Promise.all([
-    resolveHomeContent(),
-    getHomePageQuery(),
-  ]);
-
+  const content = await resolveHomeContent();
   const activeContent = selectActiveHomeContent(content);
 
   if (activeContent) {
@@ -399,10 +424,6 @@ export default async function Home() {
         <MediaCardGrid {...DEFAULT_MEDIA_CARD_GRID_2_CARDS} id="media-card-grid-2" />
         <OfferCardRow id="offer-card-row" />
         <SplitContentCards id="split-content-cards" />
-        <SideBySide {...homeMockData.sideBySidePromo} />
-        {homeMockData.sideBySidePromoSecondary && (
-          <SideBySide {...homeMockData.sideBySidePromoSecondary} />
-        )}
         <SplitContentImage {...DEFAULT_SPLIT_CONTENT} />
       </main>
     );

@@ -93,7 +93,7 @@ export function SideBySide({
               {headline}
             </Heading>
             <Text
-              as="p"
+              as={typeof body === "string" ? "p" : "div"}
               variant="body"
               color={isDark ? "inverted-muted" : "secondary"}
               className={styles.body}
