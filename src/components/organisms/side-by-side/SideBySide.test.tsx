@@ -70,4 +70,26 @@ describe("SideBySide Organism", () => {
     const imageColumn = container.querySelector("article")?.lastElementChild;
     expect(imageColumn?.contains(image)).toBe(true);
   });
+
+  it("applies section and container classes properly when stacked directly or in wrappers", () => {
+    const { container } = render(
+      <div>
+        <div data-testid="wrapper-1">
+          <SideBySide {...BASE_PROPS} variant="dark" />
+        </div>
+        <div data-testid="wrapper-2">
+          <SideBySide {...BASE_PROPS} variant="light" />
+        </div>
+      </div>
+    );
+
+    const sections = container.querySelectorAll("section");
+    expect(sections.length).toBe(2);
+    sections.forEach((section) => {
+      expect(section.className).toMatch(/section/);
+      const innerContainer = section.querySelector("div");
+      expect(innerContainer?.className).toMatch(/container/);
+    });
+  });
 });
+

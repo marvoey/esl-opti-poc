@@ -7,10 +7,6 @@ import {
   DEFAULT_CIRCULAR_IMAGE_METRIC_ROW,
 } from "@/components/organisms/circular-image-metric-row";
 import {
-  MetricCardRow,
-  DEFAULT_METRIC_CARD_ROW,
-} from "@/components/organisms/metric-card-row";
-import {
   VideoStoryCardRow,
   DEFAULT_VIDEO_STORY_CARD_ROW,
 } from "@/components/organisms/video-story-card-row";
@@ -26,8 +22,6 @@ import {
 } from "@/components/organisms/split-content-image";
 import { SplitContentCards } from "@/components/organisms/split-content-cards";
 import { VerticalSelectorFeatureCard } from "@/components/organisms/vertical-selector-feature-card";
-import { SideBySide } from "@/components/organisms/side-by-side";
-import { getHomePageQuery } from "@/application/queries/getHomePageQuery";
 import "@/infrastructure/cms/optimizely-registry";
 
 const ESL_HOME_PAGE_EXPERIENCE_QUERY = `
@@ -132,6 +126,74 @@ const ESL_HOME_PAGE_EXPERIENCE_QUERY = `
                 ... on EslTabbedSolutions {
                   showExploreSolutions
                   heading
+                }
+                ... on EslSideBySide {
+                  eyebrow
+                  headline
+                  body {
+                    html
+                    json
+                  }
+                  image {
+                    key
+                    url {
+                      default
+                      hierarchical
+                      base
+                      internal
+                    }
+                  }
+                  imageAlt
+                  cta {
+                    text
+                    title
+                    target
+                    url {
+                      default
+                      hierarchical
+                      base
+                      internal
+                    }
+                  }
+                  imagePosition
+                  colorVariant
+                }
+                ... on EslMetricCardRow {
+                  eyebrow
+                  title
+                  description
+                  cta {
+                    text
+                    title
+                    target
+                    url {
+                      default
+                      hierarchical
+                      base
+                      internal
+                    }
+                  }
+                  cards {
+                    category
+                    categoryIcon
+                    rate
+                    rateUnit
+                    rateLabel
+                    title
+                    description
+                    cta {
+                      text
+                      title
+                      target
+                      url {
+                        default
+                        hierarchical
+                        base
+                        internal
+                      }
+                    }
+                    variant
+                  }
                 }
               }
             }
@@ -380,11 +442,7 @@ function selectActiveHomeContent(
 }
 
 export default async function Home() {
-  const [content, homeMockData] = await Promise.all([
-    resolveHomeContent(),
-    getHomePageQuery(),
-  ]);
-
+  const content = await resolveHomeContent();
   const activeContent = selectActiveHomeContent(content);
 
   if (activeContent) {
@@ -393,16 +451,11 @@ export default async function Home() {
         <OptimizelyComponent content={activeContent} />
         <VerticalSelectorFeatureCard id="solutions-selector" />
         <CircularImageMetricRow {...DEFAULT_CIRCULAR_IMAGE_METRIC_ROW} />
-        <MetricCardRow {...DEFAULT_METRIC_CARD_ROW} />
         <VideoStoryCardRow {...DEFAULT_VIDEO_STORY_CARD_ROW} />
         <MediaCardGrid {...DEFAULT_MEDIA_CARD_GRID} />
         <MediaCardGrid {...DEFAULT_MEDIA_CARD_GRID_2_CARDS} id="media-card-grid-2" />
         <OfferCardRow id="offer-card-row" />
         <SplitContentCards id="split-content-cards" />
-        <SideBySide {...homeMockData.sideBySidePromo} />
-        {homeMockData.sideBySidePromoSecondary && (
-          <SideBySide {...homeMockData.sideBySidePromoSecondary} />
-        )}
         <SplitContentImage {...DEFAULT_SPLIT_CONTENT} />
       </main>
     );

@@ -10,11 +10,15 @@
 }
 
 /* Maintain exactly 48px (3rem) gap between stacked SideBySide components */
-.section:has(+ .section) .container {
+.section:has(+ .section) .container,
+:has(.section):has(+ :has(.section)) .section .container,
+[data-component-type="EslSideBySide"]:has(+ [data-component-type="EslSideBySide"]) .container {
   padding-bottom: 3rem; /* 48px */
 }
 
-.section + .section .container {
+.section + .section .container,
+:has(.section) + :has(.section) .section .container,
+[data-component-type="EslSideBySide"] + [data-component-type="EslSideBySide"] .container {
   padding-top: 0;
 }
 

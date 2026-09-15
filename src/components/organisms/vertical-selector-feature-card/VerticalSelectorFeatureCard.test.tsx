@@ -46,7 +46,7 @@ describe("VerticalSelectorFeatureCard Organism", () => {
   });
 
   it("initially renders default active tab ('Just starting out') feature card content", () => {
-    render(<VerticalSelectorFeatureCard />);
+    render(<VerticalSelectorFeatureCard defaultActiveId="just-starting-out" />);
 
     const activeTab = screen.getByRole("tab", { name: /just starting out/i });
     expect(activeTab.getAttribute("aria-selected")).toBe("true");
@@ -96,7 +96,7 @@ describe("VerticalSelectorFeatureCard Organism", () => {
   });
 
   it("supports keyboard navigation with ArrowDown and ArrowUp", () => {
-    render(<VerticalSelectorFeatureCard />);
+    render(<VerticalSelectorFeatureCard defaultActiveId="just-starting-out" />);
 
     const tablist = screen.getByRole("tablist", {
       name: "Wherever you are, we’ll help you take the next step.",

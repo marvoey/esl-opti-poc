@@ -1,9 +1,32 @@
 import React from 'react';
 import { contentType, type ContentProps } from '@optimizely/cms-sdk';
-import { OptimizelyComposition } from '@optimizely/cms-sdk/react/server';
+import {
+  OptimizelyComposition,
+  getPreviewUtils,
+  type ComponentContainerProps,
+} from '@optimizely/cms-sdk/react/server';
 import EslHeroSlider, { EslHeroSliderContentType } from '@/components/cms/components/EslHeroSlider';
 import EslSnipeCta, { EslSnipeCtaContentType } from '@/components/cms/components/EslSnipeCta';
 import EslTabbedSolutions, { EslTabbedSolutionsContentType } from '@/components/cms/components/EslTabbedSolutions';
+
+function ExperienceComponentWrapper({ children, node, displaySettings }: ComponentContainerProps) {
+  const { pa } = getPreviewUtils(node);
+  const componentType = node.component?.__typename || node.type || '';
+  const childrenWithProps =
+    React.isValidElement<{ displaySettings?: Record<string, string | boolean> }>(children) && displaySettings
+      ? React.cloneElement(children, { displaySettings })
+      : children;
+
+  return (
+    <div
+      {...pa(node)}
+      data-component-type={componentType}
+      style={{ width: '100%', display: 'block' }}
+    >
+      {childrenWithProps}
+    </div>
+  );
+}
 
 // 1. The new Visual Builder Experience
 export const EslHomePageContentType = contentType({
@@ -14,6 +37,8 @@ export const EslHomePageContentType = contentType({
     'EslHeroSlider',
     'EslSnipeCta',
     'EslTabbedSolutions',
+    'EslSideBySide',
+    'EslMetricCardRow',
   ],
 });
 
@@ -40,7 +65,7 @@ export default function EslHomePage({ content }: Props) {
   if (nodes && nodes.length > 0) {
     return (
       <>
-        <OptimizelyComposition nodes={nodes} />
+        <OptimizelyComposition nodes={nodes} ComponentWrapper={ExperienceComponentWrapper} />
       </>
     );
   }

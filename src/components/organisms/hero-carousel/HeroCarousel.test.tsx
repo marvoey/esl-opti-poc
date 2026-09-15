@@ -5,10 +5,10 @@ import { HeroCarousel } from "./HeroCarousel";
 import { HERO_SLIDES } from "./heroSlides";
 
 describe("HeroCarousel Organism", () => {
-  it("renders 3 slides with custom h1 headings and p eyebrow tags", () => {
+  it("renders 3 slides with custom h2 headings and p eyebrow tags", () => {
     render(<HeroCarousel slides={HERO_SLIDES} />);
 
-    const headings = screen.getAllByRole("heading", { level: 1 });
+    const headings = screen.getAllByRole("heading", { level: 2 });
     expect(headings).toHaveLength(3);
     expect(headings[0].textContent).toContain("Move forward");
     expect(headings[0].textContent).toContain("with confidence.");

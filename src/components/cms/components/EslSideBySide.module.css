@@ -1,0 +1,23 @@
+@media (width >= 1024px) {
+  /* Force image to the right (text order 1, image order 2) */
+  .imageRight article > div:first-child {
+    order: 1;
+    border-radius: 1.5rem 0 0 1.5rem;
+  }
+
+  .imageRight article > div:last-child {
+    order: 2;
+    border-radius: 0 1.5rem 1.5rem 0;
+  }
+
+  /* Force image to the left (image order 1, text order 2) */
+  .imageLeft article > div:first-child {
+    order: 2;
+    border-radius: 0 1.5rem 1.5rem 0;
+  }
+
+  .imageLeft article > div:last-child {
+    order: 1;
+    border-radius: 1.5rem 0 0 1.5rem;
+  }
+}

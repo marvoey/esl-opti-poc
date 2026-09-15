@@ -6,6 +6,9 @@ import { EslHeroSlideContentType } from '@/components/cms/components/EslHeroSlid
 import { EslQuickLinkCardContentType } from '@/components/cms/components/EslQuickLinkCard';
 import EslSnipeCta, { EslSnipeCtaContentType } from '@/components/cms/components/EslSnipeCta';
 import EslTabbedSolutions, { EslTabbedSolutionsContentType } from '@/components/cms/components/EslTabbedSolutions';
+import EslSideBySide, { EslSideBySideContentType } from '@/components/cms/components/EslSideBySide';
+import EslMetricCardRow, { EslMetricCardRowContentType } from '@/components/cms/components/EslMetricCardRow';
+import { EslRatesCardContentType } from '@/components/cms/components/EslRatesCard';
 import { EslFooterNavColumnContentType } from '@/components/cms/components/EslFooterNavColumn';
 import { EslFooterContentType } from '@/components/cms/components/EslFooter';
 import EslSiteSettings, { EslSiteSettingsContentType } from '@/components/cms/pages/EslSiteSettings';
@@ -24,6 +27,9 @@ export function ensureOptimizelyRegistry() {
     EslQuickLinkCardContentType,
     EslSnipeCtaContentType,
     EslTabbedSolutionsContentType,
+    EslSideBySideContentType,
+    EslMetricCardRowContentType,
+    EslRatesCardContentType,
     EslFooterNavColumnContentType,
     EslFooterContentType,
     EslSiteSettingsContentType,
@@ -37,6 +43,8 @@ export function ensureOptimizelyRegistry() {
       EslHeroSlider,
       EslSnipeCta,
       EslTabbedSolutions,
+      EslSideBySide,
+      EslMetricCardRow,
       EslSiteSettings,
       EslStartPage,
     },
