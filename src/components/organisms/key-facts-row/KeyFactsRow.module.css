@@ -1,0 +1,85 @@
+.section {
+  width: 100%;
+  background-color: var(--color-bg, #ffffff);
+}
+
+.container {
+  padding-block: 48px;
+}
+
+.header {
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2xs, 4px);
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-h3);
+  letter-spacing: var(--tracking-h3, -0.16px);
+  color: #00395d;
+}
+
+.subtitle {
+  margin: 0;
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-body);
+  color: #4e5059;
+}
+
+/* 2-column grid layout for mobile */
+.tileTrack {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.tileItem {
+  width: 100% !important;
+  border-bottom: 1px solid var(--color-border-card, #e2f0f8);
+  padding: 1.25rem 1rem;
+}
+
+/* Mobile: Odd items have vertical right divider */
+.tileItem:nth-child(odd) {
+  border-right: 1px solid var(--color-border-card, #e2f0f8);
+}
+
+/* Mobile: Remove bottom border on the last row */
+.tileItem:nth-last-child(2):nth-child(odd),
+.tileItem:nth-last-child(2):nth-child(odd) ~ .tileItem {
+  border-bottom: none;
+}
+
+.tileItem:nth-last-child(1):nth-child(odd) {
+  border-bottom: none;
+}
+
+/* Desktop layout: Single horizontal flex row with vertical dividers */
+@media (width >= 860px) {
+  .tileTrack {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .tileItem {
+    flex: 1 1 0;
+    min-width: 0;
+    width: auto !important;
+    border-bottom: none;
+    border-right: 1px solid var(--color-border-card, #e2f0f8);
+    padding: 1rem 1.25rem 1rem 1rem;
+  }
+
+  .tileItem:last-child {
+    border-right: none;
+  }
+}

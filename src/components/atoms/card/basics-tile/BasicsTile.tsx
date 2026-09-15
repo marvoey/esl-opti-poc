@@ -31,15 +31,15 @@ export function BasicsTile({
   callout,
   value,
   description,
-  valueSize = "lg",
+  valueSize = "body",
   descriptionVariant,
   order = "callout-first",
   showDivider = false,
   className = "",
   ...rest
 }: BasicsTileProps) {
-  const isMd = valueSize === "md" || valueSize === "body";
-  const sizeClass = isMd ? styles.valueMd : styles.valueLg;
+  const isLg = valueSize === "lg" || valueSize === "body-lg";
+  const sizeClass = isLg ? styles.valueLg : styles.valueMd;
   const dividerClass = showDivider ? styles.hasDivider : "";
 
   const classes = [styles.tile, sizeClass, dividerClass, className]
@@ -47,19 +47,19 @@ export function BasicsTile({
     .join(" ");
 
   const calloutEl = (
-    <Text as="span" variant="caption" color="primary" className={styles.callout}>
+    <Text as="p" variant="caption" color="primary" className={styles.callout}>
       {callout}
     </Text>
   );
 
-  const valueVariant = isMd ? "body" : "body-lg";
+  const valueVariant = isLg ? "body-lg" : "body";
   const valueEl = (
-    <Text as="span" variant={valueVariant} color="accent" className={styles.value}>
+    <Text as="p" variant={valueVariant} color="accent" className={styles.value}>
       {value}
     </Text>
   );
 
-  const descVariant = descriptionVariant ?? (isMd ? "micro" : "caption");
+  const descVariant = descriptionVariant ?? "micro";
   const descriptionEl = (
     <Text as="p" variant={descVariant} color="secondary" className={styles.description}>
       {description}

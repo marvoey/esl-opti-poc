@@ -91,6 +91,7 @@ describe("BasicsTile Component", () => {
         value="XX"
         description="Caption description"
         valueSize="lg"
+        descriptionVariant="caption"
       />
     );
     const descLg = screen.getByText("Caption description");
