@@ -110,7 +110,7 @@ export function OfferCardRow({
 
   return (
     <section id={id} className={sectionClassName} aria-labelledby={headingId}>
-      <div className={`container ${styles.container}`}>
+      <div className={styles.container}>
         {/* Div 1: Header Row */}
         <div className={styles.headerRow}>
           {eyebrow && (

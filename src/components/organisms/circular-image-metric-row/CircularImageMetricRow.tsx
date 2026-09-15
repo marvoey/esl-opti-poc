@@ -114,7 +114,7 @@ export function CircularImageMetricRow({
 
   return (
     <section id={id} className={sectionClassName} aria-labelledby={headingId}>
-      <div className={`container ${styles.container}`}>
+      <div className={styles.container}>
         {/* Div 1: Header Row (100% Width) */}
         <div className={styles.headerRow}>
           <div className={styles.headerContent}>

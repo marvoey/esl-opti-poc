@@ -35,7 +35,7 @@ export function SnipeCta({
 
   return (
     <section className={combinedSectionClass} aria-label="Membership eligibility">
-      <div className="container">
+      <div className={styles.container}>
         <div className={styles.inner}>
           <div className={styles.header}>
             <CircleCheck

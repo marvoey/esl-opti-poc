@@ -7,6 +7,9 @@
   display: flex;
   flex-direction: column;
   width: 100%;
+  max-width: var(--container-max-w, 1200px);
+  margin: 0 auto;
+  padding-inline: var(--container-gutter, 2.5rem);
   padding-block: 4rem; /* 64px desktop */
 }
 

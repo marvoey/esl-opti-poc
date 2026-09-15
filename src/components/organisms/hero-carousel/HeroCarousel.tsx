@@ -74,7 +74,7 @@ export function HeroCarousel({
     <div className={combinedClass}>
       <Carousel
         ariaLabel={ariaLabel}
-        className="container"
+        className={styles.heroContainer}
         containerClassName={styles.slideTrack}
         setApi={setApi}
         options={{

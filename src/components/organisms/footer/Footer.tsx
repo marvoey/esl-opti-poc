@@ -87,7 +87,7 @@ export function Footer({
       role="contentinfo"
       aria-label="Site Footer"
     >
-      <div className="container">
+      <div className={styles.container}>
         <div className={styles.gridContainer}>
           <div className={styles.row1}>
             {brand ? (

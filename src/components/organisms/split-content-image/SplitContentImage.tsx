@@ -74,7 +74,7 @@ export function SplitContentImage({
       className={sectionClassName}
       aria-labelledby={headingId}
     >
-      <div className={`container ${styles.container}`}>
+      <div className={styles.container}>
         <div className={styles.contentColumn}>
           <Heading
             level={headingLevel}

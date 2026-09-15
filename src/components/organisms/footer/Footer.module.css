@@ -8,6 +8,13 @@
   overflow: hidden;
 }
 
+.container {
+  width: 100%;
+  max-width: var(--container-max-w, 1200px);
+  margin: 0 auto;
+  padding-inline: var(--container-gutter, 2.5rem);
+}
+
 /* 2 Rows Grid Container with 48px row gap */
 .gridContainer {
   display: grid;

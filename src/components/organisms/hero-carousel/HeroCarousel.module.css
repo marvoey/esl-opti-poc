@@ -5,6 +5,13 @@
   background: var(--gradient-hero-glow);
 }
 
+.heroContainer {
+  width: 100%;
+  max-width: var(--container-max-w, 1200px);
+  margin: 0 auto;
+  padding-inline: var(--container-gutter, 2.5rem);
+}
+
 .slideTrack {
   display: flex;
   user-select: none;

@@ -5,7 +5,7 @@
 
 .container {
   padding-block: 4rem;
-  max-width: var(--container-max-w, 1280px);
+  max-width: var(--container-max-w, 1200px);
   margin: 0 auto;
   padding-inline: var(--container-gutter, 2.5rem);
 }
@@ -39,8 +39,7 @@
 .grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  column-gap: 1.375rem;
-  row-gap: 1.375rem;
+  gap: 1.375rem;
   width: 100%;
   box-sizing: border-box;
 }
@@ -53,6 +52,7 @@
   padding-block: var(--space-md, 16px);
   background-color: var(--color-surface-raised, #FFFFFF);
   border-radius: 0.75rem;
+  min-width: 0;
 }
 
 .icon {
@@ -63,6 +63,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-xs, 8px);
+  min-width: 0;
 }
 
 .cardTitle {

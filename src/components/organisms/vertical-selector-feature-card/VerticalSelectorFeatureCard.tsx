@@ -126,7 +126,7 @@ export function VerticalSelectorFeatureCard({
       className={sectionClassName}
       aria-labelledby={headingId}
     >
-      <div className={`container ${styles.container}`}>
+      <div className={styles.container}>
         {/* Row 1: Header Row (Equal to CircularImageMetricRow) */}
         <div className={styles.headerRow}>
           <div className={styles.headerContent}>

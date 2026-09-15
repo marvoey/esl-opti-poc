@@ -26,7 +26,7 @@ export function KeyFactsRow({
       aria-labelledby={headingId}
       {...rest}
     >
-      <div className={`container ${styles.container}`}>
+      <div className={styles.container}>
         <header className={styles.header}>
           <h3 id={headingId} className={styles.title}>
             {title}

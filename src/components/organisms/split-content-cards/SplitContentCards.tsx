@@ -74,7 +74,7 @@ export function SplitContentCards({
       style={sectionStyle}
       aria-labelledby={headingId}
     >
-      <div className={`container ${styles.container}`}>
+      <div className={styles.container}>
         {/* Column 1: Narrative & CTA */}
         <div className={styles.contentColumn}>
           {eyebrow && (

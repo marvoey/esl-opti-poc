@@ -109,8 +109,9 @@ export interface ProductCardsRowProps {
   align-items: flex-start;
   gap: var(--space-xs); /* 8px — icon to text */
   ```
+- `.card` also needs `min-width: 0;` — as a CSS Grid item it defaults to `min-width: auto`, letting its content's intrinsic width push the track (and therefore the whole `.container`) past its `max-width`.
 - `.icon`: `flex-shrink: 0;` (renders `<CircleCheck size={28} />` per the reference SVG).
-- `.textGroup`: `display: flex; flex-direction: column; gap: var(--space-xs);` (8px between the bold and regular lines).
+- `.textGroup`: `display: flex; flex-direction: column; gap: var(--space-xs); min-width: 0;` (8px between the bold and regular lines; `min-width: 0` is needed for the same reason as `.card` — it's a flex item that would otherwise refuse to shrink below its text's intrinsic width).
 - `.cardTitle` (bold line): `color: var(--color-text-primary); font-weight: var(--font-weight-bold); margin: 0;`
 - `.cardDescription` (regular line): `color: var(--color-text-secondary); font-weight: var(--font-weight-regular); margin: 0;`
 

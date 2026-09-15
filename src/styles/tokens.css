@@ -270,7 +270,7 @@
   --space-3xl: clamp(4rem, 3.25rem + 3.75vw, 6rem);
 
   /* --- Layout & Container Widths --- */
-  --container-max-w: 1280px;
+  --container-max-w: 1200px;
   --container-gutter: clamp(1rem, 0.75rem + 1.25vw, 2.5rem);
 
   /* --- Radii --- */
