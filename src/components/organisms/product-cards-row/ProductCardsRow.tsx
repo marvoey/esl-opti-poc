@@ -67,7 +67,7 @@ export function ProductCardsRow({
             <div key={item.id || index} className={styles.card}>
               <CircleCheck
                 size={28}
-                backgroundColor="var(--color-turquoise-400)"
+                backgroundColor="var(--color-card-icon-badge-bg)"
                 tickColor="var(--color-navy-900)"
                 className={styles.icon}
               />

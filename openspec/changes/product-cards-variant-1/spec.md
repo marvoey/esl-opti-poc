@@ -44,7 +44,7 @@ Composes existing atoms, following the pattern established by `<FeatureCardRow>`
 | **Eyebrow** | `<Text variant="eyebrow" color="accent">` | `#00A3A3` via `--color-accent` |
 | **Heading** | `<Heading level="h2">` | `#00395D` via `--color-text-primary` (default, no override needed) |
 | **Description** | `<Text variant="body-lg">` | Body Large typography (mobile: 18px/27px, fluid to 20px desktop via `--font-size-body-lg`) |
-| **Card Icon** | `<CircleCheck backgroundColor="var(--color-turquoise-400)" tickColor="var(--color-navy-900)" />` | Mint circle (`#68E0CC`) with navy check (`#00395D`) — an inverted color pairing of `CircleCheck`'s defaults (default: navy circle / turquoise check) |
+| **Card Icon** | `<CircleCheck backgroundColor="var(--color-card-icon-badge-bg)" tickColor="var(--color-navy-900)" />` | Mint badge background (`--color-card-icon-badge-bg` → `--color-surface` → `--color-mint-50` = `#ECFBF8`) with navy check (`#00395D`) — an inverted color pairing of `CircleCheck`'s defaults (default: navy circle / turquoise check) |
 | **Card Bold Line** | `<Text variant="body" as="p" weight="bold">` | `#00395D` via `--color-text-primary` |
 | **Card Regular Line** | `<Text variant="body" as="p">` | `#4E5059` via `--color-text-secondary` (`--color-slate-600`) |
 
