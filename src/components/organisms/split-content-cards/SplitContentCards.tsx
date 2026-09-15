@@ -31,7 +31,7 @@ export interface SplitContentCardsProps {
   eyebrow?: string | null;
   title?: string;
   headingLevel?: HeadingLevel;
-  description?: string | null;
+  description?: React.ReactNode | string | null;
   cta?: SplitContentCardsCtaData | null;
   heroMetric?: SplitContentCardsHeroMetricData | null;
   statCards?: SplitContentCardsStatItemData[];
@@ -100,7 +100,7 @@ export function SplitContentCards({
 
           {description && (
             <Text
-              as="p"
+              as={typeof description === "string" ? "p" : "div"}
               variant="body-lg"
               color="secondary"
               className={styles.description}

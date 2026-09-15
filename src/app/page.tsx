@@ -20,7 +20,6 @@ import {
   SplitContentImage,
   DEFAULT_SPLIT_CONTENT,
 } from "@/components/organisms/split-content-image";
-import { SplitContentCards } from "@/components/organisms/split-content-cards";
 import { VerticalSelectorFeatureCard } from "@/components/organisms/vertical-selector-feature-card";
 import "@/infrastructure/cms/optimizely-registry";
 
@@ -193,6 +192,42 @@ const ESL_HOME_PAGE_EXPERIENCE_QUERY = `
                       }
                     }
                     variant
+                  }
+                }
+                ... on EslSplitContentCards {
+                  eyebrow
+                  title
+                  description {
+                    html
+                    json
+                  }
+                  cta {
+                    text
+                    title
+                    target
+                    url {
+                      default
+                      hierarchical
+                      base
+                      internal
+                    }
+                  }
+                  backgroundImage {
+                    key
+                    url {
+                      default
+                      hierarchical
+                      base
+                      internal
+                    }
+                  }
+                  heroMetricSubhead
+                  heroMetricValue
+                  heroMetricUnit
+                  heroMetricDescription
+                  statCards {
+                    value
+                    label
                   }
                 }
               }
@@ -455,7 +490,6 @@ export default async function Home() {
         <MediaCardGrid {...DEFAULT_MEDIA_CARD_GRID} />
         <MediaCardGrid {...DEFAULT_MEDIA_CARD_GRID_2_CARDS} id="media-card-grid-2" />
         <OfferCardRow id="offer-card-row" />
-        <SplitContentCards id="split-content-cards" />
         <SplitContentImage {...DEFAULT_SPLIT_CONTENT} />
       </main>
     );
