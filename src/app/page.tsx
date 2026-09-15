@@ -7,10 +7,6 @@ import {
   DEFAULT_CIRCULAR_IMAGE_METRIC_ROW,
 } from "@/components/organisms/circular-image-metric-row";
 import {
-  MetricCardRow,
-  DEFAULT_METRIC_CARD_ROW,
-} from "@/components/organisms/metric-card-row";
-import {
   VideoStoryCardRow,
   DEFAULT_VIDEO_STORY_CARD_ROW,
 } from "@/components/organisms/video-story-card-row";
@@ -161,6 +157,43 @@ const ESL_HOME_PAGE_EXPERIENCE_QUERY = `
                   }
                   imagePosition
                   colorVariant
+                }
+                ... on EslMetricCardRow {
+                  eyebrow
+                  title
+                  description
+                  cta {
+                    text
+                    title
+                    target
+                    url {
+                      default
+                      hierarchical
+                      base
+                      internal
+                    }
+                  }
+                  cards {
+                    category
+                    categoryIcon
+                    rate
+                    rateUnit
+                    rateLabel
+                    title
+                    description
+                    cta {
+                      text
+                      title
+                      target
+                      url {
+                        default
+                        hierarchical
+                        base
+                        internal
+                      }
+                    }
+                    variant
+                  }
                 }
               }
             }
@@ -418,7 +451,6 @@ export default async function Home() {
         <OptimizelyComponent content={activeContent} />
         <VerticalSelectorFeatureCard id="solutions-selector" />
         <CircularImageMetricRow {...DEFAULT_CIRCULAR_IMAGE_METRIC_ROW} />
-        <MetricCardRow {...DEFAULT_METRIC_CARD_ROW} />
         <VideoStoryCardRow {...DEFAULT_VIDEO_STORY_CARD_ROW} />
         <MediaCardGrid {...DEFAULT_MEDIA_CARD_GRID} />
         <MediaCardGrid {...DEFAULT_MEDIA_CARD_GRID_2_CARDS} id="media-card-grid-2" />

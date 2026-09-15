@@ -38,6 +38,7 @@ export const EslHomePageContentType = contentType({
     'EslSnipeCta',
     'EslTabbedSolutions',
     'EslSideBySide',
+    'EslMetricCardRow',
   ],
 });
 
