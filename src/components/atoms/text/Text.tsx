@@ -12,6 +12,7 @@ export type TextVariant =
   | "micro"
   | "button"
   | "eyebrow"
+  | "h1"
   | "hero-h2"
   | "footer-title";
 
@@ -53,6 +54,7 @@ const variantClassMap: Record<TextVariant, string> = {
   micro: styles.micro,
   button: styles.button,
   eyebrow: styles.eyebrow,
+  h1: styles.h1,
   "hero-h2": styles.heroH2,
   "footer-title": styles.footerTitle,
 };

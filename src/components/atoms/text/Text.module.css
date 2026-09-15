@@ -82,6 +82,15 @@
   display: inline-block;
 }
 
+.h1 {
+  font-family: var(--font-family-display, var(--font-family-sans));
+  font-size: var(--font-size-h1);
+  line-height: var(--line-height-h1);
+  letter-spacing: var(--tracking-h1);
+  font-weight: var(--font-weight-bold);
+  margin: 0;
+}
+
 .heroH2 {
   font-family: var(--font-family-sans);
   font-size: var(--font-size-hero-h2);
@@ -99,8 +108,8 @@
 
 .footerTitle {
   font-family: var(--font-family-sans);
-  font-size: var(--font-size-footer-title-mobile, 0.71875rem);
-  line-height: var(--line-height-footer-title-mobile, 1.078125rem);
+  font-size: var(--font-size-footer-title-mobile, 0.7188rem);
+  line-height: var(--line-height-footer-title-mobile, 1.0781rem);
   letter-spacing: var(--tracking-footer-title-mobile, 1.035px);
   font-weight: var(--font-weight-bold);
   text-transform: uppercase;
@@ -110,7 +119,7 @@
   .footerTitle {
     font-size: var(--font-size-footer-title-desktop, 1.125rem);
     line-height: var(--line-height-footer-title-desktop, 1.75rem);
-    letter-spacing: var(--tracking-footer-title-desktop, 0px);
+    letter-spacing: var(--tracking-footer-title-desktop, 0);
     font-weight: var(--font-weight-medium);
     text-transform: none;
   }

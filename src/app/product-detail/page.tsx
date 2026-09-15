@@ -1,20 +1,23 @@
 import type { Metadata } from "next";
 import React from "react";
-import { Heading } from "@/components/atoms/heading/Heading";
-import { Text } from "@/components/atoms/text/Text";
+import { HeroCarousel } from "@/components/organisms/hero-carousel/HeroCarousel";
+import { PRODUCT_DETAIL_HERO_SLIDES } from "@/components/organisms/hero-carousel/heroSlides";
 
 export const metadata: Metadata = {
-  title: "Product Detail | ESL Federal Credit Union",
-  description: "Product detail page",
+  title: "Premier Checking | ESL Federal Credit Union",
+  description:
+    "Checking that gives a little back. Everything you use day to day, plus a balance that earns dividends and our member-only Owners’ Dividend.",
 };
 
 export default function ProductDetailPage() {
   return (
-    <main className="container" style={{ paddingBlock: "4rem", minHeight: "60vh" }}>
-      <Heading level="h1">product-detail</Heading>
-      <Text as="p" variant="body-lg" color="secondary" style={{ marginTop: "1rem" }}>
-        product-detail
-      </Text>
+    <main>
+      <HeroCarousel
+        variant="squared"
+        slides={PRODUCT_DETAIL_HERO_SLIDES}
+        ariaLabel="Premier Checking product hero"
+      />
     </main>
   );
 }
+

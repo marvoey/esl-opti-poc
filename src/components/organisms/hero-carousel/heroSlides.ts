@@ -8,16 +8,17 @@ export interface SlideItem {
   body: React.ReactNode;
   primaryCta: string;
   primaryCtaHref?: string;
-  primaryCtaTarget?: string;
-  primaryCtaRel?: string;
-  secondaryCta: string;
+  primaryCtaExternal?: boolean;
+  primaryCtaVariant?: string;
+  secondaryCta?: string;
   secondaryCtaHref?: string;
-  secondaryCtaTarget?: string;
-  secondaryCtaRel?: string;
+  secondaryCtaExternal?: boolean;
+  secondaryCtaVariant?: string;
   imageSrc?: string;
   imageAlt?: string;
-  badgeStat: string;
-  badgeLabel: string;
+  badgeStat?: string;
+  badgeLabel?: string;
+  primaryCtaIcon?: "user" | "arrow" | "none";
 }
 
 export const HERO_SLIDES: SlideItem[] = [
@@ -59,5 +60,21 @@ export const HERO_SLIDES: SlideItem[] = [
     imageAlt: "Three-generation Hispanic family smiling together outdoors",
     badgeStat: "100%",
     badgeLabel: "Peace of mind",
+  },
+];
+
+export const PRODUCT_DETAIL_HERO_SLIDES: SlideItem[] = [
+  {
+    id: "premier-checking",
+    eyebrow: "PREMIER CHECKING",
+    titleLine1: "Checking that gives a",
+    titleLine2: "little back.",
+    body: "Everything you use day to day, plus a balance that earns dividends and our member-only Owners’ Dividend — with no monthly fee when you keep $1,000.",
+    primaryCta: "Open a Premier Checking account",
+    imageSrc: "/images/hero/premier-checking.jpg",
+    imageAlt: "Father and daughter smiling together on sofa at home",
+    badgeStat: "$0",
+    badgeLabel: "Monthly\nservice fee",
+    primaryCtaIcon: "arrow",
   },
 ];

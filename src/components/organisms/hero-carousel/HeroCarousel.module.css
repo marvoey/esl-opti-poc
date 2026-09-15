@@ -128,6 +128,44 @@
   font-weight: var(--font-weight-medium);
   line-height: 1.15;
   margin-top: 2px;
+  white-space: pre-line;
+}
+
+/* Squared Variant (Product Detail) */
+.imageWrapperSquared {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  aspect-ratio: 1 / 1;
+}
+
+.imageSquared {
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  border: none;
+  object-fit: cover;
+  display: block;
+  box-shadow: 0 4px 20px rgba(0, 40, 69, 0.08);
+}
+
+.badgeSquared {
+  display: flex;
+  position: absolute;
+  top: -12px;
+  right: -16px;
+  width: clamp(84px, 20cqi, 110px);
+  aspect-ratio: 1 / 1;
+  border-radius: var(--radius-full);
+  background-color: var(--color-navy-900);
+  color: var(--color-text-inverted);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(0, 40, 69, 0.25);
+  padding: var(--space-3xs);
+  z-index: 2;
 }
 
 .actionsArea {

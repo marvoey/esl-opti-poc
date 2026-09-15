@@ -2,7 +2,7 @@
 
 import React, { useState, useCallback, useEffect } from "react";
 import Image from "next/image";
-import { ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
 import type { EmblaCarouselType } from "embla-carousel";
 import { Carousel, CarouselSlide } from "@/components/molecules/carousel/Carousel";
 import { Text } from "@/components/atoms/text/Text";
@@ -14,6 +14,7 @@ export interface HeroCarouselProps {
   className?: string;
   ariaLabel?: string;
   slides?: SlideItem[];
+  variant?: "default" | "squared";
   editProps?: {
     eyebrow?: Record<string, any>;
     heading?: Record<string, any>;
@@ -30,6 +31,7 @@ export function HeroCarousel({
   className,
   ariaLabel = "Featured hero slider",
   slides = HERO_SLIDES,
+  variant = "default",
   editProps,
 }: HeroCarouselProps) {
   const [api, setApi] = useState<EmblaCarouselType>();
@@ -83,6 +85,7 @@ export function HeroCarousel({
       >
         {activeSlides.map((slide, index) => {
           const isFirst = index === 0;
+          const isSquared = variant === "squared";
           return (
             <CarouselSlide key={slide.id} className={styles.slideItem}>
               <article className={styles.slideContent}>
@@ -128,12 +131,23 @@ export function HeroCarousel({
                     {slide.primaryCta && (
                       <div {...(isFirst && (editProps?.primaryCta || editProps?.primaryCtaText) ? (editProps.primaryCta || editProps.primaryCtaText) : {})}>
                         <Button
-                          variant="primary"
-                          leftIcon={<UserIcon />}
+                          variant={(slide.primaryCtaVariant as any) || "primary"}
+                          leftIcon={
+                            slide.primaryCtaIcon === "arrow" || isSquared
+                              ? undefined
+                              : slide.primaryCtaIcon === "none"
+                              ? undefined
+                              : <UserIcon />
+                          }
+                          rightIcon={
+                            slide.primaryCtaIcon === "arrow" || isSquared ? (
+                              <ArrowRight size={18} aria-hidden="true" />
+                            ) : undefined
+                          }
                           className={styles.actionBtn}
                           href={slide.primaryCtaHref || undefined}
-                          target={slide.primaryCtaTarget || undefined}
-                          rel={slide.primaryCtaRel || undefined}
+                          target={slide.primaryCtaExternal ? "_blank" : undefined}
+                          rel={slide.primaryCtaExternal ? "noopener noreferrer" : undefined}
                         >
                           {slide.primaryCta}
                         </Button>
@@ -141,12 +155,12 @@ export function HeroCarousel({
                     )}
                     {slide.secondaryCta && (
                       <Button
-                        variant="secondary"
+                        variant={(slide.secondaryCtaVariant as any) || "secondary"}
                         leftIcon={<UserIcon />}
                         className={styles.actionBtn}
                         href={slide.secondaryCtaHref || undefined}
-                        target={slide.secondaryCtaTarget || undefined}
-                        rel={slide.secondaryCtaRel || undefined}
+                        target={slide.secondaryCtaExternal ? "_blank" : undefined}
+                        rel={slide.secondaryCtaExternal ? "noopener noreferrer" : undefined}
                       >
                         {slide.secondaryCta}
                       </Button>
@@ -154,22 +168,22 @@ export function HeroCarousel({
                   </div>
                 </div>
 
-                {/* 4. Circular Responsive Image & Badge */}
+                {/* 4. Responsive Image & Badge (Circle or Squared) */}
                 {slide.imageSrc && (
                   <div className={styles.mediaArea}>
-                    <div className={styles.imageWrapper}>
+                    <div className={isSquared ? styles.imageWrapperSquared : styles.imageWrapper}>
                       <Image
                         src={slide.imageSrc}
                         alt={slide.imageAlt || ""}
                         width={440}
                         height={440}
-                        className={styles.image}
+                        className={isSquared ? styles.imageSquared : styles.image}
                         priority={isFirst}
                         loading={isFirst ? "eager" : "lazy"}
                         unoptimized={Boolean(slide.imageSrc.startsWith("http"))}
                       />
                       {(slide.badgeStat || slide.badgeLabel) && (
-                        <div className={styles.badge} aria-hidden="true">
+                        <div className={isSquared ? styles.badgeSquared : styles.badge} aria-hidden="true">
                           {slide.badgeStat && <span className={styles.badgePercent}>{slide.badgeStat}</span>}
                           {slide.badgeLabel && <span className={styles.badgeLabel}>{slide.badgeLabel}</span>}
                         </div>
