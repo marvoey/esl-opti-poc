@@ -63,6 +63,7 @@
   --gradient-hero-glow: radial-gradient(58.07% 88.19% at 17.99% 3.33%, var(--color-sky-300) 4.85%, var(--color-aqua-100) 50%, var(--color-white) 100%);
   --gradient-ambient-sky: var(--gradient-hero-glow);
   --gradient-mint-wash: linear-gradient(90deg, var(--color-white) 0%, var(--color-mint-100) 50%, var(--color-white) 100%);
+  --gradient-linear-wash: var(--gradient-mint-wash);
   --gradient-dark-navy: linear-gradient(135deg, var(--color-navy-950) 0%, var(--color-navy-800) 100%);
   --gradient-footer: var(--gradient-dark-navy);
   --gradient-split-radial: radial-gradient(69.11% 69.11% at 50.26% 14.87%, var(--color-sky-alpha-25) 0%, var(--color-aqua-alpha-25) 50%, var(--color-white-alpha-25) 100%);

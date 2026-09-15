@@ -1,6 +1,6 @@
 .snipeCta {
   width: 100%;
-  background: var(--gradient-linear-wash);
+  background: var(--gradient-linear-wash, var(--gradient-mint-wash, linear-gradient(90deg, #ffffff 0%, #eaf9f9 50%, #ffffff 100%)));
 }
 
 .inner {
