@@ -25,6 +25,7 @@ import {
   DEFAULT_SPLIT_CONTENT,
 } from "@/components/organisms/split-content-image";
 import { SplitContentCards } from "@/components/organisms/split-content-cards";
+import { VerticalSelectorFeatureCard } from "@/components/organisms/vertical-selector-feature-card";
 import { SideBySide } from "@/components/organisms/side-by-side";
 import { getHomePageQuery } from "@/application/queries/getHomePageQuery";
 import "@/infrastructure/cms/optimizely-registry";
@@ -390,6 +391,7 @@ export default async function Home() {
     return (
       <main>
         <OptimizelyComponent content={activeContent} />
+        <VerticalSelectorFeatureCard id="solutions-selector" />
         <CircularImageMetricRow {...DEFAULT_CIRCULAR_IMAGE_METRIC_ROW} />
         <MetricCardRow {...DEFAULT_METRIC_CARD_ROW} />
         <VideoStoryCardRow {...DEFAULT_VIDEO_STORY_CARD_ROW} />

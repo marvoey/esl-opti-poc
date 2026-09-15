@@ -1,0 +1,145 @@
+.section {
+  width: 100%;
+  background: var(--color-vertical-selector-bg, var(--gradient-vertical-selector));
+  padding-block: 4rem; /* 64px on desktop */
+}
+
+
+.container {
+  width: 100%;
+  max-width: var(--container-max-w, 1280px);
+  margin-inline: auto;
+  padding-inline: var(--container-gutter, 1.5rem);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Row 1: Header Row (Identical to CircularImageMetricRow) */
+.headerRow {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: var(--space-xl, 1.5rem);
+  margin-bottom: var(--space-2xl, 3rem); /* 48px gap to Row 2 */
+}
+
+.headerContent {
+  width: 100%;
+  max-width: 36.5625rem; /* 585px */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  gap: var(--space-md, 1rem); /* 16px gap between texts */
+}
+
+.eyebrow {
+  color: var(--color-accent, #00a3a3);
+  margin: 0;
+  display: block;
+}
+
+.title {
+  color: var(--color-text-primary, #00395d);
+  margin: 0;
+}
+
+.description {
+  color: var(--color-text-primary, #00395d);
+  margin: 0;
+}
+
+.headerCta {
+  flex-shrink: 0;
+}
+
+/* Row 2: 40% - 60% Split Grid with 24px Gap */
+.selectorGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 6fr); /* 40% - 60% ratio with 24px gap */
+  gap: 1.5rem; /* 24px strict */
+  align-items: stretch;
+  width: 100%;
+}
+
+/* Col 1: Tabs Controller Card */
+.tabsController {
+  background-color: var(--color-bg-white, #ffffff);
+  border-radius: var(--radius-xl, 1rem); /* 16px */
+  padding: 1rem; /* 16px */
+  box-shadow: var(--shadow-card, 0 4px 20px 0 rgba(1, 38, 66, 0.06));
+  border: 1px solid var(--color-border-subtle, rgba(1, 38, 66, 0.08));
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md, 1rem); /* 16px */
+  height: 100%;
+}
+
+.tabButton {
+  min-height: 3.125rem; /* 50px */
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-lg, 0.75rem);
+  text-align: left;
+  width: 100%;
+}
+
+/* Col 2: Feature Card */
+.featureCard {
+  background-color: var(--color-bg-white, #ffffff);
+  border-radius: var(--radius-xl, 1rem); /* 16px */
+  box-shadow: var(--shadow-card, 0 4px 20px 0 rgba(1, 38, 66, 0.06));
+  border: 1px solid var(--color-border-subtle, rgba(1, 38, 66, 0.08));
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.imageWrapper {
+  width: 100%;
+  height: 328px; /* Desktop strict 328px */
+  position: relative;
+  overflow: hidden;
+}
+
+.featureImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.textArea {
+  padding: 1.5rem; /* 24px strict */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem; /* 16px */
+  flex: 1;
+}
+
+.featureTitle {
+  color: var(--color-text-primary, #00395d);
+  margin: 0;
+}
+
+.featureDescription {
+  color: var(--color-text-primary, #00395d);
+  margin: 0;
+  font-size: var(--font-size-body-lg, 1.125rem);
+  line-height: var(--line-height-relaxed, 1.6);
+}
+
+.featureAction {
+  margin-top: auto;
+  padding-top: 0.5rem;
+}
+
+/* Responsive: Component is hidden on tablet and mobile (< 1024px) */
+@media (max-width: 1023px) {
+  .section {
+    display: none !important;
+  }
+}
