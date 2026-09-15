@@ -96,7 +96,7 @@ export interface ProductCardsRowProps {
   column-gap: 1.375rem; /* 22px */
   row-gap: 1.375rem;    /* 22px */
   ```
-- No responsive column collapse was specified by design; confirm with design whether mobile should stack to 1 column before implementation.
+- Stacks to 1 column below `768px` (`grid-template-columns: 1fr`), switching to `repeat(2, 1fr)` at `@media (width >= 768px)`, matching the responsive convention used across every other organism in this codebase.
 
 ### Card
 - `.card`:
@@ -131,5 +131,4 @@ src/components/organisms/product-cards-row/
 
 ## 6. Open Questions for Design
 
-1. Mobile behavior for the 2-column grid: stack to 1 column, or keep 2 columns at all breakpoints?
-2. Confirm `#F7F9FB` should stay a raw hex (matching the existing `FeatureCardRow` precedent) or be promoted to a `--color-surface-*` token now that a second component uses it.
+1. Confirm `#F7F9FB` should stay a raw hex (matching the existing `FeatureCardRow` precedent) or be promoted to a `--color-surface-*` token now that a second component uses it.

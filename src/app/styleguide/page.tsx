@@ -312,20 +312,24 @@ export default async function HomePage() {
                 </Text>
               </div>
               <div className={styles.componentRow}>
-                <IconContentCard
-                  title="Customer Service"
-                  description="Lorem ipsum if needed here"
-                  ctaText="CTA here"
-                  href="/customer-service"
-                  variant="default"
-                />
-                <IconContentCard
-                  title="Customer Service"
-                  description="Lorem ipsum if needed here"
-                  ctaText="CTA here"
-                  href="/customer-service"
-                  variant="inverse"
-                />
+                <div className={styles.iconContentCardDemo}>
+                  <IconContentCard
+                    title="Customer Service"
+                    description="Lorem ipsum if needed here"
+                    ctaText="CTA here"
+                    href="/customer-service"
+                    variant="default"
+                  />
+                </div>
+                <div className={styles.iconContentCardDemo}>
+                  <IconContentCard
+                    title="Customer Service"
+                    description="Lorem ipsum if needed here"
+                    ctaText="CTA here"
+                    href="/customer-service"
+                    variant="inverse"
+                  />
+                </div>
               </div>
             </div>
 

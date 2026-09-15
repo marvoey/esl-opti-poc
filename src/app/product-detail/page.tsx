@@ -8,6 +8,10 @@ import { FeatureCardRow } from "@/components/organisms/feature-card-row";
 import { DEFAULT_FEATURE_CARD_ROW_PROPS } from "@/components/organisms/feature-card-row/featureCardRowData";
 import { ProductCardsRow } from "@/components/organisms/product-cards-row";
 import { DEFAULT_PRODUCT_CARDS_ROW_PROPS } from "@/components/organisms/product-cards-row/productCardsRowData";
+import { ProductCardsRowVariant2 } from "@/components/organisms/product-cards-row-variant-2";
+import { DEFAULT_PRODUCT_CARDS_ROW_VARIANT_2_PROPS } from "@/components/organisms/product-cards-row-variant-2/productCardsRowVariant2Data";
+import { FaqStates } from "@/components/organisms/faq-states";
+import { DEFAULT_FAQ_STATES_PROPS } from "@/components/organisms/faq-states/faqStatesData";
 import styles from "./product-detail.module.css";
 
 export const metadata: Metadata = {
@@ -32,6 +36,11 @@ export default function ProductDetailPage() {
       />
       <FeatureCardRow {...DEFAULT_FEATURE_CARD_ROW_PROPS} />
       <ProductCardsRow id="product-fit" {...DEFAULT_PRODUCT_CARDS_ROW_PROPS} />
+      <ProductCardsRowVariant2
+        id="account-tools"
+        {...DEFAULT_PRODUCT_CARDS_ROW_VARIANT_2_PROPS}
+      />
+      <FaqStates id="faq" {...DEFAULT_FAQ_STATES_PROPS} />
     </main>
   );
 }

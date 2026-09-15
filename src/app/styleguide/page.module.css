@@ -183,6 +183,10 @@
   flex-wrap: wrap;
 }
 
+.iconContentCardDemo {
+  width: 220px;
+}
+
 .mobileFrame {
   max-width: 360px;
   width: 100%;
