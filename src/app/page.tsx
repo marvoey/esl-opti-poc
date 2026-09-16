@@ -1,6 +1,6 @@
 import React from "react";
 import { notFound } from "next/navigation";
-import { GraphClient } from "@optimizely/cms-sdk";
+import { getGraphClient } from "@/infrastructure/cms/graphClient";
 import { OptimizelyComponent } from "@optimizely/cms-sdk/react/server";
 import {
   CircularImageMetricRow,
@@ -59,16 +59,12 @@ const ESL_HOME_PAGE_EXPERIENCE_QUERY = `
                     eyebrow
                     heading
                     body {
-                      html
                       json
                     }
                     image {
                       key
                       url {
                         default
-                        hierarchical
-                        base
-                        internal
                       }
                     }
                     imageAlt
@@ -78,9 +74,6 @@ const ESL_HOME_PAGE_EXPERIENCE_QUERY = `
                       target
                       url {
                         default
-                        hierarchical
-                        base
-                        internal
                       }
                     }
                     secondaryCta {
@@ -89,9 +82,6 @@ const ESL_HOME_PAGE_EXPERIENCE_QUERY = `
                       target
                       url {
                         default
-                        hierarchical
-                        base
-                        internal
                       }
                     }
                     badgeStat
@@ -107,9 +97,6 @@ const ESL_HOME_PAGE_EXPERIENCE_QUERY = `
                     target
                     url {
                       default
-                      hierarchical
-                      base
-                      internal
                     }
                   }
                 }
@@ -121,16 +108,12 @@ const ESL_HOME_PAGE_EXPERIENCE_QUERY = `
                   eyebrow
                   headline
                   body {
-                    html
                     json
                   }
                   image {
                     key
                     url {
                       default
-                      hierarchical
-                      base
-                      internal
                     }
                   }
                   imageAlt
@@ -140,9 +123,6 @@ const ESL_HOME_PAGE_EXPERIENCE_QUERY = `
                     target
                     url {
                       default
-                      hierarchical
-                      base
-                      internal
                     }
                   }
                   imagePosition
@@ -158,9 +138,6 @@ const ESL_HOME_PAGE_EXPERIENCE_QUERY = `
                     target
                     url {
                       default
-                      hierarchical
-                      base
-                      internal
                     }
                   }
                   cards {
@@ -177,9 +154,6 @@ const ESL_HOME_PAGE_EXPERIENCE_QUERY = `
                       target
                       url {
                         default
-                        hierarchical
-                        base
-                        internal
                       }
                     }
                     variant
@@ -188,8 +162,7 @@ const ESL_HOME_PAGE_EXPERIENCE_QUERY = `
                 ... on EslSplitContentCards {
                   eyebrow
                   title
-                  description {
-                    html
+                  splitDescription: description {
                     json
                   }
                   cta {
@@ -198,18 +171,12 @@ const ESL_HOME_PAGE_EXPERIENCE_QUERY = `
                     target
                     url {
                       default
-                      hierarchical
-                      base
-                      internal
                     }
                   }
                   backgroundImage {
                     key
                     url {
                       default
-                      hierarchical
-                      base
-                      internal
                     }
                   }
                   heroMetricSubhead
@@ -229,17 +196,13 @@ const ESL_HOME_PAGE_EXPERIENCE_QUERY = `
                       key
                       url {
                         default
-                        hierarchical
-                        base
-                        internal
                       }
                     }
                     imageAlt
                     badge
                     badgeVariant
                     title
-                    description {
-                      html
+                    mediaDescription: description {
                       json
                     }
                     cta {
@@ -248,9 +211,6 @@ const ESL_HOME_PAGE_EXPERIENCE_QUERY = `
                       target
                       url {
                         default
-                        hierarchical
-                        base
-                        internal
                       }
                     }
                   }
@@ -258,8 +218,7 @@ const ESL_HOME_PAGE_EXPERIENCE_QUERY = `
                 ... on EslVideoStoryCardRow {
                   eyebrow
                   title
-                  description {
-                    html
+                  videoStoryDescription: description {
                     json
                   }
                   cta {
@@ -268,9 +227,6 @@ const ESL_HOME_PAGE_EXPERIENCE_QUERY = `
                     target
                     url {
                       default
-                      hierarchical
-                      base
-                      internal
                     }
                   }
                   cards {
@@ -278,9 +234,6 @@ const ESL_HOME_PAGE_EXPERIENCE_QUERY = `
                       key
                       url {
                         default
-                        hierarchical
-                        base
-                        internal
                       }
                     }
                     imageAlt
@@ -289,7 +242,6 @@ const ESL_HOME_PAGE_EXPERIENCE_QUERY = `
                     categoryIcon
                     title
                     quote {
-                      html
                       json
                     }
                     authorName
@@ -340,30 +292,27 @@ interface ExperienceQueryResult {
 
 async function resolveHomeContent(): Promise<HomeContentItem[] | null> {
   const host = process.env.OPTIMIZELY_APP_HOST || "http://localhost:5002";
-  const apiKey = process.env.OPTIMIZELY_GRAPH_SINGLE_KEY;
+  const client = getGraphClient();
 
-  if (!apiKey) {
+  if (!client) {
     return null;
   }
 
   try {
-    const client = new GraphClient(apiKey, {
-      graphUrl: process.env.OPTIMIZELY_GRAPH_GATEWAY,
-    });
-
     // 1. Direct query for Experience composition (Visual Builder)
     try {
       const expResult = (await client.request(
         ESL_HOME_PAGE_EXPERIENCE_QUERY,
         { host },
         undefined,
-        false
+        true
       )) as ExperienceQueryResult | undefined;
       const expItems = expResult?.EslHomeExperience?.items;
       if (expItems && expItems.length > 0) {
         return expItems;
       }
-    } catch {
+    } catch (err) {
+      console.warn("CMS Graph experience query error:", err);
       // ignore and try path-based resolution
     }
 
@@ -408,8 +357,7 @@ async function resolveHomeContent(): Promise<HomeContentItem[] | null> {
   }
 }
 
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
+export const revalidate = 60;
 
 function selectActiveHomeContent(
   items?: HomeContentItem[] | null

@@ -17,6 +17,7 @@ type EslSplitContentCardsData = Omit<
 > & {
   statCards?: (EslStatCardData | null)[] | null;
   description?: Partial<NonNullable<ContentProps<typeof EslSplitContentCardsContentType>['description']>> | string | null;
+  splitDescription?: Partial<NonNullable<ContentProps<typeof EslSplitContentCardsContentType>['description']>> | string | null;
 };
 
 type Props = {
@@ -91,7 +92,7 @@ export default function EslSplitContentCardsRenderer({ content }: Props) {
 
   const eyebrow = effectiveContent.eyebrow?.trim() || null;
   const title = effectiveContent.title?.trim() || '';
-  const descriptionNode = renderDescription(effectiveContent.description);
+  const descriptionNode = renderDescription(effectiveContent.description || effectiveContent.splitDescription);
   const ctaResolved = resolveLink(effectiveContent.cta);
   const bgImageUrl = resolveMediaUrl(effectiveContent.backgroundImage);
 

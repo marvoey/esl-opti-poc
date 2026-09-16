@@ -25,6 +25,7 @@ type EslVideoStoryCardRowData = Omit<
 > & {
   cards?: (EslVideoStoryCardData | null)[] | null;
   description?: Partial<NonNullable<ContentProps<typeof EslVideoStoryCardRowContentType>['description']>> | string | null;
+  videoStoryDescription?: Partial<NonNullable<ContentProps<typeof EslVideoStoryCardRowContentType>['description']>> | string | null;
 };
 
 type Props = {
@@ -111,7 +112,7 @@ export default function EslVideoStoryCardRowRenderer({ content }: Props) {
 
   const eyebrow = effectiveContent.eyebrow?.trim() || '';
   const title = effectiveContent.title?.trim() || '';
-  const description = renderRichText(effectiveContent.description);
+  const description = renderRichText(effectiveContent.description || effectiveContent.videoStoryDescription);
 
   const ctaResolved = resolveLink(effectiveContent.cta);
   const cta =
