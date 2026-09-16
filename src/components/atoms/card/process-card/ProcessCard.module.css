@@ -48,6 +48,14 @@
   color: var(--color-accent);
 }
 
+.mint .title {
+  color: var(--color-text-primary);
+}
+
+.mint .description {
+  color: var(--color-text-primary);
+}
+
 
 .mint:hover {
   border-color: var(--color-border-accent);
@@ -65,10 +73,42 @@
   color: var(--color-surface-muted);
 }
 
+.neutral .title {
+  color: var(--color-text-inverted);
+}
+
+.neutral .description {
+  color: var(--color-text-inverted);
+}
+
 
 .neutral:hover {
   transform: translateY(-1px);
   filter: brightness(1.03);
+}
+
+/* --- Variant 3: Inverse (Transparent surface directly on dark backgrounds) --- */
+.inverse {
+  background-color: transparent;
+  border: 1.5px solid var(--color-border-inverse-subtle);
+}
+
+.inverse .badge {
+  background-color: var(--color-teal-alpha-20);
+  color: var(--color-border-accent);
+}
+
+.inverse .title {
+  color: var(--color-text-inverted);
+}
+
+.inverse .description {
+  color: var(--color-text-inverted-muted);
+}
+
+.inverse:hover {
+  border-color: var(--color-turquoise-400);
+  transform: translateY(-1px);
 }
 
 .card:active {

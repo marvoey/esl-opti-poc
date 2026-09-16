@@ -4,7 +4,7 @@ import { StepBadge } from "../../step-badge/StepBadge";
 import { Text } from "../../text/Text";
 import styles from "./ProcessCard.module.css";
 
-export type ProcessCardVariant = "mint" | "neutral";
+export type ProcessCardVariant = "mint" | "neutral" | "inverse";
 
 export interface ProcessCardBaseProps {
   step: number | string;
@@ -46,26 +46,29 @@ export function ProcessCard({
   badgeBackgroundColor,
   ...rest
 }: ProcessCardProps) {
-  const variantClass = variant === "neutral" ? styles.neutral : styles.mint;
+  const variantClass =
+    variant === "neutral"
+      ? styles.neutral
+      : variant === "inverse"
+        ? styles.inverse
+        : styles.mint;
   const classes = [styles.card, variantClass, className]
     .filter(Boolean)
     .join(" ");
 
-  const textColor = variant === "neutral" ? "inverted" : "primary";
-
   const content = (
     <>
-      <StepBadge 
-        step={step} 
-        className={styles.badge} 
-        textColor={badgeTextColor} 
-        backgroundColor={badgeBackgroundColor} 
+      <StepBadge
+        step={step}
+        className={styles.badge}
+        textColor={badgeTextColor}
+        backgroundColor={badgeBackgroundColor}
       />
       <div className={styles.content}>
-        <Text as="span" variant="body-lg" weight="bold" color={textColor}>
+        <Text as="span" variant="body-lg" weight="bold" color="inherit" className={styles.title}>
           {title}
         </Text>
-        <Text as="span" variant="body-sm" color={textColor}>
+        <Text as="span" variant="body-sm" color="inherit" className={styles.description}>
           {description}
         </Text>
       </div>
