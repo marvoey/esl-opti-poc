@@ -11,7 +11,7 @@ export interface MediaCardProps {
   badge?: string;
   badgeVariant?: BadgeVariant;
   title: string;
-  description: string;
+  description: React.ReactNode | string;
   ctaText?: string;
   href: string;
   external?: boolean;
@@ -69,7 +69,11 @@ export function MediaCard({
 
         <h3 className={styles.title}>{title}</h3>
 
-        <p className={styles.description}>{description}</p>
+        {typeof description === "string" ? (
+          <p className={styles.description}>{description}</p>
+        ) : (
+          <div className={styles.description}>{description}</div>
+        )}
 
         <a href={href} className={styles.cta} {...externalProps}>
           <span>{ctaText}</span>

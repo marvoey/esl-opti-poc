@@ -10,11 +10,6 @@ import {
   VideoStoryCardRow,
   DEFAULT_VIDEO_STORY_CARD_ROW,
 } from "@/components/organisms/video-story-card-row";
-import {
-  MediaCardGrid,
-  DEFAULT_MEDIA_CARD_GRID,
-  DEFAULT_MEDIA_CARD_GRID_2_CARDS,
-} from "@/components/organisms/media-card-grid";
 import { OfferCardRow } from "@/components/organisms/offer-card-row";
 import {
   SplitContentImage,
@@ -228,6 +223,40 @@ const ESL_HOME_PAGE_EXPERIENCE_QUERY = `
                   statCards {
                     value
                     label
+                  }
+                }
+                ... on EslMediaCardGrid {
+                  eyebrow
+                  title
+                  cards {
+                    image {
+                      key
+                      url {
+                        default
+                        hierarchical
+                        base
+                        internal
+                      }
+                    }
+                    imageAlt
+                    badge
+                    badgeVariant
+                    title
+                    description {
+                      html
+                      json
+                    }
+                    cta {
+                      text
+                      title
+                      target
+                      url {
+                        default
+                        hierarchical
+                        base
+                        internal
+                      }
+                    }
                   }
                 }
               }
@@ -487,8 +516,6 @@ export default async function Home() {
         <VerticalSelectorFeatureCard id="solutions-selector" />
         <CircularImageMetricRow {...DEFAULT_CIRCULAR_IMAGE_METRIC_ROW} />
         <VideoStoryCardRow {...DEFAULT_VIDEO_STORY_CARD_ROW} />
-        <MediaCardGrid {...DEFAULT_MEDIA_CARD_GRID} />
-        <MediaCardGrid {...DEFAULT_MEDIA_CARD_GRID_2_CARDS} id="media-card-grid-2" />
         <OfferCardRow id="offer-card-row" />
         <SplitContentImage {...DEFAULT_SPLIT_CONTENT} />
       </main>
