@@ -40,6 +40,7 @@ export const EslHomePageContentType = contentType({
     'EslSideBySide',
     'EslMetricCardRow',
     'EslSplitContentCards',
+    'EslMediaCardGrid',
   ],
 });
 

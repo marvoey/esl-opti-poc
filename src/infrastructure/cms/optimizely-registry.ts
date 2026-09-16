@@ -12,6 +12,9 @@ import { EslRatesCardContentType } from '@/components/cms/components/EslRatesCar
 import { EslSplitContentCardsContentType } from '@/components/cms/components/EslSplitContentCards';
 import EslSplitContentCards from '@/components/cms/components/EslSplitContentCardsRenderer';
 import { EslStatCardContentType } from '@/components/cms/components/EslStatCard';
+import { EslMediaCardGridContentType } from '@/components/cms/components/EslMediaCardGrid';
+import { EslMediaCardContentType } from '@/components/cms/components/EslMediaCard';
+import EslMediaCardGrid from '@/components/cms/components/EslMediaCardGridRenderer';
 import { EslFooterNavColumnContentType } from '@/components/cms/components/EslFooterNavColumn';
 import { EslFooterContentType } from '@/components/cms/components/EslFooter';
 import EslSiteSettings, { EslSiteSettingsContentType } from '@/components/cms/pages/EslSiteSettings';
@@ -32,6 +35,8 @@ export function ensureOptimizelyRegistry() {
     EslRatesCardContentType,
     EslSplitContentCardsContentType,
     EslStatCardContentType,
+    EslMediaCardGridContentType,
+    EslMediaCardContentType,
     EslFooterNavColumnContentType,
     EslFooterContentType,
     EslSiteSettingsContentType,
@@ -48,6 +53,7 @@ export function ensureOptimizelyRegistry() {
       EslSideBySide,
       EslMetricCardRow,
       EslSplitContentCards,
+      EslMediaCardGrid,
       EslSiteSettings,
       EslStartPage,
     },
