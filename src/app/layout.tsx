@@ -1,3 +1,4 @@
+import React, { Suspense } from "react";
 import type { Metadata } from "next";
 import { Albert_Sans, League_Spartan } from "next/font/google";
 import "@/infrastructure/cms/optimizely-registry";
@@ -36,18 +37,24 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function RootLayout({
+async function ServerFooter() {
+  const footerProps = await resolveFooterContent();
+  if (!footerProps) return null;
+  return <Footer {...footerProps} />;
+}
+
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const footerProps = await resolveFooterContent();
-
   return (
     <html lang="en" className={`${albertSans.variable} ${leagueSpartan.variable}`}>
       <body>
         {children}
-        {footerProps && <Footer {...footerProps} />}
+        <Suspense fallback={null}>
+          <ServerFooter />
+        </Suspense>
       </body>
     </html>
   );

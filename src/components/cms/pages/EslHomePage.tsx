@@ -5,9 +5,6 @@ import {
   getPreviewUtils,
   type ComponentContainerProps,
 } from '@optimizely/cms-sdk/react/server';
-import EslHeroSlider, { EslHeroSliderContentType } from '@/components/cms/components/EslHeroSlider';
-import EslSnipeCta, { EslSnipeCtaContentType } from '@/components/cms/components/EslSnipeCta';
-import EslTabbedSolutions, { EslTabbedSolutionsContentType } from '@/components/cms/components/EslTabbedSolutions';
 
 function ExperienceComponentWrapper({ children, node, displaySettings }: ComponentContainerProps) {
   const { pa } = getPreviewUtils(node);
@@ -28,8 +25,8 @@ function ExperienceComponentWrapper({ children, node, displaySettings }: Compone
   );
 }
 
-// 1. The new Visual Builder Experience
-export const EslHomePageContentType = contentType({
+// 1. The Visual Builder Experience
+export const EslHomeExperienceContentType = contentType({
   key: 'EslHomeExperience',
   displayName: 'ESL Home Experience',
   baseType: '_experience',
@@ -41,58 +38,26 @@ export const EslHomePageContentType = contentType({
     'EslMetricCardRow',
     'EslSplitContentCards',
     'EslMediaCardGrid',
+    'EslVideoStoryCardRow',
   ],
 });
 
-// 2. Legacy fallback definition so existing CMS page previews never 404
-export const LegacyEslHomePageContentType = contentType({
-  key: 'EslHomePage',
-  displayName: 'ESL Home Page (Legacy)',
-  baseType: '_page',
-  mayContainTypes: ['*'],
-});
 
 type Props = {
-  content?: ContentProps<typeof EslHomePageContentType> & {
-    heroSlider?: ContentProps<typeof EslHeroSliderContentType>;
-    snipeCta?: ContentProps<typeof EslSnipeCtaContentType>;
-    showExploreSolutions?: boolean;
-  };
+  content?: ContentProps<typeof EslHomeExperienceContentType>;
 };
 
-export default function EslHomePage({ content }: Props) {
+export default function EslHomeExperience({ content }: Props) {
   const nodes = content?.composition?.nodes;
 
-  // 1. If Visual Builder composition nodes are present, render them in visual order
-  if (nodes && nodes.length > 0) {
-    return (
-      <>
-        <OptimizelyComposition nodes={nodes} ComponentWrapper={ExperienceComponentWrapper} />
-      </>
-    );
+  if (!nodes || nodes.length === 0) {
+    return null;
   }
 
-  // 2. Graceful fallback for empty experience or legacy data
   return (
-    <>
-      <EslHeroSlider content={content?.heroSlider ? { slides: content.heroSlider.slides } : undefined} />
-      <EslSnipeCta
-        content={
-          content?.snipeCta || {
-            title: 'Can you join?',
-            description: 'If you live, work, worship or attend school in our region - yes!',
-            link: {
-              text: 'Check your eligibility',
-              url: { type: null, graph: null, default: '/eligibility', hierarchical: null, base: null, internal: null },
-              target: '_top',
-              title: null,
-            },
-          }
-        }
-      />
-      {content?.showExploreSolutions !== false && (
-        <EslTabbedSolutions content={{ showExploreSolutions: true }} />
-      )}
-    </>
+    <OptimizelyComposition nodes={nodes} ComponentWrapper={ExperienceComponentWrapper} />
   );
 }
+
+export { EslHomeExperience as EslHomePage };
+

@@ -14,6 +14,7 @@ type EslMediaCardData = Omit<
   'description'
 > & {
   description?: Partial<NonNullable<ContentProps<typeof EslMediaCardContentType>['description']>> | string | null;
+  mediaDescription?: Partial<NonNullable<ContentProps<typeof EslMediaCardContentType>['description']>> | string | null;
 };
 
 type EslMediaCardGridData = Omit<
@@ -113,7 +114,7 @@ export default function EslMediaCardGridRenderer({ content }: Props) {
           if (!imageSrc) return null;
 
           const cardTitle = card.title?.trim() || '';
-          const cardDesc = renderDescription(card.description);
+          const cardDesc = renderDescription(card.description || card.mediaDescription);
           const imageAlt = card.imageAlt?.trim() || cardTitle || 'Promotional offer';
           const badge = card.badge?.trim() ? card.badge.trim() : '';
           const badgeVariant = resolveBadgeVariant(card.badgeVariant);
