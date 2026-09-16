@@ -79,7 +79,7 @@ describe("FaqStates Organism", () => {
     expect(screen.getByText(MOCK_ITEMS[0].answer)).toBeDefined();
   });
 
-  it("closes the previously open item when singleExpand is true (default) and a second trigger is clicked", () => {
+  it("keeps a previously open item open when a second trigger is clicked (independent expand, no accordion close-others)", () => {
     render(<FaqStates items={MOCK_ITEMS} />);
 
     const triggers = screen.getAllByRole("button");
@@ -88,12 +88,18 @@ describe("FaqStates Organism", () => {
 
     fireEvent.click(triggers[1]);
 
-    expect(triggers[0].getAttribute("aria-expanded")).toBe("false");
+    expect(triggers[0].getAttribute("aria-expanded")).toBe("true");
     expect(triggers[1].getAttribute("aria-expanded")).toBe("true");
+  });
 
-    const expandedCount = triggers.filter(
-      (trigger) => trigger.getAttribute("aria-expanded") === "true"
-    ).length;
-    expect(expandedCount).toBe(1);
+  it("closes an item only when its own trigger is clicked again", () => {
+    render(<FaqStates items={MOCK_ITEMS} />);
+
+    const triggers = screen.getAllByRole("button");
+    fireEvent.click(triggers[0]);
+    expect(triggers[0].getAttribute("aria-expanded")).toBe("true");
+
+    fireEvent.click(triggers[0]);
+    expect(triggers[0].getAttribute("aria-expanded")).toBe("false");
   });
 });

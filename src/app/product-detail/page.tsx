@@ -12,6 +12,8 @@ import { ProductCardsRowVariant2 } from "@/components/organisms/product-cards-ro
 import { DEFAULT_PRODUCT_CARDS_ROW_VARIANT_2_PROPS } from "@/components/organisms/product-cards-row-variant-2/productCardsRowVariant2Data";
 import { FaqStates } from "@/components/organisms/faq-states";
 import { DEFAULT_FAQ_STATES_PROPS } from "@/components/organisms/faq-states/faqStatesData";
+import { AccordionCardGrid } from "@/components/organisms/accordion-card-grid";
+import { DEFAULT_ACCORDION_CARD_GRID_PROPS } from "@/components/organisms/accordion-card-grid/accordionCardGridData";
 import styles from "./product-detail.module.css";
 
 export const metadata: Metadata = {
@@ -41,6 +43,7 @@ export default function ProductDetailPage() {
         {...DEFAULT_PRODUCT_CARDS_ROW_VARIANT_2_PROPS}
       />
       <FaqStates id="faq" {...DEFAULT_FAQ_STATES_PROPS} />
+      <AccordionCardGrid id="glossary" {...DEFAULT_ACCORDION_CARD_GRID_PROPS} />
     </main>
   );
 }

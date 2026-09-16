@@ -24,7 +24,6 @@ export interface FaqStatesProps {
   helpLinkHref?: string;
   items: FaqItem[];
   defaultExpandedId?: string;
-  singleExpand?: boolean;
   className?: string;
 }
 
@@ -39,7 +38,6 @@ export function FaqStates({
   helpLinkHref,
   items = [],
   defaultExpandedId,
-  singleExpand = true,
   className = "",
 }: FaqStatesProps) {
   const autoId = useId();
@@ -52,12 +50,8 @@ export function FaqStates({
 
   function toggleItem(itemId: string) {
     setExpandedIds((prev) => {
-      const isOpen = prev.has(itemId);
-      if (singleExpand) {
-        return isOpen ? new Set<string>() : new Set([itemId]);
-      }
       const next = new Set(prev);
-      if (isOpen) {
+      if (next.has(itemId)) {
         next.delete(itemId);
       } else {
         next.add(itemId);

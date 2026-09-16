@@ -1,0 +1,130 @@
+.section {
+  width: 100%;
+  background-color: var(--color-bg, #FFFFFF);
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container-max-w, 1200px);
+  margin: 0 auto;
+  padding-inline: var(--container-gutter, 2.5rem);
+  padding-block: 4rem;
+}
+
+@media (width < 768px) {
+  .container {
+    padding-block: 2.5rem;
+  }
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-xs);
+}
+
+.eyebrow {
+  margin: 0;
+}
+
+.sectionTitle {
+  margin: 0;
+}
+
+.description {
+  margin: 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: start;
+  gap: 1.375rem; /* 22px */
+  width: 100%;
+  margin-top: 1.375rem; /* 22px */
+}
+
+@media (width >= 768px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.card {
+  background-color: var(--color-surface-raised, #FFFFFF);
+  border: 1px solid var(--color-card-stroke);
+  border-radius: 0.75rem;
+  min-width: 0;
+  transition: background-color var(--duration-smart) var(--ease-out-smart),
+    border-color var(--duration-smart) var(--ease-out-smart);
+}
+
+.card:hover {
+  background-color: var(--color-surface);
+  border-color: var(--color-card-ring-hover);
+}
+
+.itemHeading {
+  margin: 0;
+}
+
+.trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 1rem; /* 16px */
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  gap: var(--space-md);
+}
+
+.trigger:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 3px;
+}
+
+.term {
+  color: var(--color-text-primary);
+  font-size: 1.1875rem; /* 19px — matches FaqStates' question font-size */
+}
+
+.icon {
+  flex-shrink: 0;
+  display: inline-flex;
+  color: var(--color-accent);
+}
+
+.panelOuter {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--duration-smart) var(--ease-out-smart);
+}
+
+.panelOuter.expanded {
+  grid-template-rows: 1fr;
+}
+
+.panelInner {
+  overflow: hidden;
+}
+
+.definition {
+  margin: 0;
+  padding-inline: 1rem;
+  padding-bottom: 1rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition: none;
+  }
+
+  .panelOuter {
+    transition: none;
+  }
+}
