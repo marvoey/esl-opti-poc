@@ -1,6 +1,6 @@
 import { initContentTypeRegistry } from '@optimizely/cms-sdk';
 import { initReactComponentRegistry } from '@optimizely/cms-sdk/react/server';
-import EslHomePage, { EslHomePageContentType, LegacyEslHomePageContentType } from '@/components/cms/pages/EslHomePage';
+import EslHomeExperience, { EslHomeExperienceContentType } from '@/components/cms/pages/EslHomePage';
 import EslHeroSlider, { EslHeroSliderContentType } from '@/components/cms/components/EslHeroSlider';
 import { EslHeroSlideContentType } from '@/components/cms/components/EslHeroSlide';
 import { EslQuickLinkCardContentType } from '@/components/cms/components/EslQuickLinkCard';
@@ -26,8 +26,7 @@ import EslStartPage, { EslStartPageContentType } from '@/components/cms/pages/Es
 export function ensureOptimizelyRegistry() {
 
   initContentTypeRegistry([
-    EslHomePageContentType,
-    LegacyEslHomePageContentType,
+    EslHomeExperienceContentType,
     EslHeroSliderContentType,
     EslHeroSlideContentType,
     EslQuickLinkCardContentType,
@@ -50,8 +49,7 @@ export function ensureOptimizelyRegistry() {
 
   initReactComponentRegistry({
     resolver: {
-      EslHomePage,
-      EslHomeExperience: EslHomePage,
+      EslHomeExperience,
       EslHeroSlider,
       EslSnipeCta,
       EslTabbedSolutions,

@@ -306,97 +306,6 @@ const ESL_HOME_PAGE_EXPERIENCE_QUERY = `
   }
 `;
 
-const ESL_HOME_PAGE_LEGACY_QUERY = `
-  query GetEslHomePageLegacy($host: String) {
-    EslHomePage(
-      where: {
-        _metadata: {
-          url: {
-            base: { eq: $host }
-          }
-        }
-      }
-    ) {
-      items {
-        _id
-        _metadata {
-          key
-          status
-          displayName
-          types
-          lastModified
-          container
-          path
-          url {
-            default
-            base
-          }
-        }
-        heroSlider {
-          slides {
-            eyebrow
-            heading
-            body {
-              html
-              json
-            }
-            image {
-              key
-              url {
-                default
-                hierarchical
-                base
-                internal
-              }
-            }
-            imageAlt
-            primaryCta {
-              text
-              title
-              target
-              url {
-                default
-                hierarchical
-                base
-                internal
-              }
-            }
-            secondaryCta {
-              text
-              title
-              target
-              url {
-                default
-                hierarchical
-                base
-                internal
-              }
-            }
-            badgeStat
-            badgeLabel
-          }
-        }
-        snipeCta {
-          title
-          description
-          link {
-            text
-            title
-            target
-            url {
-              default
-              hierarchical
-              base
-              internal
-            }
-          }
-        }
-        showExploreSolutions
-      }
-    }
-  }
-`;
-
 export interface HomeContentMetadata {
   key?: string | null;
   status?: string | null;
@@ -429,12 +338,6 @@ interface ExperienceQueryResult {
   };
 }
 
-interface LegacyQueryResult {
-  EslHomePage?: {
-    items?: HomeContentItem[];
-  };
-}
-
 async function resolveHomeContent(): Promise<HomeContentItem[] | null> {
   const host = process.env.OPTIMIZELY_APP_HOST || "http://localhost:5002";
   const apiKey = process.env.OPTIMIZELY_GRAPH_SINGLE_KEY;
@@ -461,26 +364,10 @@ async function resolveHomeContent(): Promise<HomeContentItem[] | null> {
         return expItems;
       }
     } catch {
-      // ignore and try legacy query
-    }
-
-    // 2. Direct query for legacy EslHomePage items
-    try {
-      const legacyResult = (await client.request(
-        ESL_HOME_PAGE_LEGACY_QUERY,
-        { host },
-        undefined,
-        false
-      )) as LegacyQueryResult | undefined;
-      const legacyItems = legacyResult?.EslHomePage?.items;
-      if (legacyItems && legacyItems.length > 0) {
-        return legacyItems;
-      }
-    } catch {
       // ignore and try path-based resolution
     }
 
-    // 3. Fallback to getContentByPath
+    // 2. Fallback to getContentByPath
     let content = (await client.getContentByPath("/", {
       host,
     })) as HomeContentItem[] | null;
@@ -508,11 +395,6 @@ async function resolveHomeContent(): Promise<HomeContentItem[] | null> {
             : homeContent;
 
           content = matched.length > 0 ? matched : homeContent;
-        } else {
-          const childContent = (await client.getContentByPath("/new-page", { host })) as HomeContentItem[] | null;
-          if (childContent && childContent.length > 0) {
-            content = childContent;
-          }
         }
       } catch {
         // ignore and proceed
