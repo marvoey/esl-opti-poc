@@ -2,7 +2,6 @@
   width: 100%;
   position: relative;
   background-color: var(--color-bg-white, #ffffff);
-  background-image: url("/images/guidance/skyline-illustration.svg");
   background-repeat: no-repeat;
   background-position: center bottom;
   background-size: cover;

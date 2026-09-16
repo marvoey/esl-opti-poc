@@ -9,15 +9,18 @@ import EslTabbedSolutions, { EslTabbedSolutionsContentType } from '@/components/
 import EslSideBySide, { EslSideBySideContentType } from '@/components/cms/components/EslSideBySide';
 import EslMetricCardRow, { EslMetricCardRowContentType } from '@/components/cms/components/EslMetricCardRow';
 import { EslRatesCardContentType } from '@/components/cms/components/EslRatesCard';
+import { EslSplitContentCardsContentType } from '@/components/cms/components/EslSplitContentCards';
+import EslSplitContentCards from '@/components/cms/components/EslSplitContentCardsRenderer';
+import { EslStatCardContentType } from '@/components/cms/components/EslStatCard';
+import { EslMediaCardGridContentType } from '@/components/cms/components/EslMediaCardGrid';
+import { EslMediaCardContentType } from '@/components/cms/components/EslMediaCard';
+import EslMediaCardGrid from '@/components/cms/components/EslMediaCardGridRenderer';
 import { EslFooterNavColumnContentType } from '@/components/cms/components/EslFooterNavColumn';
 import { EslFooterContentType } from '@/components/cms/components/EslFooter';
 import EslSiteSettings, { EslSiteSettingsContentType } from '@/components/cms/pages/EslSiteSettings';
 import EslStartPage, { EslStartPageContentType } from '@/components/cms/pages/EslStartPage';
 
-let isRegistered = false;
-
 export function ensureOptimizelyRegistry() {
-  if (isRegistered) return;
 
   initContentTypeRegistry([
     EslHomePageContentType,
@@ -30,6 +33,10 @@ export function ensureOptimizelyRegistry() {
     EslSideBySideContentType,
     EslMetricCardRowContentType,
     EslRatesCardContentType,
+    EslSplitContentCardsContentType,
+    EslStatCardContentType,
+    EslMediaCardGridContentType,
+    EslMediaCardContentType,
     EslFooterNavColumnContentType,
     EslFooterContentType,
     EslSiteSettingsContentType,
@@ -45,12 +52,12 @@ export function ensureOptimizelyRegistry() {
       EslTabbedSolutions,
       EslSideBySide,
       EslMetricCardRow,
+      EslSplitContentCards,
+      EslMediaCardGrid,
       EslSiteSettings,
       EslStartPage,
     },
   });
-
-  isRegistered = true;
 }
 
 // Auto-run on import

@@ -4,6 +4,7 @@ export default buildConfig({
   components: [
     './src/components/cms/**/*.tsx',
     '!./src/components/cms/**/*.test.tsx',
+    '!./src/components/cms/**/*Renderer.tsx',
   ],
   propertyGroups: [
     {

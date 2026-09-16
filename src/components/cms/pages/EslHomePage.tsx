@@ -39,6 +39,8 @@ export const EslHomePageContentType = contentType({
     'EslTabbedSolutions',
     'EslSideBySide',
     'EslMetricCardRow',
+    'EslSplitContentCards',
+    'EslMediaCardGrid',
   ],
 });
 
