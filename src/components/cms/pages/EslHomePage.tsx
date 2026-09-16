@@ -41,6 +41,7 @@ export const EslHomePageContentType = contentType({
     'EslMetricCardRow',
     'EslSplitContentCards',
     'EslMediaCardGrid',
+    'EslVideoStoryCardRow',
   ],
 });
 

@@ -6,10 +6,6 @@ import {
   CircularImageMetricRow,
   DEFAULT_CIRCULAR_IMAGE_METRIC_ROW,
 } from "@/components/organisms/circular-image-metric-row";
-import {
-  VideoStoryCardRow,
-  DEFAULT_VIDEO_STORY_CARD_ROW,
-} from "@/components/organisms/video-story-card-row";
 import { OfferCardRow } from "@/components/organisms/offer-card-row";
 import {
   SplitContentImage,
@@ -257,6 +253,48 @@ const ESL_HOME_PAGE_EXPERIENCE_QUERY = `
                         internal
                       }
                     }
+                  }
+                }
+                ... on EslVideoStoryCardRow {
+                  eyebrow
+                  title
+                  description {
+                    html
+                    json
+                  }
+                  cta {
+                    text
+                    title
+                    target
+                    url {
+                      default
+                      hierarchical
+                      base
+                      internal
+                    }
+                  }
+                  cards {
+                    image {
+                      key
+                      url {
+                        default
+                        hierarchical
+                        base
+                        internal
+                      }
+                    }
+                    imageAlt
+                    videoUrl
+                    videoTitle
+                    categoryIcon
+                    title
+                    quote {
+                      html
+                      json
+                    }
+                    authorName
+                    authorRole
+                    authorLocation
                   }
                 }
               }
@@ -515,7 +553,6 @@ export default async function Home() {
         <OptimizelyComponent content={activeContent} />
         <VerticalSelectorFeatureCard id="solutions-selector" />
         <CircularImageMetricRow {...DEFAULT_CIRCULAR_IMAGE_METRIC_ROW} />
-        <VideoStoryCardRow {...DEFAULT_VIDEO_STORY_CARD_ROW} />
         <OfferCardRow id="offer-card-row" />
         <SplitContentImage {...DEFAULT_SPLIT_CONTENT} />
       </main>

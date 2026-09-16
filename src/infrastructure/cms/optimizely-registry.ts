@@ -15,6 +15,9 @@ import { EslStatCardContentType } from '@/components/cms/components/EslStatCard'
 import { EslMediaCardGridContentType } from '@/components/cms/components/EslMediaCardGrid';
 import { EslMediaCardContentType } from '@/components/cms/components/EslMediaCard';
 import EslMediaCardGrid from '@/components/cms/components/EslMediaCardGridRenderer';
+import { EslVideoStoryCardRowContentType } from '@/components/cms/components/EslVideoStoryCardRow';
+import { EslVideoStoryCardContentType } from '@/components/cms/components/EslVideoStoryCard';
+import EslVideoStoryCardRow from '@/components/cms/components/EslVideoStoryCardRowRenderer';
 import { EslFooterNavColumnContentType } from '@/components/cms/components/EslFooterNavColumn';
 import { EslFooterContentType } from '@/components/cms/components/EslFooter';
 import EslSiteSettings, { EslSiteSettingsContentType } from '@/components/cms/pages/EslSiteSettings';
@@ -37,6 +40,8 @@ export function ensureOptimizelyRegistry() {
     EslStatCardContentType,
     EslMediaCardGridContentType,
     EslMediaCardContentType,
+    EslVideoStoryCardRowContentType,
+    EslVideoStoryCardContentType,
     EslFooterNavColumnContentType,
     EslFooterContentType,
     EslSiteSettingsContentType,
@@ -54,6 +59,7 @@ export function ensureOptimizelyRegistry() {
       EslMetricCardRow,
       EslSplitContentCards,
       EslMediaCardGrid,
+      EslVideoStoryCardRow,
       EslSiteSettings,
       EslStartPage,
     },
