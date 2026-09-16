@@ -16,6 +16,8 @@ import { AccordionCardGrid } from "@/components/organisms/accordion-card-grid";
 import { DEFAULT_ACCORDION_CARD_GRID_PROPS } from "@/components/organisms/accordion-card-grid/accordionCardGridData";
 import { SwitchSupport } from "@/components/organisms/switch-support";
 import { DEFAULT_SWITCH_SUPPORT_PROPS } from "@/components/organisms/switch-support/switchSupportData";
+import { SplitContentCta } from "@/components/organisms/split-content-cta";
+import { DEFAULT_SPLIT_CONTENT_CTA_PROPS } from "@/components/organisms/split-content-cta/splitContentCtaData";
 import styles from "./product-detail.module.css";
 
 export const metadata: Metadata = {
@@ -47,6 +49,7 @@ export default function ProductDetailPage() {
       <FaqStates id="faq" {...DEFAULT_FAQ_STATES_PROPS} />
       <AccordionCardGrid id="glossary" {...DEFAULT_ACCORDION_CARD_GRID_PROPS} />
       <SwitchSupport id="switch-support" {...DEFAULT_SWITCH_SUPPORT_PROPS} />
+      <SplitContentCta id="split-content-cta" {...DEFAULT_SPLIT_CONTENT_CTA_PROPS} />
     </main>
   );
 }

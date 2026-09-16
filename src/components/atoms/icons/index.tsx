@@ -21,6 +21,7 @@ import {
   CreditCard,
   Plus,
   Minus,
+  MapPin,
   type LucideProps,
   type LucideIcon,
 } from "lucide-react";
@@ -46,7 +47,8 @@ export type IconName =
   | "sailboat"
   | "credit-card"
   | "plus"
-  | "minus";
+  | "minus"
+  | "map-pin";
 
 export interface IconProps extends Omit<LucideProps, "ref"> {
   size?: number | string;
@@ -76,6 +78,7 @@ const iconRegistry: Record<IconName, LucideIcon> = {
   "credit-card": CreditCard,
   plus: Plus,
   minus: Minus,
+  "map-pin": MapPin,
 };
 
 /**
@@ -176,5 +179,9 @@ export function PlusIcon(props: IconProps) {
 
 export function MinusIcon(props: IconProps) {
   return <Minus size={props.size ?? 20} aria-hidden={true} {...props} />;
+}
+
+export function MapPinIcon(props: IconProps) {
+  return <MapPin size={props.size ?? 20} aria-hidden={true} {...props} />;
 }
 

@@ -30,8 +30,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 48px;
-  height: 48px;
+  width: 40px;
+  height: 40px;
   border-radius: var(--radius-full);
   flex-shrink: 0;
   margin-bottom: 16px;
@@ -123,11 +123,11 @@
   transform: translateX(4px);
 }
 
-/* --- Variant 2: Inverse (Navy Surface with Luminous Turquoise Ring) --- */
+/* --- Variant 2: Inverse (Navy Surface, flat — no border/shadow) --- */
 .inverse {
-  background-color: var(--color-card-bg-inverse);
-  border: 1px solid var(--color-card-ring-hover);
-  box-shadow: 0 0 0 1px var(--color-card-ring-hover), var(--shadow-card-hover);
+  background-color: color-mix(in srgb, var(--color-card-bg-inverse) 25%, transparent);
+  border: none;
+  box-shadow: none;
 }
 
 .inverse .iconBadge {
@@ -144,12 +144,11 @@
 }
 
 .inverse .ctaWrapper {
-  color: var(--color-link-inverted-hover);
+  color: var(--color-text-inverted);
 }
 
 .inverse:hover {
   transform: translateY(-2px);
-  box-shadow: 0 0 0 1px var(--color-card-ring-hover), var(--shadow-card-hover-intense);
 }
 
 .inverse:hover .arrow {

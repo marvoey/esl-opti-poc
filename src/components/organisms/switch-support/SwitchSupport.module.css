@@ -4,6 +4,12 @@
   padding-block: 4rem; /* 64px */
 }
 
+@media (width < 768px) {
+  .section {
+    padding-block: 2rem; /* half, 32px */
+  }
+}
+
 .container {
   width: 100%;
   max-width: var(--container-max-w, 1200px);

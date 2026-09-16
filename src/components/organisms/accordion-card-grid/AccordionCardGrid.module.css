@@ -13,7 +13,7 @@
 
 @media (width < 768px) {
   .container {
-    padding-block: 2.5rem;
+    padding-block: 2rem; /* half, 32px */
   }
 }
 
