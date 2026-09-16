@@ -10,7 +10,7 @@ export interface VideoStoryCardItemData {
   videoTitle?: string;
   icon?: React.ReactNode;
   title: string;
-  quote: string;
+  quote: React.ReactNode | string;
   author: TestimonialAuthorInfo | string;
 }
 
@@ -19,12 +19,12 @@ export interface VideoStoryCardRowProps {
   eyebrow?: string;
   title?: string;
   headingLevel?: HeadingLevel;
-  description?: string;
+  description?: React.ReactNode | string;
   cta?: {
     label: string;
     href: string;
     external?: boolean;
-  };
+  } | null;
   cards?: VideoStoryCardItemData[];
   className?: string;
 }

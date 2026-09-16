@@ -60,7 +60,7 @@ export function VideoStoryCardRow({
             )}
             {description && (
               <Text
-                as="p"
+                as={typeof description === "string" ? "p" : "div"}
                 variant="body-lg"
                 color="primary"
                 className={styles.description}

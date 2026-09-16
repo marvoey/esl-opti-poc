@@ -1,6 +1,6 @@
 import { initContentTypeRegistry } from '@optimizely/cms-sdk';
 import { initReactComponentRegistry } from '@optimizely/cms-sdk/react/server';
-import EslHomePage, { EslHomePageContentType, LegacyEslHomePageContentType } from '@/components/cms/pages/EslHomePage';
+import EslHomeExperience, { EslHomeExperienceContentType } from '@/components/cms/pages/EslHomePage';
 import EslHeroSlider, { EslHeroSliderContentType } from '@/components/cms/components/EslHeroSlider';
 import { EslHeroSlideContentType } from '@/components/cms/components/EslHeroSlide';
 import { EslQuickLinkCardContentType } from '@/components/cms/components/EslQuickLinkCard';
@@ -15,6 +15,9 @@ import { EslStatCardContentType } from '@/components/cms/components/EslStatCard'
 import { EslMediaCardGridContentType } from '@/components/cms/components/EslMediaCardGrid';
 import { EslMediaCardContentType } from '@/components/cms/components/EslMediaCard';
 import EslMediaCardGrid from '@/components/cms/components/EslMediaCardGridRenderer';
+import { EslVideoStoryCardRowContentType } from '@/components/cms/components/EslVideoStoryCardRow';
+import { EslVideoStoryCardContentType } from '@/components/cms/components/EslVideoStoryCard';
+import EslVideoStoryCardRow from '@/components/cms/components/EslVideoStoryCardRowRenderer';
 import { EslFooterNavColumnContentType } from '@/components/cms/components/EslFooterNavColumn';
 import { EslFooterContentType } from '@/components/cms/components/EslFooter';
 import EslSiteSettings, { EslSiteSettingsContentType } from '@/components/cms/pages/EslSiteSettings';
@@ -23,8 +26,7 @@ import EslStartPage, { EslStartPageContentType } from '@/components/cms/pages/Es
 export function ensureOptimizelyRegistry() {
 
   initContentTypeRegistry([
-    EslHomePageContentType,
-    LegacyEslHomePageContentType,
+    EslHomeExperienceContentType,
     EslHeroSliderContentType,
     EslHeroSlideContentType,
     EslQuickLinkCardContentType,
@@ -37,6 +39,8 @@ export function ensureOptimizelyRegistry() {
     EslStatCardContentType,
     EslMediaCardGridContentType,
     EslMediaCardContentType,
+    EslVideoStoryCardRowContentType,
+    EslVideoStoryCardContentType,
     EslFooterNavColumnContentType,
     EslFooterContentType,
     EslSiteSettingsContentType,
@@ -45,8 +49,7 @@ export function ensureOptimizelyRegistry() {
 
   initReactComponentRegistry({
     resolver: {
-      EslHomePage,
-      EslHomeExperience: EslHomePage,
+      EslHomeExperience,
       EslHeroSlider,
       EslSnipeCta,
       EslTabbedSolutions,
@@ -54,6 +57,7 @@ export function ensureOptimizelyRegistry() {
       EslMetricCardRow,
       EslSplitContentCards,
       EslMediaCardGrid,
+      EslVideoStoryCardRow,
       EslSiteSettings,
       EslStartPage,
     },

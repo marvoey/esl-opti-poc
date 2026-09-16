@@ -66,7 +66,7 @@ export interface TestimonialCardProps {
   videoTitle?: string;
   icon?: React.ReactNode;
   title: string;
-  quote: string;
+  quote: React.ReactNode | string;
   author: TestimonialAuthorInfo | string;
   className?: string;
 }
@@ -130,7 +130,7 @@ export function TestimonialCard({
   }, [isOpen, closeLightbox]);
 
   // Clean formatted quote
-  const cleanQuote = quote.replace(/^["“]|["”]$/g, "");
+  const cleanQuote = typeof quote === "string" ? quote.replace(/^["“]|["”]$/g, "") : quote;
 
   // Formatted author
   let authorPrimary = "";
@@ -195,9 +195,13 @@ export function TestimonialCard({
           </div>
 
           <blockquote className={styles.quoteWrapper}>
-            <Text as="p" variant="body" weight="regular" color="primary" className={styles.quote}>
-              &quot;{cleanQuote}&quot;
-            </Text>
+            {typeof cleanQuote === "string" ? (
+              <Text as="p" variant="body" weight="regular" color="primary" className={styles.quote}>
+                &quot;{cleanQuote}&quot;
+              </Text>
+            ) : (
+              <div className={styles.quote}>{cleanQuote}</div>
+            )}
           </blockquote>
 
           <div className={styles.authorRow}>
