@@ -18,6 +18,8 @@ import { SwitchSupport } from "@/components/organisms/switch-support";
 import { DEFAULT_SWITCH_SUPPORT_PROPS } from "@/components/organisms/switch-support/switchSupportData";
 import { SplitContentCta } from "@/components/organisms/split-content-cta";
 import { DEFAULT_SPLIT_CONTENT_CTA_PROPS } from "@/components/organisms/split-content-cta/splitContentCtaData";
+import { Disclosure } from "@/components/organisms/disclosure";
+import { DEFAULT_DISCLOSURE_PROPS } from "@/components/organisms/disclosure/disclosureData";
 import styles from "./product-detail.module.css";
 
 export const metadata: Metadata = {
@@ -50,6 +52,7 @@ export default function ProductDetailPage() {
       <AccordionCardGrid id="glossary" {...DEFAULT_ACCORDION_CARD_GRID_PROPS} />
       <SwitchSupport id="switch-support" {...DEFAULT_SWITCH_SUPPORT_PROPS} />
       <SplitContentCta id="split-content-cta" {...DEFAULT_SPLIT_CONTENT_CTA_PROPS} />
+      <Disclosure id="disclosure" {...DEFAULT_DISCLOSURE_PROPS} />
     </main>
   );
 }
