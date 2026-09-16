@@ -1,0 +1,29 @@
+.section {
+  width: 100%;
+  background-color: var(--color-bg, #FFFFFF);
+  padding-block: 30px;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container-max-w, 1200px);
+  margin: 0 auto;
+  padding-inline: var(--container-gutter, 2.5rem);  
+}
+
+.content{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+
+
+.heading {
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.line {
+  margin: 0;
+}
