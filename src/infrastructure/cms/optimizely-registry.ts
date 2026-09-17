@@ -22,6 +22,9 @@ import { EslFooterNavColumnContentType } from '@/components/cms/components/EslFo
 import { EslFooterContentType } from '@/components/cms/components/EslFooter';
 import EslSiteSettings, { EslSiteSettingsContentType } from '@/components/cms/pages/EslSiteSettings';
 import EslStartPage, { EslStartPageContentType } from '@/components/cms/pages/EslStartPage';
+import EslVerticalSelectorFeatureCard, {
+  EslVerticalSelectorFeatureCardContentType,
+} from '@/components/cms/components/EslVerticalSelectorFeatureCard';
 
 export function ensureOptimizelyRegistry() {
 
@@ -45,6 +48,7 @@ export function ensureOptimizelyRegistry() {
     EslFooterContentType,
     EslSiteSettingsContentType,
     EslStartPageContentType,
+    EslVerticalSelectorFeatureCardContentType,
   ]);
 
   initReactComponentRegistry({
@@ -58,6 +62,7 @@ export function ensureOptimizelyRegistry() {
       EslSplitContentCards,
       EslMediaCardGrid,
       EslVideoStoryCardRow,
+      EslVerticalSelectorFeatureCard,
       EslSiteSettings,
       EslStartPage,
     },

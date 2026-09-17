@@ -11,7 +11,6 @@ import {
   SplitContentImage,
   DEFAULT_SPLIT_CONTENT,
 } from "@/components/organisms/split-content-image";
-import { VerticalSelectorFeatureCard } from "@/components/organisms/vertical-selector-feature-card";
 import "@/infrastructure/cms/optimizely-registry";
 
 const ESL_HOME_PAGE_EXPERIENCE_QUERY = `
@@ -102,6 +101,10 @@ const ESL_HOME_PAGE_EXPERIENCE_QUERY = `
                 }
                 ... on EslTabbedSolutions {
                   showExploreSolutions
+                  heading
+                }
+                ... on EslVerticalSelectorFeatureCard {
+                  showVerticalSelector
                   heading
                 }
                 ... on EslSideBySide {
@@ -381,7 +384,6 @@ export default async function Home() {
     return (
       <main>
         <OptimizelyComponent content={activeContent} />
-        <VerticalSelectorFeatureCard id="solutions-selector" />
         <CircularImageMetricRow {...DEFAULT_CIRCULAR_IMAGE_METRIC_ROW} />
         <OfferCardRow id="offer-card-row" />
         <SplitContentImage {...DEFAULT_SPLIT_CONTENT} />
