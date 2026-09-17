@@ -30,6 +30,8 @@ import { EslCircularImageMetricRowContentType } from '@/components/cms/component
 import { EslCircularImageMetricItemContentType } from '@/components/cms/components/EslCircularImageMetricItem';
 import EslSplitContentImage from '@/components/cms/components/EslSplitContentImageRenderer';
 import { EslSplitContentImageContentType } from '@/components/cms/components/EslSplitContentImage';
+import EslMediaCardGridCarousel from '@/components/cms/components/EslMediaCardGridCarouselRenderer';
+import { EslMediaCardGridCarouselContentType } from '@/components/cms/components/EslMediaCardGridCarousel';
 
 export function ensureOptimizelyRegistry() {
 
@@ -57,6 +59,7 @@ export function ensureOptimizelyRegistry() {
     EslCircularImageMetricRowContentType,
     EslCircularImageMetricItemContentType,
     EslSplitContentImageContentType,
+    EslMediaCardGridCarouselContentType,
   ]);
 
   initReactComponentRegistry({
@@ -73,6 +76,7 @@ export function ensureOptimizelyRegistry() {
       EslVerticalSelectorFeatureCard,
       EslCircularImageMetricRow,
       EslSplitContentImage,
+      EslMediaCardGridCarousel,
       EslSiteSettings,
       EslStartPage,
     },

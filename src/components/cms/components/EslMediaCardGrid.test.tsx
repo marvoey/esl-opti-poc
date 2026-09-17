@@ -284,4 +284,24 @@ describe('EslMediaCardGrid CMS Component', () => {
     );
     expect(container3.firstChild).toBeNull();
   });
+
+  it('omits CTA link on card when CTA is not set in CMS', () => {
+    const mockCardNoCta = {
+      title: 'No CTA Section',
+      cards: [
+        {
+          image: mockImageRef('https://cms.esl.org/media/no-cta.jpg'),
+          title: 'Card Without CTA',
+          description: 'Description without link.',
+          cta: null,
+        },
+      ],
+    };
+
+    render(<EslMediaCardGrid content={mockCardNoCta} />);
+
+    expect(screen.getByText('Card Without CTA')).toBeDefined();
+    expect(screen.queryByRole('link')).toBeNull();
+    expect(screen.queryByText('Learn more')).toBeNull();
+  });
 });

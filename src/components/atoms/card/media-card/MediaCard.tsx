@@ -13,7 +13,7 @@ export interface MediaCardProps {
   title: string;
   description: React.ReactNode | string;
   ctaText?: string;
-  href: string;
+  href?: string;
   external?: boolean;
   className?: string;
 }
@@ -75,12 +75,14 @@ export function MediaCard({
           <div className={styles.description}>{description}</div>
         )}
 
-        <a href={href} className={styles.cta} {...externalProps}>
-          <span>{ctaText}</span>
-          <span className={styles.ctaIcon} aria-hidden="true">
-            <ArrowRightIcon size={16} />
-          </span>
-        </a>
+        {href && (
+          <a href={href} className={styles.cta} {...externalProps}>
+            <span>{ctaText}</span>
+            <span className={styles.ctaIcon} aria-hidden="true">
+              <ArrowRightIcon size={16} />
+            </span>
+          </a>
+        )}
       </div>
     </article>
   );

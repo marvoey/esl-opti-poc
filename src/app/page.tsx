@@ -2,7 +2,6 @@ import React from "react";
 import { notFound } from "next/navigation";
 import { getGraphClient } from "@/infrastructure/cms/graphClient";
 import { OptimizelyComponent } from "@optimizely/cms-sdk/react/server";
-import { OfferCardRow } from "@/components/organisms/offer-card-row";
 import "@/infrastructure/cms/optimizely-registry";
 
 const ESL_HOME_PAGE_EXPERIENCE_QUERY = `
@@ -300,6 +299,33 @@ const ESL_HOME_PAGE_EXPERIENCE_QUERY = `
                   }
                   imageAlt
                 }
+                ... on EslMediaCardGridCarousel {
+                  eyebrow
+                  title
+                  cards {
+                    image {
+                      key
+                      url {
+                        default
+                      }
+                    }
+                    imageAlt
+                    badge
+                    badgeVariant
+                    title
+                    mediaDescription: description {
+                      json
+                    }
+                    cta {
+                      text
+                      title
+                      target
+                      url {
+                        default
+                      }
+                    }
+                  }
+                }
               }
             }
           }
@@ -432,7 +458,6 @@ export default async function Home() {
     return (
       <main>
         <OptimizelyComponent content={activeContent} />
-        <OfferCardRow id="offer-card-row" />
       </main>
     );
   }
