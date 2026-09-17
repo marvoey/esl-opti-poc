@@ -1,7 +1,8 @@
 import React from 'react';
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import EslSideBySide, { EslSideBySideContentType } from './EslSideBySide';
+import EslSideBySide from './EslSideBySideRenderer';
+import { EslSideBySideContentType } from './EslSideBySide';
 
 function mockUrl(url: string) {
   return {

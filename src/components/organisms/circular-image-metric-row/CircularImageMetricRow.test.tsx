@@ -3,9 +3,9 @@ import { render, screen } from "@testing-library/react";
 import React from "react";
 import {
   CircularImageMetricRow,
-  DEFAULT_CIRCULAR_IMAGE_METRIC_ROW,
   type CircularImageMetricRowProps,
 } from "./CircularImageMetricRow";
+import { DEFAULT_CIRCULAR_IMAGE_METRIC_ROW } from "./circularImageMetricRowData";
 
 const BASE_PROPS: CircularImageMetricRowProps = {
   eyebrow: "In the community",
