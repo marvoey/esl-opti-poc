@@ -11,6 +11,7 @@ import {
 } from '@/components/atoms/icons';
 import { EslVideoStoryCardRowContentType } from './EslVideoStoryCardRow';
 import { EslVideoStoryCardContentType } from './EslVideoStoryCard';
+import { resolveMediaUrl } from '@/infrastructure/cms/mediaUrl';
 
 type EslVideoStoryCardData = Omit<
   Partial<ContentProps<typeof EslVideoStoryCardContentType>>,
@@ -33,7 +34,6 @@ type Props = {
 };
 
 type LinkContent = NonNullable<EslVideoStoryCardRowData['cta']>;
-type ImageRefContent = NonNullable<EslVideoStoryCardData['image']>;
 type RichTextContent =
   | NonNullable<EslVideoStoryCardRowData['description']>
   | NonNullable<EslVideoStoryCardData['quote']>;
@@ -85,25 +85,6 @@ function resolveLink(linkObj?: LinkContent | null) {
   return { label, href, external };
 }
 
-function resolveMediaUrl(imageRef?: ImageRefContent | null): string {
-  if (!imageRef) return '';
-
-  const url =
-    (imageRef as { item?: { Url?: string } }).item?.Url ||
-    imageRef.url?.default ||
-    imageRef.url?.hierarchical ||
-    imageRef.url?.base ||
-    '';
-
-  if (!url) return '';
-
-  if (url.startsWith('/') && !url.startsWith('/images/')) {
-    const cmsBase = process.env.OPTIMIZELY_CMS_URL || '';
-    return cmsBase ? `${cmsBase.replace(/\/$/, '')}${url}` : url;
-  }
-
-  return url;
-}
 
 export default function EslVideoStoryCardRowRenderer({ content }: Props) {
   if (!content) return null;
@@ -129,7 +110,7 @@ export default function EslVideoStoryCardRowRenderer({ content }: Props) {
     ? rawCards
         .filter((c): c is EslVideoStoryCardData => Boolean(c))
         .map((card, index): VideoStoryCardItemData | null => {
-          const imageSrc = resolveMediaUrl(card.image);
+          const imageSrc = resolveMediaUrl(card.image, { width: 500, quality: 80, format: 'auto' });
           // Strict Rule: All images must resolve from CMS media.
           // Incomplete cards without a CMS image are omitted (no local fallback).
           if (!imageSrc) return null;

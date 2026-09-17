@@ -6,6 +6,7 @@ import type {
   SplitContentCardsHeroMetricData,
   SplitContentCardsStatItemData,
 } from '@/components/organisms/split-content-cards/SplitContentCards';
+import { resolveMediaUrl } from '@/infrastructure/cms/mediaUrl';
 import { EslSplitContentCardsContentType } from './EslSplitContentCards';
 import { EslStatCardContentType } from './EslStatCard';
 
@@ -26,7 +27,6 @@ type Props = {
 
 type LinkContent = NonNullable<EslSplitContentCardsData['cta']>;
 type RichTextContent = NonNullable<EslSplitContentCardsData['description']>;
-type ImageRefContent = NonNullable<EslSplitContentCardsData['backgroundImage']>;
 
 function renderDescription(descContent?: RichTextContent | string | null): React.ReactNode {
   if (!descContent) return null;
@@ -65,25 +65,6 @@ function resolveLink(linkObj?: LinkContent | null) {
   return { label, href, external };
 }
 
-function resolveMediaUrl(imageRef?: ImageRefContent | null): string {
-  if (!imageRef) return '';
-
-  const url =
-    (imageRef as { item?: { Url?: string } }).item?.Url ||
-    imageRef.url?.default ||
-    imageRef.url?.hierarchical ||
-    imageRef.url?.base ||
-    '';
-
-  if (!url) return '';
-
-  if (url.startsWith('/') && !url.startsWith('/images/')) {
-    const cmsBase = process.env.OPTIMIZELY_CMS_URL || '';
-    return cmsBase ? `${cmsBase.replace(/\/$/, '')}${url}` : url;
-  }
-
-  return url;
-}
 
 export default function EslSplitContentCardsRenderer({ content }: Props) {
   if (!content) return null;
@@ -94,7 +75,7 @@ export default function EslSplitContentCardsRenderer({ content }: Props) {
   const title = effectiveContent.title?.trim() || '';
   const descriptionNode = renderDescription(effectiveContent.description || effectiveContent.splitDescription);
   const ctaResolved = resolveLink(effectiveContent.cta);
-  const bgImageUrl = resolveMediaUrl(effectiveContent.backgroundImage);
+  const bgImageUrl = resolveMediaUrl(effectiveContent.backgroundImage, { width: 800, quality: 80, format: 'auto' });
 
   // Top Hero Metric Card
   const heroSubhead = effectiveContent.heroMetricSubhead?.trim() || '';

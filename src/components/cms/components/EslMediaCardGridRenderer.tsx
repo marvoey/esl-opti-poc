@@ -6,6 +6,7 @@ import {
   type MediaCardItemData,
 } from '@/components/organisms/media-card-grid/MediaCardGrid';
 import type { BadgeVariant } from '@/components/atoms/badge/Badge';
+import { resolveMediaUrl } from '@/infrastructure/cms/mediaUrl';
 import { EslMediaCardGridContentType } from './EslMediaCardGrid';
 import { EslMediaCardContentType } from './EslMediaCard';
 
@@ -29,7 +30,6 @@ type Props = {
 };
 
 type LinkContent = NonNullable<EslMediaCardData['cta']>;
-type ImageRefContent = NonNullable<EslMediaCardData['image']>;
 type RichTextContent = NonNullable<EslMediaCardData['description']>;
 
 function renderDescription(descContent?: RichTextContent | string | null): React.ReactNode {
@@ -75,25 +75,6 @@ function resolveLink(linkObj?: LinkContent | null) {
   return { label, href, external };
 }
 
-function resolveMediaUrl(imageRef?: ImageRefContent | null): string {
-  if (!imageRef) return '';
-
-  const url =
-    (imageRef as { item?: { Url?: string } }).item?.Url ||
-    imageRef.url?.default ||
-    imageRef.url?.hierarchical ||
-    imageRef.url?.base ||
-    '';
-
-  if (!url) return '';
-
-  if (url.startsWith('/') && !url.startsWith('/images/')) {
-    const cmsBase = process.env.OPTIMIZELY_CMS_URL || '';
-    return cmsBase ? `${cmsBase.replace(/\/$/, '')}${url}` : url;
-  }
-
-  return url;
-}
 
 export default function EslMediaCardGridRenderer({ content }: Props) {
   if (!content) return null;
@@ -108,7 +89,7 @@ export default function EslMediaCardGridRenderer({ content }: Props) {
     ? rawCards
         .filter((c): c is EslMediaCardData => Boolean(c))
         .map((card, index): MediaCardItemData | null => {
-          const imageSrc = resolveMediaUrl(card.image);
+          const imageSrc = resolveMediaUrl(card.image, { width: 500, quality: 80, format: 'auto' });
           // Rule 4: All images are media assets from the CMS.
           // If no image is returned, do not fall back to local assets; do not show the card.
           if (!imageSrc) return null;

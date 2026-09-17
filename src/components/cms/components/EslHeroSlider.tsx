@@ -2,6 +2,7 @@ import React from 'react';
 import { contentType, type ContentProps } from '@optimizely/cms-sdk';
 import { RichText } from '@optimizely/cms-sdk/react/richText';
 import { HeroCarousel } from '@/components/organisms/hero-carousel/HeroCarousel';
+import { resolveMediaUrl } from '@/infrastructure/cms/mediaUrl';
 import { EslHeroSlideContentType } from './EslHeroSlide';
 
 export const EslHeroSliderContentType = contentType({
@@ -31,7 +32,6 @@ type Props = {
 type HeroSlideContent = NonNullable<EslHeroSliderData['slides']>[number];
 type LinkContent = NonNullable<HeroSlideContent['primaryCta']>;
 type RichTextContent = NonNullable<HeroSlideContent['body']>;
-type ImageRefContent = NonNullable<HeroSlideContent['image']>;
 
 function splitHeading(headingStr?: string | null) {
   if (!headingStr) return { titleLine1: '', titleLine2: '' };
@@ -55,27 +55,6 @@ function renderBody(bodyContent?: RichTextContent | string | null) {
     return <div dangerouslySetInnerHTML={{ __html: bodyContent.html }} />;
   }
   return '';
-}
-
-function resolveMediaUrl(imageRef?: ImageRefContent | null): string {
-  if (!imageRef) return '';
-
-  const url =
-    imageRef.item?.Url ||
-    imageRef.url?.default ||
-    imageRef.url?.hierarchical ||
-    imageRef.url?.graph ||
-    imageRef.url?.base ||
-    '';
-
-  if (!url) return '';
-
-  if (url.startsWith('/') && !url.startsWith('/images/')) {
-    const cmsBase = process.env.OPTIMIZELY_CMS_URL || '';
-    return cmsBase ? `${cmsBase.replace(/\/$/, '')}${url}` : url;
-  }
-
-  return url;
 }
 
 function resolveMediaAlt(slide?: HeroSlideContent | null, fallback: string = ''): string {
@@ -112,7 +91,7 @@ export default function EslHeroSlider({ content }: Props) {
   const customSlides = Array.isArray(sliderSlides)
     ? sliderSlides.map((slide, idx) => {
         const { titleLine1: t1, titleLine2: t2 } = splitHeading(slide.heading);
-        const imageSrc = resolveMediaUrl(slide.image);
+        const imageSrc = resolveMediaUrl(slide.image, { width: 600, quality: 80, format: 'auto' });
         const imageAlt = imageSrc ? resolveMediaAlt(slide, slide.heading || '') : '';
         const primaryCtaResolved = resolveLink(slide.primaryCta);
         const secondaryCtaResolved = resolveLink(slide.secondaryCta);

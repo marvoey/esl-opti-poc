@@ -2,6 +2,7 @@ import React from 'react';
 import { contentType, type ContentProps } from '@optimizely/cms-sdk';
 import { RichText } from '@optimizely/cms-sdk/react/richText';
 import { SideBySide } from '@/components/organisms/side-by-side/SideBySide';
+import { resolveMediaUrl } from '@/infrastructure/cms/mediaUrl';
 import styles from './EslSideBySide.module.css';
 
 export const EslSideBySideContentType = contentType({
@@ -83,7 +84,6 @@ type Props = {
 
 type LinkContent = NonNullable<EslSideBySideData>['cta'];
 type RichTextContent = NonNullable<EslSideBySideData>['body'];
-type ImageRefContent = NonNullable<EslSideBySideData>['image'];
 
 function renderBody(bodyContent?: RichTextContent | string | null): React.ReactNode {
   if (!bodyContent) return '';
@@ -95,27 +95,6 @@ function renderBody(bodyContent?: RichTextContent | string | null): React.ReactN
     return <div dangerouslySetInnerHTML={{ __html: bodyContent.html }} />;
   }
   return '';
-}
-
-function resolveMediaUrl(imageRef?: ImageRefContent | null): string {
-  if (!imageRef) return '';
-
-  const url =
-    imageRef.item?.Url ||
-    imageRef.url?.default ||
-    imageRef.url?.hierarchical ||
-    imageRef.url?.graph ||
-    imageRef.url?.base ||
-    '';
-
-  if (!url) return '';
-
-  if (url.startsWith('/') && !url.startsWith('/images/')) {
-    const cmsBase = process.env.OPTIMIZELY_CMS_URL || '';
-    return cmsBase ? `${cmsBase.replace(/\/$/, '')}${url}` : url;
-  }
-
-  return url;
 }
 
 function resolveMediaAlt(
@@ -157,7 +136,7 @@ export default function EslSideBySide({ content }: Props) {
   const headline = effectiveContent.headline?.trim() || '';
   const eyebrow = effectiveContent.eyebrow?.trim() || '';
   const body = renderBody(effectiveContent.body);
-  const imageSrc = resolveMediaUrl(effectiveContent.image);
+  const imageSrc = resolveMediaUrl(effectiveContent.image, { width: 700, quality: 80, format: 'auto' });
   const imageAlt = resolveMediaAlt(effectiveContent, headline);
   const { text: ctaLabel, url: ctaUrl, isExternal: ctaExternal } = resolveLink(
     effectiveContent.cta
