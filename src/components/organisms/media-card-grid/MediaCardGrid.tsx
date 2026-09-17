@@ -60,9 +60,9 @@ export function MediaCardGrid({
         {/* Div 2: Cards Row (Dynamic 2 or 3 Columns) */}
         {cards.length > 0 && (
           <div className={`${styles.cardsRow} ${gridLayoutClass}`}>
-            {cards.map((card, index) => (
+            {cards.map((card) => (
               <MediaCard
-                key={card.id ?? `card-${index}`}
+                key={card.id ?? card.title}
                 {...card}
                 className={styles.cardItem}
               />

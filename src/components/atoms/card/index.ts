@@ -34,12 +34,15 @@ export {
 
 export {
   TestimonialCard,
-  parseVideoSource,
   type TestimonialCardProps,
   type TestimonialAuthorInfo,
+} from "./testimonial-card/TestimonialCard";
+
+export {
+  parseVideoSource,
   type VideoSource,
   type VideoType,
-} from "./testimonial-card/TestimonialCard";
+} from "./testimonial-card/parseVideoSource";
 
 export {
   RatesCard,

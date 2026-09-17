@@ -1,7 +1,4 @@
-export { TestimonialCard, parseVideoSource } from "./TestimonialCard";
-export type {
-  TestimonialCardProps,
-  TestimonialAuthorInfo,
-  VideoSource,
-  VideoType,
-} from "./TestimonialCard";
+export { TestimonialCard } from "./TestimonialCard";
+export type { TestimonialCardProps, TestimonialAuthorInfo } from "./TestimonialCard";
+export { parseVideoSource, type VideoSource, type VideoType } from "./parseVideoSource";
+

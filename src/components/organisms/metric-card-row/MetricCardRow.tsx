@@ -99,9 +99,9 @@ export function MetricCardRow({
         {/* Div 2: Cards Row (100% Width, Margin-Top: 48px, 3 Columns) */}
         {cards && cards.length > 0 && (
           <div className={styles.cardsRow}>
-            {cards.map((card, index) => (
+            {cards.map((card) => (
               <RatesCard
-                key={card.id ?? index}
+                key={card.id ?? card.title}
                 category={card.category}
                 categoryIcon={card.categoryIcon}
                 rate={card.rate}

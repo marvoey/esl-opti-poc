@@ -65,54 +65,49 @@ function resolveLink(linkObj?: LinkContent | null) {
   return { label, href, external };
 }
 
+function buildHeroMetric(content: EslSplitContentCardsData): SplitContentCardsHeroMetricData | null {
+  const subhead = content.heroMetricSubhead?.trim() || '';
+  const value = content.heroMetricValue?.trim() || '';
+  const unit = content.heroMetricUnit?.trim() || '';
+  const description = content.heroMetricDescription?.trim() || '';
 
-export default function EslSplitContentCardsRenderer({ content }: Props) {
-  if (!content) return null;
+  if (!value && !subhead && !description) {
+    return null;
+  }
 
-  const effectiveContent = content.component || content;
+  return {
+    subhead,
+    value,
+    unit: unit || undefined,
+    description: description || undefined,
+  };
+}
 
-  const eyebrow = effectiveContent.eyebrow?.trim() || null;
-  const title = effectiveContent.title?.trim() || '';
-  const descriptionNode = renderDescription(effectiveContent.description || effectiveContent.splitDescription);
-  const ctaResolved = resolveLink(effectiveContent.cta);
-  const bgImageUrl = resolveMediaUrl(effectiveContent.backgroundImage, { width: 800, quality: 80, format: 'auto' });
+function buildStatCards(rawStatCards?: (EslStatCardData | null)[] | null): SplitContentCardsStatItemData[] {
+  if (!Array.isArray(rawStatCards)) return [];
+  return rawStatCards
+    .filter((s): s is EslStatCardData => Boolean(s))
+    .map((stat, index) => ({
+      id: `stat-card-${index + 1}`,
+      value: stat.value?.trim() || '',
+      label: stat.label?.trim() || '',
+    }));
+}
 
-  // Top Hero Metric Card
-  const heroSubhead = effectiveContent.heroMetricSubhead?.trim() || '';
-  const heroValue = effectiveContent.heroMetricValue?.trim() || '';
-  const heroUnit = effectiveContent.heroMetricUnit?.trim() || '';
-  const heroDescription = effectiveContent.heroMetricDescription?.trim() || '';
+function buildCta(ctaContent?: LinkContent | null) {
+  const resolved = resolveLink(ctaContent);
+  if (!resolved.label || !resolved.href) return null;
+  return resolved;
+}
 
-  const heroMetric: SplitContentCardsHeroMetricData | null =
-    heroValue || heroSubhead || heroDescription
-      ? {
-          subhead: heroSubhead,
-          value: heroValue,
-          unit: heroUnit || undefined,
-          description: heroDescription || undefined,
-        }
-      : null;
-
-  // Bottom Dual Stat Cards
-  const rawStatCards = effectiveContent.statCards;
-  const statCards: SplitContentCardsStatItemData[] = Array.isArray(rawStatCards)
-    ? rawStatCards
-        .filter((s): s is EslStatCardData => Boolean(s))
-        .map((stat, index) => ({
-          id: `stat-card-${index + 1}`,
-          value: stat.value?.trim() || '',
-          label: stat.label?.trim() || '',
-        }))
-    : [];
-
-  const cta =
-    ctaResolved.label && ctaResolved.href
-      ? {
-          label: ctaResolved.label,
-          href: ctaResolved.href,
-          external: ctaResolved.external,
-        }
-      : null;
+function mapSplitContentCardsProps(content: EslSplitContentCardsData) {
+  const eyebrow = content.eyebrow?.trim() || null;
+  const title = content.title?.trim() || '';
+  const descriptionNode = renderDescription(content.description || content.splitDescription);
+  const cta = buildCta(content.cta);
+  const bgImageUrl = resolveMediaUrl(content.backgroundImage, { width: 800, quality: 80, format: 'auto' });
+  const heroMetric = buildHeroMetric(content);
+  const statCards = buildStatCards(content.statCards);
 
   const hasContent = Boolean(
     title ||
@@ -124,17 +119,27 @@ export default function EslSplitContentCardsRenderer({ content }: Props) {
       bgImageUrl
   );
 
+  return {
+    hasContent,
+    props: {
+      eyebrow,
+      title: title || undefined,
+      description: descriptionNode,
+      cta,
+      heroMetric,
+      statCards,
+      backgroundImage: bgImageUrl || undefined,
+    },
+  };
+}
+
+export default function EslSplitContentCardsRenderer({ content }: Props) {
+  if (!content) return null;
+
+  const effectiveContent = content.component || content;
+  const { hasContent, props } = mapSplitContentCardsProps(effectiveContent);
+
   if (!hasContent) return null;
 
-  return (
-    <SplitContentCards
-      eyebrow={eyebrow}
-      title={title || undefined}
-      description={descriptionNode}
-      cta={cta}
-      heroMetric={heroMetric}
-      statCards={statCards}
-      backgroundImage={bgImageUrl || undefined}
-    />
-  );
+  return <SplitContentCards {...props} />;
 }

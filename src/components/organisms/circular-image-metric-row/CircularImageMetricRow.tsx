@@ -149,8 +149,8 @@ export function CircularImageMetricRow({
 
         {/* Div 2: Metrics Row (100% Width, Margin-Top: 48px) */}
         <div className={styles.metricsRow}>
-          {metrics.map((item, index) => (
-            <div key={item.id ?? index} className={styles.metricCard}>
+          {metrics.map((item) => (
+            <div key={item.id ?? item.stat} className={styles.metricCard}>
               <div className={styles.imageWrapper}>
                 <Image
                   src={item.image.src}
