@@ -28,6 +28,8 @@ import EslVerticalSelectorFeatureCard, {
 import EslCircularImageMetricRow from '@/components/cms/components/EslCircularImageMetricRowRenderer';
 import { EslCircularImageMetricRowContentType } from '@/components/cms/components/EslCircularImageMetricRow';
 import { EslCircularImageMetricItemContentType } from '@/components/cms/components/EslCircularImageMetricItem';
+import EslSplitContentImage from '@/components/cms/components/EslSplitContentImageRenderer';
+import { EslSplitContentImageContentType } from '@/components/cms/components/EslSplitContentImage';
 
 export function ensureOptimizelyRegistry() {
 
@@ -54,6 +56,7 @@ export function ensureOptimizelyRegistry() {
     EslVerticalSelectorFeatureCardContentType,
     EslCircularImageMetricRowContentType,
     EslCircularImageMetricItemContentType,
+    EslSplitContentImageContentType,
   ]);
 
   initReactComponentRegistry({
@@ -69,6 +72,7 @@ export function ensureOptimizelyRegistry() {
       EslVideoStoryCardRow,
       EslVerticalSelectorFeatureCard,
       EslCircularImageMetricRow,
+      EslSplitContentImage,
       EslSiteSettings,
       EslStartPage,
     },

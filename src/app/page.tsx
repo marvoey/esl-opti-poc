@@ -3,10 +3,6 @@ import { notFound } from "next/navigation";
 import { getGraphClient } from "@/infrastructure/cms/graphClient";
 import { OptimizelyComponent } from "@optimizely/cms-sdk/react/server";
 import { OfferCardRow } from "@/components/organisms/offer-card-row";
-import {
-  SplitContentImage,
-  DEFAULT_SPLIT_CONTENT,
-} from "@/components/organisms/split-content-image";
 import "@/infrastructure/cms/optimizely-registry";
 
 const ESL_HOME_PAGE_EXPERIENCE_QUERY = `
@@ -274,6 +270,36 @@ const ESL_HOME_PAGE_EXPERIENCE_QUERY = `
                     label
                   }
                 }
+                ... on EslSplitContentImage {
+                  title
+                  splitImageDescription: description {
+                    json
+                  }
+                  primaryCta {
+                    text
+                    title
+                    target
+                    url {
+                      default
+                    }
+                  }
+                  secondaryCta {
+                    text
+                    title
+                    target
+                    url {
+                      default
+                    }
+                  }
+                  eligibilityNote
+                  image {
+                    key
+                    url {
+                      default
+                    }
+                  }
+                  imageAlt
+                }
               }
             }
           }
@@ -407,7 +433,6 @@ export default async function Home() {
       <main>
         <OptimizelyComponent content={activeContent} />
         <OfferCardRow id="offer-card-row" />
-        <SplitContentImage {...DEFAULT_SPLIT_CONTENT} />
       </main>
     );
   }

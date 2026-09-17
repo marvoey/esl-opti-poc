@@ -41,6 +41,7 @@ export const EslHomeExperienceContentType = contentType({
     'EslVideoStoryCardRow',
     'EslVerticalSelectorFeatureCard',
     'EslCircularImageMetricRow',
+    'EslSplitContentImage',
   ],
 });
 
