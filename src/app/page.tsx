@@ -2,10 +2,6 @@ import React from "react";
 import { notFound } from "next/navigation";
 import { getGraphClient } from "@/infrastructure/cms/graphClient";
 import { OptimizelyComponent } from "@optimizely/cms-sdk/react/server";
-import {
-  CircularImageMetricRow,
-  DEFAULT_CIRCULAR_IMAGE_METRIC_ROW,
-} from "@/components/organisms/circular-image-metric-row";
 import { OfferCardRow } from "@/components/organisms/offer-card-row";
 import {
   SplitContentImage,
@@ -252,6 +248,32 @@ const ESL_HOME_PAGE_EXPERIENCE_QUERY = `
                     authorLocation
                   }
                 }
+                ... on EslCircularImageMetricRow {
+                  eyebrow
+                  title
+                  circularDescription: description {
+                    json
+                  }
+                  cta {
+                    text
+                    title
+                    target
+                    url {
+                      default
+                    }
+                  }
+                  metrics {
+                    image {
+                      key
+                      url {
+                        default
+                      }
+                    }
+                    imageAlt
+                    stat
+                    label
+                  }
+                }
               }
             }
           }
@@ -384,7 +406,6 @@ export default async function Home() {
     return (
       <main>
         <OptimizelyComponent content={activeContent} />
-        <CircularImageMetricRow {...DEFAULT_CIRCULAR_IMAGE_METRIC_ROW} />
         <OfferCardRow id="offer-card-row" />
         <SplitContentImage {...DEFAULT_SPLIT_CONTENT} />
       </main>

@@ -25,6 +25,9 @@ import EslStartPage, { EslStartPageContentType } from '@/components/cms/pages/Es
 import EslVerticalSelectorFeatureCard, {
   EslVerticalSelectorFeatureCardContentType,
 } from '@/components/cms/components/EslVerticalSelectorFeatureCard';
+import EslCircularImageMetricRow from '@/components/cms/components/EslCircularImageMetricRowRenderer';
+import { EslCircularImageMetricRowContentType } from '@/components/cms/components/EslCircularImageMetricRow';
+import { EslCircularImageMetricItemContentType } from '@/components/cms/components/EslCircularImageMetricItem';
 
 export function ensureOptimizelyRegistry() {
 
@@ -49,6 +52,8 @@ export function ensureOptimizelyRegistry() {
     EslSiteSettingsContentType,
     EslStartPageContentType,
     EslVerticalSelectorFeatureCardContentType,
+    EslCircularImageMetricRowContentType,
+    EslCircularImageMetricItemContentType,
   ]);
 
   initReactComponentRegistry({
@@ -63,6 +68,7 @@ export function ensureOptimizelyRegistry() {
       EslMediaCardGrid,
       EslVideoStoryCardRow,
       EslVerticalSelectorFeatureCard,
+      EslCircularImageMetricRow,
       EslSiteSettings,
       EslStartPage,
     },

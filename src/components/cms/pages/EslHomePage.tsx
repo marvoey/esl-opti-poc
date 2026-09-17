@@ -40,6 +40,7 @@ export const EslHomeExperienceContentType = contentType({
     'EslMediaCardGrid',
     'EslVideoStoryCardRow',
     'EslVerticalSelectorFeatureCard',
+    'EslCircularImageMetricRow',
   ],
 });
 
