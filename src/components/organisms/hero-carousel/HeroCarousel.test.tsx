@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import React from "react";
 import { HeroCarousel } from "./HeroCarousel";
@@ -39,5 +39,21 @@ describe("HeroCarousel Organism", () => {
     }));
     render(<HeroCarousel slides={slidesWithoutImages} />);
     expect(screen.queryAllByRole("img")).toHaveLength(0);
+  });
+
+  it("registers and cleans up visibilitychange listener to guard background tab autoplay", () => {
+    const addEventListenerSpy = vi.spyOn(document, "addEventListener");
+    const removeEventListenerSpy = vi.spyOn(document, "removeEventListener");
+
+    const { unmount } = render(<HeroCarousel slides={HERO_SLIDES} />);
+
+    expect(addEventListenerSpy).toHaveBeenCalledWith("visibilitychange", expect.any(Function));
+
+    unmount();
+
+    expect(removeEventListenerSpy).toHaveBeenCalledWith("visibilitychange", expect.any(Function));
+
+    addEventListenerSpy.mockRestore();
+    removeEventListenerSpy.mockRestore();
   });
 });
