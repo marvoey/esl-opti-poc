@@ -152,7 +152,7 @@ export function OfferCardRow({
               <div className={styles.track}>
                 {cards.map((card, index) => (
                   <div
-                    key={card.id ?? `offer-${index}`}
+                    key={card.id ?? card.title}
                     className={styles.slide}
                     role="group"
                     aria-roledescription="slide"

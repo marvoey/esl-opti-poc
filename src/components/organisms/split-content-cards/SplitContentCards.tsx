@@ -162,9 +162,9 @@ export function SplitContentCards({
           {/* Bottom Dual Stat Cards */}
           {statCards && statCards.length > 0 && (
             <div className={styles.dualStatsRow}>
-              {statCards.map((stat, index) => (
+              {statCards.map((stat) => (
                 <div
-                  key={stat.id ?? `stat-${index}`}
+                  key={stat.id ?? `${stat.label}-${stat.value}`}
                   className={styles.statCard}
                 >
                   <Stat className={styles.statValue}>{stat.value}</Stat>

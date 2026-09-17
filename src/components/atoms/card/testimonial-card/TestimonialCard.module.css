@@ -141,15 +141,26 @@
 .lightboxBackdrop {
   position: fixed;
   inset: 0;
+  width: 100vw;
+  height: 100vh;
+  max-width: 100vw;
+  max-height: 100vh;
+  margin: 0;
+  border: none;
   z-index: 9999;
   background-color: var(--color-overlay-white, rgba(255, 255, 255, 0.85));
   backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 24px;
   box-sizing: border-box;
   animation: fadeIn 200ms var(--ease-out-smart);
+}
+
+.lightboxBackdrop::backdrop {
+  background-color: transparent;
 }
 
 .lightboxContainer {

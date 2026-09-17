@@ -59,8 +59,8 @@ export function FeatureCardRow({
         )}
         
         <div className={styles.grid}>
-          {items.map((item, index) => (
-            <div key={item.id || index} className={styles.card}>
+          {items.map((item) => (
+            <div key={item.id || item.title} className={styles.card}>
               <div className={styles.iconBadge} aria-hidden="true">
                 {typeof item.icon === "string" ? (
                   <Icon name={item.icon as IconName} size={24} aria-hidden="true" />

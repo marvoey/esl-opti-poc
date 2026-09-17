@@ -67,9 +67,9 @@ export function ProductCardsRowVariant2({
         )}
 
         <div className={styles.grid}>
-          {items.map((item, index) => (
+          {items.map((item) => (
             <IconContentCard
-              key={item.id || index}
+              key={item.id || item.title}
               href={item.href}
               icon={
                 typeof item.icon === "string" ? (

@@ -1,7 +1,8 @@
 import { describe, it, expect } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import React from "react";
-import { TestimonialCard, parseVideoSource } from "./TestimonialCard";
+import { TestimonialCard } from "./TestimonialCard";
+import { parseVideoSource } from "./parseVideoSource";
 
 describe("TestimonialCard Component & parseVideoSource helper", () => {
   it("parses YouTube, Vimeo, and local video sources accurately", () => {

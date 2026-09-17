@@ -27,11 +27,90 @@ export interface SwitchSupportProps {
   className?: string;
 }
 
+interface SwitchSupportHeaderProps {
+  headingId?: string;
+  title?: string;
+  description?: string;
+}
+
+function SwitchSupportHeader({ headingId, title, description }: SwitchSupportHeaderProps) {
+  if (!title && !description) return null;
+
+  return (
+    <div className={styles.header}>
+      {title && (
+        <Heading
+          level="h2"
+          id={headingId}
+          className={styles.heading}
+        >
+          {title}
+        </Heading>
+      )}
+      {description && (
+        <Text variant="body-lg" color="inverted" className={styles.description}>
+          {description}
+        </Text>
+      )}
+    </div>
+  );
+}
+
+interface SwitchSupportActionsProps {
+  ctaLabel?: string;
+  ctaHref?: string;
+  linkLabel?: string;
+  linkHref?: string;
+}
+
+function SwitchSupportActions({
+  ctaLabel,
+  ctaHref,
+  linkLabel,
+  linkHref,
+}: SwitchSupportActionsProps) {
+  const hasCta = Boolean(ctaLabel && ctaHref);
+  const hasLink = Boolean(linkLabel && linkHref);
+
+  if (!hasCta && !hasLink) return null;
+
+  return (
+    <div className={styles.ctaRow}>
+      {hasCta && (
+        <Button
+          href={ctaHref!}
+          variant="secondary"
+          rightIcon={<Icon name="arrow-right" size={18} />}
+          className={styles.button}
+        >
+          {ctaLabel}
+        </Button>
+      )}
+      {hasLink && (
+        <TextLink
+          href={linkHref!}
+          variant="light"
+          underline="none"
+          textVariant="body-sm"
+          className={styles.link}
+        >
+          <span className={styles.linkContent}>
+            <CircleCheck size={28} />
+            {linkLabel}
+          </span>
+        </TextLink>
+      )}
+    </div>
+  );
+}
+
+const EMPTY_STEPS: SwitchSupportStep[] = [];
+
 export function SwitchSupport({
   id,
   title,
   description,
-  steps = [],
+  steps = EMPTY_STEPS,
   ctaLabel,
   ctaHref,
   linkLabel,
@@ -40,31 +119,21 @@ export function SwitchSupport({
 }: SwitchSupportProps) {
   if (!steps || steps.length === 0) return null;
 
+  const headingId = id ? `${id}-heading` : undefined;
+  const labelledBy = title ? (headingId ?? "switch-support-heading") : undefined;
+
   return (
     <section
       id={id}
-      className={`${styles.section} ${className}`}
-      aria-labelledby={title ? `${id ?? "switch-support"}-heading` : undefined}
+      className={`${styles.section} ${className}`.trim()}
+      aria-labelledby={labelledBy}
     >
       <div className={styles.container}>
-        {(title || description) && (
-          <div className={styles.header}>
-            {title && (
-              <Heading
-                level="h2"
-                id={id ? `${id}-heading` : undefined}
-                className={styles.heading}
-              >
-                {title}
-              </Heading>
-            )}
-            {description && (
-              <Text variant="body-lg" color="inverted" className={styles.description}>
-                {description}
-              </Text>
-            )}
-          </div>
-        )}
+        <SwitchSupportHeader
+          headingId={headingId}
+          title={title}
+          description={description}
+        />
 
         <div className={styles.grid}>
           {steps.map((item) => (
@@ -78,34 +147,12 @@ export function SwitchSupport({
           ))}
         </div>
 
-        {(ctaLabel && ctaHref) || (linkLabel && linkHref) ? (
-          <div className={styles.ctaRow}>
-            {ctaLabel && ctaHref && (
-              <Button
-                href={ctaHref}
-                variant="secondary"
-                rightIcon={<Icon name="arrow-right" size={18} />}
-                className={styles.button}
-              >
-                {ctaLabel}
-              </Button>
-            )}
-            {linkLabel && linkHref && (
-              <TextLink
-                href={linkHref}
-                variant="light"
-                underline="none"
-                textVariant="body-sm"
-                className={styles.link}
-              >
-                <span className={styles.linkContent}>
-                  <CircleCheck size={28} />
-                  {linkLabel}
-                </span>
-              </TextLink>
-            )}
-          </div>
-        ) : null}
+        <SwitchSupportActions
+          ctaLabel={ctaLabel}
+          ctaHref={ctaHref}
+          linkLabel={linkLabel}
+          linkHref={linkHref}
+        />
       </div>
     </section>
   );

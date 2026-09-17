@@ -1,19 +1,17 @@
 "use client";
 
-import React, { useEffect } from "react";
-import useEmblaCarousel from "embla-carousel-react";
-import type { EmblaOptionsType, EmblaPluginType, EmblaCarouselType } from "embla-carousel";
+import React from "react";
+import type { EmblaViewportRefType } from "embla-carousel-react";
 import styles from "./Carousel.module.css";
 
 export interface CarouselProps {
   children: React.ReactNode;
-  options?: EmblaOptionsType;
-  plugins?: EmblaPluginType[];
+  /** The `emblaRef` returned by the caller's own `useEmblaCarousel()` call, attached to the viewport element. */
+  emblaRef: EmblaViewportRefType;
   className?: string;
   viewportClassName?: string;
   containerClassName?: string;
   ariaLabel?: string;
-  setApi?: (api: EmblaCarouselType) => void;
 }
 
 export interface CarouselSlideProps {
@@ -23,22 +21,12 @@ export interface CarouselSlideProps {
 
 export function Carousel({
   children,
-  options,
-  plugins,
+  emblaRef,
   className,
   viewportClassName,
   containerClassName,
   ariaLabel = "Carousel",
-  setApi,
 }: CarouselProps) {
-  const [emblaRef, emblaApi] = useEmblaCarousel(options, plugins);
-
-  useEffect(() => {
-    if (emblaApi && setApi) {
-      setApi(emblaApi);
-    }
-  }, [emblaApi, setApi]);
-
   const carouselClass = className
     ? `${styles.carousel} ${className}`
     : styles.carousel;

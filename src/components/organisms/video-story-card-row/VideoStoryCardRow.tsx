@@ -88,9 +88,9 @@ export function VideoStoryCardRow({
         {/* Div 2: Cards Row (100% Width, Margin-Top: 48px, 3 Columns) */}
         {cards && cards.length > 0 && (
           <div className={styles.cardsRow}>
-            {cards.map((card, index) => (
+            {cards.map((card) => (
               <TestimonialCard
-                key={card.id ?? index}
+                key={card.id ?? card.title}
                 imageSrc={card.imageSrc}
                 imageAlt={card.imageAlt}
                 videoUrl={card.videoUrl}

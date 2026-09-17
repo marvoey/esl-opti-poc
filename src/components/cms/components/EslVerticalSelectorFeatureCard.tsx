@@ -1,9 +1,4 @@
-import React from 'react';
 import { contentType, type ContentProps } from '@optimizely/cms-sdk';
-import {
-  VerticalSelectorFeatureCard,
-  DEFAULT_VERTICAL_SELECTOR_DATA,
-} from '@/components/organisms/vertical-selector-feature-card';
 
 export const EslVerticalSelectorFeatureCardContentType = contentType({
   key: 'EslVerticalSelectorFeatureCard',
@@ -26,30 +21,6 @@ export const EslVerticalSelectorFeatureCardContentType = contentType({
   },
 });
 
-type EslVerticalSelectorFeatureCardData = Partial<
+export type EslVerticalSelectorFeatureCardData = Partial<
   ContentProps<typeof EslVerticalSelectorFeatureCardContentType>
 >;
-
-type Props = {
-  content?: (EslVerticalSelectorFeatureCardData & {
-    component?: EslVerticalSelectorFeatureCardData;
-  }) | null;
-};
-
-export default function EslVerticalSelectorFeatureCard({ content }: Props) {
-  const effectiveContent = content?.component || content;
-
-  // If explicitly unchecked in CMS, hide the component cleanly
-  if (effectiveContent?.showVerticalSelector === false) {
-    return null;
-  }
-
-  const titleOverride = effectiveContent?.heading?.trim();
-
-  return (
-    <VerticalSelectorFeatureCard
-      id="solutions-selector"
-      title={titleOverride || DEFAULT_VERTICAL_SELECTOR_DATA.title}
-    />
-  );
-}

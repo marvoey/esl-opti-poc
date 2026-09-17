@@ -35,9 +35,9 @@ export function KeyFactsRow({
         </header>
 
         <div className={styles.tileTrack}>
-          {tiles.map((tile, idx) => (
+          {tiles.map((tile) => (
             <BasicsTile
-              key={tile.id || `key-fact-${idx}`}
+              key={tile.id || tile.callout}
               callout={tile.callout}
               value={tile.value}
               description={tile.description}

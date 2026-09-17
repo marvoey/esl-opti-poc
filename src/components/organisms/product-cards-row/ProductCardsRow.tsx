@@ -63,8 +63,8 @@ export function ProductCardsRow({
         )}
 
         <div className={styles.grid}>
-          {items.map((item, index) => (
-            <div key={item.id || index} className={styles.card}>
+          {items.map((item) => (
+            <div key={item.id || item.title} className={styles.card}>
               <CircleCheck
                 size={28}
                 backgroundColor="var(--color-card-icon-badge-bg)"

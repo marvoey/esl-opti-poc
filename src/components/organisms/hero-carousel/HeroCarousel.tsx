@@ -3,7 +3,7 @@
 import React, { useState, useCallback, useEffect } from "react";
 import Image from "next/image";
 import { ArrowRight, ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
-import type { EmblaCarouselType } from "embla-carousel";
+import useEmblaCarousel from "embla-carousel-react";
 import { Carousel, CarouselSlide } from "@/components/molecules/carousel/Carousel";
 import { Text } from "@/components/atoms/text/Text";
 import { Button } from "@/components/atoms/button/Button";
@@ -34,16 +34,20 @@ export function HeroCarousel({
   variant = "default",
   editProps,
 }: HeroCarouselProps) {
-  const [api, setApi] = useState<EmblaCarouselType>();
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    align: "start",
+    loop: true,
+    skipSnaps: false,
+  });
   const [isPlaying, setIsPlaying] = useState(true);
 
   const scrollPrev = useCallback(() => {
-    if (api) api.scrollPrev();
-  }, [api]);
+    if (emblaApi) emblaApi.scrollPrev();
+  }, [emblaApi]);
 
   const scrollNext = useCallback(() => {
-    if (api) api.scrollNext();
-  }, [api]);
+    if (emblaApi) emblaApi.scrollNext();
+  }, [emblaApi]);
 
   const togglePlay = useCallback(() => {
     setIsPlaying((prev) => !prev);
@@ -51,14 +55,14 @@ export function HeroCarousel({
 
   // Simple interval autoplay when enabled and multiple slides exist
   useEffect(() => {
-    if (!api || !isPlaying || (slides && slides.length <= 1)) return;
+    if (!emblaApi || !isPlaying || (slides && slides.length <= 1)) return;
 
     const intervalId = setInterval(() => {
-      api.scrollNext();
+      emblaApi.scrollNext();
     }, 6000);
 
     return () => clearInterval(intervalId);
-  }, [api, isPlaying, slides]);
+  }, [emblaApi, isPlaying, slides]);
 
   const activeSlides = slides && slides.length > 0 ? slides : [];
 
@@ -76,12 +80,7 @@ export function HeroCarousel({
         ariaLabel={ariaLabel}
         className={styles.heroContainer}
         containerClassName={styles.slideTrack}
-        setApi={setApi}
-        options={{
-          align: "start",
-          loop: true,
-          skipSnaps: false,
-        }}
+        emblaRef={emblaRef}
       >
         {activeSlides.map((slide, index) => {
           const isFirst = index === 0;

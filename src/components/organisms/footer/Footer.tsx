@@ -1,8 +1,8 @@
 import React from "react";
-import Link from "next/link";
-import { Text } from "@/components/atoms/text/Text";
-import { TextLink } from "@/components/atoms/link/TextLink";
-import { Button, ButtonVariant } from "@/components/atoms/button/Button";
+import type { ButtonVariant } from "@/components/atoms/button/Button";
+import { FooterBrand } from "./FooterBrand";
+import { FooterNavColumn } from "./FooterNavColumn";
+import { FooterLegal } from "./FooterLegal";
 import styles from "./Footer.module.css";
 
 export interface FooterLinkItem {
@@ -67,11 +67,14 @@ export interface FooterProps {
  * to a stacked brand column and a 2x2 nav grid on mobile, followed by a full-width
  * legal/copyright row.
  */
+const EMPTY_COLUMNS: FooterNavColumn[] = [];
+const EMPTY_LEGAL_LINKS: FooterLinkItem[] = [];
+
 export function Footer({
   brand,
-  columns = [],
+  columns = EMPTY_COLUMNS,
   addressText,
-  legalLinks = [],
+  legalLinks = EMPTY_LEGAL_LINKS,
   serviceMarksText,
   disclaimerText,
   copyrightText,
@@ -90,160 +93,19 @@ export function Footer({
       <div className={styles.container}>
         <div className={styles.gridContainer}>
           <div className={styles.row1}>
-            {brand ? (
-              <div className={styles.brandCol}>
-                {brand.logo || brand.logoUrl ? (
-                  <Link
-                    href={brand.wordmarkHref || "/"}
-                    className={styles.brandLogo}
-                    aria-label={brand.wordmark || "ESL"}
-                  >
-                    {brand.logo ? (
-                      brand.logo
-                    ) : (
-                      <img
-                        src={brand.logoUrl}
-                        alt={brand.logoAlt || brand.wordmark || "ESL"}
-                        className={styles.logoImage}
-                      />
-                    )}
-                  </Link>
-                ) : null}
-                {brand.text ? (
-                  <Text
-                    as="p"
-                    variant="body-sm"
-                    color="inverted"
-                    className={styles.brandText}
-                  >
-                    {brand.text}
-                  </Text>
-                ) : null}
-                {brand.button ? (
-                  <Button
-                    href={brand.button.href}
-                    variant={brand.button.variant || "secondary"}
-                    shape="pill"
-                    className={styles.brandButton}
-                    {...(brand.button.external
-                      ? { target: "_blank", rel: "noopener noreferrer" }
-                      : {})}
-                  >
-                    {brand.button.label}
-                  </Button>
-                ) : null}
-              </div>
-            ) : null}
-
+            {brand ? <FooterBrand brand={brand} /> : null}
             {columns.map((column) => (
-              <nav
-                key={column.id}
-                aria-label={column.title}
-                className={styles.navCol}
-              >
-                <Text
-                  as="h3"
-                  variant="footer-title"
-                  color="inverted"
-                  className={styles.navTitle}
-                >
-                  {column.title}
-                </Text>
-                <ul className={styles.navList}>
-                  {column.links.map((link) => (
-                    <li key={link.id}>
-                      <TextLink
-                        href={link.href}
-                        variant="light"
-                        underline="none"
-                        textVariant="body"
-                        weight="regular"
-                        external={link.external}
-                        target={link.target}
-                        rel={link.rel}
-                        className={styles.footerLink}
-                      >
-                        {link.label}
-                      </TextLink>
-                    </li>
-                  ))}
-                </ul>
-              </nav>
+              <FooterNavColumn key={column.id} column={column} />
             ))}
           </div>
 
-          {(addressText || (legalLinks && legalLinks.length > 0) || effectiveServiceMarks || copyrightText || bottomContent) ? (
-            <div className={styles.row2}>
-              {bottomContent ?? (
-                <>
-                  {(addressText || (legalLinks && legalLinks.length > 0)) ? (
-                    <div className={styles.legalFirstRow}>
-                      {addressText ? (
-                        <Text
-                          as="p"
-                          variant="body-sm"
-                          color="inverted-muted"
-                          className={styles.legalAddress}
-                        >
-                          {addressText}
-                        </Text>
-                      ) : null}
-                      {legalLinks && legalLinks.length > 0 ? (
-                        <ul className={styles.legalLinksList} aria-label="Legal Information">
-                          {legalLinks.map((link) => (
-                            <li key={link.id} className={styles.legalLinkItem}>
-                              <Text
-                                as="span"
-                                variant="body-sm"
-                                color="inverted-muted"
-                                className={styles.legalPipe}
-                                aria-hidden="true"
-                              >
-                                |
-                              </Text>
-                              <TextLink
-                                href={link.href}
-                                variant="light"
-                                underline="none"
-                                textVariant="body-sm"
-                                weight="regular"
-                                external={link.external}
-                                target={link.target}
-                                rel={link.rel}
-                                className={styles.legalLink}
-                              >
-                                {link.label}
-                              </TextLink>
-                            </li>
-                          ))}
-                        </ul>
-                      ) : null}
-                    </div>
-                  ) : null}
-                  {effectiveServiceMarks ? (
-                    <Text
-                      as="p"
-                      variant="body-sm"
-                      color="inverted-muted"
-                      className={styles.legalServiceMarks}
-                    >
-                      {effectiveServiceMarks}
-                    </Text>
-                  ) : null}
-                  {copyrightText ? (
-                    <Text
-                      as="p"
-                      variant="body-sm"
-                      color="inverted-muted"
-                      className={styles.copyrightText}
-                    >
-                      {copyrightText}
-                    </Text>
-                  ) : null}
-                </>
-              )}
-            </div>
-          ) : null}
+          <FooterLegal
+            addressText={addressText}
+            legalLinks={legalLinks}
+            serviceMarksText={effectiveServiceMarks}
+            copyrightText={copyrightText}
+            bottomContent={bottomContent}
+          />
         </div>
       </div>
     </section>

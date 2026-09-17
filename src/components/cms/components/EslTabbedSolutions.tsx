@@ -1,9 +1,4 @@
-import React from 'react';
 import { contentType, type ContentProps } from '@optimizely/cms-sdk';
-import {
-  TabbedIconCards,
-  defaultTabbedSolutionsData,
-} from '@/components/organisms/tabbed-icon-cards';
 
 export const EslTabbedSolutionsContentType = contentType({
   key: 'EslTabbedSolutions',
@@ -26,24 +21,4 @@ export const EslTabbedSolutionsContentType = contentType({
   },
 });
 
-type EslTabbedSolutionsData = Partial<ContentProps<typeof EslTabbedSolutionsContentType>>;
-
-type Props = {
-  content?: (EslTabbedSolutionsData & { component?: EslTabbedSolutionsData }) | null;
-};
-
-export default function EslTabbedSolutions({ content }: Props) {
-  const effectiveContent = content?.component || content;
-
-  // If explicitly unchecked, hide the component
-  if (effectiveContent?.showExploreSolutions === false) {
-    return null;
-  }
-
-  return (
-    <TabbedIconCards
-      heading={effectiveContent?.heading || defaultTabbedSolutionsData.heading}
-      tabs={defaultTabbedSolutionsData.tabs}
-    />
-  );
-}
+export type EslTabbedSolutionsData = Partial<ContentProps<typeof EslTabbedSolutionsContentType>>;
