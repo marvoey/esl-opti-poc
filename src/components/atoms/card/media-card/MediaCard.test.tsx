@@ -40,4 +40,10 @@ describe("MediaCard Atom Component", () => {
 
     expect(screen.queryByText("Limited Time")).toBeNull();
   });
+
+  it("omits CTA link when href is not provided", () => {
+    render(<MediaCard {...MOCK_CARD_PROPS} href={undefined} />);
+
+    expect(screen.queryByRole("link")).toBeNull();
+  });
 });

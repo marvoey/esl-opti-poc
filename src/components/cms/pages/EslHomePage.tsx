@@ -39,6 +39,10 @@ export const EslHomeExperienceContentType = contentType({
     'EslSplitContentCards',
     'EslMediaCardGrid',
     'EslVideoStoryCardRow',
+    'EslVerticalSelectorFeatureCard',
+    'EslCircularImageMetricRow',
+    'EslSplitContentImage',
+    'EslMediaCardGridCarousel',
   ],
 });
 

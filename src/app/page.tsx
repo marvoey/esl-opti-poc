@@ -2,16 +2,6 @@ import React from "react";
 import { notFound } from "next/navigation";
 import { getGraphClient } from "@/infrastructure/cms/graphClient";
 import { OptimizelyComponent } from "@optimizely/cms-sdk/react/server";
-import {
-  CircularImageMetricRow,
-  DEFAULT_CIRCULAR_IMAGE_METRIC_ROW,
-} from "@/components/organisms/circular-image-metric-row";
-import { OfferCardRow } from "@/components/organisms/offer-card-row";
-import {
-  SplitContentImage,
-  DEFAULT_SPLIT_CONTENT,
-} from "@/components/organisms/split-content-image";
-import { VerticalSelectorFeatureCard } from "@/components/organisms/vertical-selector-feature-card";
 import "@/infrastructure/cms/optimizely-registry";
 
 const ESL_HOME_PAGE_EXPERIENCE_QUERY = `
@@ -102,6 +92,10 @@ const ESL_HOME_PAGE_EXPERIENCE_QUERY = `
                 }
                 ... on EslTabbedSolutions {
                   showExploreSolutions
+                  heading
+                }
+                ... on EslVerticalSelectorFeatureCard {
+                  showVerticalSelector
                   heading
                 }
                 ... on EslSideBySide {
@@ -249,6 +243,89 @@ const ESL_HOME_PAGE_EXPERIENCE_QUERY = `
                     authorLocation
                   }
                 }
+                ... on EslCircularImageMetricRow {
+                  eyebrow
+                  title
+                  circularDescription: description {
+                    json
+                  }
+                  cta {
+                    text
+                    title
+                    target
+                    url {
+                      default
+                    }
+                  }
+                  metrics {
+                    image {
+                      key
+                      url {
+                        default
+                      }
+                    }
+                    imageAlt
+                    stat
+                    label
+                  }
+                }
+                ... on EslSplitContentImage {
+                  title
+                  splitImageDescription: description {
+                    json
+                  }
+                  primaryCta {
+                    text
+                    title
+                    target
+                    url {
+                      default
+                    }
+                  }
+                  secondaryCta {
+                    text
+                    title
+                    target
+                    url {
+                      default
+                    }
+                  }
+                  eligibilityNote
+                  image {
+                    key
+                    url {
+                      default
+                    }
+                  }
+                  imageAlt
+                }
+                ... on EslMediaCardGridCarousel {
+                  eyebrow
+                  title
+                  cards {
+                    image {
+                      key
+                      url {
+                        default
+                      }
+                    }
+                    imageAlt
+                    badge
+                    badgeVariant
+                    title
+                    mediaDescription: description {
+                      json
+                    }
+                    cta {
+                      text
+                      title
+                      target
+                      url {
+                        default
+                      }
+                    }
+                  }
+                }
               }
             }
           }
@@ -381,10 +458,6 @@ export default async function Home() {
     return (
       <main>
         <OptimizelyComponent content={activeContent} />
-        <VerticalSelectorFeatureCard id="solutions-selector" />
-        <CircularImageMetricRow {...DEFAULT_CIRCULAR_IMAGE_METRIC_ROW} />
-        <OfferCardRow id="offer-card-row" />
-        <SplitContentImage {...DEFAULT_SPLIT_CONTENT} />
       </main>
     );
   }

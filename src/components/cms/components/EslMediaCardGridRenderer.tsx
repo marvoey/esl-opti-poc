@@ -101,8 +101,8 @@ export default function EslMediaCardGridRenderer({ content }: Props) {
           const badgeVariant = resolveBadgeVariant(card.badgeVariant);
 
           const ctaResolved = resolveLink(card.cta);
-          const href = ctaResolved.href || '#';
-          const ctaText = ctaResolved.label || 'Learn more';
+          const href = ctaResolved.href || undefined;
+          const ctaText = href ? ctaResolved.label || 'Learn more' : undefined;
           const external = ctaResolved.external;
 
           return {

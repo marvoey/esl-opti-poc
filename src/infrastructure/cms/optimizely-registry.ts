@@ -22,6 +22,16 @@ import { EslFooterNavColumnContentType } from '@/components/cms/components/EslFo
 import { EslFooterContentType } from '@/components/cms/components/EslFooter';
 import EslSiteSettings, { EslSiteSettingsContentType } from '@/components/cms/pages/EslSiteSettings';
 import EslStartPage, { EslStartPageContentType } from '@/components/cms/pages/EslStartPage';
+import EslVerticalSelectorFeatureCard, {
+  EslVerticalSelectorFeatureCardContentType,
+} from '@/components/cms/components/EslVerticalSelectorFeatureCard';
+import EslCircularImageMetricRow from '@/components/cms/components/EslCircularImageMetricRowRenderer';
+import { EslCircularImageMetricRowContentType } from '@/components/cms/components/EslCircularImageMetricRow';
+import { EslCircularImageMetricItemContentType } from '@/components/cms/components/EslCircularImageMetricItem';
+import EslSplitContentImage from '@/components/cms/components/EslSplitContentImageRenderer';
+import { EslSplitContentImageContentType } from '@/components/cms/components/EslSplitContentImage';
+import EslMediaCardGridCarousel from '@/components/cms/components/EslMediaCardGridCarouselRenderer';
+import { EslMediaCardGridCarouselContentType } from '@/components/cms/components/EslMediaCardGridCarousel';
 
 export function ensureOptimizelyRegistry() {
 
@@ -45,6 +55,11 @@ export function ensureOptimizelyRegistry() {
     EslFooterContentType,
     EslSiteSettingsContentType,
     EslStartPageContentType,
+    EslVerticalSelectorFeatureCardContentType,
+    EslCircularImageMetricRowContentType,
+    EslCircularImageMetricItemContentType,
+    EslSplitContentImageContentType,
+    EslMediaCardGridCarouselContentType,
   ]);
 
   initReactComponentRegistry({
@@ -58,6 +73,10 @@ export function ensureOptimizelyRegistry() {
       EslSplitContentCards,
       EslMediaCardGrid,
       EslVideoStoryCardRow,
+      EslVerticalSelectorFeatureCard,
+      EslCircularImageMetricRow,
+      EslSplitContentImage,
+      EslMediaCardGridCarousel,
       EslSiteSettings,
       EslStartPage,
     },
