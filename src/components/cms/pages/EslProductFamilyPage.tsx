@@ -1,4 +1,4 @@
-import { contentType, type ContentProps } from '@optimizely/cms-sdk';
+import { contentType } from '@optimizely/cms-sdk';
 
 export const EslProductFamilyExperienceContentType = contentType({
   key: 'EslProductFamilyExperience',
@@ -10,5 +10,3 @@ export const EslProductFamilyExperienceContentType = contentType({
     'EslKeyFactsRow',
   ],
 });
-
-export type EslProductFamilyExperienceData = Partial<ContentProps<typeof EslProductFamilyExperienceContentType>>;
