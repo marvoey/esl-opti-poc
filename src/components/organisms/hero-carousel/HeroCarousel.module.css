@@ -105,7 +105,7 @@
   width: clamp(74px, 18cqi, 108px);
   aspect-ratio: 1 / 1;
   border-radius: var(--radius-full);
-  background-color: var(--color-navy-900);
+  background-color: var(--color-navy-500);
   color: var(--color-text-inverted);
   flex-direction: column;
   align-items: center;
@@ -164,7 +164,7 @@
   width: clamp(84px, 20cqi, 110px);
   aspect-ratio: 1 / 1;
   border-radius: var(--radius-full);
-  background-color: var(--color-navy-900);
+  background-color: var(--color-navy-500);
   color: var(--color-text-inverted);
   flex-direction: column;
   align-items: center;

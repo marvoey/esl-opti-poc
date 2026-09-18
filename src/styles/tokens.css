@@ -6,7 +6,7 @@
 :root {
   /* --- Tier 1: Primitives (Zero Semantic Meaning) --- */
   --color-navy-950: #010E23; /* Footer gradient start */
-  --color-navy-900: #00395D;
+  --color-navy-500: #00395D;
   --color-navy-850: #003E65;
   --color-navy-800: #01375A; /* Footer gradient end */
   --color-teal-700: #00A3A3;
@@ -37,6 +37,7 @@
   --color-navy-alpha-18: rgba(0, 57, 93, 0.18);
   --color-navy-alpha-20: rgba(0, 57, 93, 0.20);
   --color-navy-alpha-25: rgba(0, 57, 93, 0.25);
+  --color-blue-alpha-25: rgba(213, 229, 244, 0.25);
   --color-turquoise-alpha-25: rgba(104, 224, 204, 0.25);
   --color-sky-alpha-25: rgba(135, 206, 242, 0.25);
   --color-aqua-alpha-25: rgba(213, 243, 242, 0.25);
@@ -49,11 +50,11 @@
   --color-bg: var(--color-white);
   --color-surface: var(--color-mint-50);
   --color-surface-raised: var(--color-white);
-  --color-surface-inverse: var(--color-navy-900);
+  --color-surface-inverse: var(--color-navy-500);
   --color-surface-muted: var(--color-slate-200);
   --color-overlay-backdrop: rgba(0, 57, 93, 0.85);
   --color-overlay-white: rgba(255, 255, 255, 0.85);
-  --color-bg-dark: var(--color-navy-900);
+  --color-bg-dark: var(--color-navy-500);
 
   --color-border: var(--color-teal-alpha-20);
   --color-border-subtle: var(--color-navy-alpha-12);
@@ -83,13 +84,13 @@
      section's desktop rhythm at once. */
   --space-section-block: 5.5rem; /* 88px */
 
-  --color-text-primary: var(--color-navy-900);
+  --color-text-primary: var(--color-navy-500);
   --color-text-secondary: var(--color-slate-600);
   --color-text-muted: rgba(0, 57, 93, 0.55);
   --color-text-inverted: var(--color-white);
   --color-text-inverted-muted: var(--color-white-80);
 
-  --color-primary: var(--color-navy-900);
+  --color-primary: var(--color-navy-500);
   --color-primary-hover: var(--color-teal-700);
   --color-primary-contrast: var(--color-white);
 

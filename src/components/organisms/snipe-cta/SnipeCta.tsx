@@ -40,7 +40,7 @@ export function SnipeCta({
           <div className={styles.header}>
             <CircleCheck
               size={28}
-              backgroundColor="var(--color-navy-900)"
+              backgroundColor="var(--color-navy-500)"
               tickColor="var(--color-turquoise-400)"
               className={styles.icon}
             />

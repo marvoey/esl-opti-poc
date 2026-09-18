@@ -131,7 +131,7 @@ export function SplitContentCards({
               {heroMetric.subhead && (
                 <Text
                   as="span"
-                  variant="micro"
+                  variant="eyebrow"
                   color="primary"
                   className={styles.heroSubhead}
                 >
@@ -149,8 +149,8 @@ export function SplitContentCards({
               {heroMetric.description && (
                 <Text
                   as="p"
-                  variant="body-sm"
-                  color="secondary"
+                  variant="body"
+                  color="primary"
                   className={styles.heroDescription}
                 >
                   {heroMetric.description}
@@ -170,8 +170,8 @@ export function SplitContentCards({
                   <Stat className={styles.statValue}>{stat.value}</Stat>
                   <Text
                     as="p"
-                    variant="body-sm"
-                    color="secondary"
+                    variant="body"
+                    color="primary"
                     className={styles.statLabel}
                   >
                     {stat.label}

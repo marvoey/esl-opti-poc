@@ -12,7 +12,7 @@ describe("CircleCheck Atom", () => {
     expect(svg.getAttribute("height")).toBe("28");
 
     const circle = svg.querySelector("circle");
-    expect(circle?.getAttribute("fill")).toBe("var(--color-navy-900)");
+    expect(circle?.getAttribute("fill")).toBe("var(--color-navy-500)");
 
     const path = svg.querySelector("path");
     expect(path?.getAttribute("stroke")).toBe("var(--color-turquoise-400)");
