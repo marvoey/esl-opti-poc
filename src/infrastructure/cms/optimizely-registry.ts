@@ -2,6 +2,8 @@ import { initContentTypeRegistry } from '@optimizely/cms-sdk';
 import { initReactComponentRegistry } from '@optimizely/cms-sdk/react/server';
 import { EslHomeExperienceContentType } from '@/components/cms/pages/EslHomePage';
 import EslHomeExperience from '@/components/cms/pages/EslHomePageRenderer';
+import { EslProductDetailExperienceContentType } from '@/components/cms/pages/EslProductDetailPage';
+import EslProductDetailExperience from '@/components/cms/pages/EslProductDetailPageRenderer';
 import { EslHeroSliderContentType } from '@/components/cms/components/EslHeroSlider';
 import EslHeroSlider from '@/components/cms/components/EslHeroSliderRenderer';
 import { EslHeroSlideContentType } from '@/components/cms/components/EslHeroSlide';
@@ -69,11 +71,13 @@ export function ensureOptimizelyRegistry() {
     EslCircularImageMetricItemContentType,
     EslSplitContentImageContentType,
     EslMediaCardGridCarouselContentType,
+    EslProductDetailExperienceContentType,
   ]);
 
   initReactComponentRegistry({
     resolver: {
       EslHomeExperience,
+      EslProductDetailExperience,
       EslHeroSlider,
       EslSnipeCta,
       EslTabbedSolutions,

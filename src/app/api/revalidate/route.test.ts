@@ -332,4 +332,25 @@ describe('On-Demand Revalidation Route Handler (/api/revalidate)', () => {
     expect(data.path).toBe('/product-family');
     expect(revalidatePath).toHaveBeenCalledWith('/product-family', 'page');
   });
+
+  it('revalidates /product-detail when Optimizely sends contentType "EslProductDetailExperience"', async () => {
+    const req = new NextRequest(`http://localhost:5002/api/revalidate?secret=${mockSecret}`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        type: { subject: 'doc', action: 'updated' },
+        data: {
+          contentType: 'EslProductDetailExperience',
+        },
+      }),
+    });
+
+    const res = await POST(req);
+    const data = await res.json();
+
+    expect(res.status).toBe(200);
+    expect(data.revalidated).toBe(true);
+    expect(data.path).toBe('/product-detail');
+    expect(revalidatePath).toHaveBeenCalledWith('/product-detail', 'page');
+  });
 });
