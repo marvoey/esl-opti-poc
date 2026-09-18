@@ -305,7 +305,6 @@ In compliance with [`FRONTEND.md`](file:///c:/Oshyn/ESL-OK/static/FRONTEND.md):
 - `src/domain/models/FeatureCardRow.ts`
 - `src/app/product-detail/page.tsx` — Mount `<FeatureCardRow />` below `<KeyFactsRow />`.
 
-### 8.2 Synchronize Across All 3 Repositories
+### 8.2 Synchronize Across Repositories
 - `static`
 - `esl-opti-poc`
-- `esl-contentstack-poc`

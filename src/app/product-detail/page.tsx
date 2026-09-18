@@ -5,10 +5,10 @@ import { OptimizelyComponent } from "@optimizely/cms-sdk/react/server";
 import { ProductDetailStaticSections } from "@/components/cms/pages/EslProductDetailPageRenderer";
 import "@/infrastructure/cms/optimizely-registry";
 
-export const revalidate = 60;
+export const revalidate = 0;
 
 export const metadata: Metadata = {
-  title: "Premier Checking | ESL Federal Credit Union",
+  title: "Premier Checking",
   description:
     "Checking that gives a little back. Everything you use day to day, plus a balance that earns dividends and our member-only Owners’ Dividend.",
 };

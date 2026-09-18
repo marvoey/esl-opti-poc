@@ -1,7 +1,7 @@
 # Component Specification: Media Card Grid (`<MediaCardGrid>`)
 
 > **Classification**: Organism Component  
-> **Target Directory**: `src/components/organisms/media-card-grid/` (or `components/organisms/media-card-grid/` in Contentstack)  
+> **Target Directory**: `src/components/organisms/media-card-grid/`  
 > **Associated Atom**: `src/components/atoms/card/media-card/` (`<MediaCard>`)  
 > **Status**: Proposed Spec  
 > **Design System Compliance**: Strict 3-Tier Tokens • Media Range Queries • Typography Composition Law • Dynamic 2/3 Column Grid • WCAG 2.2 AA Compliance  

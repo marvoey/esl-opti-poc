@@ -435,7 +435,7 @@ async function resolveHomeContent(): Promise<HomeContentItem[] | null> {
   }
 }
 
-export const revalidate = 60;
+export const revalidate = 0;
 
 function selectActiveHomeContent(
   items?: HomeContentItem[] | null
