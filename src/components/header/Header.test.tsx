@@ -4,25 +4,64 @@ import React from "react";
 import { Header } from "./Header";
 import { NavigationModel } from "@/domain/models/Navigation";
 
-describe("Header Component (Spec Verification)", () => {
-  const mockNav: NavigationModel = {
-    brandName: "Enterprise App",
-    brandHref: "/",
-    items: [
-      { id: "1", label: "Overview", href: "/overview", isExternal: false },
-      { id: "2", label: "Documentation", href: "/docs", isExternal: false },
-    ],
-  };
+describe("Header Component", () => {
+  it("renders default brand logo, navigation links, and explore docs CTA", () => {
+    render(<Header />);
 
-  it("renders the brand link and name from the domain model", () => {
-    render(<Header navigation={mockNav} />);
-    const brandElement = screen.getByText("Enterprise App");
-    expect(brandElement).toBeDefined();
+    // Brand link with accessible label
+    const brandLink = screen.getByRole("link", { name: /main navigation/i });
+    expect(brandLink).toBeDefined();
+    expect(brandLink.getAttribute("href")).toBe("/");
+
+    // Default nav links
+    expect(screen.getByRole("link", { name: "Home" })).toBeDefined();
+    expect(screen.getByRole("link", { name: "Features" })).toBeDefined();
+    expect(screen.getByRole("link", { name: "Architecture" })).toBeDefined();
+    expect(screen.getByRole("link", { name: "FAQ" })).toBeDefined();
+
+    // CTA button
+    const ctaButton = screen.getByRole("link", { name: /explore docs/i });
+    expect(ctaButton).toBeDefined();
+    expect(ctaButton.getAttribute("href")).toBe("https://docs.developers.optimizely.com");
   });
 
-  it("renders all navigation items provided by the domain model", () => {
+  it("supports custom navLinks and CTA overrides", () => {
+    render(
+      <Header
+        brandHref="/custom-home"
+        navLinks={[
+          { label: "Products", href: "/products" },
+          { label: "About", href: "/about" },
+        ]}
+        ctaText="Get Started"
+        ctaHref="/get-started"
+      />
+    );
+
+    const brandLink = screen.getByRole("link", { name: /main navigation/i });
+    expect(brandLink.getAttribute("href")).toBe("/custom-home");
+
+    expect(screen.getByRole("link", { name: "Products" })).toBeDefined();
+    expect(screen.getByRole("link", { name: "About" })).toBeDefined();
+    expect(screen.queryByRole("link", { name: "Features" })).toBeNull();
+
+    const cta = screen.getByRole("link", { name: /get started/i });
+    expect(cta.getAttribute("href")).toBe("/get-started");
+  });
+
+  it("supports backward-compatible navigation model prop", () => {
+    const mockNav: NavigationModel = {
+      brandName: "Enterprise App",
+      brandHref: "/app",
+      items: [
+        { id: "1", label: "Overview", href: "/overview", isExternal: false },
+        { id: "2", label: "Documentation", href: "/docs", isExternal: false },
+      ],
+    };
+
     render(<Header navigation={mockNav} />);
-    expect(screen.getByText("Overview")).toBeDefined();
-    expect(screen.getByText("Documentation")).toBeDefined();
+
+    expect(screen.getByRole("link", { name: "Overview" })).toBeDefined();
+    expect(screen.getByRole("link", { name: "Documentation" })).toBeDefined();
   });
 });

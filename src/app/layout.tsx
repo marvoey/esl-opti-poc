@@ -3,8 +3,10 @@ import type { Metadata } from "next";
 import { Albert_Sans, League_Spartan } from "next/font/google";
 import "@/infrastructure/cms/optimizely-registry";
 import "./globals.css";
+import { Header } from "@/components/header/Header";
 import { Footer } from "@/components/organisms/footer/Footer";
 import { resolveFooterContent } from "@/infrastructure/cms/resolveFooterContent";
+import { resolveSiteTitle } from "@/infrastructure/cms/resolveSiteTitle";
 
 const albertSans = Albert_Sans({
   subsets: ["latin"],
@@ -19,23 +21,33 @@ const leagueSpartan = League_Spartan({
   display: "swap",
 });
 
-export const metadata: Metadata = {
-  title: "ESL Enterprise - Spec-Driven Next.js Architecture",
-  description: "Enterprise Next.js architecture with Pragmatic Hexagonal Design, CMS Anti-Corruption Layer, and Intrinsic CSS Tokens",
-  robots: {
-    index: false,
-    follow: false,
-    nocache: true,
-    googleBot: {
+export const revalidate = 0;
+
+export async function generateMetadata(): Promise<Metadata> {
+  const siteTitle = await resolveSiteTitle();
+  const defaultTitle = siteTitle || "ESL Federal Credit Union";
+
+  return {
+    title: {
+      default: defaultTitle,
+      template: `%s | ${defaultTitle}`,
+    },
+    description: "Enterprise Next.js architecture with Pragmatic Hexagonal Design, CMS Anti-Corruption Layer, and Intrinsic CSS Tokens",
+    robots: {
       index: false,
       follow: false,
-      noimageindex: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'none',
-      'max-snippet': -1,
+      nocache: true,
+      googleBot: {
+        index: false,
+        follow: false,
+        noimageindex: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'none',
+        'max-snippet': -1,
+      },
     },
-  },
-};
+  };
+}
 
 async function ServerFooter() {
   const footerProps = await resolveFooterContent();
@@ -51,6 +63,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${albertSans.variable} ${leagueSpartan.variable}`}>
       <body>
+        <Header />
         {children}
         <Suspense fallback={null}>
           <ServerFooter />

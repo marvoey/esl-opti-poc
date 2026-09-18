@@ -5,10 +5,10 @@ import { getGraphClient } from "@/infrastructure/cms/graphClient";
 import { OptimizelyComponent } from "@optimizely/cms-sdk/react/server";
 import "@/infrastructure/cms/optimizely-registry";
 
-export const revalidate = 60;
+export const revalidate = 0;
 
 export const metadata: Metadata = {
-  title: "Product Family | ESL Federal Credit Union",
+  title: "Product Family",
   description:
     "Explore our family of financial products and services designed for every stage of your life.",
 };
