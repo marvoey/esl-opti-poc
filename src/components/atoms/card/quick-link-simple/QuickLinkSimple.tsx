@@ -58,7 +58,7 @@ export function QuickLinkSimple({
         {title}
       </Text>
       <div className={styles.iconCircle} aria-hidden="true">
-        {icon ?? <PiggyBankIcon size={36} />}
+        {icon ?? <PiggyBankIcon size={43} />}
       </div>
     </>
   );
