@@ -4,6 +4,8 @@ import { EslHomeExperienceContentType } from '@/components/cms/pages/EslHomePage
 import EslHomeExperience from '@/components/cms/pages/EslHomePageRenderer';
 import { EslProductDetailExperienceContentType } from '@/components/cms/pages/EslProductDetailPage';
 import EslProductDetailExperience from '@/components/cms/pages/EslProductDetailPageRenderer';
+import { EslProductFamilyExperienceContentType } from '@/components/cms/pages/EslProductFamilyPage';
+import EslProductFamilyExperience from '@/components/cms/pages/EslProductFamilyPageRenderer';
 import { EslHeroSliderContentType } from '@/components/cms/components/EslHeroSlider';
 import EslHeroSlider from '@/components/cms/components/EslHeroSliderRenderer';
 import { EslHeroSlideContentType } from '@/components/cms/components/EslHeroSlide';
@@ -75,6 +77,7 @@ export function ensureOptimizelyRegistry() {
     EslSplitContentImageContentType,
     EslMediaCardGridCarouselContentType,
     EslProductDetailExperienceContentType,
+    EslProductFamilyExperienceContentType,
     EslKeyFactsRowContentType,
     EslKeyFactItemContentType,
   ]);
@@ -83,6 +86,7 @@ export function ensureOptimizelyRegistry() {
     resolver: {
       EslHomeExperience,
       EslProductDetailExperience,
+      EslProductFamilyExperience,
       EslHeroSlider,
       EslSnipeCta,
       EslTabbedSolutions,
