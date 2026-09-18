@@ -76,6 +76,11 @@
   --space-footer-row-gap: 3rem;     /* 48px */
   --space-footer-col-gap: 2.5rem;   /* 40px */
 
+  /* Section Layout Spacing — vertical padding for standard content section
+     containers on desktop. Change this single value to re-tune every
+     section's desktop rhythm at once. */
+  --space-section-block: 5.5rem; /* 88px */
+
   --color-text-primary: var(--color-navy-900);
   --color-text-secondary: var(--color-slate-600);
   --color-text-muted: rgba(0, 57, 93, 0.55);

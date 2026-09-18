@@ -195,7 +195,7 @@ export function TabbedIconCards({
                       {tab.icon}
                     </span>
                   ) : null}
-                  <Text as="span" variant="subhead" color="inherit">
+                  <Text as="span" variant="subhead" weight="bold" color="inherit">
                     {tab.label}
                   </Text>
                 </button>

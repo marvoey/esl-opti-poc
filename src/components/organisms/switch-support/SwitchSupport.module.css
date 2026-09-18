@@ -1,7 +1,7 @@
 .section {
   width: 100%;
   background: linear-gradient(138.18deg, var(--color-navy-900) 0%, #001B3D 100%);
-  padding-block: 4rem; /* 64px */
+  padding-block: var(--space-section-block);
 }
 
 @media (width < 768px) {

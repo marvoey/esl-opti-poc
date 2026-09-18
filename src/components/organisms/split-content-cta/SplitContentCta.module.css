@@ -1,7 +1,7 @@
 .section {
   width: 100%;
   background: var(--gradient-dark-navy);
-  padding-block: 4rem;
+  padding-block: var(--space-section-block);
 }
 
 @media (width < 768px) {

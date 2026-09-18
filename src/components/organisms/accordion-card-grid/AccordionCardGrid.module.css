@@ -8,7 +8,7 @@
   max-width: var(--container-max-w, 1200px);
   margin: 0 auto;
   padding-inline: var(--container-gutter, 2.5rem);
-  padding-block: 4rem;
+  padding-block: var(--space-section-block);
 }
 
 @media (width < 768px) {

@@ -6,7 +6,7 @@
   max-width: var(--container-max-w, 1200px);
   margin: 0 auto;
   padding-inline: var(--container-gutter, 2.5rem);
-  padding-block: 5.5rem; /* 88px */
+  padding-block: var(--space-section-block);
 }
 
 /* Maintain exactly 48px (3rem) gap between stacked SideBySide components */

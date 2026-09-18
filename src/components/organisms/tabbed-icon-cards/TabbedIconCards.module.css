@@ -132,20 +132,20 @@
 /* Tablet / medium containers: fluid 3-4 columns */
 @container (min-width: 680px) {
   .cardGrid {
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(max-content, 1fr));
   }
 }
 
-/* Desktop / large containers: fluid single-row layout, works for any card count */
+/* Desktop / large containers: single row, capped at 7 columns max */
 @container (min-width: 920px) {
   .cardGrid {
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    grid-template-columns: repeat(7, minmax(max-content, 1fr));
   }
 }
 
 @media (width >= 860px) {
   .container {
-    padding-block: 4rem; /* 64px desktop */
+    padding-block: var(--space-section-block);
   }
 
   .heading {
