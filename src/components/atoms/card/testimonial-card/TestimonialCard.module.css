@@ -20,7 +20,7 @@
 
 .card:hover {
   transform: translateY(-2px);
-  box-shadow: var(--shadow-elevation-md);
+  box-shadow: var(--shadow-ring-hover), var(--shadow-elevation-md);
   border-color: var(--color-border-accent);
 }
 
@@ -54,6 +54,19 @@
   transform: scale(1.03);
 }
 
+.hoverOverlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  transition: opacity var(--duration-smart) var(--ease-out-smart);
+  pointer-events: none;
+}
+
+.card:hover .hoverOverlay {
+  opacity: 1;
+}
+
 .playOverlay {
   position: absolute;
   inset: 0;
@@ -83,6 +96,7 @@
 
 .playIcon {
   color: var(--color-primary);
+  fill: currentColor;
   margin-left: 3px; /* Optically center triangle within circle */
 }
 

@@ -102,4 +102,5 @@
 .ratesCard {
   max-width: 100%;
   width: 100%;
+  background-color: var(--color-navy-alpha-25);
 }

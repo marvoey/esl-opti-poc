@@ -55,6 +55,11 @@
 .viewport {
   overflow: hidden;
   width: 100%;
+  /* Give the card hover glow (box-shadow) room to render without being
+     clipped by this viewport's overflow: hidden; the negative margin cancels
+     the padding's effect on surrounding layout. */
+  padding-block: 24px;
+  margin-block: -24px;
 }
 
 .track {

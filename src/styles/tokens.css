@@ -35,6 +35,8 @@
   --color-navy-alpha-12: rgba(0, 57, 93, 0.12);
   --color-navy-alpha-15: rgba(0, 57, 93, 0.15);
   --color-navy-alpha-18: rgba(0, 57, 93, 0.18);
+  --color-navy-alpha-20: rgba(0, 57, 93, 0.20);
+  --color-navy-alpha-25: rgba(0, 57, 93, 0.25);
   --color-turquoise-alpha-25: rgba(104, 224, 204, 0.25);
   --color-sky-alpha-25: rgba(135, 206, 242, 0.25);
   --color-aqua-alpha-25: rgba(213, 243, 242, 0.25);
@@ -195,6 +197,7 @@
   --shadow-card-hover: 0 10px 14px 0 var(--color-sky-alpha-50);
   --shadow-card-hover-intense: 0 14px 20px 0 var(--color-sky-alpha-65);
   --shadow-chip-hover: 0 2px 8px var(--color-turquoise-alpha-25);
+  --shadow-ring-hover: 0 0 0 2px var(--color-border-accent); /* reusable 2px hover ring for interactive cards */
 
   /* --- Typography Families --- */
   --font-family-sans: var(--font-albert-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;

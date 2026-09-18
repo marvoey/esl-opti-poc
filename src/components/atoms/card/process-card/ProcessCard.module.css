@@ -59,6 +59,7 @@
 
 .mint:hover {
   border-color: var(--color-border-accent);
+  box-shadow: var(--shadow-ring-hover);
   transform: translateY(-1px);
 }
 
@@ -108,6 +109,7 @@
 
 .inverse:hover {
   border-color: var(--color-turquoise-400);
+  box-shadow: 0 0 0 2px var(--color-turquoise-400);
   transform: translateY(-1px);
 }
 

@@ -84,6 +84,8 @@ export function TestimonialCard({
         >
           <img src={imageSrc} alt={imageAlt} className={styles.thumbnail} />
 
+          {hasVideo && <div className={styles.hoverOverlay} aria-hidden="true" />}
+
           {hasVideo && (
             <div className={styles.playOverlay}>
               <span className={styles.playCircle} aria-hidden="true">
