@@ -135,4 +135,36 @@ describe('EslHomePageRenderer', () => {
     expect(screen.queryByTestId('visual-builder-constraint-alert')).toBeNull();
     expect(screen.queryByTestId('node-unallowed-2')).toBeNull();
   });
+
+  it('triggers constraint alert when EslKeyFactsRow is added to Home Page in edit mode', () => {
+    const mockNodes = [
+      {
+        key: 'key-facts-home',
+        type: 'EslKeyFactsRow',
+        __typename: 'CompositionComponentNode',
+        nodeType: 'component',
+        displayName: 'Key Facts Section',
+        layoutType: null,
+        displayTemplateKey: null,
+        displaySettings: null,
+        component: { __typename: 'EslKeyFactsRow' },
+        __context: { edit: true, preview_token: 'test-token' },
+      },
+    ];
+
+    render(
+      <EslHomeExperience
+        content={{
+          composition: { nodes: mockNodes },
+        }}
+      />
+    );
+
+    const alert = screen.getByTestId('visual-builder-constraint-alert');
+    expect(alert).toBeDefined();
+    expect(screen.getByText(/Visual Builder Constraint: Unallowed Section/i)).toBeDefined();
+    expect(screen.getByText(/Key Facts Section/i)).toBeDefined();
+    expect(screen.getByText(/ESL Home Experience/i)).toBeDefined();
+    expect(screen.queryByTestId('node-key-facts-home')).toBeNull();
+  });
 });

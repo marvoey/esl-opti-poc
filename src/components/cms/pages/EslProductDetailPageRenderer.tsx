@@ -4,7 +4,6 @@ import {
   getPreviewUtils,
   type ComponentContainerProps,
 } from '@optimizely/cms-sdk/react/server';
-import { KeyFactsRow } from '@/components/organisms/key-facts-row';
 import { FeatureCardRow } from '@/components/organisms/feature-card-row';
 import { DEFAULT_FEATURE_CARD_ROW_PROPS } from '@/components/organisms/feature-card-row/featureCardRowData';
 import { ProductCardsRow } from '@/components/organisms/product-cards-row';
@@ -100,11 +99,6 @@ function ExperienceComponentWrapper({ children, node, displaySettings }: Compone
 export function ProductDetailStaticSections() {
   return (
     <>
-      <KeyFactsRow
-        id="key-facts"
-        title="Details at a glance"
-        subtitle="Applies to both checking accounts"
-      />
       <FeatureCardRow {...DEFAULT_FEATURE_CARD_ROW_PROPS} />
       <ProductCardsRow id="product-fit" {...DEFAULT_PRODUCT_CARDS_ROW_PROPS} />
       <ProductCardsRowVariant2

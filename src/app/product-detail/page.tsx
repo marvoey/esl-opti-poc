@@ -100,6 +100,18 @@ const ESL_PRODUCT_DETAIL_PAGE_EXPERIENCE_QUERY = `
                     }
                   }
                 }
+                ... on EslKeyFactsRow {
+                  title
+                  subtitle
+                  facts {
+                    value
+                    callout
+                    description {
+                      json
+                      html
+                    }
+                  }
+                }
               }
             }
           }

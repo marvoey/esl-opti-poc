@@ -43,6 +43,9 @@ import EslSplitContentImage from '@/components/cms/components/EslSplitContentIma
 import { EslSplitContentImageContentType } from '@/components/cms/components/EslSplitContentImage';
 import EslMediaCardGridCarousel from '@/components/cms/components/EslMediaCardGridCarouselRenderer';
 import { EslMediaCardGridCarouselContentType } from '@/components/cms/components/EslMediaCardGridCarousel';
+import { EslKeyFactsRowContentType } from '@/components/cms/components/EslKeyFactsRow';
+import { EslKeyFactItemContentType } from '@/components/cms/components/EslKeyFactItem';
+import EslKeyFactsRow from '@/components/cms/components/EslKeyFactsRowRenderer';
 
 export function ensureOptimizelyRegistry() {
 
@@ -72,6 +75,8 @@ export function ensureOptimizelyRegistry() {
     EslSplitContentImageContentType,
     EslMediaCardGridCarouselContentType,
     EslProductDetailExperienceContentType,
+    EslKeyFactsRowContentType,
+    EslKeyFactItemContentType,
   ]);
 
   initReactComponentRegistry({
@@ -90,6 +95,7 @@ export function ensureOptimizelyRegistry() {
       EslCircularImageMetricRow,
       EslSplitContentImage,
       EslMediaCardGridCarousel,
+      EslKeyFactsRow,
       EslSiteSettings,
       EslStartPage,
     },

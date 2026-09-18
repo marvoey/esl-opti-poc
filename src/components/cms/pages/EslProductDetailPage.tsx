@@ -7,5 +7,6 @@ export const EslProductDetailExperienceContentType = contentType({
   mayContainTypes: [
     'EslHeroSlider',
     'EslSnipeCta',
+    'EslKeyFactsRow',
   ],
 });

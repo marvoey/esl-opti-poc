@@ -18,6 +18,7 @@ export const KNOWN_COMPONENT_NAMES: Record<string, string> = {
   EslCircularImageMetricRow: 'ESL Circular Image Metric Row',
   EslSplitContentImage: 'ESL Split Content Image',
   EslMediaCardGridCarousel: 'ESL Media Card Grid Carousel',
+  EslKeyFactsRow: 'ESL Key Facts Row',
 };
 
 export function getAllowedSectionsFromContentType(
