@@ -1,26 +1,11 @@
 import type { Metadata } from "next";
 import React from "react";
-import { HeroCarousel } from "@/components/organisms/hero-carousel/HeroCarousel";
-import { PRODUCT_DETAIL_HERO_SLIDES } from "@/components/organisms/hero-carousel/heroSlides";
-import { SnipeCta } from "@/components/organisms/snipe-cta/SnipeCta";
-import { KeyFactsRow } from "@/components/organisms/key-facts-row";
-import { FeatureCardRow } from "@/components/organisms/feature-card-row";
-import { DEFAULT_FEATURE_CARD_ROW_PROPS } from "@/components/organisms/feature-card-row/featureCardRowData";
-import { ProductCardsRow } from "@/components/organisms/product-cards-row";
-import { DEFAULT_PRODUCT_CARDS_ROW_PROPS } from "@/components/organisms/product-cards-row/productCardsRowData";
-import { ProductCardsRowVariant2 } from "@/components/organisms/product-cards-row-variant-2";
-import { DEFAULT_PRODUCT_CARDS_ROW_VARIANT_2_PROPS } from "@/components/organisms/product-cards-row-variant-2/productCardsRowVariant2Data";
-import { FaqStates } from "@/components/organisms/faq-states";
-import { DEFAULT_FAQ_STATES_PROPS } from "@/components/organisms/faq-states/faqStatesData";
-import { AccordionCardGrid } from "@/components/organisms/accordion-card-grid";
-import { DEFAULT_ACCORDION_CARD_GRID_PROPS } from "@/components/organisms/accordion-card-grid/accordionCardGridData";
-import { SwitchSupport } from "@/components/organisms/switch-support";
-import { DEFAULT_SWITCH_SUPPORT_PROPS } from "@/components/organisms/switch-support/switchSupportData";
-import { SplitContentCta } from "@/components/organisms/split-content-cta";
-import { DEFAULT_SPLIT_CONTENT_CTA_PROPS } from "@/components/organisms/split-content-cta/splitContentCtaData";
-import { Disclosure } from "@/components/organisms/disclosure";
-import { DEFAULT_DISCLOSURE_PROPS } from "@/components/organisms/disclosure/disclosureData";
-import styles from "./product-detail.module.css";
+import { getGraphClient } from "@/infrastructure/cms/graphClient";
+import { OptimizelyComponent } from "@optimizely/cms-sdk/react/server";
+import { ProductDetailStaticSections } from "@/components/cms/pages/EslProductDetailPageRenderer";
+import "@/infrastructure/cms/optimizely-registry";
+
+export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: "Premier Checking | ESL Federal Credit Union",
@@ -28,32 +13,216 @@ export const metadata: Metadata = {
     "Checking that gives a little back. Everything you use day to day, plus a balance that earns dividends and our member-only Owners’ Dividend.",
 };
 
-export default function ProductDetailPage() {
+const ESL_PRODUCT_DETAIL_PAGE_EXPERIENCE_QUERY = `
+  query GetEslProductDetailPageExperience($host: String) {
+    EslProductDetailExperience(
+      where: {
+        _metadata: {
+          url: {
+            base: { eq: $host }
+          }
+        }
+      }
+    ) {
+      items {
+        __typename
+        _id
+        _metadata {
+          key
+          status
+          displayName
+          types
+          lastModified
+          container
+          path
+          url {
+            default
+            base
+          }
+        }
+        composition {
+          __typename
+          nodes {
+            __typename
+            key
+            nodeType
+            type
+            displayName
+            displayTemplateKey
+            layoutType
+            ... on CompositionComponentNode {
+              component {
+                __typename
+                ... on EslHeroSlider {
+                  variant
+                  slides {
+                    eyebrow
+                    heading
+                    body {
+                      json
+                    }
+                    image {
+                      key
+                      url {
+                        default
+                      }
+                    }
+                    imageAlt
+                    primaryCta {
+                      text
+                      title
+                      target
+                      url {
+                        default
+                      }
+                    }
+                    secondaryCta {
+                      text
+                      title
+                      target
+                      url {
+                        default
+                      }
+                    }
+                    badgeStat
+                    badgeLabel
+                  }
+                }
+                ... on EslSnipeCta {
+                  title
+                  description
+                  link {
+                    text
+                    title
+                    target
+                    url {
+                      default
+                    }
+                  }
+                }
+                ... on EslKeyFactsRow {
+                  title
+                  subtitle
+                  facts {
+                    value
+                    callout
+                    description {
+                      json
+                      html
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+export interface ProductDetailMetadata {
+  key?: string | null;
+  status?: string | null;
+  displayName?: string | null;
+  types?: string[] | null;
+  lastModified?: string | null;
+  container?: string | null;
+  path?: string[] | string | null;
+  url?: {
+    default?: string | null;
+    base?: string | null;
+  } | null;
+}
+
+export type ProductDetailContentItem = Parameters<typeof OptimizelyComponent>[0]["content"] & {
+  __typename?: string;
+  _id?: string | null;
+  _metadata?: ProductDetailMetadata | null;
+  composition?: {
+    __typename?: string;
+    nodes?: unknown[];
+  } | null;
+  [key: string]: unknown;
+};
+
+interface ExperienceQueryResult {
+  EslProductDetailExperience?: {
+    items?: ProductDetailContentItem[];
+  };
+}
+
+async function resolveProductDetailContent(): Promise<ProductDetailContentItem[] | null> {
+  const host = process.env.OPTIMIZELY_APP_HOST || "http://localhost:5002";
+  const client = getGraphClient();
+
+  if (!client) {
+    return null;
+  }
+
+  try {
+    // 1. Direct query for Experience composition (Visual Builder)
+    try {
+      const expResult = (await client.request(
+        ESL_PRODUCT_DETAIL_PAGE_EXPERIENCE_QUERY,
+        { host },
+        undefined,
+        true
+      )) as ExperienceQueryResult | undefined;
+      const expItems = expResult?.EslProductDetailExperience?.items;
+      if (expItems && expItems.length > 0) {
+        return expItems;
+      }
+    } catch (err) {
+      console.warn("CMS Graph experience query error for product-detail:", err);
+    }
+
+    // 2. Fallback to getContentByPath
+    let content = (await client.getContentByPath("/product-detail", {
+      host,
+    })) as ProductDetailContentItem[] | null;
+
+    if (!content || content.length === 0) {
+      content = (await client.getContentByPath("/product-detail/", {
+        host,
+      })) as ProductDetailContentItem[] | null;
+    }
+
+    return content && content.length > 0 ? content : null;
+  } catch (error) {
+    console.warn("CMS Graph delivery query returned no product-detail page yet:", error);
+    return null;
+  }
+}
+
+function selectActiveContent(
+  items?: ProductDetailContentItem[] | null
+): ProductDetailContentItem | null {
+  if (!items || items.length === 0) return null;
+  if (items.length === 1) return items[0];
+
+  return [...items].sort((a, b) => {
+    const timeA = new Date(a._metadata?.lastModified || 0).getTime();
+    const timeB = new Date(b._metadata?.lastModified || 0).getTime();
+    return timeB - timeA;
+  })[0];
+}
+
+export default async function ProductDetailPage() {
+  const content = await resolveProductDetailContent();
+  const activeContent = selectActiveContent(content);
+
+  if (activeContent) {
+    return (
+      <main>
+        <OptimizelyComponent content={activeContent} />
+      </main>
+    );
+  }
+
   return (
     <main>
-      <HeroCarousel
-        variant="squared"
-        slides={PRODUCT_DETAIL_HERO_SLIDES}
-        ariaLabel="Premier Checking product hero"
-      />
-      <SnipeCta className={styles.snipeCta} />
-      <KeyFactsRow
-        id="key-facts"
-        title="Details at a glance"
-        subtitle="Applies to both checking accounts"
-      />
-      <FeatureCardRow {...DEFAULT_FEATURE_CARD_ROW_PROPS} />
-      <ProductCardsRow id="product-fit" {...DEFAULT_PRODUCT_CARDS_ROW_PROPS} />
-      <ProductCardsRowVariant2
-        id="account-tools"
-        {...DEFAULT_PRODUCT_CARDS_ROW_VARIANT_2_PROPS}
-      />
-      <FaqStates id="faq" {...DEFAULT_FAQ_STATES_PROPS} />
-      <AccordionCardGrid id="glossary" {...DEFAULT_ACCORDION_CARD_GRID_PROPS} />
-      <SwitchSupport id="switch-support" {...DEFAULT_SWITCH_SUPPORT_PROPS} />
-      <SplitContentCta id="split-content-cta" {...DEFAULT_SPLIT_CONTENT_CTA_PROPS} />
-      <Disclosure id="disclosure" {...DEFAULT_DISCLOSURE_PROPS} />
+      <ProductDetailStaticSections />
     </main>
   );
 }
-

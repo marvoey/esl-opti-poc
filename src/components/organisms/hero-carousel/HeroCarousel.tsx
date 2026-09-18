@@ -53,15 +53,51 @@ export function HeroCarousel({
     setIsPlaying((prev) => !prev);
   }, []);
 
-  // Simple interval autoplay when enabled and multiple slides exist
+  // Autoplay effect with Page Visibility API guard to prevent blank slides when tab is backgrounded
   useEffect(() => {
     if (!emblaApi || !isPlaying || (slides && slides.length <= 1)) return;
 
-    const intervalId = setInterval(() => {
-      emblaApi.scrollNext();
-    }, 6000);
+    let intervalId: ReturnType<typeof setInterval> | null = null;
 
-    return () => clearInterval(intervalId);
+    const startAutoplay = () => {
+      if (intervalId) clearInterval(intervalId);
+      intervalId = setInterval(() => {
+        if (typeof document !== "undefined" && document.hidden) return;
+        emblaApi.scrollNext();
+      }, 6000);
+    };
+
+    const stopAutoplay = () => {
+      if (intervalId) {
+        clearInterval(intervalId);
+        intervalId = null;
+      }
+    };
+
+    const handleVisibilityChange = () => {
+      if (typeof document !== "undefined" && document.hidden) {
+        stopAutoplay();
+      } else {
+        // Tab became visible: re-sync Embla loop and recalculate dimensions
+        emblaApi.reInit();
+        startAutoplay();
+      }
+    };
+
+    if (typeof document === "undefined" || !document.hidden) {
+      startAutoplay();
+    }
+
+    if (typeof document !== "undefined") {
+      document.addEventListener("visibilitychange", handleVisibilityChange);
+    }
+
+    return () => {
+      stopAutoplay();
+      if (typeof document !== "undefined") {
+        document.removeEventListener("visibilitychange", handleVisibilityChange);
+      }
+    };
   }, [emblaApi, isPlaying, slides]);
 
   const activeSlides = slides && slides.length > 0 ? slides : [];

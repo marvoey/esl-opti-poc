@@ -45,6 +45,7 @@ const ESL_HOME_PAGE_EXPERIENCE_QUERY = `
               component {
                 __typename
                 ... on EslHeroSlider {
+                  variant
                   slides {
                     eyebrow
                     heading

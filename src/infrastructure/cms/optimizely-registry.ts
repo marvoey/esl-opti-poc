@@ -2,6 +2,10 @@ import { initContentTypeRegistry } from '@optimizely/cms-sdk';
 import { initReactComponentRegistry } from '@optimizely/cms-sdk/react/server';
 import { EslHomeExperienceContentType } from '@/components/cms/pages/EslHomePage';
 import EslHomeExperience from '@/components/cms/pages/EslHomePageRenderer';
+import { EslProductDetailExperienceContentType } from '@/components/cms/pages/EslProductDetailPage';
+import EslProductDetailExperience from '@/components/cms/pages/EslProductDetailPageRenderer';
+import { EslProductFamilyExperienceContentType } from '@/components/cms/pages/EslProductFamilyPage';
+import EslProductFamilyExperience from '@/components/cms/pages/EslProductFamilyPageRenderer';
 import { EslHeroSliderContentType } from '@/components/cms/components/EslHeroSlider';
 import EslHeroSlider from '@/components/cms/components/EslHeroSliderRenderer';
 import { EslHeroSlideContentType } from '@/components/cms/components/EslHeroSlide';
@@ -41,6 +45,9 @@ import EslSplitContentImage from '@/components/cms/components/EslSplitContentIma
 import { EslSplitContentImageContentType } from '@/components/cms/components/EslSplitContentImage';
 import EslMediaCardGridCarousel from '@/components/cms/components/EslMediaCardGridCarouselRenderer';
 import { EslMediaCardGridCarouselContentType } from '@/components/cms/components/EslMediaCardGridCarousel';
+import { EslKeyFactsRowContentType } from '@/components/cms/components/EslKeyFactsRow';
+import { EslKeyFactItemContentType } from '@/components/cms/components/EslKeyFactItem';
+import EslKeyFactsRow from '@/components/cms/components/EslKeyFactsRowRenderer';
 
 export function ensureOptimizelyRegistry() {
 
@@ -69,11 +76,17 @@ export function ensureOptimizelyRegistry() {
     EslCircularImageMetricItemContentType,
     EslSplitContentImageContentType,
     EslMediaCardGridCarouselContentType,
+    EslProductDetailExperienceContentType,
+    EslProductFamilyExperienceContentType,
+    EslKeyFactsRowContentType,
+    EslKeyFactItemContentType,
   ]);
 
   initReactComponentRegistry({
     resolver: {
       EslHomeExperience,
+      EslProductDetailExperience,
+      EslProductFamilyExperience,
       EslHeroSlider,
       EslSnipeCta,
       EslTabbedSolutions,
@@ -86,6 +99,7 @@ export function ensureOptimizelyRegistry() {
       EslCircularImageMetricRow,
       EslSplitContentImage,
       EslMediaCardGridCarousel,
+      EslKeyFactsRow,
       EslSiteSettings,
       EslStartPage,
     },

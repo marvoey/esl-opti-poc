@@ -5,11 +5,57 @@ import {
   getPreviewUtils,
   type ComponentContainerProps,
 } from '@optimizely/cms-sdk/react/server';
-import type { EslHomeExperienceContentType } from './EslHomePage';
+import { EslHomeExperienceContentType } from './EslHomePage';
+import {
+  VisualBuilderConstraintAlert,
+  getAllowedSectionsFromContentType,
+} from '../shared/VisualBuilderConstraintAlert';
+
+const {
+  allowedKeys: ALLOWED_HOME_TYPE_KEYS,
+  allowedSections: ESL_HOME_ALLOWED_SECTIONS,
+} = getAllowedSectionsFromContentType(EslHomeExperienceContentType);
+
+export { ESL_HOME_ALLOWED_SECTIONS };
 
 function ExperienceComponentWrapper({ children, node, displaySettings }: ComponentContainerProps) {
   const { pa } = getPreviewUtils(node);
-  const componentType = node.component?.__typename || node.type || '';
+  const componentNode = node as Record<string, unknown>;
+  const componentObj = componentNode.component as Record<string, unknown> | undefined;
+  const componentType =
+    (typeof componentObj?.__typename === 'string' ? componentObj.__typename : undefined) ||
+    (typeof componentNode.type === 'string' ? componentNode.type : '') ||
+    '';
+
+  const previewAttrs = pa(node) as Record<string, unknown>;
+  const isEditMode = Boolean(
+    (node as { __context?: { edit?: boolean } }).__context?.edit ||
+      previewAttrs?.['data-epi-block-id'] ||
+      previewAttrs?.['data-epi-edit']
+  );
+
+  const isAllowed = ALLOWED_HOME_TYPE_KEYS.has(componentType);
+
+  if (!isAllowed) {
+    if (isEditMode) {
+      return (
+        <div
+          {...pa(node)}
+          data-component-type={componentType}
+          style={{ width: '100%', display: 'block' }}
+        >
+          <VisualBuilderConstraintAlert
+            componentType={componentType}
+            componentDisplayName={node.displayName || undefined}
+            pageDisplayName="ESL Home Experience"
+            allowedTypes={ESL_HOME_ALLOWED_SECTIONS}
+          />
+        </div>
+      );
+    }
+    return <></>;
+  }
+
   const childrenWithProps =
     React.isValidElement<{ displaySettings?: Record<string, string | boolean> }>(children) && displaySettings
       ? React.cloneElement(children, { displaySettings })
@@ -26,8 +72,19 @@ function ExperienceComponentWrapper({ children, node, displaySettings }: Compone
   );
 }
 
+type ExperienceCompositionData = {
+  nodes?: Parameters<typeof OptimizelyComposition>[0]['nodes'] | null;
+  [key: string]: unknown;
+};
+
 type Props = {
-  content?: ContentProps<typeof EslHomeExperienceContentType>;
+  content?:
+    | ContentProps<typeof EslHomeExperienceContentType>
+    | {
+        composition?: ExperienceCompositionData | null;
+        [key: string]: unknown;
+      }
+    | null;
 };
 
 export default function EslHomeExperience({ content }: Props) {

@@ -1,16 +1,58 @@
 import React from 'react';
 import { RichText } from '@optimizely/cms-sdk/react/richText';
 import { HeroCarousel } from '@/components/organisms/hero-carousel/HeroCarousel';
-import { resolveMediaUrl } from '@/infrastructure/cms/mediaUrl';
-import type { EslHeroSliderData } from './EslHeroSlider';
+import { resolveMediaUrl, type ImageRefContent } from '@/infrastructure/cms/mediaUrl';
 
-type Props = {
-  content?: (EslHeroSliderData & { component?: EslHeroSliderData }) | null;
+export type HeroSlideItem = {
+  eyebrow?: string | null;
+  heading?: string | null;
+  body?: {
+    html?: string | null;
+    json?: Parameters<typeof RichText>[0]['content'] | null;
+  } | string | null;
+  image?: ImageRefContent | null;
+  imageAlt?: string | null;
+  primaryCta?: {
+    text?: string | null;
+    title?: string | null;
+    target?: string | null;
+    url?: {
+      default?: string | null;
+      hierarchical?: string | null;
+      base?: string | null;
+      [key: string]: unknown;
+    } | null;
+  } | null;
+  secondaryCta?: {
+    text?: string | null;
+    title?: string | null;
+    target?: string | null;
+    url?: {
+      default?: string | null;
+      hierarchical?: string | null;
+      base?: string | null;
+      [key: string]: unknown;
+    } | null;
+  } | null;
+  badgeStat?: string | null;
+  badgeLabel?: string | null;
+  [key: string]: unknown;
 };
 
-type HeroSlideContent = NonNullable<EslHeroSliderData['slides']>[number];
-type LinkContent = NonNullable<HeroSlideContent['primaryCta']>;
-type RichTextContent = NonNullable<HeroSlideContent['body']>;
+export type EslHeroSliderComponentData = {
+  variant?: 'circled' | 'squared' | string | null;
+  slides?: HeroSlideItem[] | null;
+  [key: string]: unknown;
+};
+
+type Props = {
+  content?: (EslHeroSliderComponentData & { component?: EslHeroSliderComponentData }) | null;
+  displaySettings?: Record<string, string | boolean> | null;
+  defaultVariant?: 'circled' | 'squared';
+};
+
+type LinkContent = HeroSlideItem['primaryCta'];
+type RichTextContent = HeroSlideItem['body'];
 
 function splitHeading(headingStr?: string | null) {
   if (!headingStr) return { titleLine1: '', titleLine2: '' };
@@ -36,12 +78,12 @@ function renderBody(bodyContent?: RichTextContent | string | null) {
   return '';
 }
 
-function resolveMediaAlt(slide?: HeroSlideContent | null, fallback: string = ''): string {
+function resolveMediaAlt(slide?: HeroSlideItem | null, fallback: string = ''): string {
   const directAlt = slide?.imageAlt?.trim();
   if (directAlt) return directAlt;
 
-  const item = slide?.image?.item;
-  if (item && 'AltText' in item && item.AltText) return item.AltText;
+  const item = slide?.image?.item as { AltText?: string | null; Title?: string | null } | null | undefined;
+  if (item?.AltText) return item.AltText;
   if (item?.Title) return item.Title;
   return fallback;
 }
@@ -64,13 +106,35 @@ function resolveLink(linkObj?: LinkContent | null) {
   return { text, url, target, rel };
 }
 
-export default function EslHeroSlider({ content }: Props) {
+export default function EslHeroSlider({
+  content,
+  displaySettings,
+  defaultVariant = 'circled',
+}: Props) {
   const effectiveContent = content?.component || content;
   const sliderSlides = effectiveContent?.slides;
+
+  // Contextual default: squared for Product Detail, circled for Home
+  const contextDefault =
+    (displaySettings?.defaultVariant as 'circled' | 'squared' | undefined) || defaultVariant;
+
+  const rawVariant = effectiveContent?.variant;
+  const resolvedVariant: 'default' | 'squared' =
+    rawVariant === 'squared'
+      ? 'squared'
+      : rawVariant === 'circled'
+      ? 'default'
+      : contextDefault === 'squared'
+      ? 'squared'
+      : 'default';
+
   const customSlides = Array.isArray(sliderSlides)
     ? sliderSlides.map((slide, idx) => {
         const { titleLine1: t1, titleLine2: t2 } = splitHeading(slide.heading);
-        const imageSrc = resolveMediaUrl(slide.image, { width: 600, quality: 80, format: 'auto' });
+        const imageSrc = resolveMediaUrl(
+          slide.image as ImageRefContent | null | undefined,
+          { width: 600, quality: 80, format: 'auto' }
+        );
         const imageAlt = imageSrc ? resolveMediaAlt(slide, slide.heading || '') : '';
         const primaryCtaResolved = resolveLink(slide.primaryCta);
         const secondaryCtaResolved = resolveLink(slide.secondaryCta);
@@ -96,5 +160,10 @@ export default function EslHeroSlider({ content }: Props) {
       })
     : [];
 
-  return <HeroCarousel slides={customSlides.length > 0 ? customSlides : undefined} />;
+  // No hardcoded content: if no slides are in the CMS, do not render
+  if (customSlides.length === 0) {
+    return null;
+  }
+
+  return <HeroCarousel variant={resolvedVariant} slides={customSlides} />;
 }
