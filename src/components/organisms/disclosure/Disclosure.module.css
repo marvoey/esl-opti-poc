@@ -1,7 +1,13 @@
 .section {
   width: 100%;
   background-color: var(--color-bg, #FFFFFF);
-  padding-block: 30px;
+  padding-block: var(--space-section-block);
+}
+
+@media (width < 768px) {
+  .section {
+    padding-block: 30px;
+  }
 }
 
 .container {

@@ -4,7 +4,7 @@
 }
 
 .container {
-  padding-block: 4rem; /* 64px desktop */
+  padding-block: var(--space-section-block);
   max-width: var(--container-max-w, 1200px);
   margin: 0 auto;
   padding-inline: var(--container-gutter, 2.5rem);

@@ -7,9 +7,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   min-height: 152px;
-  padding: 24px 16px;
+  padding-block: 24px;
+  padding-inline: 13px;
   gap: 24px;
   border-radius: var(--radius-md);
   text-decoration: none;
@@ -28,7 +29,7 @@
 
 .title {
   transition: color var(--duration-smart) var(--ease-out-smart);
-  overflow-wrap: break-word;
+  white-space: nowrap;
 }
 
 .iconCircle {
@@ -58,8 +59,9 @@
 .default:hover {
   background-color: var(--color-card-bg-inverse);
   border-color: var(--color-card-ring-hover);
-  box-shadow: 0 0 0 1px var(--color-card-ring-hover), var(--shadow-card-hover);
+  box-shadow: 0 0 0 2px var(--color-card-ring-hover), var(--shadow-card-hover);
   color: var(--color-text-inverted);
+  min-height: 176px;
   transform: translateY(-2px);
 }
 
@@ -82,8 +84,9 @@
 }
 
 .inverse:hover {
+  min-height: 176px;
   transform: translateY(-2px);
-  box-shadow: 0 0 0 1px var(--color-card-ring-hover), var(--shadow-card-hover-intense);
+  box-shadow: 0 0 0 2px var(--color-card-ring-hover), var(--shadow-card-hover-intense);
 }
 
 .card:active {

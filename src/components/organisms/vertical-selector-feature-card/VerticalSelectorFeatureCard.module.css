@@ -1,7 +1,13 @@
 .section {
   width: 100%;
   background: var(--color-vertical-selector-bg, var(--gradient-vertical-selector));
-  padding-block: 4rem; /* 64px on desktop */
+  padding-block: var(--space-section-block);
+}
+
+@media (width < 768px) {
+  .section {
+    padding-block: 4rem;
+  }
 }
 
 
