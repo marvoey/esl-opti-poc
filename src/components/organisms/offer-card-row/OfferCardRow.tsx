@@ -57,7 +57,8 @@ function ChevronRightIcon({ size = 20 }: { size?: number }) {
  * Promotional showcase featuring:
  * 1. Branded dark navy gradient section with focused header row (turquoise eyebrow + white H2).
  * 2. Embla Carousel showcasing 6 time-sensitive banking offer cards (3 visible on desktop, 2 on tablet, 1 on mobile).
- * 3. Flanking circular glassmorphic navigation buttons (< Prev and > Next).
+ * 3. Netflix-style navigation: small solid navy panels flanking the row, always visible,
+ *    instead of small floating circular buttons.
  */
 export function OfferCardRow({
   id,
@@ -131,13 +132,13 @@ export function OfferCardRow({
             {/* Prev Button */}
             <button
               type="button"
-              className={`${styles.navButton} ${styles.navButtonPrev}`}
+              className={styles.navButton}
               onClick={scrollPrev}
               disabled={!canScrollPrev}
               aria-label="Previous offers"
               aria-controls={carouselId}
             >
-              <ChevronLeftIcon size={20} />
+              <ChevronLeftIcon size={16} />
             </button>
 
             {/* Embla Viewport */}
@@ -170,13 +171,13 @@ export function OfferCardRow({
             {/* Next Button */}
             <button
               type="button"
-              className={`${styles.navButton} ${styles.navButtonNext}`}
+              className={styles.navButton}
               onClick={scrollNext}
               disabled={!canScrollNext}
               aria-label="Next offers"
               aria-controls={carouselId}
             >
-              <ChevronRightIcon size={20} />
+              <ChevronRightIcon size={16} />
             </button>
           </div>
         )}

@@ -64,6 +64,7 @@
 .card:hover {
   background-color: var(--color-surface);
   border-color: var(--color-card-ring-hover);
+  box-shadow: 0 0 0 2px var(--color-card-ring-hover);
 }
 
 .itemHeading {

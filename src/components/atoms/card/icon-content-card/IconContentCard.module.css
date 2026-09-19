@@ -98,7 +98,7 @@
 .default:hover {
   background-color: var(--color-card-bg-inverse);
   border-color: var(--color-card-ring-hover);
-  box-shadow: 0 0 0 1px var(--color-card-ring-hover), var(--shadow-card-hover);
+  box-shadow: 0 0 0 2px var(--color-card-ring-hover), var(--shadow-card-hover);
   transform: translateY(-2px);
 }
 

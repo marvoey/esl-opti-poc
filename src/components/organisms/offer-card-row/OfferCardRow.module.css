@@ -50,11 +50,18 @@
   margin-top: 2.5rem; /* 40px */
   display: flex;
   align-items: center;
+  gap: 1rem;
 }
 
 .viewport {
+  flex: 1 1 auto;
+  min-width: 0;
   overflow: hidden;
-  width: 100%;
+  /* Give the card hover glow (box-shadow) room to render without being
+     clipped by this viewport's overflow: hidden; the negative margin cancels
+     the padding's effect on surrounding layout. */
+  padding-block: 24px;
+  margin-block: -24px;
 }
 
 .track {
@@ -103,55 +110,42 @@
   height: 100%;
 }
 
+/* Netflix-style nav: small solid navy panel with a white chevron, always
+   visible, flanking the card row rather than overlapping it. */
 .navButton {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 2;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  display: inline-flex;
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 24px;
+  height: 120px;
+  border: none;
+  border-radius: 0;
+  display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(1, 38, 66, 0.85);
-  border: 1px solid rgba(104, 224, 204, 0.25);
-  color: var(--color-border-accent, #68e0cc);
+  background-color: var(--color-navy-800, #01375a);
+  color: var(--color-text-inverted, #ffffff);
   cursor: pointer;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-  transition: all var(--duration-smart, 0.2s) var(--ease-out-smart, ease-out);
   padding: 0;
 }
 
-.navButton:hover:not(:disabled) {
-  background-color: #01375a;
-  border-color: var(--color-border-accent, #68e0cc);
-  box-shadow: 0 0 16px rgba(104, 224, 204, 0.4);
-  transform: translateY(-50%) scale(1.06);
+.navButton svg {
+  transition: transform var(--duration-smart, 0.2s) var(--ease-out-smart, ease-out);
+}
+
+.navButton:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: -4px;
+}
+
+.navButton:hover:not(:disabled) svg {
+  transform: scale(1.15);
 }
 
 .navButton:disabled {
-  opacity: 0.25;
   cursor: not-allowed;
   pointer-events: none;
 }
 
-.navButtonPrev {
-  left: -22px;
-}
-
-.navButtonNext {
-  right: -22px;
-}
-
-@media (width < 1024px) {
-  .navButtonPrev {
-    left: 8px;
-  }
-
-  .navButtonNext {
-    right: 8px;
-  }
+.navButton:disabled svg {
+  opacity: 0.35;
 }

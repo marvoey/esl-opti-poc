@@ -4,11 +4,12 @@
   box-sizing: border-box;
   width: 100%;
   border-radius: var(--radius-xl);
-  background-color: var(--color-surface-inverse);
+  background-color: var(--color-navy-alpha-25);
   border: 1px solid rgba(104, 224, 204, 0.15);
   overflow: hidden;
   box-shadow: var(--shadow-elevation-sm, 0 2px 4px rgba(0, 0, 0, 0.08));
   transition: transform var(--duration-smart, 0.25s) var(--ease-out-smart, cubic-bezier(0.16, 1, 0.3, 1)),
+              background-color var(--duration-smart, 0.25s) var(--ease-out-smart, cubic-bezier(0.16, 1, 0.3, 1)),
               border-color var(--duration-smart, 0.25s) var(--ease-out-smart, cubic-bezier(0.16, 1, 0.3, 1)),
               box-shadow var(--duration-smart, 0.25s) var(--ease-out-smart, cubic-bezier(0.16, 1, 0.3, 1));
   text-decoration: none;
@@ -18,8 +19,9 @@
 
 .card:hover {
   transform: translateY(-4px);
+  background-color: var(--color-navy-alpha-20);
   border-color: var(--color-border-accent);
-  box-shadow: 0 8px 24px rgba(104, 224, 204, 0.2);
+  box-shadow: var(--shadow-ring-hover), 0 8px 24px rgba(104, 224, 204, 0.2);
 }
 
 .mediaWrapper {

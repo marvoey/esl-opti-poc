@@ -63,7 +63,7 @@
 /* Row 2: 40% - 60% Split Grid with 24px Gap */
 .selectorGrid {
   display: grid;
-  grid-template-columns: minmax(0, 4fr) minmax(0, 6fr); /* 40% - 60% ratio with 24px gap */
+  grid-template-columns: minmax(0, 4fr) minmax(0, 10fr);
   gap: 1.5rem; /* 24px strict */
   align-items: stretch;
   width: 100%;

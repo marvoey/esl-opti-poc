@@ -1,6 +1,6 @@
 .section {
   width: 100%;
-  background: var(--color-bg);
+  background: var(--gradient-split-radial);
 }
 
 .container {
@@ -53,12 +53,12 @@
 }
 
 .title {
-  color: var(--color-navy-900); /* #00395D */
+  color: var(--color-navy-500); /* #00395D */
   margin: 0;
 }
 
 .description {
-  color: var(--color-navy-900); /* #00395D */
+  color: var(--color-navy-500); /* #00395D */
   margin: 0;
   font-size: var(--font-size-body-lg);
   line-height: var(--line-height-body-lg, 1.5);
@@ -110,8 +110,8 @@
 
 /* Full Circle Image */
 .imageWrapper {
-  width: 11.25rem; /* 180px */
-  height: 11.25rem; /* 180px */
+  width: 18.75rem; /* 300px */
+  height: 18.75rem; /* 300px */
   border-radius: 50%;
   overflow: hidden;
   margin-bottom: var(--space-md); /* 16px */
@@ -144,7 +144,7 @@
   font-family: var(--font-family-sans);
   font-size: var(--font-size-body);
   line-height: var(--line-height-body);
-  color: var(--color-navy-900); /* #00395D */
+  color: var(--color-navy-500); /* #00395D */
   text-align: center;
   margin: 0;
 }
