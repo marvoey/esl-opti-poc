@@ -39,7 +39,27 @@ export function HeroCarousel({
     loop: true,
     skipSnaps: false,
   });
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(() => {
+    if (typeof window !== "undefined" && window.matchMedia) {
+      return !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    }
+    return true;
+  });
+
+  // WCAG 2.2 SC 2.2.2: Subscribe to runtime changes for reduced motion
+  useEffect(() => {
+    if (typeof window === "undefined" || !window.matchMedia) return;
+
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const handleChange = (e: MediaQueryListEvent) => {
+      if (e.matches) {
+        setIsPlaying(false);
+      }
+    };
+
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, []);
 
   const scrollPrev = useCallback(() => {
     if (emblaApi) emblaApi.scrollPrev();
@@ -117,6 +137,8 @@ export function HeroCarousel({
         className={styles.heroContainer}
         containerClassName={styles.slideTrack}
         emblaRef={emblaRef}
+        emblaApi={emblaApi}
+        showControls={false}
       >
         {activeSlides.map((slide, index) => {
           const isFirst = index === 0;

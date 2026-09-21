@@ -44,3 +44,6 @@ next-env.d.ts
 # skills
 .agents/
 .atl/
+
+# specifications
+openspec/

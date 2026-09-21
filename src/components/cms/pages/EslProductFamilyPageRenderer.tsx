@@ -16,6 +16,8 @@ const {
 } = getAllowedSectionsFromContentType(EslProductFamilyExperienceContentType);
 
 export { ESL_PRODUCT_FAMILY_ALLOWED_SECTIONS };
+import { ComparisonCardPair } from '@/components/organisms/comparison-card-pair';
+
 
 function ExperienceComponentWrapper({ children, node, displaySettings }: ComponentContainerProps) {
   const { pa } = getPreviewUtils(node);
@@ -93,6 +95,15 @@ type Props = {
   } | null;
 };
 
+export function ProductFamilyStaticSections() {
+
+  return (
+    <>
+      <ComparisonCardPair id="family-comparison-card-pair" />
+    </>
+  );
+}
+
 export default function EslProductFamilyExperience({ content }: Props) {
   const nodes = content?.composition?.nodes;
 
@@ -101,10 +112,13 @@ export default function EslProductFamilyExperience({ content }: Props) {
   }
 
   return (
-    <OptimizelyComposition
-      nodes={nodes}
-      ComponentWrapper={ExperienceComponentWrapper}
-    />
+    <>
+      <OptimizelyComposition
+        nodes={nodes}
+        ComponentWrapper={ExperienceComponentWrapper}
+      />
+      <ProductFamilyStaticSections />
+    </>
   );
 }
 

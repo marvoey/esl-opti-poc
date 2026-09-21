@@ -21,3 +21,39 @@
   flex: 0 0 100%;
   min-width: 0;
 }
+
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-sm, 0.75rem);
+  margin-top: var(--space-md, 1rem);
+}
+
+.controlBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-card-stroke);
+  background-color: var(--color-surface-raised, #ffffff);
+  color: var(--color-primary);
+  cursor: pointer;
+  transition: var(--transition-all);
+}
+
+.controlBtn:hover:not(:disabled) {
+  background-color: var(--color-surface);
+  border-color: var(--color-card-ring-hover);
+}
+
+.controlBtn:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+.controlBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}

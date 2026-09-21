@@ -23,6 +23,7 @@ export function TestimonialLightbox({
   const dialogRef = useRef<HTMLDialogElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const onCloseRef = useRef(onClose);
+  const triggerRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     onCloseRef.current = onClose;
@@ -30,6 +31,10 @@ export function TestimonialLightbox({
 
   useEffect(() => {
     if (!isOpen) return;
+
+    if (typeof document !== "undefined") {
+      triggerRef.current = document.activeElement as HTMLElement | null;
+    }
 
     const dialog = dialogRef.current;
     if (dialog && !dialog.open) {
@@ -58,6 +63,7 @@ export function TestimonialLightbox({
       if (dialog?.open) {
         dialog.close();
       }
+      triggerRef.current?.focus();
     };
   }, [isOpen]);
 
