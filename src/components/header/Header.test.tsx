@@ -8,7 +8,7 @@ describe("Header Component", () => {
   it("renders the brand logo, default nav items, and Join/Sign in actions by default", () => {
     render(<Header />);
 
-    const brandLink = screen.getByRole("link", { name: /main navigation/i });
+    const brandLink = screen.getByRole("link", { name: /esl federal credit union/i });
     expect(brandLink).toBeDefined();
     expect(brandLink.getAttribute("href")).toBe("/");
 

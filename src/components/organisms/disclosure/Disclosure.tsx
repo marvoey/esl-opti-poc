@@ -23,10 +23,22 @@ export function Disclosure({
 }: DisclosureProps) {
   if (!items || items.length === 0) return null;
 
+  const headingId = id ? `${id}-heading` : "disclosures-heading";
+
   return (
-    <section id={id} className={`${styles.section} ${className}`}>
+    <section
+      id={id}
+      className={`${styles.section} ${className}`}
+      aria-labelledby={headingId}
+    >
       <div className={styles.container}>
-        <Text as="p" variant="micro" color="primary" className={styles.heading}>
+        <Text
+          as="h2"
+          id={headingId}
+          variant="micro"
+          color="primary"
+          className={styles.heading}
+        >
           {heading}
         </Text>
         <div className={styles.content}>
