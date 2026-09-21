@@ -22,6 +22,15 @@ import {
   Plus,
   Minus,
   MapPin,
+  Landmark,
+  Award,
+  Vault,
+  Smartphone,
+  HandCoins,
+  KeyRound,
+  Wallet,
+  ShieldAlert,
+  ChevronDown,
   type LucideProps,
   type LucideIcon,
 } from "lucide-react";
@@ -48,7 +57,16 @@ export type IconName =
   | "credit-card"
   | "plus"
   | "minus"
-  | "map-pin";
+  | "map-pin"
+  | "landmark"
+  | "award"
+  | "vault"
+  | "smartphone"
+  | "hand-coins"
+  | "key-round"
+  | "wallet"
+  | "shield-alert"
+  | "chevron-down";
 
 export interface IconProps extends Omit<LucideProps, "ref"> {
   size?: number | string;
@@ -79,6 +97,15 @@ const iconRegistry: Record<IconName, LucideIcon> = {
   plus: Plus,
   minus: Minus,
   "map-pin": MapPin,
+  landmark: Landmark,
+  award: Award,
+  vault: Vault,
+  smartphone: Smartphone,
+  "hand-coins": HandCoins,
+  "key-round": KeyRound,
+  wallet: Wallet,
+  "shield-alert": ShieldAlert,
+  "chevron-down": ChevronDown,
 };
 
 /**
@@ -183,5 +210,9 @@ export function MinusIcon(props: IconProps) {
 
 export function MapPinIcon(props: IconProps) {
   return <MapPin size={props.size ?? 20} aria-hidden={true} {...props} />;
+}
+
+export function ChevronDownIcon(props: IconProps) {
+  return <ChevronDown size={props.size ?? 16} aria-hidden={true} {...props} />;
 }
 

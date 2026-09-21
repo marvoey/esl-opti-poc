@@ -1,10 +1,31 @@
 import { describe, it, expect } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import React from "react";
 import { Header } from "./Header";
 import { NavigationModel } from "@/domain/models/Navigation";
 
 describe("Header Component", () => {
+  it("renders the brand logo, default nav items, and Join/Sign in actions by default", () => {
+    render(<Header />);
+
+    const brandLink = screen.getByRole("link", { name: /main navigation/i });
+    expect(brandLink).toBeDefined();
+    expect(brandLink.getAttribute("href")).toBe("/");
+
+    expect(screen.getByRole("button", { name: /personal/i })).toBeDefined();
+    expect(screen.getByRole("link", { name: "Business" })).toBeDefined();
+    expect(screen.getByRole("link", { name: "Wealth" })).toBeDefined();
+    expect(screen.getByRole("link", { name: "Membership" })).toBeDefined();
+
+    const joinButtons = screen.getAllByRole("link", { name: "Join" });
+    expect(joinButtons.length).toBeGreaterThan(0);
+    expect(joinButtons[0].getAttribute("href")).toBe("/join");
+
+    const signInButtons = screen.getAllByRole("link", { name: /sign in/i });
+    expect(signInButtons.length).toBeGreaterThan(0);
+    expect(signInButtons[0].getAttribute("href")).toBe("/sign-in");
+  });
+
   it("renders CMS brand logo, navigation links, and explore docs CTA when provided", () => {
     render(
       <Header
@@ -39,21 +60,7 @@ describe("Header Component", () => {
     expect(ctaButton.getAttribute("href")).toBe("https://docs.developers.optimizely.com");
   });
 
-  it("enforces headless rules: does not render logo or CTA when not provided in CMS (no hardcoded fallback)", () => {
-    render(<Header />);
-
-    // No logo image or brand link
-    expect(screen.queryByRole("link", { name: /main navigation/i })).toBeNull();
-    expect(screen.queryByRole("img")).toBeNull();
-
-    // No nav links
-    expect(screen.queryByRole("navigation")).toBeNull();
-
-    // No CTA button
-    expect(screen.queryByRole("link", { name: /explore docs/i })).toBeNull();
-  });
-
-  it("supports custom navLinks and CTA overrides", () => {
+  it("supports custom navLinks and action overrides", () => {
     render(
       <Header
         logoUrl="https://cdn.example.com/logo.svg"
@@ -63,8 +70,8 @@ describe("Header Component", () => {
           { label: "Products", href: "/products" },
           { label: "About", href: "/about" },
         ]}
-        ctaText="Get Started"
-        ctaHref="/get-started"
+        joinText="Get Started"
+        joinHref="/get-started"
       />
     );
 
@@ -73,9 +80,9 @@ describe("Header Component", () => {
 
     expect(screen.getByRole("link", { name: "Products" })).toBeDefined();
     expect(screen.getByRole("link", { name: "About" })).toBeDefined();
-    expect(screen.queryByRole("link", { name: "Features" })).toBeNull();
+    expect(screen.queryByRole("button", { name: /personal/i })).toBeNull();
 
-    const cta = screen.getByRole("link", { name: /get started/i });
+    const cta = screen.getAllByRole("link", { name: "Get Started" })[0];
     expect(cta.getAttribute("href")).toBe("/get-started");
     expect(cta.getAttribute("target")).toBeNull();
   });
@@ -108,5 +115,20 @@ describe("Header Component", () => {
 
     expect(screen.getByRole("link", { name: "Overview" })).toBeDefined();
     expect(screen.getByRole("link", { name: "Documentation" })).toBeDefined();
+  });
+
+  it("opens the Personal mega menu on trigger click and closes on Escape", () => {
+    render(<Header />);
+
+    const trigger = screen.getByRole("button", { name: /personal/i });
+    expect(trigger.getAttribute("aria-expanded")).toBe("false");
+
+    fireEvent.click(trigger);
+    expect(trigger.getAttribute("aria-expanded")).toBe("true");
+    expect(screen.getByText("Manage")).toBeDefined();
+    expect(screen.getByText("Checking Accounts")).toBeDefined();
+
+    fireEvent.keyDown(document, { key: "Escape" });
+    expect(trigger.getAttribute("aria-expanded")).toBe("false");
   });
 });
