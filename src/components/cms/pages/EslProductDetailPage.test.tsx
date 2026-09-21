@@ -42,6 +42,9 @@ describe('EslProductDetailPageRenderer', () => {
       'EslHeroSlider',
       'EslSnipeCta',
       'EslKeyFactsRow',
+      'EslProductCardsRow',
+      'EslProductCardsRowVariant2',
+      'EslSwitchSupport',
       'EslDisclosure',
       'EslFaqStates',
     ]);
@@ -51,13 +54,13 @@ describe('EslProductDetailPageRenderer', () => {
     render(<EslProductDetailExperience content={undefined} />);
 
     // Check key static components by id
-    expect(document.getElementById('product-fit')).toBeDefined();
-    expect(document.getElementById('account-tools')).toBeDefined();
     expect(document.getElementById('glossary')).toBeDefined();
-    expect(document.getElementById('switch-support')).toBeDefined();
     expect(document.getElementById('split-content-cta')).toBeDefined();
-    // Key facts, Disclosure, and FAQ are now purely CMS-driven, so they are NOT rendered statically
+    // Key facts, Product cards, Switch support, Disclosure, and FAQ are now purely CMS-driven, so they are NOT rendered statically
+    expect(document.getElementById('product-fit')).toBeNull();
+    expect(document.getElementById('account-tools')).toBeNull();
     expect(document.getElementById('key-facts')).toBeNull();
+    expect(document.getElementById('switch-support')).toBeNull();
     expect(document.getElementById('disclosure')).toBeNull();
     expect(document.getElementById('faq')).toBeNull();
   });
@@ -108,6 +111,17 @@ describe('EslProductDetailPageRenderer', () => {
         displaySettings: null,
         component: { __typename: 'EslDisclosure' },
       },
+      {
+        key: 'switch-support-1',
+        type: 'EslSwitchSupport',
+        __typename: 'CompositionComponentNode',
+        nodeType: 'component',
+        displayName: 'Switch Support',
+        layoutType: null,
+        displayTemplateKey: null,
+        displaySettings: null,
+        component: { __typename: 'EslSwitchSupport' },
+      },
     ];
 
     render(
@@ -121,15 +135,16 @@ describe('EslProductDetailPageRenderer', () => {
     );
 
     const comp = screen.getByTestId('mock-composition');
-    expect(comp.getAttribute('data-nodes-count')).toBe('4');
+    expect(comp.getAttribute('data-nodes-count')).toBe('5');
     expect(screen.getByTestId('node-hero-1')).toBeDefined();
     expect(screen.getByTestId('node-snipe-1')).toBeDefined();
     expect(screen.getByTestId('node-facts-1')).toBeDefined();
     expect(screen.getByTestId('node-disclosure-1')).toBeDefined();
+    expect(screen.getByTestId('node-switch-support-1')).toBeDefined();
     expect(screen.queryByTestId('visual-builder-constraint-alert')).toBeNull();
 
     // Static sections still render below
-    expect(document.getElementById('product-fit')).toBeDefined();
+    expect(document.getElementById('glossary')).toBeDefined();
   });
 
   it('renders visual constraint alert in edit mode when unallowed section is added', () => {
@@ -197,12 +212,13 @@ describe('EslProductDetailPageRenderer', () => {
     expect(screen.queryByTestId('visual-builder-constraint-alert')).toBeNull();
     expect(screen.queryByTestId('node-unallowed-2')).toBeNull();
     // Static sections still render
-    expect(document.getElementById('product-fit')).toBeDefined();
+    expect(document.getElementById('glossary')).toBeDefined();
   });
 
   it('ProductDetailStaticSections standalone renders all expected rows', () => {
     render(<ProductDetailStaticSections />);
-    expect(document.getElementById('product-fit')).toBeDefined();
     expect(document.getElementById('glossary')).toBeDefined();
+    expect(document.getElementById('split-content-cta')).toBeDefined();
+    expect(document.getElementById('switch-support')).toBeNull();
   });
 });

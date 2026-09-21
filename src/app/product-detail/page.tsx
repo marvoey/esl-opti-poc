@@ -125,6 +125,75 @@ const ESL_PRODUCT_DETAIL_PAGE_EXPERIENCE_QUERY = `
                   showFaqStates
                   heading
                 }
+                ... on EslSwitchSupport {
+                  eyebrow
+                  title
+                  switchDescription: description {
+                    json
+                  }
+                  steps {
+                    step
+                    title
+                    description {
+                      json
+                    }
+                  }
+                  cta {
+                    text
+                    title
+                    target
+                    url {
+                      default
+                    }
+                  }
+                  link {
+                    text
+                    title
+                    target
+                    url {
+                      default
+                    }
+                  }
+                }
+                ... on EslProductCardsRow {
+                  eyebrow
+                  title
+                  rowDescription: description {
+                    json
+                    html
+                  }
+                  items {
+                    title
+                    description {
+                      json
+                      html
+                    }
+                  }
+                }
+                ... on EslProductCardsRowVariant2 {
+                  eyebrow
+                  title
+                  rowDescription: description {
+                    json
+                    html
+                  }
+                  items {
+                    icon
+                    title
+                    description {
+                      json
+                      html
+                    }
+                    link {
+                      text
+                      title
+                      target
+                      url {
+                        default
+                      }
+                    }
+                  }
+                }
               }
             }
           }
@@ -245,6 +314,36 @@ const ESL_PRODUCT_DETAIL_PAGE_BASE_EXPERIENCE_QUERY = `
                 ... on EslFaqStates {
                   showFaqStates
                   heading
+                }
+                ... on EslSwitchSupport {
+                  eyebrow
+                  title
+                  switchDescription: description {
+                    json
+                  }
+                  steps {
+                    step
+                    title
+                    description {
+                      json
+                    }
+                  }
+                  cta {
+                    text
+                    title
+                    target
+                    url {
+                      default
+                    }
+                  }
+                  link {
+                    text
+                    title
+                    target
+                    url {
+                      default
+                    }
+                  }
                 }
               }
             }

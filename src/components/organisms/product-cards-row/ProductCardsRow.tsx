@@ -7,7 +7,7 @@ import styles from "./ProductCardsRow.module.css";
 export interface ProductCardItem {
   id?: string;
   title: string;
-  description: string;
+  description: React.ReactNode;
 }
 
 export interface ProductCardsRowProps {
@@ -15,7 +15,7 @@ export interface ProductCardsRowProps {
   eyebrow?: string;
   title?: string;
   headingLevel?: HeadingLevel;
-  description?: string;
+  description?: React.ReactNode;
   items: ProductCardItem[];
   className?: string;
 }
@@ -55,7 +55,11 @@ export function ProductCardsRow({
               </Heading>
             )}
             {description && (
-              <Text variant="body-lg" className={styles.description}>
+              <Text
+                as={typeof description === "string" ? "p" : "div"}
+                variant="body-lg"
+                className={styles.description}
+              >
                 {description}
               </Text>
             )}
@@ -75,7 +79,12 @@ export function ProductCardsRow({
                 <Text as="p" variant="body" weight="bold" className={styles.cardTitle}>
                   {item.title}
                 </Text>
-                <Text as="p" variant="body" color="secondary" className={styles.cardDescription}>
+                <Text
+                  as={typeof item.description === "string" ? "p" : "div"}
+                  variant="body"
+                  color="secondary"
+                  className={styles.cardDescription}
+                >
                   {item.description}
                 </Text>
               </div>
