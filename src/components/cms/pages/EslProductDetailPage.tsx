@@ -10,6 +10,7 @@ export const EslProductDetailExperienceContentType = contentType({
     'EslKeyFactsRow',
     'EslProductCardsRow',
     'EslProductCardsRowVariant2',
+    'EslSwitchSupport',
     'EslDisclosure',
     'EslFaqStates',
   ],
