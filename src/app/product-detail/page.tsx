@@ -5,7 +5,7 @@ import { OptimizelyComponent } from "@optimizely/cms-sdk/react/server";
 import { ProductDetailStaticSections } from "@/components/cms/pages/EslProductDetailPageRenderer";
 import "@/infrastructure/cms/optimizely-registry";
 
-export const revalidate = 0;
+export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: "Premier Checking",
@@ -112,6 +112,140 @@ const ESL_PRODUCT_DETAIL_PAGE_EXPERIENCE_QUERY = `
                     }
                   }
                 }
+                ... on EslDisclosure {
+                  heading
+                  items {
+                    boldText
+                    regularText {
+                      json
+                    }
+                  }
+                }
+                ... on EslFaqStates {
+                  showFaqStates
+                  heading
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+const ESL_PRODUCT_DETAIL_PAGE_BASE_EXPERIENCE_QUERY = `
+  query GetEslProductDetailPageBaseExperience($host: String) {
+    EslProductDetailExperience(
+      where: {
+        _metadata: {
+          url: {
+            base: { eq: $host }
+          }
+        }
+      }
+    ) {
+      items {
+        __typename
+        _id
+        _metadata {
+          key
+          status
+          displayName
+          types
+          lastModified
+          container
+          path
+          url {
+            default
+            base
+          }
+        }
+        composition {
+          __typename
+          nodes {
+            __typename
+            key
+            nodeType
+            type
+            displayName
+            displayTemplateKey
+            layoutType
+            ... on CompositionComponentNode {
+              component {
+                __typename
+                ... on EslHeroSlider {
+                  variant
+                  slides {
+                    eyebrow
+                    heading
+                    body {
+                      json
+                    }
+                    image {
+                      key
+                      url {
+                        default
+                      }
+                    }
+                    imageAlt
+                    primaryCta {
+                      text
+                      title
+                      target
+                      url {
+                        default
+                      }
+                    }
+                    secondaryCta {
+                      text
+                      title
+                      target
+                      url {
+                        default
+                      }
+                    }
+                    badgeStat
+                    badgeLabel
+                  }
+                }
+                ... on EslSnipeCta {
+                  title
+                  description
+                  link {
+                    text
+                    title
+                    target
+                    url {
+                      default
+                    }
+                  }
+                }
+                ... on EslKeyFactsRow {
+                  title
+                  subtitle
+                  facts {
+                    value
+                    callout
+                    description {
+                      json
+                      html
+                    }
+                  }
+                }
+                ... on EslDisclosure {
+                  heading
+                  items {
+                    boldText
+                    regularText {
+                      json
+                    }
+                  }
+                }
+                ... on EslFaqStates {
+                  showFaqStates
+                  heading
+                }
               }
             }
           }
@@ -174,7 +308,21 @@ async function resolveProductDetailContent(): Promise<ProductDetailContentItem[]
         return expItems;
       }
     } catch (err) {
-      console.warn("CMS Graph experience query error for product-detail:", err);
+      console.warn("CMS Graph experience query error for product-detail, trying base query:", err);
+      try {
+        const baseResult = (await client.request(
+          ESL_PRODUCT_DETAIL_PAGE_BASE_EXPERIENCE_QUERY,
+          { host },
+          undefined,
+          true
+        )) as ExperienceQueryResult | undefined;
+        const baseItems = baseResult?.EslProductDetailExperience?.items;
+        if (baseItems && baseItems.length > 0) {
+          return baseItems;
+        }
+      } catch (baseErr) {
+        console.warn("CMS Graph base experience query error for product-detail:", baseErr);
+      }
     }
 
     // 2. Fallback to getContentByPath

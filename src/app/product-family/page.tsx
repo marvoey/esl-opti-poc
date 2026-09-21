@@ -5,7 +5,7 @@ import { getGraphClient } from "@/infrastructure/cms/graphClient";
 import { OptimizelyComponent } from "@optimizely/cms-sdk/react/server";
 import "@/infrastructure/cms/optimizely-registry";
 
-export const revalidate = 0;
+export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: "Product Family",
@@ -112,6 +112,248 @@ const ESL_PRODUCT_FAMILY_PAGE_EXPERIENCE_QUERY = `
                     }
                   }
                 }
+                ... on EslSideBySide {
+                  eyebrow
+                  headline
+                  body {
+                    json
+                  }
+                  image {
+                    key
+                    url {
+                      default
+                    }
+                  }
+                  imageAlt
+                  cta {
+                    text
+                    title
+                    target
+                    url {
+                      default
+                    }
+                  }
+                  imagePosition
+                  colorVariant
+                }
+                ... on EslSwitchSupport {
+                  eyebrow
+                  title
+                  switchDescription: description {
+                    json
+                  }
+                  steps {
+                    step
+                    title
+                    description {
+                      json
+                    }
+                  }
+                  cta {
+                    text
+                    title
+                    target
+                    url {
+                      default
+                    }
+                  }
+                  link {
+                    text
+                    title
+                    target
+                    url {
+                      default
+                    }
+                  }
+                }
+                ... on EslDisclosure {
+                  heading
+                  items {
+                    boldText
+                    regularText {
+                      json
+                    }
+                  }
+                }
+                ... on EslFaqStates {
+                  showFaqStates
+                  heading
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+const ESL_PRODUCT_FAMILY_PAGE_BASE_EXPERIENCE_QUERY = `
+  query GetEslProductFamilyPageBaseExperience($host: String) {
+    EslProductFamilyExperience(
+      where: {
+        _metadata: {
+          url: {
+            base: { eq: $host }
+          }
+        }
+      }
+    ) {
+      items {
+        __typename
+        _id
+        _metadata {
+          key
+          status
+          displayName
+          types
+          lastModified
+          container
+          path
+          url {
+            default
+            base
+          }
+        }
+        composition {
+          __typename
+          nodes {
+            __typename
+            key
+            nodeType
+            type
+            displayName
+            displayTemplateKey
+            layoutType
+            ... on CompositionComponentNode {
+              component {
+                __typename
+                ... on EslHeroSlider {
+                  variant
+                  slides {
+                    eyebrow
+                    heading
+                    body {
+                      json
+                    }
+                    image {
+                      key
+                      url {
+                        default
+                      }
+                    }
+                    imageAlt
+                    primaryCta {
+                      text
+                      title
+                      target
+                      url {
+                        default
+                      }
+                    }
+                    secondaryCta {
+                      text
+                      title
+                      target
+                      url {
+                        default
+                      }
+                    }
+                    badgeStat
+                    badgeLabel
+                  }
+                }
+                ... on EslSnipeCta {
+                  title
+                  description
+                  link {
+                    text
+                    title
+                    target
+                    url {
+                      default
+                    }
+                  }
+                }
+                ... on EslKeyFactsRow {
+                  title
+                  subtitle
+                  facts {
+                    value
+                    callout
+                    description {
+                      json
+                      html
+                    }
+                  }
+                }
+                ... on EslSideBySide {
+                  eyebrow
+                  headline
+                  body {
+                    json
+                  }
+                  image {
+                    key
+                    url {
+                      default
+                    }
+                  }
+                  imageAlt
+                  cta {
+                    text
+                    title
+                    target
+                    url {
+                      default
+                    }
+                  }
+                  imagePosition
+                  colorVariant
+                }
+                ... on EslSwitchSupport {
+                  eyebrow
+                  title
+                  switchDescription: description {
+                    json
+                  }
+                  steps {
+                    step
+                    title
+                    description {
+                      json
+                    }
+                  }
+                  cta {
+                    text
+                    title
+                    target
+                    url {
+                      default
+                    }
+                  }
+                  link {
+                    text
+                    title
+                    target
+                    url {
+                      default
+                    }
+                  }
+                }
+                ... on EslDisclosure {
+                  heading
+                  items {
+                    boldText
+                    regularText {
+                      json
+                    }
+                  }
+                }
+                ... on EslFaqStates {
+                  showFaqStates
+                  heading
+                }
               }
             }
           }
@@ -161,7 +403,7 @@ async function resolveProductFamilyContent(): Promise<ProductFamilyContentItem[]
   }
 
   try {
-    // 1. Direct query for Experience composition (Visual Builder)
+    // 1. Direct query for Experience composition with all types
     try {
       const expResult = (await client.request(
         ESL_PRODUCT_FAMILY_PAGE_EXPERIENCE_QUERY,
@@ -174,7 +416,22 @@ async function resolveProductFamilyContent(): Promise<ProductFamilyContentItem[]
         return expItems;
       }
     } catch (err) {
-      console.warn("CMS Graph experience query error for product-family:", err);
+      console.warn("CMS Graph experience query error for product-family, trying base query:", err);
+      // Fallback: If newly added types are not yet registered in CMS schema, run base experience query
+      try {
+        const baseResult = (await client.request(
+          ESL_PRODUCT_FAMILY_PAGE_BASE_EXPERIENCE_QUERY,
+          { host },
+          undefined,
+          true
+        )) as ExperienceQueryResult | undefined;
+        const baseItems = baseResult?.EslProductFamilyExperience?.items;
+        if (baseItems && baseItems.length > 0) {
+          return baseItems;
+        }
+      } catch (baseErr) {
+        console.warn("CMS Graph base experience query error:", baseErr);
+      }
     }
 
     // 2. Fallback to getContentByPath

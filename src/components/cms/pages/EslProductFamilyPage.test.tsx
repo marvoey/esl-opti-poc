@@ -43,15 +43,23 @@ describe('EslProductFamilyPage Content Type & Renderer', () => {
       'EslHeroSlider',
       'EslSnipeCta',
       'EslKeyFactsRow',
+      'EslSideBySide',
+      'EslSwitchSupport',
+      'EslDisclosure',
+      'EslFaqStates',
     ]);
   });
 
-  it('exposes exactly 3 allowed section items', () => {
-    expect(ESL_PRODUCT_FAMILY_ALLOWED_SECTIONS).toHaveLength(3);
+  it('exposes exactly 7 allowed section items', () => {
+    expect(ESL_PRODUCT_FAMILY_ALLOWED_SECTIONS).toHaveLength(7);
     const keys = ESL_PRODUCT_FAMILY_ALLOWED_SECTIONS.map((s) => s.key);
     expect(keys).toContain('EslHeroSlider');
     expect(keys).toContain('EslSnipeCta');
     expect(keys).toContain('EslKeyFactsRow');
+    expect(keys).toContain('EslSideBySide');
+    expect(keys).toContain('EslSwitchSupport');
+    expect(keys).toContain('EslDisclosure');
+    expect(keys).toContain('EslFaqStates');
   });
 
   it('returns null when content is missing or nodes are empty (no static fallbacks)', () => {
@@ -108,6 +116,39 @@ describe('EslProductFamilyPage Content Type & Renderer', () => {
         displaySettings: null,
         component: { __typename: 'EslKeyFactsRow' },
       },
+      {
+        key: 'side-by-side-1',
+        type: 'EslSideBySide',
+        __typename: 'CompositionComponentNode',
+        nodeType: 'component',
+        displayName: 'Side by Side',
+        layoutType: null,
+        displayTemplateKey: null,
+        displaySettings: null,
+        component: { __typename: 'EslSideBySide' },
+      },
+      {
+        key: 'switch-1',
+        type: 'EslSwitchSupport',
+        __typename: 'CompositionComponentNode',
+        nodeType: 'component',
+        displayName: 'Switch Support',
+        layoutType: null,
+        displayTemplateKey: null,
+        displaySettings: null,
+        component: { __typename: 'EslSwitchSupport' },
+      },
+      {
+        key: 'disclosure-1',
+        type: 'EslDisclosure',
+        __typename: 'CompositionComponentNode',
+        nodeType: 'component',
+        displayName: 'Disclosure',
+        layoutType: null,
+        displayTemplateKey: null,
+        displaySettings: null,
+        component: { __typename: 'EslDisclosure' },
+      },
     ];
 
     render(
@@ -121,10 +162,13 @@ describe('EslProductFamilyPage Content Type & Renderer', () => {
     );
 
     const comp = screen.getByTestId('mock-composition');
-    expect(comp.getAttribute('data-nodes-count')).toBe('3');
+    expect(comp.getAttribute('data-nodes-count')).toBe('6');
     expect(screen.getByTestId('node-hero-1')).toBeDefined();
     expect(screen.getByTestId('node-snipe-1')).toBeDefined();
     expect(screen.getByTestId('node-facts-1')).toBeDefined();
+    expect(screen.getByTestId('node-side-by-side-1')).toBeDefined();
+    expect(screen.getByTestId('node-switch-1')).toBeDefined();
+    expect(screen.getByTestId('node-disclosure-1')).toBeDefined();
 
     // Verify defaultVariant squared is passed to child component
     const heroNode = screen.getByTestId('node-hero-1');
@@ -134,15 +178,15 @@ describe('EslProductFamilyPage Content Type & Renderer', () => {
   it('suppresses unallowed components in live mode', () => {
     const unallowedNodes: Parameters<typeof OptimizelyComposition>[0]['nodes'] = [
       {
-        key: 'side-by-side-1',
-        type: 'EslSideBySide',
+        key: 'metric-card-1',
+        type: 'EslMetricCardRow',
         __typename: 'CompositionComponentNode',
         nodeType: 'component',
-        displayName: 'Side by Side',
+        displayName: 'Metric Card Row',
         layoutType: null,
         displayTemplateKey: null,
         displaySettings: null,
-        component: { __typename: 'EslSideBySide' },
+        component: { __typename: 'EslMetricCardRow' },
       },
       {
         key: 'tabbed-1',
@@ -167,7 +211,7 @@ describe('EslProductFamilyPage Content Type & Renderer', () => {
       />
     );
 
-    expect(screen.queryByTestId('node-side-by-side-1')).toBeNull();
+    expect(screen.queryByTestId('node-metric-card-1')).toBeNull();
     expect(screen.queryByTestId('node-tabbed-1')).toBeNull();
     expect(screen.queryByTestId('visual-builder-constraint-alert')).toBeNull();
   });
@@ -205,5 +249,8 @@ describe('EslProductFamilyPage Content Type & Renderer', () => {
     expect(screen.getByText(/ESL Hero Slider/i)).toBeDefined();
     expect(screen.getByText(/ESL Snipe CTA/i)).toBeDefined();
     expect(screen.getByText(/ESL Key Facts Row/i)).toBeDefined();
+    expect(screen.getByText(/ESL Side By Side/i)).toBeDefined();
+    expect(screen.getByText(/ESL Switch Support/i)).toBeDefined();
+    expect(screen.getByText(/ESL Disclosure/i)).toBeDefined();
   });
 });

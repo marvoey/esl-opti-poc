@@ -19,12 +19,18 @@ export interface HeaderNavLink {
 }
 
 export interface HeaderProps {
+  logoUrl?: string;
+  logoAlt?: string;
   brandHref?: string;
   navLinks?: HeaderNavLink[];
   joinText?: string;
   joinHref?: string;
   signInText?: string;
   signInHref?: string;
+  ctaText?: string;
+  ctaHref?: string;
+  ctaTarget?: string;
+  ctaExternal?: boolean;
   navigation?: NavigationModel;
 }
 
@@ -43,12 +49,18 @@ export const DEFAULT_HEADER_NAV_LINKS: HeaderNavLink[] = [
 const CLOSE_DELAY_MS = 150;
 
 export function Header({
+  logoUrl,
+  logoAlt,
   brandHref = "/",
   navLinks,
   joinText = "Join",
   joinHref = "/join",
   signInText = "Sign in",
   signInHref = "/sign-in",
+  ctaText,
+  ctaHref,
+  ctaTarget,
+  ctaExternal,
   navigation,
 }: HeaderProps = {}) {
   const resolvedLinks: HeaderNavLink[] =
@@ -62,6 +74,7 @@ export function Header({
     DEFAULT_HEADER_NAV_LINKS;
 
   const resolvedBrandHref = navigation?.brandHref ?? brandHref;
+  const isCtaBlank = ctaTarget === "_blank" || Boolean(ctaExternal);
 
   const autoId = useId();
   const [openId, setOpenId] = useState<string | null>(null);
@@ -124,94 +137,122 @@ export function Header({
             <Link
               href={resolvedBrandHref}
               className={styles.brandLink}
-              aria-label="Main Navigation"
+              aria-label={logoAlt || "Main Navigation"}
             >
-              <BrandLogo
-                width={83}
-                height={50}
-                color="var(--color-primary)"
-                className={styles.logo}
-              />
+              {logoUrl ? (
+                <img
+                  src={logoUrl}
+                  alt={logoAlt || "Brand Logo"}
+                  width={83}
+                  height={50}
+                  className={styles.logo}
+                />
+              ) : (
+                <BrandLogo
+                  width={83}
+                  height={50}
+                  color="var(--color-primary)"
+                  className={styles.logo}
+                />
+              )}
             </Link>
           </div>
 
-          <nav className={styles.nav} aria-label="Primary Navigation">
-            <ul className={styles.navList}>
-              {resolvedLinks.map((link) => {
-                const itemId = link.id || link.label;
-                const panelId = `${autoId}-${itemId}-panel`;
-                const isOpen = openId === itemId;
+          {resolvedLinks.length > 0 ? (
+            <nav className={styles.nav} aria-label="Primary Navigation">
+              <ul className={styles.navList}>
+                {resolvedLinks.map((link) => {
+                  const itemId = link.id || link.label;
+                  const panelId = `${autoId}-${itemId}-panel`;
+                  const isOpen = openId === itemId;
 
-                if (link.megaMenu) {
+                  if (link.megaMenu) {
+                    return (
+                      <li
+                        key={itemId}
+                        className={styles.navItem}
+                        onMouseEnter={() => openMenu(itemId)}
+                        onMouseLeave={scheduleClose}
+                      >
+                        <button
+                          type="button"
+                          className={`${styles.navTrigger} ${isOpen ? styles.navTriggerActive : ""}`}
+                          aria-expanded={isOpen}
+                          aria-haspopup="true"
+                          aria-controls={panelId}
+                          onClick={() => toggleMenu(itemId)}
+                        >
+                          {link.label}
+                          <ChevronDownIcon
+                            size={14}
+                            className={styles.navChevron}
+                          />
+                        </button>
+                        {isOpen && (
+                          <div
+                            onMouseEnter={cancelClose}
+                            onMouseLeave={scheduleClose}
+                          >
+                            <MegaMenu id={panelId} data={link.megaMenu} />
+                          </div>
+                        )}
+                      </li>
+                    );
+                  }
+
                   return (
-                    <li
-                      key={itemId}
-                      className={styles.navItem}
-                      onMouseEnter={() => openMenu(itemId)}
-                      onMouseLeave={scheduleClose}
-                    >
-                      <button
-                        type="button"
-                        className={`${styles.navTrigger} ${isOpen ? styles.navTriggerActive : ""}`}
-                        aria-expanded={isOpen}
-                        aria-haspopup="true"
-                        aria-controls={panelId}
-                        onClick={() => toggleMenu(itemId)}
+                    <li key={itemId} className={styles.navItem}>
+                      <Link
+                        href={link.href ?? "#"}
+                        className={styles.navLink}
+                        target={link.isExternal ? "_blank" : undefined}
+                        rel={link.isExternal ? "noopener noreferrer" : undefined}
                       >
                         {link.label}
-                        <ChevronDownIcon
-                          size={14}
-                          className={styles.navChevron}
-                        />
-                      </button>
-                      {isOpen && (
-                        <div
-                          onMouseEnter={cancelClose}
-                          onMouseLeave={scheduleClose}
-                        >
-                          <MegaMenu id={panelId} data={link.megaMenu} />
-                        </div>
-                      )}
+                      </Link>
                     </li>
                   );
-                }
-
-                return (
-                  <li key={itemId} className={styles.navItem}>
-                    <Link
-                      href={link.href ?? "#"}
-                      className={styles.navLink}
-                      target={link.isExternal ? "_blank" : undefined}
-                      rel={link.isExternal ? "noopener noreferrer" : undefined}
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
-          </nav>
+                })}
+              </ul>
+            </nav>
+          ) : null}
 
           <div className={styles.actions}>
-            <Button
-              variant="outline"
-              size="sm"
-              shape="pill"
-              href={joinHref}
-              className={styles.joinButton}
-            >
-              {joinText}
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              shape="pill"
-              href={signInHref}
-              leftIcon={<UserIcon size={16} />}
-              className={styles.signInButton}
-            >
-              {signInText}
-            </Button>
+            {ctaText && ctaHref ? (
+              <Button
+                variant="primary"
+                size="sm"
+                shape="pill"
+                href={ctaHref}
+                className={styles.ctaButton}
+                target={isCtaBlank ? "_blank" : undefined}
+                rel={isCtaBlank ? "noopener noreferrer" : undefined}
+              >
+                {ctaText}
+              </Button>
+            ) : (
+              <>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  shape="pill"
+                  href={joinHref}
+                  className={styles.joinButton}
+                >
+                  {joinText}
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  shape="pill"
+                  href={signInHref}
+                  leftIcon={<UserIcon size={16} />}
+                  className={styles.signInButton}
+                >
+                  {signInText}
+                </Button>
+              </>
+            )}
 
             <button
               type="button"
@@ -289,19 +330,35 @@ export function Header({
           </ul>
 
           <div className={styles.mobileActions}>
-            <Button variant="outline" size="sm" shape="pill" href={joinHref} fullWidth>
-              {joinText}
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              shape="pill"
-              href={signInHref}
-              leftIcon={<UserIcon size={16} />}
-              fullWidth
-            >
-              {signInText}
-            </Button>
+            {ctaText && ctaHref ? (
+              <Button
+                variant="primary"
+                size="sm"
+                shape="pill"
+                href={ctaHref}
+                fullWidth
+                target={isCtaBlank ? "_blank" : undefined}
+                rel={isCtaBlank ? "noopener noreferrer" : undefined}
+              >
+                {ctaText}
+              </Button>
+            ) : (
+              <>
+                <Button variant="outline" size="sm" shape="pill" href={joinHref} fullWidth>
+                  {joinText}
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  shape="pill"
+                  href={signInHref}
+                  leftIcon={<UserIcon size={16} />}
+                  fullWidth
+                >
+                  {signInText}
+                </Button>
+              </>
+            )}
           </div>
         </div>
       )}

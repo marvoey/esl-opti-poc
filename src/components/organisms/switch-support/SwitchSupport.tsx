@@ -12,13 +12,14 @@ export interface SwitchSupportStep {
   id: string;
   step: number;
   title: string;
-  description: string;
+  description: React.ReactNode;
 }
 
 export interface SwitchSupportProps {
   id?: string;
+  eyebrow?: string;
   title?: string;
-  description?: string;
+  description?: React.ReactNode;
   steps: SwitchSupportStep[];
   ctaLabel?: string;
   ctaHref?: string;
@@ -29,15 +30,26 @@ export interface SwitchSupportProps {
 
 interface SwitchSupportHeaderProps {
   headingId?: string;
+  eyebrow?: string;
   title?: string;
-  description?: string;
+  description?: React.ReactNode;
 }
 
-function SwitchSupportHeader({ headingId, title, description }: SwitchSupportHeaderProps) {
-  if (!title && !description) return null;
+function SwitchSupportHeader({ headingId, eyebrow, title, description }: SwitchSupportHeaderProps) {
+  if (!eyebrow && !title && !description) return null;
 
   return (
     <div className={styles.header}>
+      {eyebrow && (
+        <Text
+          as="span"
+          variant="eyebrow"
+          color="accent"
+          className={styles.eyebrow}
+        >
+          {eyebrow}
+        </Text>
+      )}
       {title && (
         <Heading
           level="h2"
@@ -48,7 +60,12 @@ function SwitchSupportHeader({ headingId, title, description }: SwitchSupportHea
         </Heading>
       )}
       {description && (
-        <Text variant="body-lg" color="inverted" className={styles.description}>
+        <Text
+          as={typeof description === "string" ? "p" : "div"}
+          variant="body-lg"
+          color="inverted"
+          className={styles.description}
+        >
           {description}
         </Text>
       )}
@@ -108,6 +125,7 @@ const EMPTY_STEPS: SwitchSupportStep[] = [];
 
 export function SwitchSupport({
   id,
+  eyebrow,
   title,
   description,
   steps = EMPTY_STEPS,
@@ -131,6 +149,7 @@ export function SwitchSupport({
       <div className={styles.container}>
         <SwitchSupportHeader
           headingId={headingId}
+          eyebrow={eyebrow}
           title={title}
           description={description}
         />

@@ -1,7 +1,11 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
-import EslProductDetailExperience, { ProductDetailStaticSections } from './EslProductDetailPageRenderer';
+import EslProductDetailExperience, {
+  ProductDetailStaticSections,
+  ESL_PRODUCT_DETAIL_ALLOWED_SECTIONS,
+} from './EslProductDetailPageRenderer';
+import { EslProductDetailExperienceContentType } from './EslProductDetailPage';
 
 import type { OptimizelyComposition } from '@optimizely/cms-sdk/react/server';
 
@@ -31,19 +35,31 @@ vi.mock('@optimizely/cms-sdk/react/server', () => ({
 }));
 
 describe('EslProductDetailPageRenderer', () => {
-  it('renders all 8 static sections when content is missing or nodes are empty', () => {
+  it('defines EslProductDetailExperience with baseType _experience and correct mayContainTypes', () => {
+    expect(EslProductDetailExperienceContentType.key).toBe('EslProductDetailExperience');
+    expect(EslProductDetailExperienceContentType.baseType).toBe('_experience');
+    expect(EslProductDetailExperienceContentType.mayContainTypes).toEqual([
+      'EslHeroSlider',
+      'EslSnipeCta',
+      'EslKeyFactsRow',
+      'EslDisclosure',
+      'EslFaqStates',
+    ]);
+  });
+
+  it('renders static sections when content is missing or nodes are empty', () => {
     render(<EslProductDetailExperience content={undefined} />);
 
     // Check key static components by id
     expect(document.getElementById('product-fit')).toBeDefined();
     expect(document.getElementById('account-tools')).toBeDefined();
-    expect(document.getElementById('faq')).toBeDefined();
     expect(document.getElementById('glossary')).toBeDefined();
     expect(document.getElementById('switch-support')).toBeDefined();
     expect(document.getElementById('split-content-cta')).toBeDefined();
-    expect(document.getElementById('disclosure')).toBeDefined();
-    // Key facts is now purely CMS-driven, so it is NOT rendered statically
+    // Key facts, Disclosure, and FAQ are now purely CMS-driven, so they are NOT rendered statically
     expect(document.getElementById('key-facts')).toBeNull();
+    expect(document.getElementById('disclosure')).toBeNull();
+    expect(document.getElementById('faq')).toBeNull();
   });
 
   it('renders allowed CMS composition nodes above static sections', () => {
@@ -81,6 +97,17 @@ describe('EslProductDetailPageRenderer', () => {
         displaySettings: null,
         component: { __typename: 'EslKeyFactsRow' },
       },
+      {
+        key: 'disclosure-1',
+        type: 'EslDisclosure',
+        __typename: 'CompositionComponentNode',
+        nodeType: 'component',
+        displayName: 'Disclosure',
+        layoutType: null,
+        displayTemplateKey: null,
+        displaySettings: null,
+        component: { __typename: 'EslDisclosure' },
+      },
     ];
 
     render(
@@ -94,10 +121,11 @@ describe('EslProductDetailPageRenderer', () => {
     );
 
     const comp = screen.getByTestId('mock-composition');
-    expect(comp.getAttribute('data-nodes-count')).toBe('3');
+    expect(comp.getAttribute('data-nodes-count')).toBe('4');
     expect(screen.getByTestId('node-hero-1')).toBeDefined();
     expect(screen.getByTestId('node-snipe-1')).toBeDefined();
     expect(screen.getByTestId('node-facts-1')).toBeDefined();
+    expect(screen.getByTestId('node-disclosure-1')).toBeDefined();
     expect(screen.queryByTestId('visual-builder-constraint-alert')).toBeNull();
 
     // Static sections still render below

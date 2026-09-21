@@ -54,7 +54,7 @@ describe("SwitchSupport Organism", () => {
 
     MOCK_STEPS.forEach((item) => {
       expect(screen.getByText(item.title)).toBeDefined();
-      expect(screen.getByText(item.description)).toBeDefined();
+      expect(screen.getByText(item.description as string)).toBeDefined();
     });
   });
 
@@ -86,5 +86,42 @@ describe("SwitchSupport Organism", () => {
       name: /Lorem ipsum if needed/i,
     });
     expect(link.getAttribute("href")).toBe("/help");
+  });
+
+  it("renders eyebrow when provided", () => {
+    render(
+      <SwitchSupport
+        eyebrow="Easy Transition"
+        title="Switching is simpler than it sounds."
+        steps={MOCK_STEPS}
+      />
+    );
+
+    expect(screen.getByText("Easy Transition")).toBeDefined();
+    expect(
+      screen.getByRole("heading", {
+        name: "Switching is simpler than it sounds.",
+      })
+    ).toBeDefined();
+  });
+
+  it("renders rich text ReactNode description and step descriptions", () => {
+    render(
+      <SwitchSupport
+        title="Switching is simpler than it sounds."
+        description={<div data-testid="custom-desc">Rich description node</div>}
+        steps={[
+          {
+            id: "step-1",
+            step: 1,
+            title: "Step with rich text",
+            description: <span data-testid="step-desc-node">Rich step node</span>,
+          },
+        ]}
+      />
+    );
+
+    expect(screen.getByTestId("custom-desc")).toBeDefined();
+    expect(screen.getByTestId("step-desc-node")).toBeDefined();
   });
 });

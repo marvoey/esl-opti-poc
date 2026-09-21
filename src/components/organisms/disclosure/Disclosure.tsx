@@ -5,7 +5,7 @@ import styles from "./Disclosure.module.css";
 export interface DisclosureItem {
   id: string;
   boldText: string;
-  regularText: string;
+  regularText?: React.ReactNode;
 }
 
 export interface DisclosureProps {
@@ -35,7 +35,12 @@ export function Disclosure({
             <Text as="p" variant="micro" color="primary" weight="bold" className={styles.line}>
               {item.boldText}
             </Text>
-            <Text as="p" variant="micro" color="primary" className={styles.line}>
+            <Text
+              as={typeof item.regularText === "string" ? "p" : "div"}
+              variant="micro"
+              color="primary"
+              className={styles.line}
+            >
               {item.regularText}
             </Text>
           </div>

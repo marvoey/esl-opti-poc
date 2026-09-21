@@ -5,7 +5,7 @@ import { Header } from "./Header";
 import { NavigationModel } from "@/domain/models/Navigation";
 
 describe("Header Component", () => {
-  it("renders the brand logo, default nav items, and Join/Sign in actions", () => {
+  it("renders the brand logo, default nav items, and Join/Sign in actions by default", () => {
     render(<Header />);
 
     const brandLink = screen.getByRole("link", { name: /main navigation/i });
@@ -26,9 +26,45 @@ describe("Header Component", () => {
     expect(signInButtons[0].getAttribute("href")).toBe("/sign-in");
   });
 
+  it("renders CMS brand logo, navigation links, and explore docs CTA when provided", () => {
+    render(
+      <Header
+        logoUrl="https://cdn.example.com/esl-header-logo.png"
+        logoAlt="ESL Federal Credit Union"
+        brandHref="/"
+        navLinks={[
+          { id: "nav-home", label: "Home", href: "/" },
+          { id: "nav-features", label: "Features", href: "/#features" },
+        ]}
+        ctaText="Explore Docs"
+        ctaHref="https://docs.developers.optimizely.com"
+      />
+    );
+
+    // Brand link with CMS logo
+    const brandLink = screen.getByRole("link", { name: /esl federal credit union/i });
+    expect(brandLink).toBeDefined();
+    expect(brandLink.getAttribute("href")).toBe("/");
+
+    const logoImg = screen.getByAltText("ESL Federal Credit Union");
+    expect(logoImg).toBeDefined();
+    expect(logoImg.getAttribute("src")).toBe("https://cdn.example.com/esl-header-logo.png");
+
+    // Nav links
+    expect(screen.getByRole("link", { name: "Home" })).toBeDefined();
+    expect(screen.getByRole("link", { name: "Features" })).toBeDefined();
+
+    // CTA button
+    const ctaButton = screen.getByRole("link", { name: /explore docs/i });
+    expect(ctaButton).toBeDefined();
+    expect(ctaButton.getAttribute("href")).toBe("https://docs.developers.optimizely.com");
+  });
+
   it("supports custom navLinks and action overrides", () => {
     render(
       <Header
+        logoUrl="https://cdn.example.com/logo.svg"
+        logoAlt="Custom Logo"
         brandHref="/custom-home"
         navLinks={[
           { label: "Products", href: "/products" },
@@ -39,7 +75,7 @@ describe("Header Component", () => {
       />
     );
 
-    const brandLink = screen.getByRole("link", { name: /main navigation/i });
+    const brandLink = screen.getByRole("link", { name: /custom logo/i });
     expect(brandLink.getAttribute("href")).toBe("/custom-home");
 
     expect(screen.getByRole("link", { name: "Products" })).toBeDefined();
@@ -48,6 +84,21 @@ describe("Header Component", () => {
 
     const cta = screen.getAllByRole("link", { name: "Get Started" })[0];
     expect(cta.getAttribute("href")).toBe("/get-started");
+    expect(cta.getAttribute("target")).toBeNull();
+  });
+
+  it("opens CTA in new tab only when ctaTarget is '_blank' or ctaExternal is true", () => {
+    render(
+      <Header
+        ctaText="Explore Docs"
+        ctaHref="https://docs.developers.optimizely.com"
+        ctaTarget="_blank"
+      />
+    );
+
+    const ctaButton = screen.getByRole("link", { name: /explore docs/i });
+    expect(ctaButton.getAttribute("target")).toBe("_blank");
+    expect(ctaButton.getAttribute("rel")).toBe("noopener noreferrer");
   });
 
   it("supports backward-compatible navigation model prop", () => {
