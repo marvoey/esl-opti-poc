@@ -1,36 +1,37 @@
 import { revalidatePath } from 'next/cache';
 import { NextRequest, NextResponse } from 'next/server';
+import { getGraphClient } from '@/infrastructure/cms/graphClient';
 
 function isAuthorized(request: NextRequest): boolean {
   const expectedSecret =
     process.env.OPTIMIZELY_GRAPH_SINGLE_KEY ||
+    process.env.OPTIMIZELY_REVALIDATE_SECRET ||
     process.env.REVALIDATE_SECRET;
 
   if (!expectedSecret) {
     return false;
   }
 
-  // 1. Check query parameter: ?secret=...
-  const querySecret = request.nextUrl.searchParams.get('secret');
+  // 1. Check query parameters:
+  // - ?cg_webhook_secret=... (Optimizely Graph convention)
+  // - ?secret=... (standard query param)
+  const querySecret =
+    request.nextUrl.searchParams.get('cg_webhook_secret') ||
+    request.nextUrl.searchParams.get('secret');
   if (querySecret && querySecret === expectedSecret) {
     return true;
   }
 
-  // 2. Check header: x-revalidate-secret
-  const headerSecret = request.headers.get('x-revalidate-secret');
-  if (headerSecret && headerSecret === expectedSecret) {
-    return true;
-  }
-
-  // 3. Check Optimizely CMS SaaS Callback-Secret headers
+  // 2. Check Optimizely CMS SaaS Callback-Secret headers
   const callbackSecret =
     request.headers.get('callback-secret') ||
-    request.headers.get('x-callback-secret');
+    request.headers.get('x-callback-secret') ||
+    request.headers.get('x-revalidate-secret');
   if (callbackSecret && callbackSecret === expectedSecret) {
     return true;
   }
 
-  // 4. Check Authorization header: Bearer <secret>
+  // 3. Check Authorization header: Bearer <secret>
   const authHeader = request.headers.get('authorization');
   if (authHeader && authHeader.startsWith('Bearer ')) {
     const bearerSecret = authHeader.substring(7).trim();
@@ -42,13 +43,65 @@ function isAuthorized(request: NextRequest): boolean {
   return false;
 }
 
+function isProbeOrVerification(body: unknown): boolean {
+  if (!body) return true;
+  if (typeof body !== 'object' || body === null) return false;
+
+  const b = body as Record<string, unknown>;
+  if (Object.keys(b).length === 0) return true;
+
+  const eventType = String(
+    b.type || b.event || b.eventType || b.action || b.topic || ''
+  ).toLowerCase();
+  if (
+    [
+      'ping',
+      'test',
+      'verification',
+      'handshake',
+      'check',
+      'probe',
+      'validation',
+    ].includes(eventType)
+  ) {
+    return true;
+  }
+
+  // Content Graph test / verification probes
+  if (b.data && typeof b.data === 'object') {
+    const d = b.data as Record<string, unknown>;
+    const dType = String(
+      d.type || d.event || d.eventType || d.action || d.topic || ''
+    ).toLowerCase();
+    if (
+      [
+        'ping',
+        'test',
+        'verification',
+        'handshake',
+        'check',
+        'probe',
+        'validation',
+      ].includes(dType)
+    ) {
+      return true;
+    }
+    if (Object.keys(d).length === 0) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 function normalizePath(rawPath: string): string {
   let clean = rawPath.trim();
   if (!clean.startsWith('/')) {
     try {
-      const urlToParse = clean.startsWith('http://') || clean.startsWith('https://')
-        ? clean
-        : `https://${clean}`;
+      const urlToParse =
+        clean.startsWith('http://') || clean.startsWith('https://')
+          ? clean
+          : `https://${clean}`;
       const u = new URL(urlToParse);
       clean = u.pathname;
     } catch {
@@ -93,7 +146,10 @@ function mapContentTypeToPath(typeStr?: unknown): string | null {
   if (
     lower.includes('homeexperience') ||
     lower.includes('homepage') ||
-    lower.includes('startpage')
+    lower.includes('startpage') ||
+    lower.includes('header') ||
+    lower.includes('footer') ||
+    lower.includes('sitesettings')
   ) {
     return '/';
   }
@@ -119,9 +175,88 @@ function mapNameToPath(nameStr?: unknown): string | null {
   if (lower.includes('product detail') || lower.includes('premier checking')) {
     return '/product-detail';
   }
-  if (lower === 'home' || lower.includes('esl home')) {
+  if (
+    lower === 'home' ||
+    lower.includes('esl home') ||
+    lower.includes('header') ||
+    lower.includes('footer')
+  ) {
     return '/';
   }
+  return null;
+}
+
+const GET_CONTENT_BY_GUID_QUERY = `
+  query GetContentByGuid($guid: String) {
+    _Content(where: { _metadata: { key: { eq: $guid } } }) {
+      items {
+        _metadata {
+          displayName
+          url {
+            default
+            hierarchical
+            type
+          }
+          types
+        }
+      }
+    }
+  }
+`;
+
+async function resolvePathFromDocId(docId: string): Promise<string | null> {
+  // Expected format: <guid>_<locale>_Published
+  const [rawGuid] = docId.split('_');
+  if (!rawGuid) return null;
+
+  const formattedGuid = rawGuid.replaceAll('-', '');
+  const client = getGraphClient();
+  if (!client) {
+    return null;
+  }
+
+  try {
+    const response = (await client.request(GET_CONTENT_BY_GUID_QUERY, {
+      guid: formattedGuid,
+    })) as {
+      _Content?: {
+        items?: Array<{
+          _metadata?: {
+            displayName?: string | null;
+            url?: {
+              default?: string | null;
+              hierarchical?: string | null;
+              type?: string | null;
+            } | null;
+            types?: string[] | null;
+          } | null;
+        }> | null;
+      } | null;
+    };
+
+    const item = response?._Content?.items?.[0];
+    if (!item?._metadata) return null;
+
+    const urlObj = item._metadata.url;
+    const urlType = urlObj?.type;
+    const rawUrl =
+      urlType === 'SIMPLE'
+        ? urlObj?.default
+        : urlObj?.hierarchical?.replace('/s', '') || urlObj?.default;
+
+    if (rawUrl) {
+      return normalizePath(rawUrl);
+    }
+
+    const fromTypes = mapTypesArrayToPath(item._metadata.types);
+    if (fromTypes) return fromTypes;
+
+    const fromName = mapNameToPath(item._metadata.displayName);
+    if (fromName) return fromName;
+  } catch (err) {
+    console.error('Error fetching content by guid in revalidation:', err);
+  }
+
   return null;
 }
 
@@ -228,11 +363,17 @@ function extractTargetPagePath(request: NextRequest, body?: unknown): string | n
 }
 
 export async function GET(request: NextRequest) {
+  console.log(`[REVALIDATE GET] url: ${request.url}`);
+  console.log(`[REVALIDATE GET] headers:`, Object.fromEntries(request.headers.entries()));
+
   // If authorized, revalidate the target path
   if (isAuthorized(request)) {
     const targetPath = extractTargetPagePath(request) || '/';
     try {
       revalidatePath(targetPath, 'page');
+      if (targetPath === '/') {
+        revalidatePath('/', 'layout');
+      }
       return NextResponse.json({
         revalidated: true,
         path: targetPath,
@@ -260,37 +401,82 @@ export async function POST(request: NextRequest) {
   try {
     body = await request.json();
   } catch {
-    // Body may be empty or plain text
+    // Body may be empty, non-JSON, etc.
   }
 
-  // Handle Optimizely verification handshake probes
-  const isVerificationProbe =
-    !body ||
-    (typeof body === 'object' &&
-      (('type' in (body as object) && (body as Record<string, unknown>).type === 'verification') ||
-        ('event' in (body as object) && (body as Record<string, unknown>).event === 'verification') ||
-        Object.keys(body as object).length === 0));
+  console.log(`[REVALIDATE POST] url: ${request.url}`);
+  console.log(`[REVALIDATE POST] headers:`, Object.fromEntries(request.headers.entries()));
+  console.log(`[REVALIDATE POST] body:`, JSON.stringify(body));
 
-  if (!isAuthorized(request)) {
-    if (isVerificationProbe) {
-      return NextResponse.json({
-        status: 'ready',
-        revalidated: false,
-        message: 'Revalidation endpoint verified.',
-        now: Date.now(),
-      });
-    }
+  const authorized = isAuthorized(request);
+  const probe = isProbeOrVerification(body);
 
+  // If this is a probe/test event (used by CMS SaaS / Graph when verifying the endpoint):
+  if (probe) {
+    console.log(`[REVALIDATE POST] Detected verification probe. Responding 200 OK.`);
+    return NextResponse.json({
+      status: 'ready',
+      revalidated: false,
+      message: 'Webhook endpoint verified successfully.',
+      now: Date.now(),
+    });
+  }
+
+  // If not a probe and not authorized, reject with 401
+  if (!authorized) {
+    console.log(`[REVALIDATE POST] Unauthorized request: missing or invalid secret.`);
     return NextResponse.json(
       { message: 'Invalid or missing authorization secret' },
       { status: 401 }
     );
   }
 
+  // Check for Optimizely Graph docId format (e.g. { data: { docId: "<guid>_<locale>_Published" } })
+  const b = body && typeof body === 'object' ? (body as Record<string, unknown>) : null;
+  const docId =
+    (b?.data && typeof b.data === 'object'
+      ? (b.data as Record<string, unknown>).docId
+      : null) || b?.docId;
+
+  if (typeof docId === 'string' && docId.length > 0) {
+    // If it's not a published version (e.g. draft, deleted, etc.), return 200 with no action taken
+    if (!docId.includes('Published')) {
+      return NextResponse.json({
+        status: 'ok',
+        revalidated: false,
+        message: 'No action taken (document is not in Published status).',
+        now: Date.now(),
+      });
+    }
+
+    const resolvedPath = await resolvePathFromDocId(docId);
+    if (resolvedPath) {
+      try {
+        revalidatePath(resolvedPath, 'page');
+        if (resolvedPath === '/') {
+          revalidatePath('/', 'layout');
+        }
+        return NextResponse.json({
+          revalidated: true,
+          path: resolvedPath,
+          source: 'docId',
+          now: Date.now(),
+        });
+      } catch (error) {
+        return NextResponse.json(
+          { message: 'Error revalidating path', error: (error as Error).message },
+          { status: 500 }
+        );
+      }
+    }
+  }
+
+  // Fall back to extracting target page path from standard payload fields
   const targetPath = extractTargetPagePath(request, body);
 
   if (!targetPath) {
     return NextResponse.json({
+      status: 'ok',
       revalidated: false,
       message:
         'Payload does not map to any recognized cached page route. Skipped cache eviction.',
@@ -299,8 +485,10 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    // Revalidates ONLY the specific published page
     revalidatePath(targetPath, 'page');
+    if (targetPath === '/') {
+      revalidatePath('/', 'layout');
+    }
     return NextResponse.json({
       revalidated: true,
       path: targetPath,

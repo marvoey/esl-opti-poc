@@ -22,6 +22,8 @@ export const KNOWN_COMPONENT_NAMES: Record<string, string> = {
   EslSwitchSupport: 'ESL Switch Support',
   EslDisclosure: 'ESL Disclosure',
   EslFaqStates: 'ESL FAQ States',
+  EslProductCardsRow: 'ESL Product Cards Row',
+  EslProductCardsRowVariant2: 'ESL Product Cards Row Variant 2',
 };
 
 export function getAllowedSectionsFromContentType(
