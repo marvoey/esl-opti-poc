@@ -8,6 +8,8 @@ export const EslProductDetailExperienceContentType = contentType({
     'EslHeroSlider',
     'EslSnipeCta',
     'EslKeyFactsRow',
+    'EslProductCardsRow',
+    'EslProductCardsRowVariant2',
     'EslDisclosure',
     'EslFaqStates',
   ],

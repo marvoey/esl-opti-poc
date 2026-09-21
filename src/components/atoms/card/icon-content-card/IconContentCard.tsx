@@ -8,7 +8,7 @@ export type IconContentCardVariant = "default" | "inverse";
 
 export interface IconContentCardBaseProps {
   title: string;
-  description?: string;
+  description?: React.ReactNode;
   ctaText?: string;
   icon?: React.ReactNode;
   variant?: IconContentCardVariant;
@@ -69,7 +69,7 @@ export function IconContentCard({
         </Text>
         {description && (
           <Text
-            as="p"
+            as={typeof description === "string" ? "p" : "div"}
             variant="body-sm"
             color="inherit"
             className={styles.description}

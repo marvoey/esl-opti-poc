@@ -42,6 +42,8 @@ describe('EslProductDetailPageRenderer', () => {
       'EslHeroSlider',
       'EslSnipeCta',
       'EslKeyFactsRow',
+      'EslProductCardsRow',
+      'EslProductCardsRowVariant2',
       'EslDisclosure',
       'EslFaqStates',
     ]);
@@ -51,12 +53,12 @@ describe('EslProductDetailPageRenderer', () => {
     render(<EslProductDetailExperience content={undefined} />);
 
     // Check key static components by id
-    expect(document.getElementById('product-fit')).toBeDefined();
-    expect(document.getElementById('account-tools')).toBeDefined();
     expect(document.getElementById('glossary')).toBeDefined();
     expect(document.getElementById('switch-support')).toBeDefined();
     expect(document.getElementById('split-content-cta')).toBeDefined();
-    // Key facts, Disclosure, and FAQ are now purely CMS-driven, so they are NOT rendered statically
+    // Key facts, Product cards, Disclosure, and FAQ are now purely CMS-driven, so they are NOT rendered statically
+    expect(document.getElementById('product-fit')).toBeNull();
+    expect(document.getElementById('account-tools')).toBeNull();
     expect(document.getElementById('key-facts')).toBeNull();
     expect(document.getElementById('disclosure')).toBeNull();
     expect(document.getElementById('faq')).toBeNull();
@@ -129,7 +131,7 @@ describe('EslProductDetailPageRenderer', () => {
     expect(screen.queryByTestId('visual-builder-constraint-alert')).toBeNull();
 
     // Static sections still render below
-    expect(document.getElementById('product-fit')).toBeDefined();
+    expect(document.getElementById('glossary')).toBeDefined();
   });
 
   it('renders visual constraint alert in edit mode when unallowed section is added', () => {
@@ -197,12 +199,13 @@ describe('EslProductDetailPageRenderer', () => {
     expect(screen.queryByTestId('visual-builder-constraint-alert')).toBeNull();
     expect(screen.queryByTestId('node-unallowed-2')).toBeNull();
     // Static sections still render
-    expect(document.getElementById('product-fit')).toBeDefined();
+    expect(document.getElementById('glossary')).toBeDefined();
   });
 
   it('ProductDetailStaticSections standalone renders all expected rows', () => {
     render(<ProductDetailStaticSections />);
-    expect(document.getElementById('product-fit')).toBeDefined();
     expect(document.getElementById('glossary')).toBeDefined();
+    expect(document.getElementById('switch-support')).toBeDefined();
+    expect(document.getElementById('split-content-cta')).toBeDefined();
   });
 });

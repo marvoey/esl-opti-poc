@@ -9,7 +9,7 @@ export interface ProductCardsRowVariant2Item {
   id?: string;
   icon: IconName | React.ReactNode;
   title: string;
-  description: string;
+  description: React.ReactNode;
   ctaText: string;
   href: string;
 }
@@ -19,7 +19,7 @@ export interface ProductCardsRowVariant2Props {
   eyebrow?: string;
   title?: string;
   headingLevel?: HeadingLevel;
-  description?: string;
+  description?: React.ReactNode;
   items: ProductCardsRowVariant2Item[];
   className?: string;
 }
@@ -59,7 +59,11 @@ export function ProductCardsRowVariant2({
               </Heading>
             )}
             {description && (
-              <Text variant="body-lg" className={styles.description}>
+              <Text
+                as={typeof description === "string" ? "p" : "div"}
+                variant="body-lg"
+                className={styles.description}
+              >
                 {description}
               </Text>
             )}

@@ -125,6 +125,45 @@ const ESL_PRODUCT_DETAIL_PAGE_EXPERIENCE_QUERY = `
                   showFaqStates
                   heading
                 }
+                ... on EslProductCardsRow {
+                  eyebrow
+                  title
+                  rowDescription: description {
+                    json
+                    html
+                  }
+                  items {
+                    title
+                    description {
+                      json
+                      html
+                    }
+                  }
+                }
+                ... on EslProductCardsRowVariant2 {
+                  eyebrow
+                  title
+                  rowDescription: description {
+                    json
+                    html
+                  }
+                  items {
+                    icon
+                    title
+                    description {
+                      json
+                      html
+                    }
+                    link {
+                      text
+                      title
+                      target
+                      url {
+                        default
+                      }
+                    }
+                  }
+                }
               }
             }
           }

@@ -57,6 +57,12 @@ import EslDisclosure from '@/components/cms/components/EslDisclosureRenderer';
 import { EslHeaderContentType } from '@/components/cms/components/EslHeader';
 import { EslFaqStatesContentType } from '@/components/cms/components/EslFaqStates';
 import EslFaqStates from '@/components/cms/components/EslFaqStatesRenderer';
+import { EslProductCardsRowContentType } from '@/components/cms/components/EslProductCardsRow';
+import { EslProductCardItemContentType } from '@/components/cms/components/EslProductCardItem';
+import EslProductCardsRow from '@/components/cms/components/EslProductCardsRowRenderer';
+import { EslProductCardsRowVariant2ContentType } from '@/components/cms/components/EslProductCardsRowVariant2';
+import { EslProductCardsRowVariant2ItemContentType } from '@/components/cms/components/EslProductCardsRowVariant2Item';
+import EslProductCardsRowVariant2 from '@/components/cms/components/EslProductCardsRowVariant2Renderer';
 
 export function ensureOptimizelyRegistry() {
 
@@ -95,6 +101,10 @@ export function ensureOptimizelyRegistry() {
     EslDisclosureContentType,
     EslDisclosureItemContentType,
     EslFaqStatesContentType,
+    EslProductCardsRowContentType,
+    EslProductCardItemContentType,
+    EslProductCardsRowVariant2ContentType,
+    EslProductCardsRowVariant2ItemContentType,
   ]);
 
   initReactComponentRegistry({
@@ -118,6 +128,8 @@ export function ensureOptimizelyRegistry() {
       EslSwitchSupport,
       EslDisclosure,
       EslFaqStates,
+      EslProductCardsRow,
+      EslProductCardsRowVariant2,
       EslSiteSettings,
       EslStartPage,
     },
