@@ -20,7 +20,24 @@ describe("Disclosure", () => {
 
     DEFAULT_DISCLOSURE_PROPS.items.forEach((item) => {
       expect(screen.getByText(item.boldText)).toBeDefined();
-      expect(screen.getByText(item.regularText)).toBeDefined();
+      expect(screen.getByText(item.regularText as string)).toBeDefined();
     });
+  });
+
+  it("renders rich text ReactNode in regularText", () => {
+    render(
+      <Disclosure
+        items={[
+          {
+            id: "test-1",
+            boldText: "Notice:",
+            regularText: <span data-testid="rich-regular">Custom rich node</span>,
+          },
+        ]}
+      />
+    );
+
+    expect(screen.getByText("Notice:")).toBeDefined();
+    expect(screen.getByTestId("rich-regular")).toBeDefined();
   });
 });

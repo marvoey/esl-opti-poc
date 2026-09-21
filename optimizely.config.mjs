@@ -13,6 +13,11 @@ export default buildConfig({
       sortOrder: -10,
     },
     {
+      key: 'header',
+      displayName: 'Header',
+      sortOrder: 10,
+    },
+    {
       key: 'footer',
       displayName: 'Footer',
       sortOrder: 20,

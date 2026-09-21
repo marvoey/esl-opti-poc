@@ -21,9 +21,11 @@ function ExperienceComponentWrapper({ children, node, displaySettings }: Compone
   const { pa } = getPreviewUtils(node);
   const componentNode = node as Record<string, unknown>;
   const componentObj = componentNode.component as Record<string, unknown> | undefined;
+  const rawTypename = typeof componentObj?.__typename === 'string' ? componentObj.__typename : undefined;
   const componentType =
-    (typeof componentObj?.__typename === 'string' ? componentObj.__typename : undefined) ||
+    (rawTypename && rawTypename !== '_Component' ? rawTypename : undefined) ||
     (typeof componentNode.type === 'string' ? componentNode.type : '') ||
+    rawTypename ||
     '';
 
   const previewAttrs = pa(node) as Record<string, unknown>;

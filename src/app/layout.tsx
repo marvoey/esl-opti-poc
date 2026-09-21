@@ -5,6 +5,7 @@ import "@/infrastructure/cms/optimizely-registry";
 import "./globals.css";
 import { Header } from "@/components/header/Header";
 import { Footer } from "@/components/organisms/footer/Footer";
+import { resolveHeaderContent } from "@/infrastructure/cms/resolveHeaderContent";
 import { resolveFooterContent } from "@/infrastructure/cms/resolveFooterContent";
 import { resolveSiteTitle } from "@/infrastructure/cms/resolveSiteTitle";
 
@@ -21,7 +22,7 @@ const leagueSpartan = League_Spartan({
   display: "swap",
 });
 
-export const revalidate = 0;
+export const revalidate = 60;
 
 export async function generateMetadata(): Promise<Metadata> {
   const siteTitle = await resolveSiteTitle();
@@ -49,6 +50,12 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
+async function ServerHeader() {
+  const headerProps = await resolveHeaderContent();
+  if (!headerProps) return null;
+  return <Header {...headerProps} />;
+}
+
 async function ServerFooter() {
   const footerProps = await resolveFooterContent();
   if (!footerProps) return null;
@@ -63,7 +70,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${albertSans.variable} ${leagueSpartan.variable}`}>
       <body>
-        <Header />
+        <Suspense fallback={null}>
+          <ServerHeader />
+        </Suspense>
         {children}
         <Suspense fallback={null}>
           <ServerFooter />

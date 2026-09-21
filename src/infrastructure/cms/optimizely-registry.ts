@@ -48,6 +48,15 @@ import { EslMediaCardGridCarouselContentType } from '@/components/cms/components
 import { EslKeyFactsRowContentType } from '@/components/cms/components/EslKeyFactsRow';
 import { EslKeyFactItemContentType } from '@/components/cms/components/EslKeyFactItem';
 import EslKeyFactsRow from '@/components/cms/components/EslKeyFactsRowRenderer';
+import { EslSwitchSupportContentType } from '@/components/cms/components/EslSwitchSupport';
+import { EslSwitchSupportStepContentType } from '@/components/cms/components/EslSwitchSupportStep';
+import EslSwitchSupport from '@/components/cms/components/EslSwitchSupportRenderer';
+import { EslDisclosureContentType } from '@/components/cms/components/EslDisclosure';
+import { EslDisclosureItemContentType } from '@/components/cms/components/EslDisclosureItem';
+import EslDisclosure from '@/components/cms/components/EslDisclosureRenderer';
+import { EslHeaderContentType } from '@/components/cms/components/EslHeader';
+import { EslFaqStatesContentType } from '@/components/cms/components/EslFaqStates';
+import EslFaqStates from '@/components/cms/components/EslFaqStatesRenderer';
 
 export function ensureOptimizelyRegistry() {
 
@@ -69,6 +78,7 @@ export function ensureOptimizelyRegistry() {
     EslVideoStoryCardContentType,
     EslFooterNavColumnContentType,
     EslFooterContentType,
+    EslHeaderContentType,
     EslSiteSettingsContentType,
     EslStartPageContentType,
     EslVerticalSelectorFeatureCardContentType,
@@ -80,6 +90,11 @@ export function ensureOptimizelyRegistry() {
     EslProductFamilyExperienceContentType,
     EslKeyFactsRowContentType,
     EslKeyFactItemContentType,
+    EslSwitchSupportContentType,
+    EslSwitchSupportStepContentType,
+    EslDisclosureContentType,
+    EslDisclosureItemContentType,
+    EslFaqStatesContentType,
   ]);
 
   initReactComponentRegistry({
@@ -100,6 +115,9 @@ export function ensureOptimizelyRegistry() {
       EslSplitContentImage,
       EslMediaCardGridCarousel,
       EslKeyFactsRow,
+      EslSwitchSupport,
+      EslDisclosure,
+      EslFaqStates,
       EslSiteSettings,
       EslStartPage,
     },

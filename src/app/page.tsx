@@ -412,13 +412,13 @@ async function resolveHomeContent(): Promise<HomeContentItem[] | null> {
           // Exclusively match Home pages belonging to the EslStartPage site
           const matched = eslStartPageKey
             ? homeContent.filter((item: HomeContentItem) => {
-                const container = item._metadata?.container;
-                const path = item._metadata?.path;
-                return (
-                  container === eslStartPageKey ||
-                  (Array.isArray(path) && path.includes(eslStartPageKey))
-                );
-              })
+              const container = item._metadata?.container;
+              const path = item._metadata?.path;
+              return (
+                container === eslStartPageKey ||
+                (Array.isArray(path) && path.includes(eslStartPageKey))
+              );
+            })
             : homeContent;
 
           content = matched.length > 0 ? matched : homeContent;
@@ -435,7 +435,7 @@ async function resolveHomeContent(): Promise<HomeContentItem[] | null> {
   }
 }
 
-export const revalidate = 0;
+export const revalidate = 60;
 
 function selectActiveHomeContent(
   items?: HomeContentItem[] | null

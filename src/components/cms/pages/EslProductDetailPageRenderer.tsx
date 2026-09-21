@@ -18,8 +18,6 @@ import { SwitchSupport } from '@/components/organisms/switch-support';
 import { DEFAULT_SWITCH_SUPPORT_PROPS } from '@/components/organisms/switch-support/switchSupportData';
 import { SplitContentCta } from '@/components/organisms/split-content-cta';
 import { DEFAULT_SPLIT_CONTENT_CTA_PROPS } from '@/components/organisms/split-content-cta/splitContentCtaData';
-import { Disclosure } from '@/components/organisms/disclosure';
-import { DEFAULT_DISCLOSURE_PROPS } from '@/components/organisms/disclosure/disclosureData';
 
 import { EslProductDetailExperienceContentType } from './EslProductDetailPage';
 import {
@@ -38,9 +36,11 @@ function ExperienceComponentWrapper({ children, node, displaySettings }: Compone
   const { pa } = getPreviewUtils(node);
   const componentNode = node as Record<string, unknown>;
   const componentObj = componentNode.component as Record<string, unknown> | undefined;
+  const rawTypename = typeof componentObj?.__typename === 'string' ? componentObj.__typename : undefined;
   const componentType =
-    (typeof componentObj?.__typename === 'string' ? componentObj.__typename : undefined) ||
+    (rawTypename && rawTypename !== '_Component' ? rawTypename : undefined) ||
     (typeof componentNode.type === 'string' ? componentNode.type : '') ||
+    rawTypename ||
     '';
 
   const previewAttrs = pa(node) as Record<string, unknown>;
@@ -105,11 +105,9 @@ export function ProductDetailStaticSections() {
         id="account-tools"
         {...DEFAULT_PRODUCT_CARDS_ROW_VARIANT_2_PROPS}
       />
-      <FaqStates id="faq" {...DEFAULT_FAQ_STATES_PROPS} />
       <AccordionCardGrid id="glossary" {...DEFAULT_ACCORDION_CARD_GRID_PROPS} />
       <SwitchSupport id="switch-support" {...DEFAULT_SWITCH_SUPPORT_PROPS} />
       <SplitContentCta id="split-content-cta" {...DEFAULT_SPLIT_CONTENT_CTA_PROPS} />
-      <Disclosure id="disclosure" {...DEFAULT_DISCLOSURE_PROPS} />
     </>
   );
 }

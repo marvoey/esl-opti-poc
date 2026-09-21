@@ -36,6 +36,11 @@
   width: 100%;
 }
 
+.eyebrow {
+  color: var(--color-border-accent, #68E0CC);
+  margin: 0;
+}
+
 .heading {
   color: var(--color-text-inverted);
   margin: 0;

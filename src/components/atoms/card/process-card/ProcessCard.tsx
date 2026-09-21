@@ -9,7 +9,7 @@ export type ProcessCardVariant = "mint" | "neutral" | "inverse";
 export interface ProcessCardBaseProps {
   step: number | string;
   title: string;
-  description: string;
+  description: React.ReactNode;
   variant?: ProcessCardVariant;
   className?: string;
   badgeTextColor?: string;
@@ -68,7 +68,7 @@ export function ProcessCard({
         <Text as="span" variant="body-lg" weight="bold" color="inherit" className={styles.title}>
           {title}
         </Text>
-        <Text as="span" variant="body-sm" color="inherit" className={styles.description}>
+        <Text as={typeof description === "string" ? "span" : "div"} variant="body-sm" color="inherit" className={styles.description}>
           {description}
         </Text>
       </div>

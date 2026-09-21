@@ -1,6 +1,5 @@
 import React from 'react';
 import Link from 'next/link';
-import { BrandLogo } from '@/components/atoms/logo/BrandLogo';
 import { Button } from '@/components/atoms/button/Button';
 import type { NavigationModel } from '@/domain/models/Navigation';
 import styles from './Header.module.css';
@@ -13,10 +12,14 @@ export interface HeaderNavLink {
 }
 
 export interface HeaderProps {
+  logoUrl?: string;
+  logoAlt?: string;
   brandHref?: string;
   navLinks?: HeaderNavLink[];
   ctaText?: string;
   ctaHref?: string;
+  ctaTarget?: string;
+  ctaExternal?: boolean;
   navigation?: NavigationModel;
 }
 
@@ -28,10 +31,14 @@ export const DEFAULT_HEADER_NAV_LINKS: HeaderNavLink[] = [
 ];
 
 export function Header({
+  logoUrl,
+  logoAlt,
   brandHref = '/',
   navLinks,
-  ctaText = 'Explore Docs',
-  ctaHref = 'https://docs.developers.optimizely.com',
+  ctaText,
+  ctaHref,
+  ctaTarget,
+  ctaExternal,
   navigation,
 }: HeaderProps = {}) {
   const resolvedLinks: HeaderNavLink[] =
@@ -42,57 +49,68 @@ export function Header({
       href: item.href,
       isExternal: item.isExternal,
     })) ??
-    DEFAULT_HEADER_NAV_LINKS;
+    [];
 
   const resolvedBrandHref = navigation?.brandHref ?? brandHref;
+
+  const isCtaBlank = ctaTarget === '_blank' || Boolean(ctaExternal);
 
   return (
     <header className={styles.header}>
       <div className={styles.container}>
         <div className={styles.inner}>
-          <div className={styles.brandWrapper}>
-            <Link
-              href={resolvedBrandHref}
-              className={styles.brandLink}
-              aria-label="Main Navigation"
-            >
-              <BrandLogo
-                width={83}
-                height={50}
-                color="var(--color-primary)"
-                className={styles.logo}
-              />
-            </Link>
-          </div>
+          {logoUrl ? (
+            <div className={styles.brandWrapper}>
+              <Link
+                href={resolvedBrandHref}
+                className={styles.brandLink}
+                aria-label={logoAlt || 'Main Navigation'}
+              >
+                <img
+                  src={logoUrl}
+                  alt={logoAlt || 'Brand Logo'}
+                  width={83}
+                  height={50}
+                  className={styles.logo}
+                />
+              </Link>
+            </div>
+          ) : null}
 
-          <nav className={styles.nav} aria-label="Primary Navigation">
-            <ul className={styles.navList}>
-              {resolvedLinks.map((link) => (
-                <li key={link.id || link.label} className={styles.navItem}>
-                  <Link
-                    href={link.href}
-                    className={styles.navLink}
-                    target={link.isExternal ? '_blank' : undefined}
-                    rel={link.isExternal ? 'noopener noreferrer' : undefined}
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
+          {resolvedLinks.length > 0 ? (
+            <nav className={styles.nav} aria-label="Primary Navigation">
+              <ul className={styles.navList}>
+                {resolvedLinks.map((link) => (
+                  <li key={link.id || link.label} className={styles.navItem}>
+                    <Link
+                      href={link.href}
+                      className={styles.navLink}
+                      target={link.isExternal ? '_blank' : undefined}
+                      rel={link.isExternal ? 'noopener noreferrer' : undefined}
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          ) : null}
 
-          <div className={styles.actions}>
-            <Button
-              variant="primary"
-              size="sm"
-              shape="pill"
-              href={ctaHref}
-              className={styles.ctaButton}
-            >
-              {ctaText}
-            </Button>
-          </div>
+          {ctaText && ctaHref ? (
+            <div className={styles.actions}>
+              <Button
+                variant="primary"
+                size="sm"
+                shape="pill"
+                href={ctaHref}
+                className={styles.ctaButton}
+                target={isCtaBlank ? '_blank' : undefined}
+                rel={isCtaBlank ? 'noopener noreferrer' : undefined}
+              >
+                {ctaText}
+              </Button>
+            </div>
+          ) : null}
         </div>
       </div>
     </header>
