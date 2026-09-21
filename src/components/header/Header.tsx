@@ -35,12 +35,6 @@ export interface HeaderProps {
 }
 
 export const DEFAULT_HEADER_NAV_LINKS: HeaderNavLink[] = [
-  {
-    id: "nav-personal",
-    label: "Personal",
-    href: "/personal",
-    megaMenu: PERSONAL_MEGA_MENU,
-  },
   { id: "nav-business", label: "Business", href: "/business" },
   { id: "nav-wealth", label: "Wealth", href: "/wealth" },
   { id: "nav-membership", label: "Membership", href: "/membership" },
@@ -63,7 +57,7 @@ export function Header({
   ctaExternal,
   navigation,
 }: HeaderProps = {}) {
-  const resolvedLinks: HeaderNavLink[] =
+  const cmsLinks: HeaderNavLink[] = (
     navLinks ??
     navigation?.items.map((item) => ({
       id: item.id,
@@ -71,7 +65,18 @@ export function Header({
       href: item.href,
       isExternal: item.isExternal,
     })) ??
-    DEFAULT_HEADER_NAV_LINKS;
+    DEFAULT_HEADER_NAV_LINKS
+  ).filter((link) => link.label.trim().toLowerCase() !== "personal");
+
+  const resolvedLinks: HeaderNavLink[] = [
+    {
+      id: "nav-personal",
+      label: "Personal",
+      href: "/personal",
+      megaMenu: PERSONAL_MEGA_MENU,
+    },
+    ...cmsLinks,
+  ];
 
   const resolvedBrandHref = navigation?.brandHref ?? brandHref;
   const isCtaBlank = ctaTarget === "_blank" || Boolean(ctaExternal);
