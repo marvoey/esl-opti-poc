@@ -3,7 +3,9 @@ import React from "react";
 import { notFound } from "next/navigation";
 import { getGraphClient } from "@/infrastructure/cms/graphClient";
 import { OptimizelyComponent } from "@optimizely/cms-sdk/react/server";
+import { ProductFamilyStaticSections } from "@/components/cms/pages/EslProductFamilyPageRenderer";
 import "@/infrastructure/cms/optimizely-registry";
+
 
 export const revalidate = 60;
 
@@ -477,5 +479,10 @@ export default async function ProductFamilyPage() {
     );
   }
 
-  return notFound();
+  return (
+    <main>
+      <ProductFamilyStaticSections />
+    </main>
+  );
 }
+
