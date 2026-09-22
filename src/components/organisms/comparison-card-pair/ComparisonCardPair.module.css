@@ -42,7 +42,7 @@
 }
 
 .description {
-  color: var(--color-text-secondary, #4E5059);
+  color: var(--color-text-secondary, var(--color-neutral-600));
   margin: 0;
   max-width: 48rem;
 }
@@ -93,7 +93,7 @@
 
 /* Card Description */
 .cardDescription {
-  color: #4E5059;
+  color: var(--color-neutral-600);
   margin: 0;
 }
 

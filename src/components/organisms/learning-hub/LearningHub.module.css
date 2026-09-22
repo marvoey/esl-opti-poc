@@ -1,0 +1,193 @@
+.section {
+  width: 100%;
+  background: var(--color-bg-subtle, #f7f9fb);
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: var(--container-max-w);
+  margin-inline: auto;
+  padding-inline: var(--container-gutter);
+  padding-block: var(--space-section-block);
+}
+
+@media (width < 768px) {
+  .container {
+    padding-block: 2rem; /* 32px on mobile */
+  }
+}
+
+/* Div 1: Header Row */
+.headerRow {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: var(--space-xl);
+}
+
+@media (width < 768px) {
+  .headerRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-lg);
+  }
+}
+
+/* Col 1: Text Section */
+.headerContent {
+  width: 100%;
+  max-width: 36.5625rem; /* 585px */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  gap: var(--space-md); /* 16px gap between texts */
+}
+
+.eyebrow {
+  color: var(--color-teal-700, #00a3a3);
+  margin: 0;
+}
+
+.title {
+  color: var(--color-navy-500, #00395d);
+  margin: 0;
+}
+
+.description {
+  color: var(--color-neutral-600, #4e5059);
+  margin: 0;
+  font-size: var(--font-size-body-lg);
+  line-height: var(--line-height-body-lg, 1.5);
+}
+
+/* Col 2: CTA Column */
+.headerCta {
+  flex-shrink: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+@media (width < 768px) {
+  .headerCta {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .cta {
+    width: 100%;
+  }
+}
+
+/* Div 2: Cards Row — 3-column grid on desktop */
+.cardsRow {
+  width: 100%;
+  margin-top: 3rem; /* 48px */
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  align-items: stretch;
+}
+
+/* Mobile: horizontal CSS scroll-snap track (zero JS). Exactly one card is
+   fully visible with ~25% of the next card peeking at the right edge. */
+@media (width < 768px) {
+  .cardsRow {
+    margin-top: 2rem;
+    display: flex;
+    grid-template-columns: none;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 1rem;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+  }
+
+  .cardsRow::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
+  }
+}
+
+/* Card */
+.card {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-xl, 1rem); /* 16px */
+  border: 1px solid var(--color-border-card);
+  background-color: var(--color-surface-raised, #ffffff);
+  overflow: hidden;
+  box-sizing: border-box;
+  transition: var(--transition-all);
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-elevation-md);
+  border-color: var(--color-border-accent);
+}
+
+@media (width < 768px) {
+  .card {
+    flex: 0 0 calc(78% - 1rem);
+    scroll-snap-align: start;
+  }
+}
+
+.cardLink {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  color: inherit;
+  text-decoration: none;
+}
+
+.cardLink:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: -2px;
+}
+
+.mediaWrapper {
+  position: relative;
+  width: 100%;
+  height: 210px; /* 16:9-ish fixed banner height */
+  overflow: hidden;
+  background-color: var(--color-surface);
+  flex-shrink: 0;
+}
+
+.thumbnail {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform var(--duration-smart) var(--ease-out-smart);
+}
+
+.card:hover .thumbnail {
+  transform: scale(1.03);
+}
+
+.cardBadge {
+  position: absolute;
+  top: 13.5px;
+  left: 13.5px;
+  z-index: 2;
+}
+
+.content {
+  padding: 1.25rem; /* 20px, exact geometry per spec */
+  box-sizing: border-box;
+  min-height: 44px; /* touch target */
+}
+
+.cardTitle {
+  margin: 0;
+  color: var(--color-navy-500, #00395d);
+  overflow-wrap: break-word;
+}

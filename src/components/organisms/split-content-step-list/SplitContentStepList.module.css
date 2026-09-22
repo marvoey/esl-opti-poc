@@ -27,10 +27,6 @@
     row-gap: 124px;
     align-items: center;
   }
-
-  .cta {
-    width: auto;
-  }
 }
 
 .textCol {
@@ -57,6 +53,12 @@
 .cta {
   margin-top: var(--space-sm);
   width: 100%;
+}
+
+@media (width >= 1024px) {
+  .cta {
+    width: fit-content;
+  }
 }
 
 .stepList {
