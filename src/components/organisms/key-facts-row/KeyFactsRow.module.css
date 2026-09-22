@@ -40,7 +40,7 @@
   font-size: var(--font-size-body);
   font-weight: var(--font-weight-regular);
   line-height: var(--line-height-body);
-  color: #4e5059;
+  color: var(--color-neutral-600);
 }
 
 /* 2-column grid layout for mobile */

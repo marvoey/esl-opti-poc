@@ -22,7 +22,8 @@
   --color-sky-300: #87CEF2;  /* Figma: card/shadowHover base */
   --color-slate-50: #F7F9FB;  /* Figma: section neutral background */
   --color-slate-200: #B8BFC7; /* Figma: process/neutral surface */
-  --color-slate-600: #4E5059; /* Figma: neutral/body description */
+  --color-neutral-600: #4E5059; /* Figma: neutral/body description */
+  --color-slate-600: var(--color-neutral-600); /* Backwards-compatible alias */
 
   --color-white-10: rgba(255, 255, 255, 0.10);
   --color-white-50: rgba(255, 255, 255, 0.50);
@@ -89,7 +90,7 @@
   --space-section-block: 5.5rem; /* 88px */
 
   --color-text-primary: var(--color-navy-500);
-  --color-text-secondary: var(--color-slate-600);
+  --color-text-secondary: var(--color-neutral-600);
   --color-text-muted: rgba(0, 57, 93, 0.55);
   --color-text-inverted: var(--color-white);
   --color-text-inverted-muted: var(--color-white-80);
