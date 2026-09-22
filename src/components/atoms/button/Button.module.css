@@ -64,6 +64,14 @@
   transition: var(--transition-all);
 }
 
+/* Mobile: button label matches Body Small typography (14px / 20px LH) */
+@media (width < 768px) {
+  .button .label {
+    font-size: var(--font-size-body-sm);
+    line-height: var(--line-height-body-sm);
+  }
+}
+
 .iconLeft,
 .iconRight {
   display: inline-flex;

@@ -17,6 +17,7 @@ const {
 
 export { ESL_PRODUCT_FAMILY_ALLOWED_SECTIONS };
 import { ComparisonCardPair } from '@/components/organisms/comparison-card-pair';
+import { CompareTable } from '@/components/organisms/compare-table';
 
 
 function ExperienceComponentWrapper({ children, node, displaySettings }: ComponentContainerProps) {
@@ -100,6 +101,7 @@ export function ProductFamilyStaticSections() {
   return (
     <>
       <ComparisonCardPair id="family-comparison-card-pair" />
+      <CompareTable id="family-compare-table" />
     </>
   );
 }
