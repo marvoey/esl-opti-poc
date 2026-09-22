@@ -4,12 +4,7 @@ import {
   getPreviewUtils,
   type ComponentContainerProps,
 } from '@optimizely/cms-sdk/react/server';
-import { FeatureCardRow } from '@/components/organisms/feature-card-row';
-import { DEFAULT_FEATURE_CARD_ROW_PROPS } from '@/components/organisms/feature-card-row/featureCardRowData';
-import { AccordionCardGrid } from '@/components/organisms/accordion-card-grid';
-import { DEFAULT_ACCORDION_CARD_GRID_PROPS } from '@/components/organisms/accordion-card-grid/accordionCardGridData';
-import { SplitContentCta } from '@/components/organisms/split-content-cta';
-import { DEFAULT_SPLIT_CONTENT_CTA_PROPS } from '@/components/organisms/split-content-cta/splitContentCtaData';
+
 
 import { EslProductDetailExperienceContentType } from './EslProductDetailPage';
 import {
@@ -89,13 +84,7 @@ function ExperienceComponentWrapper({ children, node, displaySettings }: Compone
 }
 
 export function ProductDetailStaticSections() {
-  return (
-    <>
-      <FeatureCardRow {...DEFAULT_FEATURE_CARD_ROW_PROPS} />
-      <AccordionCardGrid id="glossary" {...DEFAULT_ACCORDION_CARD_GRID_PROPS} />
-      <SplitContentCta id="split-content-cta" {...DEFAULT_SPLIT_CONTENT_CTA_PROPS} />
-    </>
-  );
+  return null;
 }
 
 type ExperienceCompositionData = {

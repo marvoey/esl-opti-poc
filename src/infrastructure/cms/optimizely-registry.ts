@@ -55,6 +55,10 @@ import { EslDisclosureContentType } from '@/components/cms/components/EslDisclos
 import { EslDisclosureItemContentType } from '@/components/cms/components/EslDisclosureItem';
 import EslDisclosure from '@/components/cms/components/EslDisclosureRenderer';
 import { EslHeaderContentType } from '@/components/cms/components/EslHeader';
+import { EslMegaMenuContentType } from '@/components/cms/components/EslMegaMenu';
+import { EslMegaMenuColumnContentType } from '@/components/cms/components/EslMegaMenuColumn';
+import { EslMegaMenuColumnItemContentType } from '@/components/cms/components/EslMegaMenuColumnItem';
+import { EslMegaMenuPromoContentType } from '@/components/cms/components/EslMegaMenuPromo';
 import { EslFaqStatesContentType } from '@/components/cms/components/EslFaqStates';
 import EslFaqStates from '@/components/cms/components/EslFaqStatesRenderer';
 import { EslProductCardsRowContentType } from '@/components/cms/components/EslProductCardsRow';
@@ -63,6 +67,17 @@ import EslProductCardsRow from '@/components/cms/components/EslProductCardsRowRe
 import { EslProductCardsRowVariant2ContentType } from '@/components/cms/components/EslProductCardsRowVariant2';
 import { EslProductCardsRowVariant2ItemContentType } from '@/components/cms/components/EslProductCardsRowVariant2Item';
 import EslProductCardsRowVariant2 from '@/components/cms/components/EslProductCardsRowVariant2Renderer';
+import { EslAccordionCardGridContentType } from '@/components/cms/components/EslAccordionCardGrid';
+import { EslAccordionCardItemContentType } from '@/components/cms/components/EslAccordionCardItem';
+import EslAccordionCardGrid from '@/components/cms/components/EslAccordionCardGridRenderer';
+import { EslSplitContentCtaContentType } from '@/components/cms/components/EslSplitContentCta';
+import EslSplitContentCta from '@/components/cms/components/EslSplitContentCtaRenderer';
+import { EslFeatureCardRowContentType } from '@/components/cms/components/EslFeatureCardRow';
+import EslFeatureCardRow from '@/components/cms/components/EslFeatureCardRowRenderer';
+import { EslComparisonCardPairContentType } from '@/components/cms/components/EslComparisonCardPair';
+import { EslComparisonCardItemContentType } from '@/components/cms/components/EslComparisonCardItem';
+import { EslComparisonFeatureItemContentType } from '@/components/cms/components/EslComparisonFeatureItem';
+import EslComparisonCardPair from '@/components/cms/components/EslComparisonCardPairRenderer';
 
 export function ensureOptimizelyRegistry() {
 
@@ -85,6 +100,10 @@ export function ensureOptimizelyRegistry() {
     EslFooterNavColumnContentType,
     EslFooterContentType,
     EslHeaderContentType,
+    EslMegaMenuContentType,
+    EslMegaMenuColumnContentType,
+    EslMegaMenuColumnItemContentType,
+    EslMegaMenuPromoContentType,
     EslSiteSettingsContentType,
     EslStartPageContentType,
     EslVerticalSelectorFeatureCardContentType,
@@ -105,6 +124,13 @@ export function ensureOptimizelyRegistry() {
     EslProductCardItemContentType,
     EslProductCardsRowVariant2ContentType,
     EslProductCardsRowVariant2ItemContentType,
+    EslAccordionCardGridContentType,
+    EslAccordionCardItemContentType,
+    EslSplitContentCtaContentType,
+    EslFeatureCardRowContentType,
+    EslComparisonCardPairContentType,
+    EslComparisonCardItemContentType,
+    EslComparisonFeatureItemContentType,
   ]);
 
   initReactComponentRegistry({
@@ -130,6 +156,10 @@ export function ensureOptimizelyRegistry() {
       EslFaqStates,
       EslProductCardsRow,
       EslProductCardsRowVariant2,
+      EslAccordionCardGrid,
+      EslSplitContentCta,
+      EslFeatureCardRow,
+      EslComparisonCardPair,
       EslSiteSettings,
       EslStartPage,
     },

@@ -69,33 +69,37 @@ function ComparisonCardItem({ card }: { card: ComparisonCardData }) {
       </ul>
 
       {/* Pill button(s), 100% width, text and arrow centered. One button by default, or two side-by-side (stacked on mobile) when secondaryCta is set. */}
-      <div className={card.secondaryCta ? styles.cardActionTwo : styles.cardAction}>
-        <Button
-          variant="primary"
-          shape="pill"
-          size="md"
-          fullWidth
-          href={card.cta.href}
-          target={card.cta.external ? "_blank" : undefined}
-          rel={card.cta.external ? "noopener noreferrer" : undefined}
-          rightIcon={<ArrowRightIcon size={18} aria-hidden="true" />}
-        >
-          {card.cta.label}
-        </Button>
-        {card.secondaryCta && (
-          <Button
-            variant="outline"
-            shape="pill"
-            size="md"
-            fullWidth
-            href={card.secondaryCta.href}
-            target={card.secondaryCta.external ? "_blank" : undefined}
-            rel={card.secondaryCta.external ? "noopener noreferrer" : undefined}
-          >
-            {card.secondaryCta.label}
-          </Button>
-        )}
-      </div>
+      {(card.cta || card.secondaryCta) && (
+        <div className={card.secondaryCta && card.cta ? styles.cardActionTwo : styles.cardAction}>
+          {card.cta && (
+            <Button
+              variant="primary"
+              shape="pill"
+              size="md"
+              fullWidth
+              href={card.cta.href}
+              target={card.cta.external ? "_blank" : undefined}
+              rel={card.cta.external ? "noopener noreferrer" : undefined}
+              rightIcon={<ArrowRightIcon size={18} aria-hidden="true" />}
+            >
+              {card.cta.label}
+            </Button>
+          )}
+          {card.secondaryCta && (
+            <Button
+              variant="outline"
+              shape="pill"
+              size="md"
+              fullWidth
+              href={card.secondaryCta.href}
+              target={card.secondaryCta.external ? "_blank" : undefined}
+              rel={card.secondaryCta.external ? "noopener noreferrer" : undefined}
+            >
+              {card.secondaryCta.label}
+            </Button>
+          )}
+        </div>
+      )}
     </article>
   );
 }

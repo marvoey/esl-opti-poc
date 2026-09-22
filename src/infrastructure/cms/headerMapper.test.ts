@@ -147,5 +147,137 @@ describe('headerMapper', () => {
       expect(result?.ctaTarget).toBeUndefined();
       expect(result?.ctaExternal).toBe(false);
     });
+
+    it('maps megaMenu into Personal navigation item with columns, items, and promo', () => {
+      const rawCms: RawCmsHeader = {
+        navLinks: [
+          { text: 'Home', url: { default: '/' } },
+          { text: 'Product Family', url: { default: '/product-family' } },
+          { text: 'Product Detail', url: { default: '/product-detail' } },
+        ],
+        megaMenu: {
+          navLabel: 'Personal',
+          cta: { text: 'View All Personal Banking', url: { default: '/personal' } },
+          columns: [
+            {
+              heading: 'MANAGE',
+              items: [
+                {
+                  icon: 'landmark',
+                  link: { text: 'Checking Accounts', url: { default: '/personal/checking' } },
+                },
+                {
+                  icon: 'piggy-bank',
+                  link: { text: 'Savings Accounts', url: { default: '/personal/savings' } },
+                },
+              ],
+            },
+            {
+              heading: 'BORROW',
+              items: [
+                {
+                  icon: 'hand-coins',
+                  link: { text: 'Personal Loans', url: { default: '/personal/loans' } },
+                },
+              ],
+            },
+          ],
+          promo: {
+            eyebrow: 'FINANCIAL WELLNESS CENTER',
+            heading: 'Not sure where to start?',
+            description: {
+              html: '<p>Explore tools and guidance for every stage of your financial journey.</p>',
+            },
+            cta: {
+              text: 'Get guidance',
+              url: { default: '/financial-wellness' },
+            },
+          },
+        },
+      };
+
+      const result = mapCmsHeaderToProps(rawCms);
+      expect(result).not.toBeNull();
+      // Should have Personal prepended + 3 regular links = 4 links total
+      expect(result?.navLinks).toHaveLength(4);
+
+      const personalLink = result?.navLinks?.[0];
+      expect(personalLink?.label).toBe('Personal');
+      expect(personalLink?.href).toBe('/personal');
+      expect(personalLink?.megaMenu).toBeDefined();
+      expect(personalLink?.megaMenu?.viewAllLabel).toBe('View All Personal Banking');
+      expect(personalLink?.megaMenu?.viewAllHref).toBe('/personal');
+      expect(personalLink?.megaMenu?.columns).toHaveLength(2);
+      expect(personalLink?.megaMenu?.columns[0].heading).toBe('MANAGE');
+      expect(personalLink?.megaMenu?.columns[0].items).toHaveLength(2);
+      expect(personalLink?.megaMenu?.columns[0].items[0]).toEqual({
+        icon: 'landmark',
+        label: 'Checking Accounts',
+        href: '/personal/checking',
+      });
+      expect(personalLink?.megaMenu?.promo).toEqual({
+        eyebrow: 'FINANCIAL WELLNESS CENTER',
+        heading: 'Not sure where to start?',
+        description: 'Explore tools and guidance for every stage of your financial journey.',
+        ctaLabel: 'Get guidance',
+        ctaHref: '/financial-wellness',
+      });
+
+      // Subsequent links remain intact
+      expect(result?.navLinks?.[1].label).toBe('Home');
+      expect(result?.navLinks?.[2].label).toBe('Product Family');
+      expect(result?.navLinks?.[3].label).toBe('Product Detail');
+    });
+
+    it('supports backwards compatibility with legacy viewAllLabel/viewAllLink and item label', () => {
+      const rawCms: RawCmsHeader = {
+        megaMenu: {
+          navLabel: 'Personal',
+          viewAllLabel: 'Legacy View All',
+          viewAllLink: { url: { default: '/legacy-all' } },
+          columns: [
+            {
+              heading: 'ACCOUNTS',
+              items: [
+                {
+                  icon: 'landmark',
+                  label: 'Legacy Checking',
+                  link: { url: { default: '/legacy-checking' } },
+                },
+              ],
+            },
+          ],
+        },
+      };
+
+      const result = mapCmsHeaderToProps(rawCms);
+      expect(result?.navLinks?.[0].megaMenu?.viewAllLabel).toBe('Legacy View All');
+      expect(result?.navLinks?.[0].megaMenu?.viewAllHref).toBe('/legacy-all');
+      expect(result?.navLinks?.[0].megaMenu?.columns[0].items[0].label).toBe('Legacy Checking');
+    });
+
+    it('attaches megaMenu to existing Personal link if present in navLinks', () => {
+      const rawCms: RawCmsHeader = {
+        navLinks: [
+          { text: 'Personal', url: { default: '/personal' } },
+          { text: 'Business', url: { default: '/business' } },
+        ],
+        megaMenu: {
+          navLabel: 'Personal',
+          cta: { text: 'View All Personal Banking', url: { default: '/personal' } },
+          columns: [],
+          promo: {
+            heading: 'Promo',
+            description: 'Plain text description',
+          },
+        },
+      };
+
+      const result = mapCmsHeaderToProps(rawCms);
+      expect(result?.navLinks).toHaveLength(2);
+      expect(result?.navLinks?.[0].label).toBe('Personal');
+      expect(result?.navLinks?.[0].megaMenu).toBeDefined();
+      expect(result?.navLinks?.[0].megaMenu?.promo.description).toBe('Plain text description');
+    });
   });
 });

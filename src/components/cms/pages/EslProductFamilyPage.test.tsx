@@ -47,11 +47,15 @@ describe('EslProductFamilyPage Content Type & Renderer', () => {
       'EslSwitchSupport',
       'EslDisclosure',
       'EslFaqStates',
+      'EslAccordionCardGrid',
+      'EslSplitContentCta',
+      'EslFeatureCardRow',
+      'EslComparisonCardPair',
     ]);
   });
 
-  it('exposes exactly 7 allowed section items', () => {
-    expect(ESL_PRODUCT_FAMILY_ALLOWED_SECTIONS).toHaveLength(7);
+  it('exposes exactly 11 allowed section items', () => {
+    expect(ESL_PRODUCT_FAMILY_ALLOWED_SECTIONS).toHaveLength(11);
     const keys = ESL_PRODUCT_FAMILY_ALLOWED_SECTIONS.map((s) => s.key);
     expect(keys).toContain('EslHeroSlider');
     expect(keys).toContain('EslSnipeCta');
@@ -60,6 +64,10 @@ describe('EslProductFamilyPage Content Type & Renderer', () => {
     expect(keys).toContain('EslSwitchSupport');
     expect(keys).toContain('EslDisclosure');
     expect(keys).toContain('EslFaqStates');
+    expect(keys).toContain('EslAccordionCardGrid');
+    expect(keys).toContain('EslSplitContentCta');
+    expect(keys).toContain('EslFeatureCardRow');
+    expect(keys).toContain('EslComparisonCardPair');
   });
 
   it('returns null when content is missing or nodes are empty (no static fallbacks)', () => {

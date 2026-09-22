@@ -181,6 +181,65 @@ const ESL_PRODUCT_FAMILY_PAGE_EXPERIENCE_QUERY = `
                   showFaqStates
                   heading
                 }
+                ... on EslAccordionCardGrid {
+                  eyebrow
+                  title
+                  accordionDescription: description {
+                    json
+                    html
+                  }
+                  items {
+                    term
+                    definition {
+                      json
+                      html
+                    }
+                  }
+                }
+                ... on EslSplitContentCta {
+                  showSplitContentCta
+                  heading
+                }
+                ... on EslFeatureCardRow {
+                  showFeatureCardRow
+                  heading
+                }
+                ... on EslComparisonCardPair {
+                  eyebrow
+                  title
+                  comparisonDescription: description {
+                    json
+                    html
+                  }
+                  cards {
+                    title
+                    badgeText
+                    cardDescription: description {
+                      json
+                      html
+                    }
+                    features {
+                      text
+                      iconType
+                    }
+                    cta {
+                      text
+                      title
+                      target
+                      url {
+                        default
+                      }
+                    }
+                    secondaryCta {
+                      text
+                      title
+                      target
+                      url {
+                        default
+                      }
+                    }
+                  }
+                }
               }
             }
           }

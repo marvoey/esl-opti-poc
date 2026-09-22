@@ -47,16 +47,18 @@ describe('EslProductDetailPageRenderer', () => {
       'EslSwitchSupport',
       'EslDisclosure',
       'EslFaqStates',
+      'EslAccordionCardGrid',
+      'EslSplitContentCta',
+      'EslFeatureCardRow',
     ]);
   });
 
-  it('renders static sections when content is missing or nodes are empty', () => {
+  it('renders null or empty static sections when content is missing or nodes are empty', () => {
     render(<EslProductDetailExperience content={undefined} />);
 
-    // Check key static components by id
-    expect(document.getElementById('glossary')).toBeDefined();
-    expect(document.getElementById('split-content-cta')).toBeDefined();
-    // Key facts, Product cards, Switch support, Disclosure, and FAQ are now purely CMS-driven, so they are NOT rendered statically
+    // All former static sections are now purely CMS-driven
+    expect(document.getElementById('split-content-cta')).toBeNull();
+    expect(document.getElementById('glossary')).toBeNull();
     expect(document.getElementById('product-fit')).toBeNull();
     expect(document.getElementById('account-tools')).toBeNull();
     expect(document.getElementById('key-facts')).toBeNull();
@@ -144,7 +146,7 @@ describe('EslProductDetailPageRenderer', () => {
     expect(screen.queryByTestId('visual-builder-constraint-alert')).toBeNull();
 
     // Static sections still render below
-    expect(document.getElementById('glossary')).toBeDefined();
+    expect(document.getElementById('split-content-cta')).toBeDefined();
   });
 
   it('renders visual constraint alert in edit mode when unallowed section is added', () => {
@@ -211,14 +213,13 @@ describe('EslProductDetailPageRenderer', () => {
     // Neither the alert nor the unallowed component is rendered on live
     expect(screen.queryByTestId('visual-builder-constraint-alert')).toBeNull();
     expect(screen.queryByTestId('node-unallowed-2')).toBeNull();
-    // Static sections still render
-    expect(document.getElementById('glossary')).toBeDefined();
   });
 
-  it('ProductDetailStaticSections standalone renders all expected rows', () => {
-    render(<ProductDetailStaticSections />);
-    expect(document.getElementById('glossary')).toBeDefined();
-    expect(document.getElementById('split-content-cta')).toBeDefined();
+  it('ProductDetailStaticSections standalone returns null', () => {
+    const { container } = render(<ProductDetailStaticSections />);
+    expect(container.firstChild).toBeNull();
+    expect(document.getElementById('glossary')).toBeNull();
+    expect(document.getElementById('split-content-cta')).toBeNull();
     expect(document.getElementById('switch-support')).toBeNull();
   });
 });

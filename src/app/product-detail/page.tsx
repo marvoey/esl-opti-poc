@@ -125,6 +125,29 @@ const ESL_PRODUCT_DETAIL_PAGE_EXPERIENCE_QUERY = `
                   showFaqStates
                   heading
                 }
+                ... on EslAccordionCardGrid {
+                  eyebrow
+                  title
+                  accordionDescription: description {
+                    json
+                    html
+                  }
+                  items {
+                    term
+                    definition {
+                      json
+                      html
+                    }
+                  }
+                }
+                ... on EslSplitContentCta {
+                  showSplitContentCta
+                  heading
+                }
+                ... on EslFeatureCardRow {
+                  showFeatureCardRow
+                  heading
+                }
                 ... on EslSwitchSupport {
                   eyebrow
                   title

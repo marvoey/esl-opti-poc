@@ -10,7 +10,7 @@ export interface ComparisonCardData {
   badgeText?: string;
   description: string;
   features: [ComparisonFeatureItem, ComparisonFeatureItem, ComparisonFeatureItem];
-  cta: {
+  cta?: {
     label: string;
     href: string;
     external?: boolean;

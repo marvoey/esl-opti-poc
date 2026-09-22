@@ -24,6 +24,10 @@ export const KNOWN_COMPONENT_NAMES: Record<string, string> = {
   EslFaqStates: 'ESL FAQ States',
   EslProductCardsRow: 'ESL Product Cards Row',
   EslProductCardsRowVariant2: 'ESL Product Cards Row Variant 2',
+  EslAccordionCardGrid: 'ESL Accordion Card Grid',
+  EslSplitContentCta: 'ESL Split Content CTA',
+  EslFeatureCardRow: 'ESL Feature Card Row',
+  EslComparisonCardPair: 'ESL Comparison Card Pair',
 };
 
 export function getAllowedSectionsFromContentType(

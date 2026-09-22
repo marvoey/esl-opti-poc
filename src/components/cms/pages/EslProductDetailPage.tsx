@@ -13,5 +13,8 @@ export const EslProductDetailExperienceContentType = contentType({
     'EslSwitchSupport',
     'EslDisclosure',
     'EslFaqStates',
+    'EslAccordionCardGrid',
+    'EslSplitContentCta',
+    'EslFeatureCardRow',
   ],
 });

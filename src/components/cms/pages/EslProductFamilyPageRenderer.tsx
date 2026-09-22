@@ -16,10 +16,6 @@ const {
 } = getAllowedSectionsFromContentType(EslProductFamilyExperienceContentType);
 
 export { ESL_PRODUCT_FAMILY_ALLOWED_SECTIONS };
-import { ComparisonCardPair } from '@/components/organisms/comparison-card-pair';
-import { CompareTable } from '@/components/organisms/compare-table';
-import { SplitContentStepList, DEFAULT_SPLIT_CONTENT_STEP_LIST_PROPS } from '@/components/organisms/split-content-step-list';
-import { LearningHub, DEFAULT_LEARNING_HUB_PROPS } from '@/components/organisms/learning-hub';
 
 
 function ExperienceComponentWrapper({ children, node, displaySettings }: ComponentContainerProps) {
@@ -99,21 +95,7 @@ type Props = {
 };
 
 export function ProductFamilyStaticSections() {
-
-  return (
-    <>
-      <ComparisonCardPair id="family-comparison-card-pair" />
-      <CompareTable id="family-compare-table" />
-      <SplitContentStepList
-        id="family-split-content-step-list"
-        {...DEFAULT_SPLIT_CONTENT_STEP_LIST_PROPS}
-      />
-      <LearningHub
-        id="family-learning-hub"
-        {...DEFAULT_LEARNING_HUB_PROPS}
-      />
-    </>
-  );
+  return null;
 }
 
 export default function EslProductFamilyExperience({ content }: Props) {

@@ -506,14 +506,25 @@ export async function HEAD() {
   return new NextResponse(null, { status: 200 });
 }
 
-export async function OPTIONS() {
+export async function OPTIONS(request?: NextRequest) {
+  const requestOrigin =
+    request?.headers?.get('WebHook-Request-Origin') ||
+    request?.headers?.get('webhook-request-origin');
+
+  const headers: Record<string, string> = {
+    Allow: 'GET, POST, HEAD, OPTIONS',
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET, POST, HEAD, OPTIONS',
+    'Access-Control-Allow-Headers': '*',
+  };
+
+  if (requestOrigin) {
+    headers['WebHook-Allowed-Origin'] = requestOrigin;
+    headers['WebHook-Allowed-Rate'] = '120';
+  }
+
   return new NextResponse(null, {
     status: 200,
-    headers: {
-      Allow: 'GET, POST, HEAD, OPTIONS',
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET, POST, HEAD, OPTIONS',
-      'Access-Control-Allow-Headers': '*',
-    },
+    headers,
   });
 }
