@@ -24,6 +24,7 @@
   --color-slate-200: #B8BFC7; /* Figma: process/neutral surface */
   --color-neutral-600: #4E5059; /* Figma: neutral/body description */
   --color-slate-600: var(--color-neutral-600); /* Backwards-compatible alias */
+  --color-slate-700: #364153; /* Figma: FinalCta body description */
 
   --color-white-10: rgba(255, 255, 255, 0.10);
   --color-white-50: rgba(255, 255, 255, 0.50);
@@ -77,6 +78,7 @@
   --gradient-footer: var(--gradient-dark-navy);
   --gradient-split-radial: radial-gradient(69.11% 69.11% at 50.26% 14.87%, var(--color-sky-alpha-25) 0%, var(--color-aqua-alpha-25) 50%, var(--color-white-alpha-25) 100%);
   --gradient-vertical-selector: radial-gradient(44.47% 44.21% at 54.11% 55.27%, var(--color-sky-300) 7.67%, var(--color-aqua-100) 50%, var(--color-white) 100%);
+  --gradient-final-cta: linear-gradient(107.92deg, var(--color-aqua-100) 0%, var(--color-mint-50) 100%);
 
   /* Footer Layout Spacing */
   --space-footer-top: 4rem;         /* 64px */

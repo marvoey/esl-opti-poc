@@ -1,0 +1,63 @@
+.section {
+  width: 100%;
+  background: var(--gradient-final-cta);
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: var(--container-max-w);
+  margin-inline: auto;
+  padding-inline: var(--container-gutter);
+  padding-block: var(--space-section-block);
+}
+
+@media (width < 768px) {
+  .container {
+    padding-block: 2.75rem; /* 44px */
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.625rem; /* 10px between heading and description */
+  max-width: 100%;
+}
+
+.heading {
+  color: var(--color-navy-500);
+  margin: 0;
+}
+
+.description {
+  color: var(--color-slate-700);
+  max-width: 42.5rem; /* ~680px, readable line length */
+  margin: 0;
+}
+
+.actionWrapper {
+  margin-block: 15px;
+}
+
+.eligibilityNote {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  margin: 0;
+}
+
+.checkIcon {
+  color: var(--color-teal-700);
+  flex-shrink: 0;
+}
+
+.eligibilityText {
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-micro);
+  line-height: var(--line-height-micro);
+  color: var(--color-text-secondary);
+}

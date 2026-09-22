@@ -16,6 +16,7 @@ const {
 } = getAllowedSectionsFromContentType(EslProductFamilyExperienceContentType);
 
 export { ESL_PRODUCT_FAMILY_ALLOWED_SECTIONS };
+import { FinalCta, DEFAULT_FINAL_CTA_PROPS } from '@/components/organisms/final-cta';
 
 
 function ExperienceComponentWrapper({ children, node, displaySettings }: ComponentContainerProps) {
@@ -95,7 +96,9 @@ type Props = {
 };
 
 export function ProductFamilyStaticSections() {
-  return null;
+  return (
+    <FinalCta {...DEFAULT_FINAL_CTA_PROPS} />
+  );
 }
 
 export default function EslProductFamilyExperience({ content }: Props) {
