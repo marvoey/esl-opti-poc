@@ -397,12 +397,44 @@ describe('On-Demand Revalidation Route Handler (/api/revalidate)', () => {
     expect(revalidatePath).toHaveBeenCalledWith('/product-family', 'page');
   });
 
-  it('HEAD and OPTIONS return 200 OK', async () => {
+  it('HEAD and OPTIONS return 200 OK for standard requests', async () => {
     const headRes = await HEAD();
     expect(headRes.status).toBe(200);
 
     const optionsRes = await OPTIONS();
     expect(optionsRes.status).toBe(200);
     expect(optionsRes.headers.get('Allow')).toContain('POST');
+    expect(optionsRes.headers.get('WebHook-Allowed-Origin')).toBeNull();
+  });
+
+  it('handles CloudEvents / Azure Event Grid webhook validation handshake via OPTIONS', async () => {
+    const origin = 'https://app-fecu01saas6fn6qt001.cms.optimizely.com';
+    const req = new NextRequest('http://localhost:5002/api/revalidate', {
+      method: 'OPTIONS',
+      headers: {
+        'WebHook-Request-Origin': origin,
+      },
+    });
+
+    const res = await OPTIONS(req);
+    expect(res.status).toBe(200);
+    expect(res.headers.get('WebHook-Allowed-Origin')).toBe(origin);
+    expect(res.headers.get('WebHook-Allowed-Rate')).toBe('120');
+    expect(res.headers.get('Allow')).toContain('POST');
+  });
+
+  it('handles webhook validation handshake case-insensitively via OPTIONS', async () => {
+    const origin = 'https://app-fecu01saas6fn6qt001.cms.optimizely.com';
+    const req = new NextRequest('http://localhost:5002/api/revalidate', {
+      method: 'OPTIONS',
+      headers: {
+        'webhook-request-origin': origin,
+      },
+    });
+
+    const res = await OPTIONS(req);
+    expect(res.status).toBe(200);
+    expect(res.headers.get('WebHook-Allowed-Origin')).toBe(origin);
+    expect(res.headers.get('WebHook-Allowed-Rate')).toBe('120');
   });
 });
