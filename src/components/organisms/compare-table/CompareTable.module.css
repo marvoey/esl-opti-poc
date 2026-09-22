@@ -93,7 +93,7 @@
 .rowHeader {
   padding: var(--space-md);
   text-align: left;
-  font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-bold);
   color: var(--color-text-primary);
   border-block-end: 1px solid var(--color-border-subtle);
   border-inline-end: 1px solid var(--color-border-card);
