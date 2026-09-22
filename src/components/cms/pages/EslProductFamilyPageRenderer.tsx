@@ -16,7 +16,6 @@ const {
 } = getAllowedSectionsFromContentType(EslProductFamilyExperienceContentType);
 
 export { ESL_PRODUCT_FAMILY_ALLOWED_SECTIONS };
-import { ComparisonCardPair } from '@/components/organisms/comparison-card-pair';
 
 
 function ExperienceComponentWrapper({ children, node, displaySettings }: ComponentContainerProps) {
@@ -96,12 +95,7 @@ type Props = {
 };
 
 export function ProductFamilyStaticSections() {
-
-  return (
-    <>
-      <ComparisonCardPair id="family-comparison-card-pair" />
-    </>
-  );
+  return null;
 }
 
 export default function EslProductFamilyExperience({ content }: Props) {

@@ -13,11 +13,13 @@ describe('EslHeader CMS Content Type', () => {
     expect(properties).toHaveProperty('brandLogoAlt');
     expect(properties).toHaveProperty('brandHref');
     expect(properties).toHaveProperty('navLinks');
+    expect(properties).toHaveProperty('megaMenu');
     expect(properties).toHaveProperty('cta');
 
     expect(properties.brandLogo.type).toBe('contentReference');
     expect(properties.brandLogo.allowedTypes).toContain('_image');
     expect(properties.navLinks.type).toBe('array');
+    expect(properties.megaMenu.type).toBe('component');
     expect(properties.cta.type).toBe('link');
   });
 });
