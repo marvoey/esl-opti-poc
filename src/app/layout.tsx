@@ -1,5 +1,6 @@
 import React, { Suspense } from "react";
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Albert_Sans, League_Spartan } from "next/font/google";
 import "@/infrastructure/cms/optimizely-registry";
 import "./globals.css";
@@ -69,6 +70,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${albertSans.variable} ${leagueSpartan.variable}`}>
+      <head>
+        <link rel="preconnect" href="https://cdn.optimizely.com" />
+        <link rel="dns-prefetch" href="https://cdn.optimizely.com" />
+        <Script
+          src="https://cdn.optimizely.com/js/4775830914596864.js"
+          strategy="beforeInteractive"
+        />
+      </head>
       <body>
         <Suspense fallback={null}>
           <ServerHeader />
