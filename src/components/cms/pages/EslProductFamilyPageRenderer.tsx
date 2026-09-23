@@ -16,8 +16,6 @@ const {
 } = getAllowedSectionsFromContentType(EslProductFamilyExperienceContentType);
 
 export { ESL_PRODUCT_FAMILY_ALLOWED_SECTIONS };
-import { FinalCta, DEFAULT_FINAL_CTA_PROPS } from '@/components/organisms/final-cta';
-
 
 function ExperienceComponentWrapper({ children, node, displaySettings }: ComponentContainerProps) {
   const { pa } = getPreviewUtils(node);
@@ -95,10 +93,8 @@ type Props = {
   } | null;
 };
 
-export function ProductFamilyStaticSections() {
-  return (
-    <FinalCta {...DEFAULT_FINAL_CTA_PROPS} />
-  );
+export function ProductFamilyStaticSections(): React.ReactNode {
+  return null;
 }
 
 export default function EslProductFamilyExperience({ content }: Props) {
@@ -109,13 +105,10 @@ export default function EslProductFamilyExperience({ content }: Props) {
   }
 
   return (
-    <>
-      <OptimizelyComposition
-        nodes={nodes}
-        ComponentWrapper={ExperienceComponentWrapper}
-      />
-      <ProductFamilyStaticSections />
-    </>
+    <OptimizelyComposition
+      nodes={nodes}
+      ComponentWrapper={ExperienceComponentWrapper}
+    />
   );
 }
 

@@ -51,6 +51,14 @@ describe('headerMapper', () => {
         })
       ).toBe(true);
     });
+
+    it('returns true when secondaryCta is present', () => {
+      expect(
+        hasCmsHeaderContent({
+          secondaryCta: { text: 'Sign In', url: { default: '/sign-in' } },
+        })
+      ).toBe(true);
+    });
   });
 
   describe('mapCmsHeaderToProps', () => {
@@ -146,6 +154,59 @@ describe('headerMapper', () => {
       expect(result).not.toBeNull();
       expect(result?.ctaTarget).toBeUndefined();
       expect(result?.ctaExternal).toBe(false);
+    });
+
+    it('maps secondaryCta alongside primary cta', () => {
+      const rawCms: RawCmsHeader = {
+        cta: {
+          text: 'Apply Now',
+          url: { default: '/apply' },
+        },
+        ctaIcon: 'arrow-right',
+        secondaryCta: {
+          text: 'Sign In',
+          url: { default: '/login' },
+          target: '_blank',
+        },
+        secondaryCtaIcon: 'user',
+      };
+
+      const result = mapCmsHeaderToProps(rawCms);
+      expect(result).not.toBeNull();
+      expect(result?.ctaText).toBe('Apply Now');
+      expect(result?.ctaHref).toBe('/apply');
+      expect(result?.ctaIcon).toBe('arrow-right');
+      expect(result?.secondaryCtaText).toBe('Sign In');
+      expect(result?.secondaryCtaHref).toBe('/login');
+      expect(result?.secondaryCtaTarget).toBe('_blank');
+      expect(result?.secondaryCtaExternal).toBe(true);
+      expect(result?.secondaryCtaIcon).toBe('user');
+    });
+
+    it('maps "none" or invalid icon strings to undefined', () => {
+      const rawCms: RawCmsHeader = {
+        cta: { text: 'Apply', url: { default: '/apply' } },
+        ctaIcon: 'none',
+        secondaryCta: { text: 'Sign In', url: { default: '/login' } },
+        secondaryCtaIcon: 'nonexistent-icon-123',
+      };
+
+      const result = mapCmsHeaderToProps(rawCms);
+      expect(result?.ctaIcon).toBeUndefined();
+      expect(result?.secondaryCtaIcon).toBeUndefined();
+    });
+
+    it('maps ctaVariant and secondaryCtaVariant correctly', () => {
+      const rawCms: RawCmsHeader = {
+        cta: { text: 'Apply', url: { default: '/apply' } },
+        ctaVariant: 'light',
+        secondaryCta: { text: 'Sign In', url: { default: '/login' } },
+        secondaryCtaVariant: 'dark',
+      };
+
+      const result = mapCmsHeaderToProps(rawCms);
+      expect(result?.ctaVariant).toBe('light');
+      expect(result?.secondaryCtaVariant).toBe('dark');
     });
 
     it('maps megaMenu into Personal navigation item with columns, items, and promo', () => {

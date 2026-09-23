@@ -3,7 +3,6 @@ import React from "react";
 import { notFound } from "next/navigation";
 import { getGraphClient } from "@/infrastructure/cms/graphClient";
 import { OptimizelyComponent } from "@optimizely/cms-sdk/react/server";
-import { ProductFamilyStaticSections } from "@/components/cms/pages/EslProductFamilyPageRenderer";
 import "@/infrastructure/cms/optimizely-registry";
 
 
@@ -240,6 +239,18 @@ const ESL_PRODUCT_FAMILY_PAGE_EXPERIENCE_QUERY = `
                     }
                   }
                 }
+                ... on EslCompareTable {
+                  showCompareTable
+                  heading
+                }
+                ... on EslFinalCta {
+                  showFinalCta
+                  heading
+                }
+                ... on EslLearningHub {
+                  showLearningHub
+                  heading
+                }
               }
             }
           }
@@ -415,6 +426,65 @@ const ESL_PRODUCT_FAMILY_PAGE_BASE_EXPERIENCE_QUERY = `
                   showFaqStates
                   heading
                 }
+                ... on EslAccordionCardGrid {
+                  eyebrow
+                  title
+                  accordionDescription: description {
+                    json
+                    html
+                  }
+                  items {
+                    term
+                    definition {
+                      json
+                      html
+                    }
+                  }
+                }
+                ... on EslSplitContentCta {
+                  showSplitContentCta
+                  heading
+                }
+                ... on EslFeatureCardRow {
+                  showFeatureCardRow
+                  heading
+                }
+                ... on EslComparisonCardPair {
+                  eyebrow
+                  title
+                  comparisonDescription: description {
+                    json
+                    html
+                  }
+                  cards {
+                    title
+                    badgeText
+                    cardDescription: description {
+                      json
+                      html
+                    }
+                    features {
+                      text
+                      iconType
+                    }
+                    cta {
+                      text
+                      title
+                      target
+                      url {
+                        default
+                      }
+                    }
+                    secondaryCta {
+                      text
+                      title
+                      target
+                      url {
+                        default
+                      }
+                    }
+                  }
+                }
               }
             }
           }
@@ -538,10 +608,6 @@ export default async function ProductFamilyPage() {
     );
   }
 
-  return (
-    <main>
-      <ProductFamilyStaticSections />
-    </main>
-  );
+  return notFound();
 }
 

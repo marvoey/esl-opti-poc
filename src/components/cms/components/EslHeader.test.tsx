@@ -14,12 +14,21 @@ describe('EslHeader CMS Content Type', () => {
     expect(properties).toHaveProperty('brandHref');
     expect(properties).toHaveProperty('navLinks');
     expect(properties).toHaveProperty('megaMenu');
+    expect(properties).toHaveProperty('ctaVariant');
+    expect(properties).toHaveProperty('ctaIcon');
     expect(properties).toHaveProperty('cta');
+    expect(properties).toHaveProperty('secondaryCtaVariant');
+    expect(properties).toHaveProperty('secondaryCtaIcon');
+    expect(properties).toHaveProperty('secondaryCta');
 
     expect(properties.brandLogo.type).toBe('contentReference');
     expect(properties.brandLogo.allowedTypes).toContain('_image');
     expect(properties.navLinks.type).toBe('array');
     expect(properties.megaMenu.type).toBe('component');
     expect(properties.cta.type).toBe('link');
+    expect(properties.ctaVariant.type).toBe('string');
+    expect(properties.ctaVariant.format).toBe('selectOne');
+    expect(properties.secondaryCtaVariant.type).toBe('string');
+    expect(properties.secondaryCtaVariant.format).toBe('selectOne');
   });
 });

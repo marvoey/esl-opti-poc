@@ -437,4 +437,209 @@ describe('On-Demand Revalidation Route Handler (/api/revalidate)', () => {
     expect(res.headers.get('WebHook-Allowed-Origin')).toBe(origin);
     expect(res.headers.get('WebHook-Allowed-Rate')).toBe('120');
   });
+
+  it('normalizes Optimizely hierarchical /home/product-detail/ to /product-detail', async () => {
+    const req = new NextRequest(`http://localhost:5002/api/revalidate?secret=${mockSecret}`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        data: {
+          publicUrl: 'https://opti-1920.move-esl-forward.org/home/product-detail/',
+        },
+      }),
+    });
+
+    const res = await POST(req);
+    const data = await res.json();
+
+    expect(res.status).toBe(200);
+    expect(data.revalidated).toBe(true);
+    expect(data.path).toBe('/product-detail');
+    expect(revalidatePath).toHaveBeenCalledWith('/product-detail', 'page');
+    expect(revalidatePath).toHaveBeenCalledWith('/home/product-detail', 'page');
+  });
+
+  it('normalizes Optimizely hierarchical /home/product-family/ to /product-family', async () => {
+    const req = new NextRequest(`http://localhost:5002/api/revalidate?secret=${mockSecret}`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        data: {
+          url: '/home/product-family/',
+        },
+      }),
+    });
+
+    const res = await POST(req);
+    const data = await res.json();
+
+    expect(res.status).toBe(200);
+    expect(data.revalidated).toBe(true);
+    expect(data.path).toBe('/product-family');
+    expect(revalidatePath).toHaveBeenCalledWith('/product-family', 'page');
+    expect(revalidatePath).toHaveBeenCalledWith('/home/product-family', 'page');
+  });
+
+  it('revalidates /product-detail when contentTypeName has spaces ("ESL Product Detail Experience")', async () => {
+    const req = new NextRequest(`http://localhost:5002/api/revalidate?secret=${mockSecret}`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        type: 'contentVersion:preview1:published',
+        data: {
+          contentTypeName: 'ESL Product Detail Experience',
+        },
+      }),
+    });
+
+    const res = await POST(req);
+    const data = await res.json();
+
+    expect(res.status).toBe(200);
+    expect(data.revalidated).toBe(true);
+    expect(data.path).toBe('/product-detail');
+    expect(revalidatePath).toHaveBeenCalledWith('/product-detail', 'page');
+  });
+
+  it('revalidates only Product Detail Page A when Page A is published, not touching Page B', async () => {
+    const req = new NextRequest(`http://localhost:5002/api/revalidate?secret=${mockSecret}`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        type: 'contentVersion:preview1:published',
+        data: {
+          publicUrl: 'https://opti-1920.move-esl-forward.org/accounts/premier-checking/',
+          contentTypeName: 'ESL Product Detail Experience',
+        },
+      }),
+    });
+
+    const res = await POST(req);
+    const data = await res.json();
+
+    expect(res.status).toBe(200);
+    expect(data.revalidated).toBe(true);
+    expect(data.path).toBe('/accounts/premier-checking');
+    expect(revalidatePath).toHaveBeenCalledWith('/accounts/premier-checking', 'page');
+    expect(revalidatePath).not.toHaveBeenCalledWith('/loans/auto-loans', 'page');
+    expect(revalidatePath).not.toHaveBeenCalledWith('/product-detail', 'page');
+  });
+
+  it('revalidates only Product Detail Page B when Page B is published, not touching Page A', async () => {
+    const req = new NextRequest(`http://localhost:5002/api/revalidate?secret=${mockSecret}`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        type: 'contentVersion:preview1:published',
+        data: {
+          publicUrl: 'https://opti-1920.move-esl-forward.org/loans/auto-loans/',
+          contentTypeName: 'ESL Product Detail Experience',
+        },
+      }),
+    });
+
+    const res = await POST(req);
+    const data = await res.json();
+
+    expect(res.status).toBe(200);
+    expect(data.revalidated).toBe(true);
+    expect(data.path).toBe('/loans/auto-loans');
+    expect(revalidatePath).toHaveBeenCalledWith('/loans/auto-loans', 'page');
+    expect(revalidatePath).not.toHaveBeenCalledWith('/accounts/premier-checking', 'page');
+  });
+
+  it('handles Optimizely CMS SaaS webhook event object format ({ version, key }) resolving via Content Graph', async () => {
+    const mockRequestFn = vi.fn().mockResolvedValue({
+      _Content: {
+        items: [
+          {
+            _metadata: {
+              url: {
+                default: '/home/product-detail/',
+                hierarchical: '/home/product-detail/',
+              },
+              types: ['EslProductDetailPage'],
+            },
+          },
+        ],
+      },
+    });
+
+    vi.mocked(getGraphClient).mockReturnValue({
+      request: mockRequestFn,
+    } as unknown as ReturnType<typeof getGraphClient>);
+
+    const req = new NextRequest(
+      `http://localhost:5002/api/revalidate?cg_webhook_secret=${mockSecret}`,
+      {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          type: 'contentVersion:preview1:published',
+          data: {
+            version: '184',
+            key: 'd7ff5161-6e71-4632-878d-797c915eb355',
+          },
+        }),
+      }
+    );
+
+    const res = await POST(req);
+    const data = await res.json();
+
+    expect(res.status).toBe(200);
+    expect(data.revalidated).toBe(true);
+    expect(data.path).toBe('/product-detail');
+    expect(data.paths).toContain('/product-detail');
+    expect(data.source).toBe('guid');
+    expect(mockRequestFn).toHaveBeenCalled();
+    expect(revalidatePath).toHaveBeenCalledWith('/product-detail', 'page');
+  });
+
+  it('handles unwrapped Optimizely sample format ({ version, key }) resolving via Content Graph', async () => {
+    const mockRequestFn = vi.fn().mockResolvedValue({
+      _Content: {
+        items: [
+          {
+            _metadata: {
+              url: {
+                default: '/accounts/custom-checking',
+                hierarchical: '/accounts/custom-checking',
+              },
+              types: ['EslProductDetailPage'],
+            },
+          },
+        ],
+      },
+    });
+
+    vi.mocked(getGraphClient).mockReturnValue({
+      request: mockRequestFn,
+    } as unknown as ReturnType<typeof getGraphClient>);
+
+    const req = new NextRequest(
+      `http://localhost:5002/api/revalidate?cg_webhook_secret=${mockSecret}`,
+      {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          version: '184',
+          key: 'd7ff51616e714632878d797c915eb355',
+        }),
+      }
+    );
+
+    const res = await POST(req);
+    const data = await res.json();
+
+    expect(res.status).toBe(200);
+    expect(data.revalidated).toBe(true);
+    expect(data.path).toBe('/accounts/custom-checking');
+    expect(data.source).toBe('guid');
+    expect(mockRequestFn).toHaveBeenCalled();
+    expect(revalidatePath).toHaveBeenCalledWith('/accounts/custom-checking', 'page');
+  });
 });
+
+
+

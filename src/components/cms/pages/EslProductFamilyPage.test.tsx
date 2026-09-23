@@ -51,11 +51,14 @@ describe('EslProductFamilyPage Content Type & Renderer', () => {
       'EslSplitContentCta',
       'EslFeatureCardRow',
       'EslComparisonCardPair',
+      'EslCompareTable',
+      'EslFinalCta',
+      'EslLearningHub',
     ]);
   });
 
-  it('exposes exactly 11 allowed section items', () => {
-    expect(ESL_PRODUCT_FAMILY_ALLOWED_SECTIONS).toHaveLength(11);
+  it('exposes exactly 14 allowed section items', () => {
+    expect(ESL_PRODUCT_FAMILY_ALLOWED_SECTIONS).toHaveLength(14);
     const keys = ESL_PRODUCT_FAMILY_ALLOWED_SECTIONS.map((s) => s.key);
     expect(keys).toContain('EslHeroSlider');
     expect(keys).toContain('EslSnipeCta');
@@ -68,6 +71,9 @@ describe('EslProductFamilyPage Content Type & Renderer', () => {
     expect(keys).toContain('EslSplitContentCta');
     expect(keys).toContain('EslFeatureCardRow');
     expect(keys).toContain('EslComparisonCardPair');
+    expect(keys).toContain('EslCompareTable');
+    expect(keys).toContain('EslFinalCta');
+    expect(keys).toContain('EslLearningHub');
   });
 
   it('returns null when content is missing or nodes are empty (no static fallbacks)', () => {

@@ -4,7 +4,7 @@ import React, { useCallback, useEffect, useId, useRef, useState } from "react";
 import Link from "next/link";
 import { BrandLogo } from "@/components/atoms/logo/BrandLogo";
 import { Button } from "@/components/atoms/button/Button";
-import { UserIcon, ChevronDownIcon, CloseIcon } from "@/components/atoms/icons";
+import { UserIcon, ChevronDownIcon, CloseIcon, Icon, type IconName } from "@/components/atoms/icons";
 import type { NavigationModel } from "@/domain/models/Navigation";
 import { MegaMenu } from "./mega-menu/MegaMenu";
 import { PERSONAL_MEGA_MENU, type MegaMenuData } from "./megaMenuData";
@@ -31,7 +31,23 @@ export interface HeaderProps {
   ctaHref?: string;
   ctaTarget?: string;
   ctaExternal?: boolean;
+  ctaVariant?: "dark" | "light" | "primary" | "outline";
+  ctaIcon?: IconName;
+  secondaryCtaText?: string;
+  secondaryCtaHref?: string;
+  secondaryCtaTarget?: string;
+  secondaryCtaExternal?: boolean;
+  secondaryCtaVariant?: "dark" | "light" | "primary" | "outline";
+  secondaryCtaIcon?: IconName;
   navigation?: NavigationModel;
+}
+
+function renderCtaIcon(iconName?: IconName) {
+  if (!iconName) return { leftIcon: undefined, rightIcon: undefined };
+  const icon = <Icon name={iconName} size={16} />;
+  return iconName === "arrow-right"
+    ? { leftIcon: undefined, rightIcon: icon }
+    : { leftIcon: icon, rightIcon: undefined };
 }
 
 export const DEFAULT_HEADER_NAV_LINKS: HeaderNavLink[] = [
@@ -61,6 +77,14 @@ export function Header({
   ctaHref,
   ctaTarget,
   ctaExternal,
+  ctaVariant,
+  ctaIcon,
+  secondaryCtaText,
+  secondaryCtaHref,
+  secondaryCtaTarget,
+  secondaryCtaExternal,
+  secondaryCtaVariant,
+  secondaryCtaIcon,
   navigation,
 }: HeaderProps = {}) {
   const resolvedLinks: HeaderNavLink[] = navLinks
@@ -76,6 +100,21 @@ export function Header({
 
   const resolvedBrandHref = navigation?.brandHref ?? brandHref;
   const isCtaBlank = ctaTarget === "_blank" || Boolean(ctaExternal);
+  const isSecondaryCtaBlank =
+    secondaryCtaTarget === "_blank" || Boolean(secondaryCtaExternal);
+  const hasCmsActions = Boolean(
+    (ctaText && ctaHref) || (secondaryCtaText && secondaryCtaHref)
+  );
+
+  const primaryIconProps = renderCtaIcon(ctaIcon);
+  const secondaryIconProps = renderCtaIcon(secondaryCtaIcon);
+
+  const resolvedPrimaryVariant: "primary" | "outline" =
+    ctaVariant === "light" || ctaVariant === "outline" ? "outline" : "primary";
+  const resolvedSecondaryVariant: "primary" | "outline" =
+    secondaryCtaVariant === "dark" || secondaryCtaVariant === "primary"
+      ? "primary"
+      : "outline";
 
   const autoId = useId();
   const [openId, setOpenId] = useState<string | null>(null);
@@ -219,18 +258,39 @@ export function Header({
           ) : null}
 
           <div className={styles.actions}>
-            {ctaText && ctaHref ? (
-              <Button
-                variant="primary"
-                size="sm"
-                shape="pill"
-                href={ctaHref}
-                className={styles.ctaButton}
-                target={isCtaBlank ? "_blank" : undefined}
-                rel={isCtaBlank ? "noopener noreferrer" : undefined}
-              >
-                {ctaText}
-              </Button>
+            {hasCmsActions ? (
+              <>
+                {ctaText && ctaHref && (
+                  <Button
+                    variant={resolvedPrimaryVariant}
+                    size="sm"
+                    shape="pill"
+                    href={ctaHref}
+                    leftIcon={primaryIconProps.leftIcon}
+                    rightIcon={primaryIconProps.rightIcon}
+                    className={styles.ctaButton}
+                    target={isCtaBlank ? "_blank" : undefined}
+                    rel={isCtaBlank ? "noopener noreferrer" : undefined}
+                  >
+                    {ctaText}
+                  </Button>
+                )}
+                {secondaryCtaText && secondaryCtaHref && (
+                  <Button
+                    variant={resolvedSecondaryVariant}
+                    size="sm"
+                    shape="pill"
+                    href={secondaryCtaHref}
+                    leftIcon={secondaryIconProps.leftIcon}
+                    rightIcon={secondaryIconProps.rightIcon}
+                    className={styles.secondaryCtaButton}
+                    target={isSecondaryCtaBlank ? "_blank" : undefined}
+                    rel={isSecondaryCtaBlank ? "noopener noreferrer" : undefined}
+                  >
+                    {secondaryCtaText}
+                  </Button>
+                )}
+              </>
             ) : (
               <>
                 <Button
@@ -331,18 +391,39 @@ export function Header({
           </ul>
 
           <div className={styles.mobileActions}>
-            {ctaText && ctaHref ? (
-              <Button
-                variant="primary"
-                size="sm"
-                shape="pill"
-                href={ctaHref}
-                fullWidth
-                target={isCtaBlank ? "_blank" : undefined}
-                rel={isCtaBlank ? "noopener noreferrer" : undefined}
-              >
-                {ctaText}
-              </Button>
+            {hasCmsActions ? (
+              <>
+                {ctaText && ctaHref && (
+                  <Button
+                    variant={resolvedPrimaryVariant}
+                    size="sm"
+                    shape="pill"
+                    href={ctaHref}
+                    leftIcon={primaryIconProps.leftIcon}
+                    rightIcon={primaryIconProps.rightIcon}
+                    fullWidth
+                    target={isCtaBlank ? "_blank" : undefined}
+                    rel={isCtaBlank ? "noopener noreferrer" : undefined}
+                  >
+                    {ctaText}
+                  </Button>
+                )}
+                {secondaryCtaText && secondaryCtaHref && (
+                  <Button
+                    variant={resolvedSecondaryVariant}
+                    size="sm"
+                    shape="pill"
+                    href={secondaryCtaHref}
+                    leftIcon={secondaryIconProps.leftIcon}
+                    rightIcon={secondaryIconProps.rightIcon}
+                    fullWidth
+                    target={isSecondaryCtaBlank ? "_blank" : undefined}
+                    rel={isSecondaryCtaBlank ? "noopener noreferrer" : undefined}
+                  >
+                    {secondaryCtaText}
+                  </Button>
+                )}
+              </>
             ) : (
               <>
                 <Button variant="outline" size="sm" shape="pill" href={joinHref} fullWidth>

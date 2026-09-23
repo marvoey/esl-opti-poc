@@ -77,7 +77,22 @@ const COMBINED_HEADER_QUERY = `
               }
             }
           }
+          ctaVariant
+          ctaIcon
           cta {
+            text
+            title
+            target
+            url {
+              default
+              hierarchical
+              base
+              internal
+            }
+          }
+          secondaryCtaVariant
+          secondaryCtaIcon
+          secondaryCta {
             text
             title
             target
@@ -163,7 +178,22 @@ const COMBINED_HEADER_QUERY = `
               }
             }
           }
+          ctaVariant
+          ctaIcon
           cta {
+            text
+            title
+            target
+            url {
+              default
+              hierarchical
+              base
+              internal
+            }
+          }
+          secondaryCtaVariant
+          secondaryCtaIcon
+          secondaryCta {
             text
             title
             target
@@ -204,7 +234,70 @@ const COMBINED_HEADER_BASE_QUERY = `
               internal
             }
           }
+          megaMenu {
+            navLabel
+            cta {
+              text
+              title
+              target
+              url {
+                default
+                hierarchical
+                base
+                internal
+              }
+            }
+            columns {
+              heading
+              items {
+                icon
+                link {
+                  text
+                  title
+                  target
+                  url {
+                    default
+                    hierarchical
+                    base
+                    internal
+                  }
+                }
+              }
+            }
+            promo {
+              eyebrow
+              heading
+              description {
+                json
+                html
+              }
+              cta {
+                text
+                title
+                target
+                url {
+                  default
+                  hierarchical
+                  base
+                  internal
+                }
+              }
+            }
+          }
+          ctaIcon
           cta {
+            text
+            title
+            target
+            url {
+              default
+              hierarchical
+              base
+              internal
+            }
+          }
+          secondaryCtaIcon
+          secondaryCta {
             text
             title
             target
@@ -240,7 +333,70 @@ const COMBINED_HEADER_BASE_QUERY = `
               internal
             }
           }
+          megaMenu {
+            navLabel
+            cta {
+              text
+              title
+              target
+              url {
+                default
+                hierarchical
+                base
+                internal
+              }
+            }
+            columns {
+              heading
+              items {
+                icon
+                link {
+                  text
+                  title
+                  target
+                  url {
+                    default
+                    hierarchical
+                    base
+                    internal
+                  }
+                }
+              }
+            }
+            promo {
+              eyebrow
+              heading
+              description {
+                json
+                html
+              }
+              cta {
+                text
+                title
+                target
+                url {
+                  default
+                  hierarchical
+                  base
+                  internal
+                }
+              }
+            }
+          }
+          ctaIcon
           cta {
+            text
+            title
+            target
+            url {
+              default
+              hierarchical
+              base
+              internal
+            }
+          }
+          secondaryCtaIcon
+          secondaryCta {
             text
             title
             target

@@ -7,9 +7,11 @@
   border-bottom: 1px solid var(--color-border-subtle);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  transition: box-shadow var(--duration-smart) var(--ease-out-smart);
 }
 
 .container {
+  width: 100%;
   max-width: var(--container-max-w);
   margin-inline: auto;
   padding-inline: var(--container-gutter);
@@ -19,7 +21,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: clamp(4rem, 3.5rem + 1vw, 5rem);
+  height: clamp(64px, 4rem + 1vw, 80px);
   gap: var(--space-md);
 }
 
@@ -48,9 +50,8 @@
 
 .logo {
   display: block;
-  height: auto;
-  max-height: 3rem;
-  width: auto;
+  width: 83px;
+  height: 50px;
 }
 
 .nav {
@@ -141,19 +142,23 @@
 .actions {
   display: flex;
   align-items: center;
-  gap: var(--space-xs);
+  gap: var(--space-sm);
   flex-shrink: 0;
 }
 
 .joinButton,
-.signInButton {
+.signInButton,
+.ctaButton,
+.secondaryCtaButton {
   display: none;
   white-space: nowrap;
 }
 
 @media (width >= 1024px) {
   .joinButton,
-  .signInButton {
+  .signInButton,
+  .ctaButton,
+  .secondaryCtaButton {
     display: inline-flex;
   }
 }

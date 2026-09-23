@@ -16,5 +16,8 @@ export const EslProductFamilyExperienceContentType = contentType({
     'EslSplitContentCta',
     'EslFeatureCardRow',
     'EslComparisonCardPair',
+    'EslCompareTable',
+    'EslFinalCta',
+    'EslLearningHub',
   ],
 });

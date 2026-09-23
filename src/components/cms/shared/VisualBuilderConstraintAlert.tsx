@@ -28,6 +28,9 @@ export const KNOWN_COMPONENT_NAMES: Record<string, string> = {
   EslSplitContentCta: 'ESL Split Content CTA',
   EslFeatureCardRow: 'ESL Feature Card Row',
   EslComparisonCardPair: 'ESL Comparison Card Pair',
+  EslCompareTable: 'ESL Compare Table',
+  EslFinalCta: 'ESL Final CTA',
+  EslLearningHub: 'ESL Learning Hub',
 };
 
 export function getAllowedSectionsFromContentType(

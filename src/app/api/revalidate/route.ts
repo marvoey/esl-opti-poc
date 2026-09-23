@@ -3,18 +3,13 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getGraphClient } from '@/infrastructure/cms/graphClient';
 
 function isAuthorized(request: NextRequest): boolean {
-  const expectedSecret =
-    process.env.OPTIMIZELY_GRAPH_SINGLE_KEY ||
-    process.env.OPTIMIZELY_REVALIDATE_SECRET ||
-    process.env.REVALIDATE_SECRET;
+  const expectedSecret = process.env.OPTIMIZELY_GRAPH_SINGLE_KEY;
 
   if (!expectedSecret) {
     return false;
   }
 
-  // 1. Check query parameters:
-  // - ?cg_webhook_secret=... (Optimizely Graph convention)
-  // - ?secret=... (standard query param)
+  // 1. Check query parameters (?cg_webhook_secret=... or ?secret=...)
   const querySecret =
     request.nextUrl.searchParams.get('cg_webhook_secret') ||
     request.nextUrl.searchParams.get('secret');
@@ -94,8 +89,30 @@ function isProbeOrVerification(body: unknown): boolean {
   return false;
 }
 
-function normalizePath(rawPath: string): string {
-  let clean = rawPath.trim();
+function extractUrlValue(val: unknown): string | null {
+  if (!val) return null;
+  if (typeof val === 'string') return val;
+  if (typeof val === 'object' && val !== null) {
+    const obj = val as Record<string, unknown>;
+    if (typeof obj.default === 'string') return obj.default;
+    if (typeof obj.hierarchical === 'string') return obj.hierarchical;
+    if (typeof obj.base === 'string') return obj.base;
+  }
+  return null;
+}
+
+/**
+ * Resolves the Next.js routes that correspond to a specific published content URL.
+ * Revalidates only the specific page that was updated.
+ *
+ * Examples:
+ * - "/home/product-detail/" -> ["/product-detail", "/home/product-detail"]
+ * - "/accounts/savings-detail/" -> ["/accounts/savings-detail"]
+ * - "/home/" or "/home" -> ["/"]
+ * - "/custom-page" -> ["/custom-page"]
+ */
+function resolveRoutesFromUrl(rawUrl: string): { paths: string[]; isHome: boolean } {
+  let clean = rawUrl.trim();
   if (!clean.startsWith('/')) {
     try {
       const urlToParse =
@@ -109,79 +126,125 @@ function normalizePath(rawPath: string): string {
     }
   }
 
-  // Remove trailing slash except for root '/'
-  if (clean.length > 1 && clean.endsWith('/')) {
+  // Remove trailing slashes
+  while (clean.length > 1 && clean.endsWith('/')) {
     clean = clean.slice(0, -1);
   }
 
-  // In Next.js, the homepage Experience (/home) maps to root '/'
-  if (clean === '/home') {
-    return '/';
-  }
-
-  return clean || '/';
-}
-
-function extractUrlValue(val: unknown): string | null {
-  if (!val) return null;
-  if (typeof val === 'string') return val;
-  if (typeof val === 'object' && val !== null) {
-    const obj = val as Record<string, unknown>;
-    if (typeof obj.default === 'string') return obj.default;
-    if (typeof obj.hierarchical === 'string') return obj.hierarchical;
-    if (typeof obj.base === 'string') return obj.base;
-  }
-  return null;
-}
-
-function mapContentTypeToPath(typeStr?: unknown): string | null {
-  if (typeof typeStr !== 'string') return null;
-  const lower = typeStr.toLowerCase();
-  if (lower.includes('productfamily') || lower.includes('product-family')) {
-    return '/product-family';
-  }
-  if (lower.includes('productdetail') || lower.includes('product-detail')) {
-    return '/product-detail';
-  }
+  // Home experience variations map to root '/'
   if (
-    lower.includes('homeexperience') ||
-    lower.includes('homepage') ||
-    lower.includes('startpage') ||
-    lower.includes('header') ||
-    lower.includes('footer') ||
-    lower.includes('sitesettings')
+    clean === '' ||
+    clean === '/' ||
+    clean === '/home' ||
+    clean === '/home/esl-poc' ||
+    clean === '/esl-poc'
   ) {
-    return '/';
+    return { paths: ['/'], isHome: true };
   }
-  return null;
-}
 
-function mapTypesArrayToPath(types?: unknown): string | null {
-  if (Array.isArray(types)) {
-    for (const t of types) {
-      const p = mapContentTypeToPath(t);
-      if (p) return p;
+  const paths = new Set<string>();
+
+  // If the path is organized under Optimizely CMS hierarchy /home/<subpath>,
+  // place the clean /<subpath> route first (e.g. /product-detail),
+  // and also include /home/<subpath> for dynamic [...slug] compatibility
+  if (clean.startsWith('/home/')) {
+    const stripped = clean.replace(/^\/home/, '');
+    if (stripped) {
+      paths.add(stripped);
     }
   }
-  return null;
+
+  paths.add(clean);
+
+  return { paths: Array.from(paths), isHome: false };
 }
 
-function mapNameToPath(nameStr?: unknown): string | null {
-  if (typeof nameStr !== 'string') return null;
-  const lower = nameStr.toLowerCase();
-  if (lower.includes('product family') || lower.includes('product-family')) {
-    return '/product-family';
-  }
-  if (lower.includes('product detail') || lower.includes('premier checking')) {
-    return '/product-detail';
-  }
+function extractRawUrlFromPayload(body?: unknown): string | null {
+  if (!body || typeof body !== 'object') return null;
+  const b = body as Record<string, unknown>;
+  const d = b.data && typeof b.data === 'object' ? (b.data as Record<string, unknown>) : null;
+  const c = b.content && typeof b.content === 'object' ? (b.content as Record<string, unknown>) : null;
+  const item =
+    (b.item || b.doc) && typeof (b.item || b.doc) === 'object'
+      ? ((b.item || b.doc) as Record<string, unknown>)
+      : null;
+
+  return (
+    extractUrlValue(b.publicUrl) ||
+    extractUrlValue(b.url) ||
+    extractUrlValue(b.path) ||
+    extractUrlValue(b.relativeUrl) ||
+    (d && (
+      extractUrlValue(d.publicUrl) ||
+      extractUrlValue(d.url) ||
+      extractUrlValue(d.path) ||
+      extractUrlValue(d.relativeUrl) ||
+      extractUrlValue(d.routeSegment) ||
+      (d.contentLink && typeof d.contentLink === 'object'
+        ? extractUrlValue((d.contentLink as Record<string, unknown>).url)
+        : null)
+    )) ||
+    (c && (
+      extractUrlValue(c.publicUrl) ||
+      extractUrlValue(c.url) ||
+      extractUrlValue(c.path) ||
+      (c.contentLink && typeof c.contentLink === 'object'
+        ? extractUrlValue((c.contentLink as Record<string, unknown>).url)
+        : null)
+    )) ||
+    (item && (
+      extractUrlValue(item.publicUrl) ||
+      extractUrlValue(item.url) ||
+      extractUrlValue(item.path)
+    )) ||
+    null
+  );
+}
+
+function extractContentTypeFromPayload(body?: unknown): string | null {
+  if (!body || typeof body !== 'object') return null;
+  const b = body as Record<string, unknown>;
+  const d = b.data && typeof b.data === 'object' ? (b.data as Record<string, unknown>) : null;
+  const c = b.content && typeof b.content === 'object' ? (b.content as Record<string, unknown>) : null;
+
+  return (
+    (typeof d?.contentTypeName === 'string' ? d.contentTypeName : null) ||
+    (typeof d?.contentType === 'string' ? d.contentType : null) ||
+    (Array.isArray(d?.types) && typeof d.types[0] === 'string' ? d.types[0] : null) ||
+    (typeof c?.contentTypeName === 'string' ? c.contentTypeName : null) ||
+    (typeof c?.contentType === 'string' ? c.contentType : null) ||
+    (typeof b.contentTypeName === 'string' ? b.contentTypeName : null) ||
+    (typeof b.contentType === 'string' ? b.contentType : null) ||
+    (Array.isArray(b.types) && typeof b.types[0] === 'string' ? b.types[0] : null) ||
+    null
+  );
+}
+
+function mapContentTypeToFallbackPath(typeStr?: unknown): string | null {
+  if (typeof typeStr !== 'string') return null;
+  const lower = typeStr.toLowerCase();
   if (
-    lower === 'home' ||
-    lower.includes('esl home') ||
-    lower.includes('header') ||
-    lower.includes('footer')
+    lower.includes('homeexperience') ||
+    lower.includes('home experience') ||
+    lower.includes('homepage') ||
+    lower.includes('home page') ||
+    lower.includes('startpage')
   ) {
     return '/';
+  }
+  if (
+    lower.includes('productfamily') ||
+    lower.includes('product-family') ||
+    lower.includes('product family')
+  ) {
+    return '/product-family';
+  }
+  if (
+    lower.includes('productdetail') ||
+    lower.includes('product-detail') ||
+    lower.includes('product detail')
+  ) {
+    return '/product-detail';
   }
   return null;
 }
@@ -191,68 +254,92 @@ const GET_CONTENT_BY_GUID_QUERY = `
     _Content(where: { _metadata: { key: { eq: $guid } } }) {
       items {
         _metadata {
-          displayName
+          types
           url {
             default
             hierarchical
             type
           }
-          types
         }
       }
     }
   }
 `;
 
-async function resolvePathFromDocId(docId: string): Promise<string | null> {
-  // Expected format: <guid>_<locale>_Published
-  const [rawGuid] = docId.split('_');
-  if (!rawGuid) return null;
-
+async function resolveRoutesFromGuid(
+  rawGuid: string
+): Promise<{ paths: string[]; isHome: boolean } | null> {
   const formattedGuid = rawGuid.replaceAll('-', '');
   const client = getGraphClient();
   if (!client) {
     return null;
   }
 
-  try {
-    const response = (await client.request(GET_CONTENT_BY_GUID_QUERY, {
-      guid: formattedGuid,
-    })) as {
-      _Content?: {
-        items?: Array<{
-          _metadata?: {
-            displayName?: string | null;
-            url?: {
-              default?: string | null;
-              hierarchical?: string | null;
-              type?: string | null;
-            } | null;
-            types?: string[] | null;
+  type ContentResponse = {
+    _Content?: {
+      items?: Array<{
+        _metadata?: {
+          types?: string[] | null;
+          url?: {
+            default?: string | null;
+            hierarchical?: string | null;
+            type?: string | null;
           } | null;
-        }> | null;
-      } | null;
-    };
+        } | null;
+      }> | null;
+    } | null;
+  };
 
-    const item = response?._Content?.items?.[0];
-    if (!item?._metadata) return null;
+  try {
+    let response = (await client.request(
+      GET_CONTENT_BY_GUID_QUERY,
+      { guid: formattedGuid },
+      undefined,
+      false
+    )) as ContentResponse;
 
-    const urlObj = item._metadata.url;
-    const urlType = urlObj?.type;
-    const rawUrl =
-      urlType === 'SIMPLE'
-        ? urlObj?.default
-        : urlObj?.hierarchical?.replace('/s', '') || urlObj?.default;
+    let item = response?._Content?.items?.[0];
 
-    if (rawUrl) {
-      return normalizePath(rawUrl);
+    // If not found with stripped hyphens, check if raw guid matches
+    if (!item?._metadata && rawGuid !== formattedGuid) {
+      response = (await client.request(
+        GET_CONTENT_BY_GUID_QUERY,
+        { guid: rawGuid },
+        undefined,
+        false
+      )) as ContentResponse;
+      item = response?._Content?.items?.[0];
     }
 
-    const fromTypes = mapTypesArrayToPath(item._metadata.types);
-    if (fromTypes) return fromTypes;
+    // If still not found, wait 400ms and retry once in case Content Graph indexing is in flight
+    if (!item?._metadata) {
+      await new Promise((resolve) => setTimeout(resolve, 400));
+      response = (await client.request(
+        GET_CONTENT_BY_GUID_QUERY,
+        { guid: formattedGuid },
+        undefined,
+        false
+      )) as ContentResponse;
+      item = response?._Content?.items?.[0];
+    }
 
-    const fromName = mapNameToPath(item._metadata.displayName);
-    if (fromName) return fromName;
+    if (!item?._metadata) return null;
+
+    const types = item._metadata.types || [];
+    const isHomeType = types.some((t) => t.toLowerCase().includes('homeexperience'));
+
+    const rawUrl = item._metadata.url?.hierarchical || item._metadata.url?.default;
+    if (rawUrl) {
+      const resolved = resolveRoutesFromUrl(rawUrl);
+      return {
+        paths: resolved.paths,
+        isHome: resolved.isHome || isHomeType,
+      };
+    }
+
+    if (isHomeType) {
+      return { paths: ['/'], isHome: true };
+    }
   } catch (err) {
     console.error('Error fetching content by guid in revalidation:', err);
   }
@@ -260,106 +347,22 @@ async function resolvePathFromDocId(docId: string): Promise<string | null> {
   return null;
 }
 
-function extractTargetPagePath(request: NextRequest, body?: unknown): string | null {
-  // 1. Explicit query parameter: ?path=/product-detail or ?path=/
-  const queryPath = request.nextUrl.searchParams.get('path');
-  if (queryPath) {
-    return normalizePath(queryPath);
+function executeRevalidations(paths: string[], isHome: boolean): void {
+  for (const p of paths) {
+    try {
+      revalidatePath(p, 'page');
+    } catch (e) {
+      console.error(`Error revalidating path "${p}":`, e);
+    }
   }
 
-  // 2. Parse from Optimizely webhook payload (POST)
-  if (body && typeof body === 'object') {
-    const b = body as Record<string, unknown>;
-
-    // 2a. Direct string or object url / path
-    const directUrl =
-      extractUrlValue(b.url) ||
-      extractUrlValue(b.path) ||
-      extractUrlValue(b.relativeUrl);
-    if (directUrl) return normalizePath(directUrl);
-
-    // 2b. Check nested "data" (Optimizely CMS SaaS & Content Graph event structure)
-    if (b.data && typeof b.data === 'object') {
-      const d = b.data as Record<string, unknown>;
-      const dUrl =
-        extractUrlValue(d.url) ||
-        extractUrlValue(d.path) ||
-        extractUrlValue(d.relativeUrl) ||
-        (d.contentLink && typeof d.contentLink === 'object'
-          ? extractUrlValue((d.contentLink as Record<string, unknown>).url)
-          : null);
-      if (dUrl) return normalizePath(dUrl);
-
-      const fromType =
-        mapContentTypeToPath(d.contentType) || mapTypesArrayToPath(d.types);
-      if (fromType) return fromType;
-
-      const fromName =
-        mapNameToPath(d.displayName) ||
-        mapNameToPath(d.name) ||
-        mapNameToPath(d.slug);
-      if (fromName) return fromName;
+  if (isHome || paths.includes('/')) {
+    try {
+      revalidatePath('/', 'layout');
+    } catch (e) {
+      console.error('Error revalidating layout:', e);
     }
-
-    // 2c. Check nested "content" (Optimizely Content Cloud webhooks add-on structure)
-    if (b.content && typeof b.content === 'object') {
-      const c = b.content as Record<string, unknown>;
-      const cUrl =
-        extractUrlValue(c.url) ||
-        extractUrlValue(c.path) ||
-        (c.contentLink && typeof c.contentLink === 'object'
-          ? extractUrlValue((c.contentLink as Record<string, unknown>).url)
-          : null);
-      if (cUrl) return normalizePath(cUrl);
-
-      const fromType =
-        mapContentTypeToPath(c.contentType) ||
-        mapTypesArrayToPath(c.contentType) ||
-        mapTypesArrayToPath(c.types);
-      if (fromType) return fromType;
-
-      const fromName = mapNameToPath(c.displayName) || mapNameToPath(c.name);
-      if (fromName) return fromName;
-    }
-
-    // 2d. Check nested "item" or "doc" (Optimizely Content Graph doc.updated structure)
-    const itemObj = (b.item || b.doc) as Record<string, unknown> | undefined;
-    if (itemObj && typeof itemObj === 'object') {
-      const iUrl = extractUrlValue(itemObj.url) || extractUrlValue(itemObj.path);
-      if (iUrl) return normalizePath(iUrl);
-
-      const fromType =
-        mapContentTypeToPath(itemObj.contentType) ||
-        mapTypesArrayToPath(itemObj.types);
-      if (fromType) return fromType;
-
-      const fromName =
-        mapNameToPath(itemObj.displayName) || mapNameToPath(itemObj.name);
-      if (fromName) return fromName;
-    }
-
-    // 2e. Check root contentType / types / name / slug
-    const rootType =
-      mapContentTypeToPath(b.contentType) || mapTypesArrayToPath(b.types);
-    if (rootType) return rootType;
-
-    const rootName =
-      mapNameToPath(b.displayName) ||
-      mapNameToPath(b.name) ||
-      mapNameToPath(b.slug);
-    if (rootName) return rootName;
   }
-
-  // 3. Fallback for explicit manual tests with empty/missing body
-  if (
-    body === null ||
-    body === undefined ||
-    (typeof body === 'object' && Object.keys(body as object).length === 0)
-  ) {
-    return '/';
-  }
-
-  return null;
 }
 
 export async function GET(request: NextRequest) {
@@ -368,15 +371,14 @@ export async function GET(request: NextRequest) {
 
   // If authorized, revalidate the target path
   if (isAuthorized(request)) {
-    const targetPath = extractTargetPagePath(request) || '/';
+    const queryPath = request.nextUrl.searchParams.get('path') || '/';
+    const { paths, isHome } = resolveRoutesFromUrl(queryPath);
     try {
-      revalidatePath(targetPath, 'page');
-      if (targetPath === '/') {
-        revalidatePath('/', 'layout');
-      }
+      executeRevalidations(paths, isHome);
       return NextResponse.json({
         revalidated: true,
-        path: targetPath,
+        path: paths[0],
+        paths,
         now: Date.now(),
       });
     } catch (error) {
@@ -387,7 +389,7 @@ export async function GET(request: NextRequest) {
     }
   }
 
-  // If not authorized, respond 200 OK for Optimizely endpoint readiness verification & health probes
+  // If not authorized, respond 200 ready for Optimizely endpoint readiness verification & health probes
   return NextResponse.json({
     status: 'ready',
     revalidated: false,
@@ -431,15 +433,14 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  // Check for Optimizely Graph docId format (e.g. { data: { docId: "<guid>_<locale>_Published" } })
   const b = body && typeof body === 'object' ? (body as Record<string, unknown>) : null;
-  const docId =
-    (b?.data && typeof b.data === 'object'
-      ? (b.data as Record<string, unknown>).docId
-      : null) || b?.docId;
+  const d = b?.data && typeof b.data === 'object' ? (b.data as Record<string, unknown>) : null;
+
+  // 1. Check for Optimizely Content Graph docId format (e.g. { data: { docId: "<guid>_<locale>_Published" } })
+  const docId = (d?.docId as string) || (b?.docId as string);
 
   if (typeof docId === 'string' && docId.length > 0) {
-    // If it's not a published version (e.g. draft, deleted, etc.), return 200 with no action taken
+    // If it's not a published version (e.g. draft, deleted), return 200 with no action taken
     if (!docId.includes('Published')) {
       return NextResponse.json({
         status: 'ok',
@@ -449,57 +450,110 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    const resolvedPath = await resolvePathFromDocId(docId);
-    if (resolvedPath) {
-      try {
-        revalidatePath(resolvedPath, 'page');
-        if (resolvedPath === '/') {
-          revalidatePath('/', 'layout');
-        }
+    const [rawGuid] = docId.split('_');
+    if (rawGuid) {
+      const resolved = await resolveRoutesFromGuid(rawGuid);
+      if (resolved && resolved.paths.length > 0) {
+        executeRevalidations(resolved.paths, resolved.isHome);
         return NextResponse.json({
           revalidated: true,
-          path: resolvedPath,
+          path: resolved.paths[0],
+          paths: resolved.paths,
           source: 'docId',
           now: Date.now(),
         });
-      } catch (error) {
-        return NextResponse.json(
-          { message: 'Error revalidating path', error: (error as Error).message },
-          { status: 500 }
-        );
       }
     }
   }
 
-  // Fall back to extracting target page path from standard payload fields
-  const targetPath = extractTargetPagePath(request, body);
+  // 2. Check for direct key / contentGuid in Optimizely CMS SaaS payload
+  const guidCandidate =
+    (typeof d?.key === 'string' ? d.key.trim() : null) ||
+    (typeof d?.contentGuid === 'string' ? d.contentGuid.trim() : null) ||
+    (typeof b?.key === 'string' ? b.key.trim() : null) ||
+    (typeof b?.contentGuid === 'string' ? b.contentGuid.trim() : null);
 
-  if (!targetPath) {
-    return NextResponse.json({
-      status: 'ok',
-      revalidated: false,
-      message:
-        'Payload does not map to any recognized cached page route. Skipped cache eviction.',
-      now: Date.now(),
-    });
+  if (guidCandidate && guidCandidate.length > 0) {
+    const resolved = await resolveRoutesFromGuid(guidCandidate);
+    if (resolved && resolved.paths.length > 0) {
+      executeRevalidations(resolved.paths, resolved.isHome);
+      return NextResponse.json({
+        revalidated: true,
+        path: resolved.paths[0],
+        paths: resolved.paths,
+        source: 'guid',
+        now: Date.now(),
+      });
+    }
   }
 
-  try {
-    revalidatePath(targetPath, 'page');
-    if (targetPath === '/') {
-      revalidatePath('/', 'layout');
-    }
+  // 3. Check for direct URL in payload (e.g. data.publicUrl, data.url, path, etc.)
+  const rawUrl = extractRawUrlFromPayload(body);
+  if (rawUrl) {
+    const { paths, isHome } = resolveRoutesFromUrl(rawUrl);
+    executeRevalidations(paths, isHome);
     return NextResponse.json({
       revalidated: true,
-      path: targetPath,
+      path: paths[0],
+      paths,
+      source: 'url',
       now: Date.now(),
     });
-  } catch (error) {
-    return NextResponse.json(
-      { message: 'Error revalidating path', error: (error as Error).message },
-      { status: 500 }
-    );
   }
+
+  // 4. Fallback to Content Type if payload contains no URL or GUID
+  const fallbackType = extractContentTypeFromPayload(body);
+  const fallbackPath = mapContentTypeToFallbackPath(fallbackType);
+  if (fallbackPath) {
+    const isHome = fallbackPath === '/';
+    const { paths } = resolveRoutesFromUrl(fallbackPath);
+    executeRevalidations(paths, isHome);
+    return NextResponse.json({
+      revalidated: true,
+      path: paths[0],
+      paths,
+      source: 'contentType',
+      now: Date.now(),
+    });
+  }
+
+  // 5. Check for explicit path in request query parameters (?path=/...)
+  const queryPath = request.nextUrl.searchParams.get('path');
+  if (queryPath) {
+    const { paths, isHome } = resolveRoutesFromUrl(queryPath);
+    executeRevalidations(paths, isHome);
+    return NextResponse.json({
+      revalidated: true,
+      path: paths[0],
+      paths,
+      source: 'queryPath',
+      now: Date.now(),
+    });
+  }
+
+  // 6. Fallback for manual test invocations with empty body
+  if (
+    body === null ||
+    body === undefined ||
+    (typeof body === 'object' && Object.keys(body as object).length === 0)
+  ) {
+    executeRevalidations(['/'], true);
+    return NextResponse.json({
+      revalidated: true,
+      path: '/',
+      paths: ['/'],
+      source: 'fallback',
+      now: Date.now(),
+    });
+  }
+
+  // 7. If the payload doesn't provide a recognized page URL or GUID (e.g. unmapped asset)
+  return NextResponse.json({
+    status: 'ok',
+    revalidated: false,
+    message: 'Payload does not map to any page route. Skipped cache eviction.',
+    now: Date.now(),
+  });
 }
 
 export async function HEAD() {

@@ -78,6 +78,12 @@ import { EslComparisonCardPairContentType } from '@/components/cms/components/Es
 import { EslComparisonCardItemContentType } from '@/components/cms/components/EslComparisonCardItem';
 import { EslComparisonFeatureItemContentType } from '@/components/cms/components/EslComparisonFeatureItem';
 import EslComparisonCardPair from '@/components/cms/components/EslComparisonCardPairRenderer';
+import { EslCompareTableContentType } from '@/components/cms/components/EslCompareTable';
+import EslCompareTable from '@/components/cms/components/EslCompareTableRenderer';
+import { EslFinalCtaContentType } from '@/components/cms/components/EslFinalCta';
+import EslFinalCta from '@/components/cms/components/EslFinalCtaRenderer';
+import { EslLearningHubContentType } from '@/components/cms/components/EslLearningHub';
+import EslLearningHub from '@/components/cms/components/EslLearningHubRenderer';
 
 export function ensureOptimizelyRegistry() {
 
@@ -131,6 +137,9 @@ export function ensureOptimizelyRegistry() {
     EslComparisonCardPairContentType,
     EslComparisonCardItemContentType,
     EslComparisonFeatureItemContentType,
+    EslCompareTableContentType,
+    EslFinalCtaContentType,
+    EslLearningHubContentType,
   ]);
 
   initReactComponentRegistry({
@@ -160,6 +169,9 @@ export function ensureOptimizelyRegistry() {
       EslSplitContentCta,
       EslFeatureCardRow,
       EslComparisonCardPair,
+      EslCompareTable,
+      EslFinalCta,
+      EslLearningHub,
       EslSiteSettings,
       EslStartPage,
     },

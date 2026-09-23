@@ -101,6 +101,51 @@ describe("Header Component", () => {
     expect(ctaButton.getAttribute("rel")).toBe("noopener noreferrer");
   });
 
+  it("renders both primary and secondary CTAs when provided", () => {
+    render(
+      <Header
+        ctaText="Apply Now"
+        ctaHref="/apply"
+        secondaryCtaText="Contact Us"
+        secondaryCtaHref="/contact"
+        secondaryCtaTarget="_blank"
+      />
+    );
+
+    const primaryCta = screen.getAllByRole("link", { name: "Apply Now" })[0];
+    expect(primaryCta).toBeDefined();
+    expect(primaryCta.getAttribute("href")).toBe("/apply");
+
+    const secondaryCta = screen.getAllByRole("link", { name: "Contact Us" })[0];
+    expect(secondaryCta).toBeDefined();
+    expect(secondaryCta.getAttribute("href")).toBe("/contact");
+    expect(secondaryCta.getAttribute("target")).toBe("_blank");
+    expect(secondaryCta.getAttribute("rel")).toBe("noopener noreferrer");
+
+    // Default join/sign-in should NOT be present when CMS actions are provided
+    expect(screen.queryByRole("link", { name: "Join" })).toBeNull();
+  });
+
+  it("renders icons on primary and secondary CTAs when provided", () => {
+    const { container } = render(
+      <Header
+        ctaText="Explore"
+        ctaHref="/explore"
+        ctaIcon="arrow-right"
+        secondaryCtaText="Sign In"
+        secondaryCtaHref="/sign-in"
+        secondaryCtaIcon="user"
+      />
+    );
+
+    const primaryCta = screen.getAllByRole("link", { name: /explore/i })[0];
+    const secondaryCta = screen.getAllByRole("link", { name: /sign in/i })[0];
+
+    // Both buttons should contain SVG icons
+    expect(primaryCta.querySelector("svg")).not.toBeNull();
+    expect(secondaryCta.querySelector("svg")).not.toBeNull();
+  });
+
   it("supports backward-compatible navigation model prop", () => {
     const mockNav: NavigationModel = {
       brandName: "Enterprise App",
@@ -130,5 +175,26 @@ describe("Header Component", () => {
 
     fireEvent.keyDown(document, { key: "Escape" });
     expect(trigger.getAttribute("aria-expanded")).toBe("false");
+  });
+
+  it("renders custom variants for primary and secondary CTA buttons", () => {
+    render(
+      <Header
+        ctaText="Explore"
+        ctaHref="/explore"
+        ctaVariant="light"
+        secondaryCtaText="Sign In"
+        secondaryCtaHref="/sign-in"
+        secondaryCtaVariant="dark"
+      />
+    );
+
+    const primaryCta = screen.getAllByRole("link", { name: /explore/i })[0];
+    const secondaryCta = screen.getAllByRole("link", { name: /sign in/i })[0];
+
+    // Primary with "light" should have outline class
+    expect(primaryCta.className).toContain("outline");
+    // Secondary with "dark" should have primary class
+    expect(secondaryCta.className).toContain("primary");
   });
 });

@@ -53,6 +53,11 @@ export type RawCmsHeader = {
   navLinks?: RawCmsLink[] | null;
   megaMenu?: RawCmsMegaMenu | null;
   cta?: RawCmsLink | null;
+  ctaVariant?: string | null;
+  ctaIcon?: string | null;
+  secondaryCta?: RawCmsLink | null;
+  secondaryCtaVariant?: string | null;
+  secondaryCtaIcon?: string | null;
 };
 
 const VALID_ICON_NAMES: Set<IconName> = new Set([
@@ -93,6 +98,23 @@ function toIconName(iconStr?: string | null): IconName {
   if (!iconStr) return 'landmark';
   const clean = iconStr.trim().toLowerCase() as IconName;
   return VALID_ICON_NAMES.has(clean) ? clean : 'landmark';
+}
+
+export function parseOptionalIconName(iconStr?: string | null): IconName | undefined {
+  if (!iconStr) return undefined;
+  const clean = iconStr.trim().toLowerCase();
+  if (clean === 'none') return undefined;
+  return VALID_ICON_NAMES.has(clean as IconName) ? (clean as IconName) : undefined;
+}
+
+export function parseOptionalCtaVariant(
+  variantStr?: string | null
+): 'dark' | 'light' | undefined {
+  if (!variantStr) return undefined;
+  const clean = variantStr.trim().toLowerCase();
+  if (clean === 'dark' || clean === 'primary') return 'dark';
+  if (clean === 'light' || clean === 'outline') return 'light';
+  return undefined;
 }
 
 function extractTextFromJson(node: unknown): string {
@@ -232,8 +254,21 @@ export function hasCmsHeaderContent(cmsHeader?: RawCmsHeader | null): boolean {
       cmsHeader.cta?.url?.default ||
       cmsHeader.cta?.url?.hierarchical
   );
+  const hasSecondaryCta = Boolean(
+    cmsHeader.secondaryCta?.text?.trim() ||
+      cmsHeader.secondaryCta?.title?.trim() ||
+      cmsHeader.secondaryCta?.url?.default ||
+      cmsHeader.secondaryCta?.url?.hierarchical
+  );
 
-  return hasBrandLogo || hasBrandHref || hasNavLinks || hasMegaMenu || hasCta;
+  return (
+    hasBrandLogo ||
+    hasBrandHref ||
+    hasNavLinks ||
+    hasMegaMenu ||
+    hasCta ||
+    hasSecondaryCta
+  );
 }
 
 /**
@@ -301,7 +336,7 @@ export function mapCmsHeaderToProps(
     }
   }
 
-  // 4. Map Explore Docs CTA button (distinct from navLinks)
+  // 4. Map Primary CTA button (distinct from navLinks)
   let ctaText: string | undefined;
   let ctaHref: string | undefined;
   let ctaTarget: string | undefined;
@@ -322,6 +357,33 @@ export function mapCmsHeaderToProps(
     }
   }
 
+  // 5. Map Secondary CTA button
+  let secondaryCtaText: string | undefined;
+  let secondaryCtaHref: string | undefined;
+  let secondaryCtaTarget: string | undefined;
+  let secondaryCtaExternal: boolean | undefined;
+
+  if (cmsHeader?.secondaryCta) {
+    const resolvedSecCta = resolveCmsLink(cmsHeader.secondaryCta);
+    if (
+      resolvedSecCta.label ||
+      cmsHeader.secondaryCta.url?.default ||
+      cmsHeader.secondaryCta.url?.hierarchical
+    ) {
+      secondaryCtaText = resolvedSecCta.label || undefined;
+      secondaryCtaHref = resolvedSecCta.href;
+      const isBlank =
+        cmsHeader.secondaryCta.target?.trim().toLowerCase() === '_blank';
+      secondaryCtaTarget = isBlank ? '_blank' : undefined;
+      secondaryCtaExternal = isBlank;
+    }
+  }
+
+  const ctaVariant = parseOptionalCtaVariant(cmsHeader?.ctaVariant);
+  const ctaIcon = parseOptionalIconName(cmsHeader?.ctaIcon);
+  const secondaryCtaVariant = parseOptionalCtaVariant(cmsHeader?.secondaryCtaVariant);
+  const secondaryCtaIcon = parseOptionalIconName(cmsHeader?.secondaryCtaIcon);
+
   return {
     logoUrl,
     logoAlt,
@@ -331,5 +393,13 @@ export function mapCmsHeaderToProps(
     ctaHref,
     ctaTarget,
     ctaExternal,
+    ctaVariant,
+    ctaIcon,
+    secondaryCtaText,
+    secondaryCtaHref,
+    secondaryCtaTarget,
+    secondaryCtaExternal,
+    secondaryCtaVariant,
+    secondaryCtaIcon,
   };
 }
