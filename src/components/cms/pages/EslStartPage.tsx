@@ -6,7 +6,7 @@ export const EslStartPageContentType = contentType({
   key: 'EslStartPage',
   displayName: 'ESL Start Page',
   baseType: '_page',
-  mayContainTypes: ['*'],
+  mayContainTypes: ['EslHomeExperience', 'EslHomePage'],
   properties: {
     title: {
       type: 'string',

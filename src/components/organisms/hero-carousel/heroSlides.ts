@@ -1,4 +1,5 @@
 import React from "react";
+import type { IconName } from "@/components/atoms/icons";
 
 export interface SlideItem {
   id: string;
@@ -10,15 +11,16 @@ export interface SlideItem {
   primaryCtaHref?: string;
   primaryCtaExternal?: boolean;
   primaryCtaVariant?: string;
+  primaryCtaIcon?: IconName | "arrow" | "none" | string;
   secondaryCta?: string;
   secondaryCtaHref?: string;
   secondaryCtaExternal?: boolean;
   secondaryCtaVariant?: string;
+  secondaryCtaIcon?: IconName | "arrow" | "none" | string;
   imageSrc?: string;
   imageAlt?: string;
   badgeStat?: string;
   badgeLabel?: string;
-  primaryCtaIcon?: "user" | "arrow" | "none";
 }
 
 export const HERO_SLIDES: SlideItem[] = [
@@ -30,6 +32,8 @@ export const HERO_SLIDES: SlideItem[] = [
     body: "From your first account to planning for retirement, we’re here to help at every step.",
     primaryCta: "Become a member",
     secondaryCta: "Sign In",
+    primaryCtaIcon: "user",
+    secondaryCtaIcon: "user",
     imageSrc: "/images/hero/family.jpg",
     imageAlt: "Three-generation Hispanic family smiling together outdoors",
     badgeStat: "100%",
@@ -43,6 +47,8 @@ export const HERO_SLIDES: SlideItem[] = [
     body: "From your first account to planning for retirement, we’re here to help at every step.",
     primaryCta: "Become a member",
     secondaryCta: "Sign In",
+    primaryCtaIcon: "user",
+    secondaryCtaIcon: "user",
     imageSrc: "/images/hero/family.jpg",
     imageAlt: "Three-generation Hispanic family smiling together outdoors",
     badgeStat: "100%",
@@ -56,6 +62,8 @@ export const HERO_SLIDES: SlideItem[] = [
     body: "From your first account to planning for retirement, we’re here to help at every step.",
     primaryCta: "Become a member",
     secondaryCta: "Sign In",
+    primaryCtaIcon: "user",
+    secondaryCtaIcon: "user",
     imageSrc: "/images/hero/family.jpg",
     imageAlt: "Three-generation Hispanic family smiling together outdoors",
     badgeStat: "100%",

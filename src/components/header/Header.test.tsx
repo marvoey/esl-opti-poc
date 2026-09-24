@@ -197,4 +197,75 @@ describe("Header Component", () => {
     // Secondary with "dark" should have primary class
     expect(secondaryCta.className).toContain("primary");
   });
+
+  it("supports multiple mega menus that open and toggle independently", () => {
+    render(
+      <Header
+        navLinks={[
+          {
+            id: "nav-personal",
+            label: "Personal",
+            href: "/personal",
+            megaMenu: {
+              viewAllLabel: "View All Personal",
+              viewAllHref: "/personal",
+              columns: [
+                {
+                  heading: "Personal Manage",
+                  items: [{ icon: "landmark", label: "Checking", href: "/checking" }],
+                },
+              ],
+              promo: {
+                eyebrow: "Wellness",
+                heading: "Personal Guidance",
+                description: "Guidance for you",
+                ctaLabel: "Learn more",
+                ctaHref: "/personal-guidance",
+              },
+            },
+          },
+          {
+            id: "nav-business",
+            label: "Business",
+            href: "/business",
+            megaMenu: {
+              viewAllLabel: "View All Business",
+              viewAllHref: "/business",
+              columns: [
+                {
+                  heading: "Business Growth",
+                  items: [{ icon: "store", label: "Merchant Services", href: "/merchants" }],
+                },
+              ],
+              promo: {
+                eyebrow: "Enterprise",
+                heading: "Business Advisory",
+                description: "Guidance for your company",
+                ctaLabel: "Get advisory",
+                ctaHref: "/business-advisory",
+              },
+            },
+          },
+        ]}
+      />
+    );
+
+    const personalTrigger = screen.getByRole("button", { name: /personal/i });
+    const businessTrigger = screen.getByRole("button", { name: /business/i });
+
+    expect(personalTrigger.getAttribute("aria-expanded")).toBe("false");
+    expect(businessTrigger.getAttribute("aria-expanded")).toBe("false");
+
+    // Click Personal
+    fireEvent.click(personalTrigger);
+    expect(personalTrigger.getAttribute("aria-expanded")).toBe("true");
+    expect(businessTrigger.getAttribute("aria-expanded")).toBe("false");
+    expect(screen.getByText("Personal Manage")).toBeDefined();
+
+    // Click Business (should switch active menu)
+    fireEvent.click(businessTrigger);
+    expect(personalTrigger.getAttribute("aria-expanded")).toBe("false");
+    expect(businessTrigger.getAttribute("aria-expanded")).toBe("true");
+    expect(screen.getByText("Business Growth")).toBeDefined();
+  });
 });

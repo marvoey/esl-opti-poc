@@ -16,14 +16,22 @@ import { getGraphClient } from '@/infrastructure/cms/graphClient';
 describe('On-Demand Revalidation Route Handler (/api/revalidate)', () => {
   const originalKey = process.env.OPTIMIZELY_GRAPH_SINGLE_KEY;
   const mockSecret = 'test-optimizely-graph-key-12345';
+  const originalAppHost = process.env.OPTIMIZELY_APP_HOST;
+  const originalSiteHosts = process.env.OPTIMIZELY_SITE_HOSTS;
+  // Pages are served from /sites/<site key>/... (see src/proxy.ts); revalidatePath gets that route.
+  const SITE = '/sites/localhost_5002';
 
   beforeEach(() => {
     process.env.OPTIMIZELY_GRAPH_SINGLE_KEY = mockSecret;
+    process.env.OPTIMIZELY_APP_HOST = 'http://localhost:5002';
+    delete process.env.OPTIMIZELY_SITE_HOSTS;
     vi.clearAllMocks();
   });
 
   afterEach(() => {
     process.env.OPTIMIZELY_GRAPH_SINGLE_KEY = originalKey;
+    process.env.OPTIMIZELY_APP_HOST = originalAppHost;
+    process.env.OPTIMIZELY_SITE_HOSTS = originalSiteHosts;
   });
 
   it('responds with 200 ready for readiness checks (without revalidating) when secret is missing on GET', async () => {
@@ -56,8 +64,7 @@ describe('On-Demand Revalidation Route Handler (/api/revalidate)', () => {
     expect(res.status).toBe(200);
     expect(data.revalidated).toBe(true);
     expect(data.path).toBe('/');
-    expect(revalidatePath).toHaveBeenCalledWith('/', 'page');
-    expect(revalidatePath).toHaveBeenCalledWith('/', 'layout');
+    expect(revalidatePath).toHaveBeenCalledWith(SITE, 'layout');
   });
 
   it('successfully revalidates via Optimizely Graph convention ?cg_webhook_secret=', async () => {
@@ -70,7 +77,7 @@ describe('On-Demand Revalidation Route Handler (/api/revalidate)', () => {
     expect(res.status).toBe(200);
     expect(data.revalidated).toBe(true);
     expect(data.path).toBe('/product-detail');
-    expect(revalidatePath).toHaveBeenCalledWith('/product-detail', 'page');
+    expect(revalidatePath).toHaveBeenCalledWith(`${SITE}/product-detail`);
   });
 
   it('authenticates via x-revalidate-secret header', async () => {
@@ -84,7 +91,7 @@ describe('On-Demand Revalidation Route Handler (/api/revalidate)', () => {
 
     expect(res.status).toBe(200);
     expect(data.revalidated).toBe(true);
-    expect(revalidatePath).toHaveBeenCalledWith('/', 'page');
+    expect(revalidatePath).toHaveBeenCalledWith(SITE, 'layout');
   });
 
   it('authenticates via Authorization Bearer header', async () => {
@@ -98,7 +105,7 @@ describe('On-Demand Revalidation Route Handler (/api/revalidate)', () => {
 
     expect(res.status).toBe(200);
     expect(data.revalidated).toBe(true);
-    expect(revalidatePath).toHaveBeenCalledWith('/', 'page');
+    expect(revalidatePath).toHaveBeenCalledWith(SITE, 'layout');
   });
 
   it('authenticates via Optimizely CMS SaaS callback-secret header', async () => {
@@ -112,7 +119,7 @@ describe('On-Demand Revalidation Route Handler (/api/revalidate)', () => {
 
     expect(res.status).toBe(200);
     expect(data.revalidated).toBe(true);
-    expect(revalidatePath).toHaveBeenCalledWith('/', 'page');
+    expect(revalidatePath).toHaveBeenCalledWith(SITE, 'layout');
   });
 
   it('responds with 200 ready for verification probes without secret (empty body or ping event)', async () => {
@@ -170,7 +177,7 @@ describe('On-Demand Revalidation Route Handler (/api/revalidate)', () => {
     expect(res.status).toBe(200);
     expect(data.revalidated).toBe(true);
     expect(data.path).toBe('/custom-article');
-    expect(revalidatePath).toHaveBeenCalledWith('/custom-article', 'page');
+    expect(revalidatePath).toHaveBeenCalledWith(`${SITE}/custom-article`);
   });
 
   it('handles Content Graph docId for non-published events by returning 200 with no action taken', async () => {
@@ -240,7 +247,7 @@ describe('On-Demand Revalidation Route Handler (/api/revalidate)', () => {
     expect(data.path).toBe('/product-detail');
     expect(data.source).toBe('docId');
     expect(mockRequestFn).toHaveBeenCalled();
-    expect(revalidatePath).toHaveBeenCalledWith('/product-detail', 'page');
+    expect(revalidatePath).toHaveBeenCalledWith(`${SITE}/product-detail`);
   });
 
   it('revalidates only the published page from Optimizely nested webhook payload (data.url)', async () => {
@@ -262,7 +269,7 @@ describe('On-Demand Revalidation Route Handler (/api/revalidate)', () => {
     expect(res.status).toBe(200);
     expect(data.revalidated).toBe(true);
     expect(data.path).toBe('/product-detail');
-    expect(revalidatePath).toHaveBeenCalledWith('/product-detail', 'page');
+    expect(revalidatePath).toHaveBeenCalledWith(`${SITE}/product-detail`);
   });
 
   it('normalizes /home to root path (/) and revalidates layout', async () => {
@@ -282,8 +289,7 @@ describe('On-Demand Revalidation Route Handler (/api/revalidate)', () => {
     expect(res.status).toBe(200);
     expect(data.revalidated).toBe(true);
     expect(data.path).toBe('/');
-    expect(revalidatePath).toHaveBeenCalledWith('/', 'page');
-    expect(revalidatePath).toHaveBeenCalledWith('/', 'layout');
+    expect(revalidatePath).toHaveBeenCalledWith(SITE, 'layout');
   });
 
   it('revalidates product-detail when Optimizely sends Graph url object ({ default: "/product-detail/" })', async () => {
@@ -306,10 +312,10 @@ describe('On-Demand Revalidation Route Handler (/api/revalidate)', () => {
     expect(res.status).toBe(200);
     expect(data.revalidated).toBe(true);
     expect(data.path).toBe('/product-detail');
-    expect(revalidatePath).toHaveBeenCalledWith('/product-detail', 'page');
+    expect(revalidatePath).toHaveBeenCalledWith(`${SITE}/product-detail`);
   });
 
-  it('revalidates product-detail when Optimizely sends contentType "EslProductDetailExperience"', async () => {
+  it('evicts the whole site when a page type ("EslProductDetailExperience") arrives without a URL', async () => {
     const req = new NextRequest(`http://localhost:5002/api/revalidate?secret=${mockSecret}`, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
@@ -327,11 +333,12 @@ describe('On-Demand Revalidation Route Handler (/api/revalidate)', () => {
 
     expect(res.status).toBe(200);
     expect(data.revalidated).toBe(true);
-    expect(data.path).toBe('/product-detail');
-    expect(revalidatePath).toHaveBeenCalledWith('/product-detail', 'page');
+    expect(data.path).toBe('/');
+    expect(data.source).toBe('contentType');
+    expect(revalidatePath).toHaveBeenCalledWith(SITE, 'layout');
   });
 
-  it('revalidates home when Optimizely sends contentType "EslHomeExperience"', async () => {
+  it('evicts the whole site when Optimizely sends contentType "EslHomeExperience"', async () => {
     const req = new NextRequest(`http://localhost:5002/api/revalidate?secret=${mockSecret}`, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
@@ -350,8 +357,7 @@ describe('On-Demand Revalidation Route Handler (/api/revalidate)', () => {
     expect(res.status).toBe(200);
     expect(data.revalidated).toBe(true);
     expect(data.path).toBe('/');
-    expect(revalidatePath).toHaveBeenCalledWith('/', 'page');
-    expect(revalidatePath).toHaveBeenCalledWith('/', 'layout');
+    expect(revalidatePath).toHaveBeenCalledWith(SITE, 'layout');
   });
 
   it('safely skips revalidation and does NOT invalidate home when an unmapped item is published', async () => {
@@ -376,7 +382,7 @@ describe('On-Demand Revalidation Route Handler (/api/revalidate)', () => {
     expect(revalidatePath).not.toHaveBeenCalled();
   });
 
-  it('revalidates /product-family when Optimizely sends contentType "EslProductFamilyExperience"', async () => {
+  it('evicts the whole site when a page type ("EslProductFamilyExperience") arrives without a URL', async () => {
     const req = new NextRequest(`http://localhost:5002/api/revalidate?secret=${mockSecret}`, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
@@ -393,8 +399,9 @@ describe('On-Demand Revalidation Route Handler (/api/revalidate)', () => {
 
     expect(res.status).toBe(200);
     expect(data.revalidated).toBe(true);
-    expect(data.path).toBe('/product-family');
-    expect(revalidatePath).toHaveBeenCalledWith('/product-family', 'page');
+    expect(data.path).toBe('/');
+    expect(data.source).toBe('contentType');
+    expect(revalidatePath).toHaveBeenCalledWith(SITE, 'layout');
   });
 
   it('HEAD and OPTIONS return 200 OK for standard requests', async () => {
@@ -455,8 +462,7 @@ describe('On-Demand Revalidation Route Handler (/api/revalidate)', () => {
     expect(res.status).toBe(200);
     expect(data.revalidated).toBe(true);
     expect(data.path).toBe('/product-detail');
-    expect(revalidatePath).toHaveBeenCalledWith('/product-detail', 'page');
-    expect(revalidatePath).toHaveBeenCalledWith('/home/product-detail', 'page');
+    expect(revalidatePath).toHaveBeenCalledWith(`${SITE}/product-detail`);
   });
 
   it('normalizes Optimizely hierarchical /home/product-family/ to /product-family', async () => {
@@ -476,11 +482,10 @@ describe('On-Demand Revalidation Route Handler (/api/revalidate)', () => {
     expect(res.status).toBe(200);
     expect(data.revalidated).toBe(true);
     expect(data.path).toBe('/product-family');
-    expect(revalidatePath).toHaveBeenCalledWith('/product-family', 'page');
-    expect(revalidatePath).toHaveBeenCalledWith('/home/product-family', 'page');
+    expect(revalidatePath).toHaveBeenCalledWith(`${SITE}/product-family`);
   });
 
-  it('revalidates /product-detail when contentTypeName has spaces ("ESL Product Detail Experience")', async () => {
+  it('evicts the whole site when contentTypeName has spaces ("ESL Product Detail Experience") and no URL', async () => {
     const req = new NextRequest(`http://localhost:5002/api/revalidate?secret=${mockSecret}`, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
@@ -497,8 +502,9 @@ describe('On-Demand Revalidation Route Handler (/api/revalidate)', () => {
 
     expect(res.status).toBe(200);
     expect(data.revalidated).toBe(true);
-    expect(data.path).toBe('/product-detail');
-    expect(revalidatePath).toHaveBeenCalledWith('/product-detail', 'page');
+    expect(data.path).toBe('/');
+    expect(data.source).toBe('contentType');
+    expect(revalidatePath).toHaveBeenCalledWith(SITE, 'layout');
   });
 
   it('revalidates only Product Detail Page A when Page A is published, not touching Page B', async () => {
@@ -520,9 +526,9 @@ describe('On-Demand Revalidation Route Handler (/api/revalidate)', () => {
     expect(res.status).toBe(200);
     expect(data.revalidated).toBe(true);
     expect(data.path).toBe('/accounts/premier-checking');
-    expect(revalidatePath).toHaveBeenCalledWith('/accounts/premier-checking', 'page');
-    expect(revalidatePath).not.toHaveBeenCalledWith('/loans/auto-loans', 'page');
-    expect(revalidatePath).not.toHaveBeenCalledWith('/product-detail', 'page');
+    expect(revalidatePath).toHaveBeenCalledWith(`${SITE}/accounts/premier-checking`);
+    expect(revalidatePath).not.toHaveBeenCalledWith(`${SITE}/loans/auto-loans`);
+    expect(revalidatePath).not.toHaveBeenCalledWith(`${SITE}/product-detail`);
   });
 
   it('revalidates only Product Detail Page B when Page B is published, not touching Page A', async () => {
@@ -544,8 +550,8 @@ describe('On-Demand Revalidation Route Handler (/api/revalidate)', () => {
     expect(res.status).toBe(200);
     expect(data.revalidated).toBe(true);
     expect(data.path).toBe('/loans/auto-loans');
-    expect(revalidatePath).toHaveBeenCalledWith('/loans/auto-loans', 'page');
-    expect(revalidatePath).not.toHaveBeenCalledWith('/accounts/premier-checking', 'page');
+    expect(revalidatePath).toHaveBeenCalledWith(`${SITE}/loans/auto-loans`);
+    expect(revalidatePath).not.toHaveBeenCalledWith(`${SITE}/accounts/premier-checking`);
   });
 
   it('handles Optimizely CMS SaaS webhook event object format ({ version, key }) resolving via Content Graph', async () => {
@@ -593,7 +599,7 @@ describe('On-Demand Revalidation Route Handler (/api/revalidate)', () => {
     expect(data.paths).toContain('/product-detail');
     expect(data.source).toBe('guid');
     expect(mockRequestFn).toHaveBeenCalled();
-    expect(revalidatePath).toHaveBeenCalledWith('/product-detail', 'page');
+    expect(revalidatePath).toHaveBeenCalledWith(`${SITE}/product-detail`);
   });
 
   it('handles unwrapped Optimizely sample format ({ version, key }) resolving via Content Graph', async () => {
@@ -637,9 +643,262 @@ describe('On-Demand Revalidation Route Handler (/api/revalidate)', () => {
     expect(data.path).toBe('/accounts/custom-checking');
     expect(data.source).toBe('guid');
     expect(mockRequestFn).toHaveBeenCalled();
-    expect(revalidatePath).toHaveBeenCalledWith('/accounts/custom-checking', 'page');
+    expect(revalidatePath).toHaveBeenCalledWith(`${SITE}/accounts/custom-checking`);
+  });
+
+  describe('multiple sites', () => {
+    const BRAND = '/sites/brand.example';
+
+    beforeEach(() => {
+      process.env.OPTIMIZELY_SITE_HOSTS = 'https://brand.example';
+    });
+
+    it('evicts only the site that owns an absolute URL', async () => {
+      const req = new NextRequest(`http://localhost:5002/api/revalidate?secret=${mockSecret}`, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ data: { publicUrl: 'https://brand.example/home/product-family/' } }),
+      });
+
+      const data = await (await POST(req)).json();
+
+      expect(data.path).toBe('/product-family');
+      expect(data.routes).toEqual([`${BRAND}/product-family`]);
+      expect(revalidatePath).not.toHaveBeenCalledWith(`${SITE}/product-family`);
+    });
+
+    it('evicts the page on every site when the URL names no site', async () => {
+      const req = new NextRequest(`http://localhost:5002/api/revalidate?secret=${mockSecret}`, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ data: { url: '/home/product-family/' } }),
+      });
+
+      const data = await (await POST(req)).json();
+
+      expect(data.routes).toEqual([`${SITE}/product-family`, `${BRAND}/product-family`]);
+    });
+
+    it('limits a GUID lookup to the site in Graph url.base', async () => {
+      vi.mocked(getGraphClient).mockReturnValue({
+        request: vi.fn().mockResolvedValue({
+          _Content: {
+            items: [
+              {
+                _metadata: {
+                  url: { default: '/home/checking/', base: 'https://brand.example' },
+                  types: ['EslProductDetailExperience'],
+                },
+              },
+            ],
+          },
+        }),
+      } as unknown as ReturnType<typeof getGraphClient>);
+
+      const req = new NextRequest(`http://localhost:5002/api/revalidate?secret=${mockSecret}`, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ data: { key: 'd7ff51616e714632878d797c915eb355' } }),
+      });
+
+      const data = await (await POST(req)).json();
+
+      expect(data.source).toBe('guid');
+      expect(data.routes).toEqual([`${BRAND}/checking`]);
+    });
+
+    it('evicts the whole site layout when its start page (header and footer) is published', async () => {
+      const req = new NextRequest(`http://localhost:5002/api/revalidate?secret=${mockSecret}`, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ data: { publicUrl: 'https://brand.example/' } }),
+      });
+
+      await POST(req);
+
+      expect(revalidatePath).toHaveBeenCalledWith(BRAND, 'layout');
+      expect(revalidatePath).not.toHaveBeenCalledWith(SITE, 'layout');
+    });
+  });
+
+  describe('nested page hierarchy and global component revalidation', () => {
+    it('correctly revalidates Home page with layout, Home page tag, and public root', async () => {
+      const req = new NextRequest(`http://localhost:5002/api/revalidate?secret=${mockSecret}`, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ data: { url: '/home/' } }),
+      });
+
+      const res = await POST(req);
+      const data = await res.json();
+
+      expect(res.status).toBe(200);
+      expect(data.revalidated).toBe(true);
+      expect(data.path).toBe('/');
+      // Verifies both the Next.js layout pattern tag and the page-level home route
+      expect(revalidatePath).toHaveBeenCalledWith('/sites/[site]', 'layout');
+      expect(revalidatePath).toHaveBeenCalledWith(SITE);
+      expect(revalidatePath).toHaveBeenCalledWith(SITE, 'layout');
+      expect(revalidatePath).toHaveBeenCalledWith('/', 'layout');
+    });
+
+    it('correctly revalidates nested child: Product 1 under Product Family without affecting Product 1 under Product Family 2', async () => {
+      const req = new NextRequest(`http://localhost:5002/api/revalidate?secret=${mockSecret}`, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          data: {
+            publicUrl: 'http://localhost:5002/home/product-family/product-1/',
+          },
+        }),
+      });
+
+      const res = await POST(req);
+      const data = await res.json();
+
+      expect(res.status).toBe(200);
+      expect(data.revalidated).toBe(true);
+      expect(data.path).toBe('/product-family/product-1');
+      expect(revalidatePath).toHaveBeenCalledWith(`${SITE}/product-family/product-1`);
+      expect(revalidatePath).not.toHaveBeenCalledWith(`${SITE}/product-family-2/product-1`);
+    });
+
+    it('correctly revalidates nested child: Product 1 under Product Family 2 without affecting Product 1 under Product Family', async () => {
+      const req = new NextRequest(`http://localhost:5002/api/revalidate?secret=${mockSecret}`, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          data: {
+            publicUrl: 'http://localhost:5002/home/product-family-2/product-1/',
+          },
+        }),
+      });
+
+      const res = await POST(req);
+      const data = await res.json();
+
+      expect(res.status).toBe(200);
+      expect(data.revalidated).toBe(true);
+      expect(data.path).toBe('/product-family-2/product-1');
+      expect(revalidatePath).toHaveBeenCalledWith(`${SITE}/product-family-2/product-1`);
+      expect(revalidatePath).not.toHaveBeenCalledWith(`${SITE}/product-family/product-1`);
+    });
+
+    it('correctly revalidates Product Details under Product Family', async () => {
+      const req = new NextRequest(`http://localhost:5002/api/revalidate?secret=${mockSecret}`, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          data: {
+            url: '/home/product-family/product-details/',
+          },
+        }),
+      });
+
+      const res = await POST(req);
+      const data = await res.json();
+
+      expect(res.status).toBe(200);
+      expect(data.revalidated).toBe(true);
+      expect(data.path).toBe('/product-family/product-details');
+      expect(revalidatePath).toHaveBeenCalledWith(`${SITE}/product-family/product-details`);
+    });
+
+    it('evicts the site layout and home page when EslHeader is published', async () => {
+      const req = new NextRequest(`http://localhost:5002/api/revalidate?secret=${mockSecret}`, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          type: { subject: 'doc', action: 'updated' },
+          data: {
+            contentType: 'EslHeader',
+            types: ['EslHeader', '_Component'],
+          },
+        }),
+      });
+
+      const res = await POST(req);
+      const data = await res.json();
+
+      expect(res.status).toBe(200);
+      expect(data.revalidated).toBe(true);
+      expect(data.source).toBe('contentType');
+      expect(revalidatePath).toHaveBeenCalledWith('/sites/[site]', 'layout');
+      expect(revalidatePath).toHaveBeenCalledWith(SITE);
+    });
+
+    it('evicts the site layout and home page when EslFooter is published', async () => {
+      const req = new NextRequest(`http://localhost:5002/api/revalidate?secret=${mockSecret}`, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          type: 'contentVersion:preview1:published',
+          data: {
+            contentTypeName: 'ESL Footer',
+          },
+        }),
+      });
+
+      const res = await POST(req);
+      const data = await res.json();
+
+      expect(res.status).toBe(200);
+      expect(data.revalidated).toBe(true);
+      expect(data.source).toBe('contentType');
+      expect(revalidatePath).toHaveBeenCalledWith('/sites/[site]', 'layout');
+    });
+
+    it('evicts the site layout and home page when EslMegaMenu is published', async () => {
+      const req = new NextRequest(`http://localhost:5002/api/revalidate?secret=${mockSecret}`, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          type: 'contentVersion:preview1:published',
+          data: {
+            contentTypeName: 'ESL Mega Menu',
+          },
+        }),
+      });
+
+      const res = await POST(req);
+      const data = await res.json();
+
+      expect(res.status).toBe(200);
+      expect(data.revalidated).toBe(true);
+      expect(data.source).toBe('contentType');
+      expect(revalidatePath).toHaveBeenCalledWith('/sites/[site]', 'layout');
+    });
+
+    it('evicts the site layout and home page when EslStartPage is resolved by GUID without URL', async () => {
+      vi.mocked(getGraphClient).mockReturnValue({
+        request: vi.fn().mockResolvedValue({
+          _Content: {
+            items: [
+              {
+                _metadata: {
+                  url: null,
+                  types: ['EslStartPage', '_Page'],
+                },
+              },
+            ],
+          },
+        }),
+      } as unknown as ReturnType<typeof getGraphClient>);
+
+      const req = new NextRequest(`http://localhost:5002/api/revalidate?secret=${mockSecret}`, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ data: { key: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890' } }),
+      });
+
+      const res = await POST(req);
+      const data = await res.json();
+
+      expect(res.status).toBe(200);
+      expect(data.revalidated).toBe(true);
+      expect(data.source).toBe('guid');
+      expect(revalidatePath).toHaveBeenCalledWith('/sites/[site]', 'layout');
+      expect(revalidatePath).toHaveBeenCalledWith(SITE);
+    });
   });
 });
-
-
-

@@ -40,13 +40,25 @@ describe('EslProductFamilyPage Content Type & Renderer', () => {
     expect(EslProductFamilyExperienceContentType.key).toBe('EslProductFamilyExperience');
     expect(EslProductFamilyExperienceContentType.baseType).toBe('_experience');
     expect(EslProductFamilyExperienceContentType.mayContainTypes).toEqual([
+      'EslProductDetailExperience',
       'EslHeroSlider',
       'EslSnipeCta',
-      'EslKeyFactsRow',
+      'EslTabbedSolutions',
       'EslSideBySide',
+      'EslMetricCardRow',
+      'EslSplitContentCards',
+      'EslMediaCardGrid',
+      'EslVideoStoryCardRow',
+      'EslVerticalSelectorFeatureCard',
+      'EslCircularImageMetricRow',
+      'EslSplitContentImage',
+      'EslMediaCardGridCarousel',
+      'EslKeyFactsRow',
       'EslSwitchSupport',
       'EslDisclosure',
       'EslFaqStates',
+      'EslProductCardsRow',
+      'EslProductCardsRowVariant2',
       'EslAccordionCardGrid',
       'EslSplitContentCta',
       'EslFeatureCardRow',
@@ -54,14 +66,18 @@ describe('EslProductFamilyPage Content Type & Renderer', () => {
       'EslCompareTable',
       'EslFinalCta',
       'EslLearningHub',
+      'EslIconCardSingleColumnGrid',
+      'EslLongTextLeftCardsRight',
     ]);
   });
 
-  it('exposes exactly 14 allowed section items', () => {
-    expect(ESL_PRODUCT_FAMILY_ALLOWED_SECTIONS).toHaveLength(14);
+  it('exposes exactly 28 allowed section items', () => {
+    expect(ESL_PRODUCT_FAMILY_ALLOWED_SECTIONS).toHaveLength(28);
     const keys = ESL_PRODUCT_FAMILY_ALLOWED_SECTIONS.map((s) => s.key);
+    expect(keys).toContain('EslProductDetailExperience');
     expect(keys).toContain('EslHeroSlider');
     expect(keys).toContain('EslSnipeCta');
+    expect(keys).toContain('EslTabbedSolutions');
     expect(keys).toContain('EslKeyFactsRow');
     expect(keys).toContain('EslSideBySide');
     expect(keys).toContain('EslSwitchSupport');
@@ -74,6 +90,8 @@ describe('EslProductFamilyPage Content Type & Renderer', () => {
     expect(keys).toContain('EslCompareTable');
     expect(keys).toContain('EslFinalCta');
     expect(keys).toContain('EslLearningHub');
+    expect(keys).toContain('EslIconCardSingleColumnGrid');
+    expect(keys).toContain('EslLongTextLeftCardsRight');
   });
 
   it('returns null when content is missing or nodes are empty (no static fallbacks)', () => {
@@ -192,26 +210,15 @@ describe('EslProductFamilyPage Content Type & Renderer', () => {
   it('suppresses unallowed components in live mode', () => {
     const unallowedNodes: Parameters<typeof OptimizelyComposition>[0]['nodes'] = [
       {
-        key: 'metric-card-1',
-        type: 'EslMetricCardRow',
+        key: 'foreign-1',
+        type: 'ForeignComponent',
         __typename: 'CompositionComponentNode',
         nodeType: 'component',
-        displayName: 'Metric Card Row',
+        displayName: 'Foreign Component',
         layoutType: null,
         displayTemplateKey: null,
         displaySettings: null,
-        component: { __typename: 'EslMetricCardRow' },
-      },
-      {
-        key: 'tabbed-1',
-        type: 'EslTabbedSolutions',
-        __typename: 'CompositionComponentNode',
-        nodeType: 'component',
-        displayName: 'Explore Solutions',
-        layoutType: null,
-        displayTemplateKey: null,
-        displaySettings: null,
-        component: { __typename: 'EslTabbedSolutions' },
+        component: { __typename: 'ForeignComponent' },
       },
     ];
 
@@ -225,23 +232,22 @@ describe('EslProductFamilyPage Content Type & Renderer', () => {
       />
     );
 
-    expect(screen.queryByTestId('node-metric-card-1')).toBeNull();
-    expect(screen.queryByTestId('node-tabbed-1')).toBeNull();
+    expect(screen.queryByTestId('node-foreign-1')).toBeNull();
     expect(screen.queryByTestId('visual-builder-constraint-alert')).toBeNull();
   });
 
   it('renders VisualBuilderConstraintAlert for unallowed components in edit mode', () => {
     const editModeNode: Parameters<typeof OptimizelyComposition>[0]['nodes'] = [
       {
-        key: 'grid-1',
-        type: 'EslMediaCardGrid',
+        key: 'foreign-edit-1',
+        type: 'ForeignComponent',
         __typename: 'CompositionComponentNode',
         nodeType: 'component',
-        displayName: 'Media Card Grid',
+        displayName: 'Foreign Component',
         layoutType: null,
         displayTemplateKey: null,
         displaySettings: null,
-        component: { __typename: 'EslMediaCardGrid' },
+        component: { __typename: 'ForeignComponent' },
         __context: { edit: true, preview_token: 'test-token' },
       },
     ];

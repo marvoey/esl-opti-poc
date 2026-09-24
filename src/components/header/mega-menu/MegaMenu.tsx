@@ -11,20 +11,30 @@ export interface MegaMenuProps {
 }
 
 export function MegaMenu({ id, data }: MegaMenuProps) {
+  const hasPromo = Boolean(
+    data.promo &&
+      (data.promo.heading?.trim() ||
+        data.promo.description?.trim() ||
+        data.promo.ctaLabel?.trim() ||
+        data.promo.eyebrow?.trim())
+  );
+
   return (
     <div id={id} className={styles.panel} role="region">
-      <div className={styles.inner}>
+      <div className={`${styles.inner} ${!hasPromo ? styles.innerNoPromo : ""}`}>
         <div className={styles.columns}>
-          <Button
-            variant="secondary"
-            size="sm"
-            shape="pill"
-            href={data.viewAllHref}
-            rightIcon={<ArrowRightIcon size={16} />}
-            className={styles.viewAllLink}
-          >
-            {data.viewAllLabel}
-          </Button>
+          {data.viewAllLabel && data.viewAllHref && (
+            <Button
+              variant="secondary"
+              size="sm"
+              shape="pill"
+              href={data.viewAllHref}
+              rightIcon={<ArrowRightIcon size={16} />}
+              className={styles.viewAllLink}
+            >
+              {data.viewAllLabel}
+            </Button>
+          )}
 
           <div className={styles.columnGrid}>
             {data.columns.map((column) => (
@@ -49,15 +59,25 @@ export function MegaMenu({ id, data }: MegaMenuProps) {
           </div>
         </div>
 
-        <div className={styles.promo}>
-          <p className={styles.promoEyebrow}>{data.promo.eyebrow}</p>
-          <p className={styles.promoHeading}>{data.promo.heading}</p>
-          <p className={styles.promoDescription}>{data.promo.description}</p>
-          <Link href={data.promo.ctaHref} className={styles.promoCta}>
-            {data.promo.ctaLabel}
-            <span aria-hidden="true">→</span>
-          </Link>
-        </div>
+        {hasPromo && data.promo && (
+          <div className={styles.promo}>
+            {data.promo.eyebrow && (
+              <p className={styles.promoEyebrow}>{data.promo.eyebrow}</p>
+            )}
+            {data.promo.heading && (
+              <p className={styles.promoHeading}>{data.promo.heading}</p>
+            )}
+            {data.promo.description && (
+              <p className={styles.promoDescription}>{data.promo.description}</p>
+            )}
+            {data.promo.ctaLabel && data.promo.ctaHref && (
+              <Link href={data.promo.ctaHref} className={styles.promoCta}>
+                {data.promo.ctaLabel}
+                <span aria-hidden="true">→</span>
+              </Link>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

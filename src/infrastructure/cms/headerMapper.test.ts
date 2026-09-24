@@ -338,7 +338,109 @@ describe('headerMapper', () => {
       expect(result?.navLinks).toHaveLength(2);
       expect(result?.navLinks?.[0].label).toBe('Personal');
       expect(result?.navLinks?.[0].megaMenu).toBeDefined();
-      expect(result?.navLinks?.[0].megaMenu?.promo.description).toBe('Plain text description');
+      expect(result?.navLinks?.[0].megaMenu?.promo?.description).toBe('Plain text description');
+    });
+
+    it('does not default promo to hardcoded content when promo is not set in CMS', () => {
+      const rawCms: RawCmsHeader = {
+        megaMenus: [
+          {
+            navLabel: 'Business',
+            cta: { text: 'All Business', url: { default: '/business' } },
+            columns: [
+              {
+                heading: 'COMMERCIAL',
+                items: [{ icon: 'store', link: { text: 'Loans', url: { default: '/loans' } } }],
+              },
+            ],
+            // No promo authored
+          },
+        ],
+      };
+
+      const result = mapCmsHeaderToProps(rawCms);
+      expect(result?.navLinks?.[0].megaMenu?.promo).toBeUndefined();
+    });
+
+    it('places multiple unanchored megaMenus together at the front in authored order before regular nav links', () => {
+      const rawCms: RawCmsHeader = {
+        navLinks: [
+          { text: 'Home', url: { default: '/' } },
+          { text: 'Product Family', url: { default: '/product-family' } },
+          { text: 'Product Detail', url: { default: '/product-detail' } },
+        ],
+        megaMenus: [
+          {
+            navLabel: 'Personal',
+            columns: [{ heading: 'MANAGE', items: [] }],
+          },
+          {
+            navLabel: 'Business',
+            columns: [{ heading: 'GROWTH', items: [] }],
+          },
+        ],
+      };
+
+      const result = mapCmsHeaderToProps(rawCms);
+      expect(result?.navLinks).toHaveLength(5);
+      // Personal and Business must be together at the front, followed by the regular links
+      expect(result?.navLinks?.[0].label).toBe('Personal');
+      expect(result?.navLinks?.[0].megaMenu).toBeDefined();
+      expect(result?.navLinks?.[1].label).toBe('Business');
+      expect(result?.navLinks?.[1].megaMenu).toBeDefined();
+      expect(result?.navLinks?.[2].label).toBe('Home');
+      expect(result?.navLinks?.[3].label).toBe('Product Family');
+      expect(result?.navLinks?.[4].label).toBe('Product Detail');
+    });
+
+    it('maps multiple megaMenus into separate navigation items (e.g. Personal and Business)', () => {
+      const rawCms: RawCmsHeader = {
+        navLinks: [
+          { text: 'Personal', url: { default: '/personal' } },
+          { text: 'Business', url: { default: '/business' } },
+          { text: 'Wealth', url: { default: '/wealth' } },
+        ],
+        megaMenus: [
+          {
+            navLabel: 'Personal',
+            cta: { text: 'All Personal', url: { default: '/personal' } },
+            columns: [
+              {
+                heading: 'ACCOUNTS',
+                items: [{ icon: 'landmark', link: { text: 'Checking', url: { default: '/checking' } } }],
+              },
+            ],
+          },
+          {
+            navLabel: 'Business',
+            cta: { text: 'All Business', url: { default: '/business' } },
+            columns: [
+              {
+                heading: 'COMMERCIAL',
+                items: [{ icon: 'store', link: { text: 'Business Loans', url: { default: '/biz-loans' } } }],
+              },
+            ],
+          },
+        ],
+      };
+
+      const result = mapCmsHeaderToProps(rawCms);
+      expect(result).not.toBeNull();
+      expect(result?.navLinks).toHaveLength(3);
+
+      const personalLink = result?.navLinks?.[0];
+      expect(personalLink?.label).toBe('Personal');
+      expect(personalLink?.megaMenu).toBeDefined();
+      expect(personalLink?.megaMenu?.columns[0].heading).toBe('ACCOUNTS');
+
+      const businessLink = result?.navLinks?.[1];
+      expect(businessLink?.label).toBe('Business');
+      expect(businessLink?.megaMenu).toBeDefined();
+      expect(businessLink?.megaMenu?.columns[0].heading).toBe('COMMERCIAL');
+
+      const wealthLink = result?.navLinks?.[2];
+      expect(wealthLink?.label).toBe('Wealth');
+      expect(wealthLink?.megaMenu).toBeUndefined();
     });
   });
 });

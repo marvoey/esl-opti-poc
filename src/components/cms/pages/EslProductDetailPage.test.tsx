@@ -41,15 +41,31 @@ describe('EslProductDetailPageRenderer', () => {
     expect(EslProductDetailExperienceContentType.mayContainTypes).toEqual([
       'EslHeroSlider',
       'EslSnipeCta',
+      'EslTabbedSolutions',
+      'EslSideBySide',
+      'EslMetricCardRow',
+      'EslSplitContentCards',
+      'EslMediaCardGrid',
+      'EslVideoStoryCardRow',
+      'EslVerticalSelectorFeatureCard',
+      'EslCircularImageMetricRow',
+      'EslSplitContentImage',
+      'EslMediaCardGridCarousel',
       'EslKeyFactsRow',
-      'EslProductCardsRow',
-      'EslProductCardsRowVariant2',
       'EslSwitchSupport',
       'EslDisclosure',
       'EslFaqStates',
+      'EslProductCardsRow',
+      'EslProductCardsRowVariant2',
       'EslAccordionCardGrid',
       'EslSplitContentCta',
       'EslFeatureCardRow',
+      'EslComparisonCardPair',
+      'EslCompareTable',
+      'EslFinalCta',
+      'EslLearningHub',
+      'EslIconCardSingleColumnGrid',
+      'EslLongTextLeftCardsRight',
     ]);
   });
 
@@ -153,14 +169,14 @@ describe('EslProductDetailPageRenderer', () => {
     const mockNodes = [
       {
         key: 'unallowed-1',
-        type: 'EslSideBySide',
+        type: 'ForeignComponent',
         __typename: 'CompositionComponentNode',
         nodeType: 'component',
-        displayName: 'Side By Side Section',
+        displayName: 'Foreign Section',
         layoutType: null,
         displayTemplateKey: null,
         displaySettings: null,
-        component: { __typename: 'EslSideBySide' },
+        component: { __typename: 'ForeignComponent' },
         __context: { edit: true, preview_token: 'test-token' },
       },
     ];
@@ -178,9 +194,8 @@ describe('EslProductDetailPageRenderer', () => {
     const alert = screen.getByTestId('visual-builder-constraint-alert');
     expect(alert).toBeDefined();
     expect(screen.getByText(/Visual Builder Constraint: Unallowed Section/i)).toBeDefined();
-    expect(screen.getByText(/Side By Side Section/i)).toBeDefined();
+    expect(screen.getByText(/Foreign Section/i)).toBeDefined();
     expect(screen.getByText(/ESL Product Detail Experience/i)).toBeDefined();
-    // The actual component is NOT rendered
     expect(screen.queryByTestId('node-unallowed-1')).toBeNull();
   });
 
@@ -188,14 +203,14 @@ describe('EslProductDetailPageRenderer', () => {
     const mockNodes = [
       {
         key: 'unallowed-2',
-        type: 'EslSideBySide',
+        type: 'ForeignComponent',
         __typename: 'CompositionComponentNode',
         nodeType: 'component',
-        displayName: 'Side By Side Section',
+        displayName: 'Foreign Section',
         layoutType: null,
         displayTemplateKey: null,
         displaySettings: null,
-        component: { __typename: 'EslSideBySide' },
+        component: { __typename: 'ForeignComponent' },
         __context: { edit: false, preview_token: '' },
       },
     ];
@@ -210,7 +225,6 @@ describe('EslProductDetailPageRenderer', () => {
       />
     );
 
-    // Neither the alert nor the unallowed component is rendered on live
     expect(screen.queryByTestId('visual-builder-constraint-alert')).toBeNull();
     expect(screen.queryByTestId('node-unallowed-2')).toBeNull();
   });

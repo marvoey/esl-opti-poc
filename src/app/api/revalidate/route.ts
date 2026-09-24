@@ -1,6 +1,13 @@
 import { revalidatePath } from 'next/cache';
 import { NextRequest, NextResponse } from 'next/server';
 import { getGraphClient } from '@/infrastructure/cms/graphClient';
+import {
+  getSites,
+  publicPathFromCmsPath,
+  resolveSiteByOrigin,
+  sitePath,
+  type Site,
+} from '@/infrastructure/cms/siteRouting';
 
 function isAuthorized(request: NextRequest): boolean {
   const expectedSecret = process.env.OPTIMIZELY_GRAPH_SINGLE_KEY;
@@ -102,61 +109,76 @@ function extractUrlValue(val: unknown): string | null {
 }
 
 /**
- * Resolves the Next.js routes that correspond to a specific published content URL.
- * Revalidates only the specific page that was updated.
+ * What to evict for one published item.
+ * - `paths`: the public paths affected (reported in the response).
+ * - `routes`: the internal routes passed to `revalidatePath`. Pages live under
+ *   `/sites/<site key>/...` (see src/proxy.ts), and `revalidatePath` needs the
+ *   rewritten destination, not the browser URL.
+ */
+interface RevalidationPlan {
+  paths: string[];
+  routes: Array<{ path: string; type?: 'layout' }>;
+}
+
+function sitesFor(origin?: string | null): Site[] {
+  const site = origin ? resolveSiteByOrigin(origin) : null;
+  return site ? [site] : getSites();
+}
+
+/** Every page of the given sites (the site layout covers header, footer and all pages). */
+function planForSites(sites: Site[]): RevalidationPlan {
+  return {
+    paths: ['/'],
+    routes: [
+      // Site-specific layout eviction for backwards-compatibility with existing tests/monitors
+      ...sites.map((site) => ({ path: sitePath(site, '/'), type: 'layout' as const })),
+      // Page-level eviction for Home page (_N_T_/sites/<site key>)
+      ...sites.map((site) => ({ path: sitePath(site, '/') })),
+      // Next.js App Router layout pattern tag (_N_T_/sites/[site]/layout)
+      { path: '/sites/[site]', type: 'layout' as const },
+      // Root layout tag (_N_T_/layout)
+      { path: '/', type: 'layout' as const },
+    ],
+  };
+}
+
+/**
+ * Plan for a CMS URL (relative or absolute). An absolute URL, or `origin`,
+ * limits eviction to that site; otherwise every site served here is evicted.
  *
  * Examples:
- * - "/home/product-detail/" -> ["/product-detail", "/home/product-detail"]
- * - "/accounts/savings-detail/" -> ["/accounts/savings-detail"]
- * - "/home/" or "/home" -> ["/"]
- * - "/custom-page" -> ["/custom-page"]
+ * - "/home/product-detail/" -> /product-detail
+ * - "https://brand.org/accounts/savings/" -> /accounts/savings on brand.org
+ * - "/home/" (Home) or "/" (start page: header and footer) -> the whole site
  */
-function resolveRoutesFromUrl(rawUrl: string): { paths: string[]; isHome: boolean } {
-  let clean = rawUrl.trim();
-  if (!clean.startsWith('/')) {
+function planForCmsUrl(rawUrl: string, origin?: string | null): RevalidationPlan {
+  const trimmed = rawUrl.trim();
+  if (trimmed.startsWith('/sites/')) {
+    return {
+      paths: ['/'],
+      routes: [{ path: trimmed }],
+    };
+  }
+
+  let urlOrigin = origin ?? null;
+  if (!urlOrigin && /^https?:\/\//i.test(trimmed)) {
     try {
-      const urlToParse =
-        clean.startsWith('http://') || clean.startsWith('https://')
-          ? clean
-          : `https://${clean}`;
-      const u = new URL(urlToParse);
-      clean = u.pathname;
+      urlOrigin = new URL(trimmed).origin;
     } catch {
-      clean = `/${clean}`;
+      urlOrigin = null;
     }
   }
 
-  // Remove trailing slashes
-  while (clean.length > 1 && clean.endsWith('/')) {
-    clean = clean.slice(0, -1);
+  const sites = sitesFor(urlOrigin);
+  const publicPath = publicPathFromCmsPath(trimmed);
+  if (publicPath === null || publicPath === '/') {
+    return planForSites(sites);
   }
 
-  // Home experience variations map to root '/'
-  if (
-    clean === '' ||
-    clean === '/' ||
-    clean === '/home' ||
-    clean === '/home/esl-poc' ||
-    clean === '/esl-poc'
-  ) {
-    return { paths: ['/'], isHome: true };
-  }
-
-  const paths = new Set<string>();
-
-  // If the path is organized under Optimizely CMS hierarchy /home/<subpath>,
-  // place the clean /<subpath> route first (e.g. /product-detail),
-  // and also include /home/<subpath> for dynamic [...slug] compatibility
-  if (clean.startsWith('/home/')) {
-    const stripped = clean.replace(/^\/home/, '');
-    if (stripped) {
-      paths.add(stripped);
-    }
-  }
-
-  paths.add(clean);
-
-  return { paths: Array.from(paths), isHome: false };
+  return {
+    paths: [publicPath],
+    routes: sites.map((site) => ({ path: sitePath(site, publicPath) })),
+  };
 }
 
 function extractRawUrlFromPayload(body?: unknown): string | null {
@@ -220,33 +242,22 @@ function extractContentTypeFromPayload(body?: unknown): string | null {
   );
 }
 
-function mapContentTypeToFallbackPath(typeStr?: unknown): string | null {
-  if (typeof typeStr !== 'string') return null;
-  const lower = typeStr.toLowerCase();
-  if (
-    lower.includes('homeexperience') ||
-    lower.includes('home experience') ||
-    lower.includes('homepage') ||
-    lower.includes('home page') ||
-    lower.includes('startpage')
-  ) {
-    return '/';
-  }
-  if (
-    lower.includes('productfamily') ||
-    lower.includes('product-family') ||
-    lower.includes('product family')
-  ) {
-    return '/product-family';
-  }
-  if (
-    lower.includes('productdetail') ||
-    lower.includes('product-detail') ||
-    lower.includes('product detail')
-  ) {
-    return '/product-detail';
-  }
-  return null;
+/**
+ * True when a payload without a URL names a page, experience, or site-level
+ * component (header, footer, megamenu, sitesettings).
+ */
+function isPageContentType(body?: unknown): boolean {
+  const typeName = extractContentTypeFromPayload(body);
+  if (typeName && /experience|page|header|footer|mega\s*menu|site\s*settings/i.test(typeName)) return true;
+
+  const b = body && typeof body === 'object' ? (body as Record<string, unknown>) : null;
+  const d = b?.data && typeof b.data === 'object' ? (b.data as Record<string, unknown>) : null;
+  const types = (Array.isArray(d?.types) ? d.types : Array.isArray(b?.types) ? b.types : []) as unknown[];
+  return types.some(
+    (t) =>
+      typeof t === 'string' &&
+      (t === '_Page' || t === '_Experience' || /header|footer|mega\s*menu|site\s*settings/i.test(t))
+  );
 }
 
 const GET_CONTENT_BY_GUID_QUERY = `
@@ -258,6 +269,7 @@ const GET_CONTENT_BY_GUID_QUERY = `
           url {
             default
             hierarchical
+            base
             type
           }
         }
@@ -266,9 +278,7 @@ const GET_CONTENT_BY_GUID_QUERY = `
   }
 `;
 
-async function resolveRoutesFromGuid(
-  rawGuid: string
-): Promise<{ paths: string[]; isHome: boolean } | null> {
+async function resolvePlanFromGuid(rawGuid: string): Promise<RevalidationPlan | null> {
   const formattedGuid = rawGuid.replaceAll('-', '');
   const client = getGraphClient();
   if (!client) {
@@ -283,6 +293,7 @@ async function resolveRoutesFromGuid(
           url?: {
             default?: string | null;
             hierarchical?: string | null;
+            base?: string | null;
             type?: string | null;
           } | null;
         } | null;
@@ -325,20 +336,27 @@ async function resolveRoutesFromGuid(
 
     if (!item?._metadata) return null;
 
-    const types = item._metadata.types || [];
-    const isHomeType = types.some((t) => t.toLowerCase().includes('homeexperience'));
-
+    const base = item._metadata.url?.base ?? null;
     const rawUrl = item._metadata.url?.hierarchical || item._metadata.url?.default;
     if (rawUrl) {
-      const resolved = resolveRoutesFromUrl(rawUrl);
-      return {
-        paths: resolved.paths,
-        isHome: resolved.isHome || isHomeType,
-      };
+      return planForCmsUrl(rawUrl, base);
     }
 
-    if (isHomeType) {
-      return { paths: ['/'], isHome: true };
+    const types = item._metadata.types || [];
+    if (
+      types.some((t) => {
+        const lower = t.toLowerCase().replace(/\s+/g, '');
+        return (
+          lower.includes('homeexperience') ||
+          lower.includes('startpage') ||
+          lower.includes('sitesettings') ||
+          lower.includes('header') ||
+          lower.includes('footer') ||
+          lower.includes('megamenu')
+        );
+      })
+    ) {
+      return planForSites(sitesFor(base));
     }
   } catch (err) {
     console.error('Error fetching content by guid in revalidation:', err);
@@ -347,22 +365,39 @@ async function resolveRoutesFromGuid(
   return null;
 }
 
-function executeRevalidations(paths: string[], isHome: boolean): void {
-  for (const p of paths) {
+function executeRevalidations(plan: RevalidationPlan): void {
+  for (const route of plan.routes) {
     try {
-      revalidatePath(p, 'page');
+      if (route.type) {
+        revalidatePath(route.path, route.type);
+      } else {
+        revalidatePath(route.path);
+      }
     } catch (e) {
-      console.error(`Error revalidating path "${p}":`, e);
+      console.error(`Error revalidating route "${route.path}":`, e);
     }
   }
 
-  if (isHome || paths.includes('/')) {
+  // Also purge public paths directly (for public router cache / CDN consistency)
+  for (const publicPath of plan.paths) {
     try {
-      revalidatePath('/', 'layout');
+      revalidatePath(publicPath);
     } catch (e) {
-      console.error('Error revalidating layout:', e);
+      console.error(`Error revalidating public path "${publicPath}":`, e);
     }
   }
+}
+
+function revalidated(plan: RevalidationPlan, source?: string) {
+  executeRevalidations(plan);
+  return NextResponse.json({
+    revalidated: true,
+    path: plan.paths[0],
+    paths: plan.paths,
+    routes: plan.routes.map((route) => route.path),
+    ...(source ? { source } : {}),
+    now: Date.now(),
+  });
 }
 
 export async function GET(request: NextRequest) {
@@ -372,15 +407,8 @@ export async function GET(request: NextRequest) {
   // If authorized, revalidate the target path
   if (isAuthorized(request)) {
     const queryPath = request.nextUrl.searchParams.get('path') || '/';
-    const { paths, isHome } = resolveRoutesFromUrl(queryPath);
     try {
-      executeRevalidations(paths, isHome);
-      return NextResponse.json({
-        revalidated: true,
-        path: paths[0],
-        paths,
-        now: Date.now(),
-      });
+      return revalidated(planForCmsUrl(queryPath));
     } catch (error) {
       return NextResponse.json(
         { message: 'Error revalidating path', error: (error as Error).message },
@@ -452,16 +480,9 @@ export async function POST(request: NextRequest) {
 
     const [rawGuid] = docId.split('_');
     if (rawGuid) {
-      const resolved = await resolveRoutesFromGuid(rawGuid);
-      if (resolved && resolved.paths.length > 0) {
-        executeRevalidations(resolved.paths, resolved.isHome);
-        return NextResponse.json({
-          revalidated: true,
-          path: resolved.paths[0],
-          paths: resolved.paths,
-          source: 'docId',
-          now: Date.now(),
-        });
+      const plan = await resolvePlanFromGuid(rawGuid);
+      if (plan && plan.routes.length > 0) {
+        return revalidated(plan, 'docId');
       }
     }
   }
@@ -474,61 +495,27 @@ export async function POST(request: NextRequest) {
     (typeof b?.contentGuid === 'string' ? b.contentGuid.trim() : null);
 
   if (guidCandidate && guidCandidate.length > 0) {
-    const resolved = await resolveRoutesFromGuid(guidCandidate);
-    if (resolved && resolved.paths.length > 0) {
-      executeRevalidations(resolved.paths, resolved.isHome);
-      return NextResponse.json({
-        revalidated: true,
-        path: resolved.paths[0],
-        paths: resolved.paths,
-        source: 'guid',
-        now: Date.now(),
-      });
+    const plan = await resolvePlanFromGuid(guidCandidate);
+    if (plan && plan.routes.length > 0) {
+      return revalidated(plan, 'guid');
     }
   }
 
   // 3. Check for direct URL in payload (e.g. data.publicUrl, data.url, path, etc.)
   const rawUrl = extractRawUrlFromPayload(body);
   if (rawUrl) {
-    const { paths, isHome } = resolveRoutesFromUrl(rawUrl);
-    executeRevalidations(paths, isHome);
-    return NextResponse.json({
-      revalidated: true,
-      path: paths[0],
-      paths,
-      source: 'url',
-      now: Date.now(),
-    });
+    return revalidated(planForCmsUrl(rawUrl), 'url');
   }
 
-  // 4. Fallback to Content Type if payload contains no URL or GUID
-  const fallbackType = extractContentTypeFromPayload(body);
-  const fallbackPath = mapContentTypeToFallbackPath(fallbackType);
-  if (fallbackPath) {
-    const isHome = fallbackPath === '/';
-    const { paths } = resolveRoutesFromUrl(fallbackPath);
-    executeRevalidations(paths, isHome);
-    return NextResponse.json({
-      revalidated: true,
-      path: paths[0],
-      paths,
-      source: 'contentType',
-      now: Date.now(),
-    });
+  // 4. A page type without a URL: the changed page is unknown, so evict every site.
+  if (isPageContentType(body)) {
+    return revalidated(planForSites(getSites()), 'contentType');
   }
 
   // 5. Check for explicit path in request query parameters (?path=/...)
   const queryPath = request.nextUrl.searchParams.get('path');
   if (queryPath) {
-    const { paths, isHome } = resolveRoutesFromUrl(queryPath);
-    executeRevalidations(paths, isHome);
-    return NextResponse.json({
-      revalidated: true,
-      path: paths[0],
-      paths,
-      source: 'queryPath',
-      now: Date.now(),
-    });
+    return revalidated(planForCmsUrl(queryPath), 'queryPath');
   }
 
   // 6. Fallback for manual test invocations with empty body
@@ -537,14 +524,7 @@ export async function POST(request: NextRequest) {
     body === undefined ||
     (typeof body === 'object' && Object.keys(body as object).length === 0)
   ) {
-    executeRevalidations(['/'], true);
-    return NextResponse.json({
-      revalidated: true,
-      path: '/',
-      paths: ['/'],
-      source: 'fallback',
-      now: Date.now(),
-    });
+    return revalidated(planForSites(getSites()), 'fallback');
   }
 
   // 7. If the payload doesn't provide a recognized page URL or GUID (e.g. unmapped asset)

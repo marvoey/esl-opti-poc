@@ -52,6 +52,7 @@ export type RawCmsHeader = {
   brandHref?: string | null;
   navLinks?: RawCmsLink[] | null;
   megaMenu?: RawCmsMegaMenu | null;
+  megaMenus?: RawCmsMegaMenu[] | null;
   cta?: RawCmsLink | null;
   ctaVariant?: string | null;
   ctaIcon?: string | null;
@@ -195,11 +196,13 @@ export function mapCmsMegaMenuToProps(
     return null;
   }
 
+  const navLabel = raw?.navLabel?.trim() || 'Personal';
+  const defaultSlug = navLabel.toLowerCase().replace(/[^a-z0-9]+/g, '-');
   const ctaLink = raw?.cta || raw?.viewAllLink;
   const ctaResolved = resolveCmsLink(ctaLink);
   const viewAllLabel =
-    ctaResolved.label || raw?.viewAllLabel?.trim() || 'View All Personal Banking';
-  const viewAllHref = ctaResolved.href || '/personal';
+    ctaResolved.label || raw?.viewAllLabel?.trim() || `View All ${navLabel}`;
+  const viewAllHref = ctaResolved.href || `/${defaultSlug}`;
 
   const columns: MegaMenuColumn[] = Array.isArray(raw?.columns)
     ? raw!.columns.map((col) => {
@@ -218,20 +221,32 @@ export function mapCmsMegaMenuToProps(
       })
     : [];
 
-  const promoResolvedCta = resolveCmsLink(raw?.promo?.cta);
-  const promo: MegaMenuPromo = {
-    eyebrow: raw?.promo?.eyebrow?.trim() || '',
-    heading: raw?.promo?.heading?.trim() || '',
-    description: extractRichText(raw?.promo?.description),
-    ctaLabel: promoResolvedCta.label || 'Get guidance',
-    ctaHref: promoResolvedCta.href || '/financial-wellness',
-  };
+  let promo: MegaMenuPromo | undefined;
+  if (raw?.promo) {
+    const eyebrow = raw.promo.eyebrow?.trim() || '';
+    const heading = raw.promo.heading?.trim() || '';
+    const description = extractRichText(raw.promo.description);
+    const promoResolvedCta = resolveCmsLink(raw.promo.cta);
+    const ctaLabel = promoResolvedCta.label || '';
+    const ctaHref = promoResolvedCta.href || '';
+
+    // Only set promo if there is actual authored content
+    if (heading || description || ctaLabel || ctaHref || eyebrow) {
+      promo = {
+        eyebrow,
+        heading,
+        description,
+        ctaLabel,
+        ctaHref,
+      };
+    }
+  }
 
   return {
     viewAllLabel,
     viewAllHref,
     columns,
-    promo,
+    ...(promo ? { promo } : {}),
   };
 }
 
@@ -247,7 +262,10 @@ export function hasCmsHeaderContent(cmsHeader?: RawCmsHeader | null): boolean {
   const hasBrandHref = Boolean(cmsHeader.brandHref?.trim());
   const hasNavLinks =
     Array.isArray(cmsHeader.navLinks) && cmsHeader.navLinks.length > 0;
-  const hasMegaMenu = hasCmsMegaMenuContent(cmsHeader.megaMenu);
+  const hasMegaMenu =
+    hasCmsMegaMenuContent(cmsHeader.megaMenu) ||
+    (Array.isArray(cmsHeader.megaMenus) &&
+      cmsHeader.megaMenus.some((m) => hasCmsMegaMenuContent(m)));
   const hasCta = Boolean(
     cmsHeader.cta?.text?.trim() ||
       cmsHeader.cta?.title?.trim() ||
@@ -305,34 +323,62 @@ export function mapCmsHeaderToProps(
       })
     : [];
 
-  // 3. Map Mega Menu (if configured in CMS)
+  // 3. Map Mega Menus (supports both megaMenus array and legacy single megaMenu)
+  const rawMegaMenus: RawCmsMegaMenu[] = [];
+
+  if (Array.isArray(cmsHeader?.megaMenus)) {
+    for (const m of cmsHeader.megaMenus) {
+      if (hasCmsMegaMenuContent(m)) {
+        rawMegaMenus.push(m);
+      }
+    }
+  }
+
+  // Include legacy single megaMenu if provided and not already included
   if (hasCmsMegaMenuContent(cmsHeader?.megaMenu)) {
-    const mappedMegaMenu = mapCmsMegaMenuToProps(cmsHeader?.megaMenu);
-    if (mappedMegaMenu) {
-      const megaNavLabel = cmsHeader?.megaMenu?.navLabel?.trim() || 'Personal';
-      const megaHref = mappedMegaMenu.viewAllHref || '/personal';
+    const single = cmsHeader!.megaMenu!;
+    const singleLabel = single.navLabel?.trim().toLowerCase() || 'personal';
+    const alreadyPresent = rawMegaMenus.some(
+      (m) => (m.navLabel?.trim().toLowerCase() || 'personal') === singleLabel
+    );
+    if (!alreadyPresent) {
+      rawMegaMenus.unshift(single);
+    }
+  }
 
-      // If an existing link in navLinks matches the mega menu label, attach to it
-      const existingIndex = navLinks.findIndex(
-        (l) => l.label.toLowerCase() === megaNavLabel.toLowerCase()
-      );
+  let insertIndex = 0;
 
-      const megaNavLink: HeaderNavLink = {
-        id: 'nav-personal',
-        label: megaNavLabel,
-        href: megaHref,
+  for (const rawMenu of rawMegaMenus) {
+    const mappedMegaMenu = mapCmsMegaMenuToProps(rawMenu);
+    if (!mappedMegaMenu) continue;
+
+    const megaNavLabel = rawMenu.navLabel?.trim() || 'Personal';
+    const slug = megaNavLabel.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+    const megaHref = mappedMegaMenu.viewAllHref || `/${slug}`;
+
+    // If an existing link in navLinks matches the mega menu label, attach to it
+    const existingIndex = navLinks.findIndex(
+      (l) => l.label.toLowerCase() === megaNavLabel.toLowerCase()
+    );
+
+    const megaNavLink: HeaderNavLink = {
+      id: `nav-${slug}`,
+      label: megaNavLabel,
+      href: megaHref,
+      megaMenu: mappedMegaMenu,
+    };
+
+    if (existingIndex >= 0) {
+      navLinks[existingIndex] = {
+        ...navLinks[existingIndex],
+        href: navLinks[existingIndex].href || megaHref,
         megaMenu: mappedMegaMenu,
       };
-
-      if (existingIndex >= 0) {
-        navLinks[existingIndex] = {
-          ...navLinks[existingIndex],
-          megaMenu: mappedMegaMenu,
-        };
-      } else {
-        // Prepend as the first navigation item (matching the design layout)
-        navLinks.unshift(megaNavLink);
-      }
+      insertIndex = Math.max(insertIndex, existingIndex + 1);
+    } else {
+      // Keep all mega menus together in order at the front of the navigation bar
+      navLinks.splice(insertIndex, 0, megaNavLink);
+      insertIndex++;
     }
   }
 

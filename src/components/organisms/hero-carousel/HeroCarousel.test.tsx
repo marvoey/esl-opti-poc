@@ -56,4 +56,48 @@ describe("HeroCarousel Organism", () => {
     addEventListenerSpy.mockRestore();
     removeEventListenerSpy.mockRestore();
   });
+
+  it("renders buttons with only text and NO icon when CTA icons are not set or set to 'none'", () => {
+    const textOnlySlides = [
+      {
+        id: "slide-text-only",
+        eyebrow: "Eyebrow",
+        titleLine1: "Title Without Icons",
+        body: "Body text",
+        primaryCta: "Learn More",
+        secondaryCta: "Contact Us",
+      },
+    ];
+
+    render(<HeroCarousel slides={textOnlySlides} />);
+
+    const primaryBtn = screen.getByRole("button", { name: "Learn More" });
+    const secondaryBtn = screen.getByRole("button", { name: "Contact Us" });
+
+    expect(primaryBtn.querySelector("svg")).toBeNull();
+    expect(secondaryBtn.querySelector("svg")).toBeNull();
+  });
+
+  it("renders custom icons when CTA icons are explicitly configured", () => {
+    const iconSlides = [
+      {
+        id: "slide-with-icons",
+        eyebrow: "Eyebrow",
+        titleLine1: "Title With Icons",
+        body: "Body text",
+        primaryCta: "Explore Rates",
+        primaryCtaIcon: "arrow-right",
+        secondaryCta: "Member Login",
+        secondaryCtaIcon: "user",
+      },
+    ];
+
+    render(<HeroCarousel slides={iconSlides} />);
+
+    const primaryBtn = screen.getByRole("button", { name: "Explore Rates" });
+    const secondaryBtn = screen.getByRole("button", { name: "Member Login" });
+
+    expect(primaryBtn.querySelector("svg")).not.toBeNull();
+    expect(secondaryBtn.querySelector("svg")).not.toBeNull();
+  });
 });

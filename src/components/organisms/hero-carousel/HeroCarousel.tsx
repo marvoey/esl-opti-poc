@@ -7,8 +7,32 @@ import useEmblaCarousel from "embla-carousel-react";
 import { Carousel, CarouselSlide } from "@/components/molecules/carousel/Carousel";
 import { Text } from "@/components/atoms/text/Text";
 import { Button } from "@/components/atoms/button/Button";
-import { UserIcon } from "@/components/atoms/icons";
+import { Icon, type IconName } from "@/components/atoms/icons";
 import styles from "./HeroCarousel.module.css";
+
+function resolveSlideCtaIcon(iconKey?: string | null): {
+  leftIcon?: React.ReactNode;
+  rightIcon?: React.ReactNode;
+} {
+  if (!iconKey) return { leftIcon: undefined, rightIcon: undefined };
+
+  const clean = iconKey.trim().toLowerCase();
+  if (!clean || clean === "none") {
+    return { leftIcon: undefined, rightIcon: undefined };
+  }
+
+  if (clean === "arrow" || clean === "arrow-right") {
+    return {
+      leftIcon: undefined,
+      rightIcon: <ArrowRight size={18} aria-hidden="true" />,
+    };
+  }
+
+  return {
+    leftIcon: <Icon name={clean as IconName} size={18} aria-hidden="true" />,
+    rightIcon: undefined,
+  };
+}
 
 export interface HeroCarouselProps {
   className?: string;
@@ -143,6 +167,8 @@ export function HeroCarousel({
         {activeSlides.map((slide, index) => {
           const isFirst = index === 0;
           const isSquared = variant === "squared";
+          const primaryIcons = resolveSlideCtaIcon(slide.primaryCtaIcon);
+          const secondaryIcons = resolveSlideCtaIcon(slide.secondaryCtaIcon);
           return (
             <CarouselSlide key={slide.id} className={styles.slideItem}>
               <article className={styles.slideContent}>
@@ -189,18 +215,8 @@ export function HeroCarousel({
                       <div {...(isFirst && (editProps?.primaryCta || editProps?.primaryCtaText) ? (editProps.primaryCta || editProps.primaryCtaText) : {})}>
                         <Button
                           variant={(slide.primaryCtaVariant as any) || "primary"}
-                          leftIcon={
-                            slide.primaryCtaIcon === "arrow" || isSquared
-                              ? undefined
-                              : slide.primaryCtaIcon === "none"
-                              ? undefined
-                              : <UserIcon />
-                          }
-                          rightIcon={
-                            slide.primaryCtaIcon === "arrow" || isSquared ? (
-                              <ArrowRight size={18} aria-hidden="true" />
-                            ) : undefined
-                          }
+                          leftIcon={primaryIcons.leftIcon}
+                          rightIcon={primaryIcons.rightIcon}
                           className={styles.actionBtn}
                           href={slide.primaryCtaHref || undefined}
                           target={slide.primaryCtaExternal ? "_blank" : undefined}
@@ -213,7 +229,8 @@ export function HeroCarousel({
                     {slide.secondaryCta && (
                       <Button
                         variant={(slide.secondaryCtaVariant as any) || "secondary"}
-                        leftIcon={<UserIcon />}
+                        leftIcon={secondaryIcons.leftIcon}
+                        rightIcon={secondaryIcons.rightIcon}
                         className={styles.actionBtn}
                         href={slide.secondaryCtaHref || undefined}
                         target={slide.secondaryCtaExternal ? "_blank" : undefined}

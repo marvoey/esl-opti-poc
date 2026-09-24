@@ -1,7 +1,7 @@
 import { initContentTypeRegistry } from '@optimizely/cms-sdk';
 import { initReactComponentRegistry } from '@optimizely/cms-sdk/react/server';
-import { EslHomeExperienceContentType } from '@/components/cms/pages/EslHomePage';
-import EslHomeExperience from '@/components/cms/pages/EslHomePageRenderer';
+import { EslHomeExperienceContentType, EslHomePageContentType } from '@/components/cms/pages/EslHomePage';
+import EslHomeExperience, { EslHomePage } from '@/components/cms/pages/EslHomePageRenderer';
 import { EslProductDetailExperienceContentType } from '@/components/cms/pages/EslProductDetailPage';
 import EslProductDetailExperience from '@/components/cms/pages/EslProductDetailPageRenderer';
 import { EslProductFamilyExperienceContentType } from '@/components/cms/pages/EslProductFamilyPage';
@@ -84,11 +84,19 @@ import { EslFinalCtaContentType } from '@/components/cms/components/EslFinalCta'
 import EslFinalCta from '@/components/cms/components/EslFinalCtaRenderer';
 import { EslLearningHubContentType } from '@/components/cms/components/EslLearningHub';
 import EslLearningHub from '@/components/cms/components/EslLearningHubRenderer';
+import { EslIconCardSingleColumnGridItemContentType } from '@/components/cms/components/EslIconCardSingleColumnGridItem';
+import { EslIconCardSingleColumnGridContentType } from '@/components/cms/components/EslIconCardSingleColumnGrid';
+import EslIconCardSingleColumnGrid from '@/components/cms/components/EslIconCardSingleColumnGridRenderer';
+import { EslLongTextLeftCardsRightCardContentType } from '@/components/cms/components/EslLongTextLeftCardsRightCard';
+import { EslLongTextLeftCardsRightPromoContentType } from '@/components/cms/components/EslLongTextLeftCardsRightPromo';
+import { EslLongTextLeftCardsRightContentType } from '@/components/cms/components/EslLongTextLeftCardsRight';
+import EslLongTextLeftCardsRight from '@/components/cms/components/EslLongTextLeftCardsRightRenderer';
 
 export function ensureOptimizelyRegistry() {
 
   initContentTypeRegistry([
     EslHomeExperienceContentType,
+    EslHomePageContentType,
     EslHeroSliderContentType,
     EslHeroSlideContentType,
     EslQuickLinkCardContentType,
@@ -140,11 +148,17 @@ export function ensureOptimizelyRegistry() {
     EslCompareTableContentType,
     EslFinalCtaContentType,
     EslLearningHubContentType,
+    EslIconCardSingleColumnGridItemContentType,
+    EslIconCardSingleColumnGridContentType,
+    EslLongTextLeftCardsRightCardContentType,
+    EslLongTextLeftCardsRightPromoContentType,
+    EslLongTextLeftCardsRightContentType,
   ]);
 
   initReactComponentRegistry({
     resolver: {
       EslHomeExperience,
+      EslHomePage,
       EslProductDetailExperience,
       EslProductFamilyExperience,
       EslHeroSlider,
@@ -172,6 +186,8 @@ export function ensureOptimizelyRegistry() {
       EslCompareTable,
       EslFinalCta,
       EslLearningHub,
+      EslIconCardSingleColumnGrid,
+      EslLongTextLeftCardsRight,
       EslSiteSettings,
       EslStartPage,
     },

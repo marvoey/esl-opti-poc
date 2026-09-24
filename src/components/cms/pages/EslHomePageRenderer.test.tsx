@@ -1,7 +1,8 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
-import EslHomeExperience from './EslHomePageRenderer';
+import EslHomeExperience, { ESL_HOME_ALLOWED_SECTIONS } from './EslHomePageRenderer';
+import { EslHomeExperienceContentType } from './EslHomePage';
 
 import type { OptimizelyComposition } from '@optimizely/cms-sdk/react/server';
 
@@ -136,7 +137,7 @@ describe('EslHomePageRenderer', () => {
     expect(screen.queryByTestId('node-unallowed-2')).toBeNull();
   });
 
-  it('triggers constraint alert when EslKeyFactsRow is added to Home Page in edit mode', () => {
+  it('renders EslKeyFactsRow without constraint alert now that all components are allowed', () => {
     const mockNodes = [
       {
         key: 'key-facts-home',
@@ -160,11 +161,86 @@ describe('EslHomePageRenderer', () => {
       />
     );
 
+    expect(screen.queryByTestId('visual-builder-constraint-alert')).toBeNull();
+    expect(screen.getByTestId('node-key-facts-home')).toBeDefined();
+  });
+
+  it('defines EslHomeExperienceContentType with baseType _experience and accepts EslProductFamilyExperience plus all 26 components', () => {
+    expect(EslHomeExperienceContentType.key).toBe('EslHomeExperience');
+    expect(EslHomeExperienceContentType.baseType).toBe('_experience');
+    expect(EslHomeExperienceContentType.mayContainTypes).toEqual([
+      'EslProductFamilyExperience',
+      'EslHeroSlider',
+      'EslSnipeCta',
+      'EslTabbedSolutions',
+      'EslSideBySide',
+      'EslMetricCardRow',
+      'EslSplitContentCards',
+      'EslMediaCardGrid',
+      'EslVideoStoryCardRow',
+      'EslVerticalSelectorFeatureCard',
+      'EslCircularImageMetricRow',
+      'EslSplitContentImage',
+      'EslMediaCardGridCarousel',
+      'EslKeyFactsRow',
+      'EslSwitchSupport',
+      'EslDisclosure',
+      'EslFaqStates',
+      'EslProductCardsRow',
+      'EslProductCardsRowVariant2',
+      'EslAccordionCardGrid',
+      'EslSplitContentCta',
+      'EslFeatureCardRow',
+      'EslComparisonCardPair',
+      'EslCompareTable',
+      'EslFinalCta',
+      'EslLearningHub',
+      'EslIconCardSingleColumnGrid',
+      'EslLongTextLeftCardsRight',
+    ]);
+    expect(EslHomeExperienceContentType.mayContainTypes).toContain('EslProductFamilyExperience');
+    expect(EslHomeExperienceContentType.mayContainTypes).not.toContain('EslProductDetailExperience');
+  });
+
+  it('exposes exactly 28 allowed section items containing EslProductFamilyExperience and excluding EslProductDetailExperience', () => {
+    expect(ESL_HOME_ALLOWED_SECTIONS).toHaveLength(28);
+    const keys = ESL_HOME_ALLOWED_SECTIONS.map((s) => s.key);
+    expect(keys).toContain('EslProductFamilyExperience');
+    expect(keys).toContain('EslKeyFactsRow');
+    expect(keys).toContain('EslCompareTable');
+    expect(keys).toContain('EslLongTextLeftCardsRight');
+    expect(keys).not.toContain('EslProductDetailExperience');
+  });
+
+  it('triggers constraint alert when EslProductDetailExperience is added to Home Page in edit mode', () => {
+    const mockNodes = [
+      {
+        key: 'detail-experience-under-home',
+        type: 'EslProductDetailExperience',
+        __typename: 'CompositionComponentNode',
+        nodeType: 'component',
+        displayName: 'ESL Product Detail Experience',
+        layoutType: null,
+        displayTemplateKey: null,
+        displaySettings: null,
+        component: { __typename: 'EslProductDetailExperience' },
+        __context: { edit: true, preview_token: 'test-token' },
+      },
+    ];
+
+    render(
+      <EslHomeExperience
+        content={{
+          composition: { nodes: mockNodes },
+        }}
+      />
+    );
+
     const alert = screen.getByTestId('visual-builder-constraint-alert');
     expect(alert).toBeDefined();
     expect(screen.getByText(/Visual Builder Constraint: Unallowed Section/i)).toBeDefined();
-    expect(screen.getByText(/Key Facts Section/i)).toBeDefined();
+    expect(screen.getByText(/ESL Product Detail Experience/i)).toBeDefined();
     expect(screen.getByText(/ESL Home Experience/i)).toBeDefined();
-    expect(screen.queryByTestId('node-key-facts-home')).toBeNull();
+    expect(screen.queryByTestId('node-detail-experience-under-home')).toBeNull();
   });
 });

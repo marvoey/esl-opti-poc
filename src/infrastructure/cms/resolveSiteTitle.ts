@@ -1,9 +1,10 @@
 import { getGraphClient } from '@/infrastructure/cms/graphClient';
+import { getDefaultSite } from '@/infrastructure/cms/siteRouting';
 import '@/infrastructure/cms/optimizely-registry';
 
 const SITE_TITLE_QUERY = `
-  query GetSiteTitle {
-    EslStartPage {
+  query GetSiteTitle($host: String) {
+    EslStartPage(where: { _metadata: { url: { base: { eq: $host } } } }) {
       items {
         title
       }
@@ -23,14 +24,16 @@ interface SiteTitleResponse {
  * Resolves the site title from EslStartPage in Optimizely Graph.
  * Falls back to null if not configured or query fails.
  */
-export async function resolveSiteTitle(): Promise<string | null> {
+export async function resolveSiteTitle(
+  origin: string = getDefaultSite().origin
+): Promise<string | null> {
   const client = getGraphClient();
   if (!client) {
     return null;
   }
 
   try {
-    const response = (await client.request(SITE_TITLE_QUERY, {}, undefined, true)) as SiteTitleResponse | null;
+    const response = (await client.request(SITE_TITLE_QUERY, { host: origin }, undefined, true)) as SiteTitleResponse | null;
     const title = response?.EslStartPage?.items?.[0]?.title;
     if (typeof title === 'string' && title.trim().length > 0) {
       return title.trim();
