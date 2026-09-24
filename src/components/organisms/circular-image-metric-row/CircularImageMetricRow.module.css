@@ -48,17 +48,17 @@
 }
 
 .eyebrow {
-  color: var(--color-teal-700); /* #00A3A3 */
+  color: var(--color-accent);
   margin: 0;
 }
 
 .title {
-  color: var(--color-navy-500); /* #00395D */
+  color: var(--color-text-primary);
   margin: 0;
 }
 
 .description {
-  color: var(--color-navy-500); /* #00395D */
+  color: var(--color-text-primary);
   margin: 0;
   font-size: var(--font-size-body-lg);
   line-height: var(--line-height-body-lg, 1.5);
@@ -134,7 +134,7 @@
   font-size: var(--font-size-stat);
   line-height: var(--line-height-stat, 1.1);
   font-weight: var(--font-weight-bold);
-  color: var(--color-teal-700); /* #00A3A3 */
+  color: var(--color-accent);
   text-align: center;
   margin: 0 0 0.5rem;
   display: block;
@@ -145,7 +145,7 @@
   font-family: var(--font-family-sans);
   font-size: var(--font-size-body);
   line-height: var(--line-height-body);
-  color: var(--color-navy-500); /* #00395D */
+  color: var(--color-text-primary);
   text-align: center;
   margin: 0;
 }

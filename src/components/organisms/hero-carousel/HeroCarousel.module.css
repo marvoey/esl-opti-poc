@@ -98,7 +98,7 @@
   width: 100%;
   height: 100%;
   border-radius: var(--radius-full);
-  border: 5px solid var(--color-turquoise-400);
+  border: 5px solid var(--color-border-accent);
   object-fit: cover;
   display: block;
 }
@@ -111,7 +111,7 @@
   width: 128px;
   height: 128px;
   border-radius: var(--radius-full);
-  background-color: var(--color-navy-500);
+  background-color: var(--color-surface-inverse);
   color: var(--color-text-inverted);
   flex-direction: column;
   align-items: center;
@@ -176,7 +176,7 @@
   width: clamp(84px, 20cqi, 110px);
   aspect-ratio: 1 / 1;
   border-radius: var(--radius-full);
-  background-color: var(--color-navy-500);
+  background-color: var(--color-surface-inverse);
   color: var(--color-text-inverted);
   flex-direction: column;
   align-items: center;

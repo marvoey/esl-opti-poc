@@ -40,7 +40,7 @@ export function SnipeCta({
           <div className={styles.header}>
             <CircleHelpIcon
               size={15}
-              color="var(--color-navy-500)"
+              color="var(--color-primary)"
               className={styles.icon}
             />
             <Text

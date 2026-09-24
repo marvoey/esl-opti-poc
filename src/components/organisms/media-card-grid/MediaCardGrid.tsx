@@ -51,7 +51,7 @@ export function MediaCardGrid({
             </Text>
           )}
           {title && (
-            <Heading level={headingLevel} id={headingId} className={styles.title}>
+            <Heading level={headingLevel} id={headingId} color="inverted" className={styles.title}>
               {title}
             </Heading>
           )}

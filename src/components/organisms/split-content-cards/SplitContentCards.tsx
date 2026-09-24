@@ -140,7 +140,7 @@ export function SplitContentCards({
               )}
 
               <div className={styles.heroStatGroup}>
-                <Stat className={styles.heroStatValue}>{heroMetric.value}</Stat>
+                <Stat color="accent" className={styles.heroStatValue}>{heroMetric.value}</Stat>
                 {heroMetric.unit && (
                   <span className={styles.heroStatUnit}>{heroMetric.unit}</span>
                 )}
@@ -167,7 +167,7 @@ export function SplitContentCards({
                   key={stat.id ?? `${stat.label}-${stat.value}`}
                   className={styles.statCard}
                 >
-                  <Stat className={styles.statValue}>{stat.value}</Stat>
+                  <Stat color="accent" className={styles.statValue}>{stat.value}</Stat>
                   <Text
                     as="p"
                     variant="body"

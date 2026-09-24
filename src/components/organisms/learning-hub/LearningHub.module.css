@@ -48,17 +48,17 @@
 }
 
 .eyebrow {
-  color: var(--color-teal-700, #00a3a3);
+  color: var(--color-accent);
   margin: 0;
 }
 
 .title {
-  color: var(--color-navy-500, #00395d);
+  color: var(--color-text-primary);
   margin: 0;
 }
 
 .description {
-  color: var(--color-neutral-600, #4e5059);
+  color: var(--color-text-secondary);
   margin: 0;
   font-size: var(--font-size-body-lg);
   line-height: var(--line-height-body-lg, 1.5);
@@ -188,6 +188,6 @@
 
 .cardTitle {
   margin: 0;
-  color: var(--color-navy-500, #00395d);
+  color: var(--color-text-primary);
   overflow-wrap: break-word;
 }

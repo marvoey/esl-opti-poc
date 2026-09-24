@@ -15,8 +15,8 @@ export interface CircleCheckProps {
  */
 export function CircleCheck({
   size = 28,
-  backgroundColor = "var(--color-navy-500)",
-  tickColor = "var(--color-turquoise-400)",
+  backgroundColor = "var(--color-primary)",
+  tickColor = "var(--color-aqua-300)",
   className = "",
   "aria-hidden": ariaHidden = true,
 }: CircleCheckProps) {

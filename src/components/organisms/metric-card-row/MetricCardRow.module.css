@@ -52,10 +52,7 @@
   margin: 0;
 }
 
-.title,
-.headerContent .title,
-.headerRow h2 {
-  color: var(--color-text-inverted, #ffffff) !important;
+.title {
   margin: 0;
 }
 

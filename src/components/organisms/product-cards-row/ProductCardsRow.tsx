@@ -72,7 +72,7 @@ export function ProductCardsRow({
               <CircleCheck
                 size={28}
                 backgroundColor="var(--color-card-icon-badge-bg)"
-                tickColor="var(--color-navy-500)"
+                tickColor="var(--color-primary)"
                 className={styles.icon}
               />
               <div className={styles.textGroup}>

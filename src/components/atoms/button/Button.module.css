@@ -84,6 +84,13 @@
   transition: var(--transition-all);
 }
 
+.iconRight svg {
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  min-height: 20px;
+}
+
 /* Arrow Button Padding:
    Buttons with an arrow icon have 16px block padding and 32px inline padding */
 .button.hasArrow {
@@ -92,20 +99,24 @@
   transition: var(--transition-all), padding-right var(--duration-smart) var(--ease-out-smart), padding-left var(--duration-smart) var(--ease-out-smart), gap var(--duration-smart) var(--ease-out-smart);
 }
 
+/* Arrow Hover Animation:
+   - Left-aligned (.button.hasArrow): button increases its size to the left (padding-left expands, icon right stays stable)
+   - Right-aligned (.alignRight): keeps expanding to the left as well */
 .button.hasArrow:hover:not(:disabled) {
-  padding-right: var(--space-btn-arrow-hover-pad, calc(2rem + 12px));
-  gap: 1rem; /* 16px (increased from 8px/6px) */
+  padding-left: var(--space-btn-arrow-hover-pad, calc(2rem + 12px));
+  padding-right: var(--space-btn-arrow-inline, 2rem);
+  gap: 1rem; /* 16px */
 }
 
 .button.hasArrow:hover:not(:disabled) .iconRight {
-  transform: translateX(4px);
+  transform: none;
 }
 
 /* Right-aligned variant: expands to the left instead of right */
 .button.hasArrow.alignRight:hover:not(:disabled) {
   padding-right: var(--space-btn-arrow-inline, 2rem);
   padding-left: var(--space-btn-arrow-hover-pad, calc(2rem + 12px));
-  gap: 1rem; /* 16px (increased from 8px/6px) */
+  gap: 1rem; /* 16px */
 }
 
 .button.hasArrow.alignRight:hover:not(:disabled) .label {
