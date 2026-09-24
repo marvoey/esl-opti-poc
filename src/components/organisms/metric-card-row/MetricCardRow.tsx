@@ -86,6 +86,7 @@ export function MetricCardRow({
               <Button
                 variant="secondary"
                 shape="pill"
+                align="right"
                 href={cta.href}
                 rightIcon={<ArrowRightIcon size={20} />}
                 {...ctaExternalProps}

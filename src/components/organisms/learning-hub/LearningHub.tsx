@@ -154,6 +154,7 @@ export function LearningHub({
               <Button
                 variant="primary"
                 shape="pill"
+                align="right"
                 href={cta.href}
                 rightIcon={<ArrowRightIcon size={20} />}
                 className={styles.cta}

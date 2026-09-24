@@ -54,11 +54,11 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://cdn.optimizely.com" />
       </head>
       <body>
+        {children}
         <Script
           src="https://cdn.optimizely.com/js/4775830914596864.js"
-          strategy="beforeInteractive"
+          strategy="afterInteractive"
         />
-        {children}
       </body>
     </html>
   );

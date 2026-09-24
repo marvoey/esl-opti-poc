@@ -1,25 +1,14 @@
 .section {
   width: 100%;
+  background: var(--gradient-side-by-side);
+  margin-bottom: var(--space-side-by-side-margin-bottom);
 }
 
 .container {
   max-width: var(--container-max-w, 1200px);
   margin: 0 auto;
   padding-inline: var(--container-gutter, 2.5rem);
-  padding-block: var(--space-section-block);
-}
-
-/* Maintain exactly 48px (3rem) gap between stacked SideBySide components */
-.section:has(+ .section) .container,
-:has(.section):has(+ :has(.section)) .section .container,
-[data-component-type="EslSideBySide"]:has(+ [data-component-type="EslSideBySide"]) .container {
-  padding-bottom: 3rem; /* 48px */
-}
-
-.section + .section .container,
-:has(.section) + :has(.section) .section .container,
-[data-component-type="EslSideBySide"] + [data-component-type="EslSideBySide"] .container {
-  padding-top: 0;
+  padding-block: var(--space-section-block, 5.5rem); /* 88px */
 }
 
 .card {
@@ -50,7 +39,7 @@
 }
 
 .eyebrow {
-  margin-bottom: var(--space-sm);
+  margin-bottom: var(--space-md);
 }
 
 .headline {
@@ -58,7 +47,7 @@
 }
 
 .body {
-  margin-bottom: var(--space-lg);
+  margin-bottom: var(--space-side-by-side-text-margin-bottom, 2rem); /* 32px */
 }
 
 .headlineDark {
@@ -81,6 +70,13 @@
 
 .image {
   object-fit: cover;
+}
+
+@media (width < 768px) {
+  .imageColumn {
+    height: var(--size-side-by-side-image-mobile);
+    min-height: var(--size-side-by-side-image-mobile);
+  }
 }
 
 @media (width >= 1024px) {

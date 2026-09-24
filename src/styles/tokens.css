@@ -82,6 +82,7 @@
   --gradient-vertical-selector: radial-gradient(44.47% 44.21% at 54.11% 55.27%, var(--color-sky-300) 7.67%, var(--color-aqua-100) 50%, var(--color-white) 100%);
   --gradient-final-cta: linear-gradient(107.92deg, var(--color-aqua-100) 0%, var(--color-grey-95) 100%);
   --gradient-switch-support: linear-gradient(138.18deg, var(--color-navy-500) 0%, #001B3D 100%);
+  --gradient-side-by-side: radial-gradient(53.7% 53.29% at 52.69% 64.36%, var(--color-sky-300) 7.67%, var(--color-aqua-100) 50%, var(--color-white) 100%);
 
   /* Footer Layout Spacing */
   --space-footer-top: 4rem;         /* 64px */
@@ -111,8 +112,19 @@
   /* Vertical Selector Feature Card Tab Icon */
   --size-icon-tab: 1.5rem; /* 24px */
 
-  /* Pill Button Padding */
-  --space-btn-pill-block: 0.875rem; /* 14px */
+  /* Side By Side Mobile Image Height */
+  --size-side-by-side-image-mobile: 14.375rem; /* 230px */
+
+  /* Side By Side Section Spacing */
+  --space-side-by-side-margin-bottom: 2rem; /* 32px */
+  --space-side-by-side-text-margin-bottom: 2rem; /* 32px */
+
+  /* Button Padding Tokens (Strict Figma Specs) */
+  --space-btn-pill-block: 0.9375rem;     /* 15px */
+  --space-btn-pill-inline: 1.5rem;       /* 24px */
+  --space-btn-arrow-block: 1rem;         /* 16px */
+  --space-btn-arrow-inline: 2rem;        /* 32px */
+  --space-btn-arrow-hover-pad: 2.75rem;  /* 32px + 12px = 44px */
 
   --color-text-primary: var(--color-navy-500);
   --color-text-secondary: var(--color-neutral-600);
@@ -268,7 +280,7 @@
   --line-height-h4: 1.5rem;                                                /* 24px (6x4) */
   --line-height-body-lg: 1.6875rem;                                        /* 27px */
   --line-height-label: 1.75rem;                                            /* 28px (7x4) */
-  --line-height-eyebrow: 1.25rem;                                          /* 20px (5x4, normalized from 18px) */
+  --line-height-eyebrow: 1.125rem;                                         /* 18px */
   --line-height-subhead: clamp(1.75rem, 0.86rem + 1.85vw, 2rem);           /* 28px -> 32px (4x grid) */
   --line-height-h3: clamp(1.75rem, 0.86rem + 1.85vw, 2.25rem);             /* 28px -> 36px (4x grid) */
   --line-height-h2: clamp(2.25rem, 0.917rem + 2.78vw, 3rem);               /* 36px -> 48px (4x grid) */

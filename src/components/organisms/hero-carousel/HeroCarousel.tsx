@@ -63,18 +63,16 @@ export function HeroCarousel({
     loop: true,
     skipSnaps: false,
   });
-  const [isPlaying, setIsPlaying] = useState(() => {
-    if (typeof window !== "undefined" && window.matchMedia) {
-      return !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    }
-    return true;
-  });
+  const [isPlaying, setIsPlaying] = useState(true);
 
-  // WCAG 2.2 SC 2.2.2: Subscribe to runtime changes for reduced motion
+  // WCAG 2.2 SC 2.2.2: Sync with prefers-reduced-motion after mount to avoid hydration mismatch
   useEffect(() => {
     if (typeof window === "undefined" || !window.matchMedia) return;
 
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (mediaQuery.matches) {
+      setIsPlaying(false);
+    }
     const handleChange = (e: MediaQueryListEvent) => {
       if (e.matches) {
         setIsPlaying(false);
