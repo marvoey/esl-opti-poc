@@ -40,6 +40,7 @@ describe('EslProductFamilyPage Content Type & Renderer', () => {
     expect(EslProductFamilyExperienceContentType.key).toBe('EslProductFamilyExperience');
     expect(EslProductFamilyExperienceContentType.baseType).toBe('_experience');
     expect(EslProductFamilyExperienceContentType.mayContainTypes).toEqual([
+      'EslProductDetailExperience',
       'EslHeroSlider',
       'EslSnipeCta',
       'EslKeyFactsRow',
@@ -58,9 +59,10 @@ describe('EslProductFamilyPage Content Type & Renderer', () => {
     ]);
   });
 
-  it('exposes exactly 15 allowed section items', () => {
-    expect(ESL_PRODUCT_FAMILY_ALLOWED_SECTIONS).toHaveLength(15);
+  it('exposes exactly 16 allowed section items', () => {
+    expect(ESL_PRODUCT_FAMILY_ALLOWED_SECTIONS).toHaveLength(16);
     const keys = ESL_PRODUCT_FAMILY_ALLOWED_SECTIONS.map((s) => s.key);
+    expect(keys).toContain('EslProductDetailExperience');
     expect(keys).toContain('EslHeroSlider');
     expect(keys).toContain('EslSnipeCta');
     expect(keys).toContain('EslKeyFactsRow');

@@ -5,6 +5,7 @@ export const EslProductFamilyExperienceContentType = contentType({
   displayName: 'ESL Product Family Experience',
   baseType: '_experience',
   mayContainTypes: [
+    'EslProductDetailExperience',
     'EslHeroSlider',
     'EslSnipeCta',
     'EslKeyFactsRow',

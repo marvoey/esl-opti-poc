@@ -1,7 +1,8 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
-import EslHomeExperience from './EslHomePageRenderer';
+import EslHomeExperience, { ESL_HOME_ALLOWED_SECTIONS } from './EslHomePageRenderer';
+import { EslHomeExperienceContentType } from './EslHomePage';
 
 import type { OptimizelyComposition } from '@optimizely/cms-sdk/react/server';
 
@@ -166,5 +167,66 @@ describe('EslHomePageRenderer', () => {
     expect(screen.getByText(/Key Facts Section/i)).toBeDefined();
     expect(screen.getByText(/ESL Home Experience/i)).toBeDefined();
     expect(screen.queryByTestId('node-key-facts-home')).toBeNull();
+  });
+
+  it('defines EslHomeExperienceContentType with baseType _experience and accepts EslProductFamilyExperience without EslProductDetailExperience', () => {
+    expect(EslHomeExperienceContentType.key).toBe('EslHomeExperience');
+    expect(EslHomeExperienceContentType.baseType).toBe('_experience');
+    expect(EslHomeExperienceContentType.mayContainTypes).toEqual([
+      'EslProductFamilyExperience',
+      'EslHeroSlider',
+      'EslSnipeCta',
+      'EslTabbedSolutions',
+      'EslSideBySide',
+      'EslMetricCardRow',
+      'EslSplitContentCards',
+      'EslMediaCardGrid',
+      'EslVideoStoryCardRow',
+      'EslVerticalSelectorFeatureCard',
+      'EslCircularImageMetricRow',
+      'EslSplitContentImage',
+      'EslMediaCardGridCarousel',
+    ]);
+    expect(EslHomeExperienceContentType.mayContainTypes).toContain('EslProductFamilyExperience');
+    expect(EslHomeExperienceContentType.mayContainTypes).not.toContain('EslProductDetailExperience');
+  });
+
+  it('exposes exactly 13 allowed section items containing EslProductFamilyExperience and excluding EslProductDetailExperience', () => {
+    expect(ESL_HOME_ALLOWED_SECTIONS).toHaveLength(13);
+    const keys = ESL_HOME_ALLOWED_SECTIONS.map((s) => s.key);
+    expect(keys).toContain('EslProductFamilyExperience');
+    expect(keys).not.toContain('EslProductDetailExperience');
+  });
+
+  it('triggers constraint alert when EslProductDetailExperience is added to Home Page in edit mode', () => {
+    const mockNodes = [
+      {
+        key: 'detail-experience-under-home',
+        type: 'EslProductDetailExperience',
+        __typename: 'CompositionComponentNode',
+        nodeType: 'component',
+        displayName: 'ESL Product Detail Experience',
+        layoutType: null,
+        displayTemplateKey: null,
+        displaySettings: null,
+        component: { __typename: 'EslProductDetailExperience' },
+        __context: { edit: true, preview_token: 'test-token' },
+      },
+    ];
+
+    render(
+      <EslHomeExperience
+        content={{
+          composition: { nodes: mockNodes },
+        }}
+      />
+    );
+
+    const alert = screen.getByTestId('visual-builder-constraint-alert');
+    expect(alert).toBeDefined();
+    expect(screen.getByText(/Visual Builder Constraint: Unallowed Section/i)).toBeDefined();
+    expect(screen.getByText(/ESL Product Detail Experience/i)).toBeDefined();
+    expect(screen.getByText(/ESL Home Experience/i)).toBeDefined();
+    expect(screen.queryByTestId('node-detail-experience-under-home')).toBeNull();
   });
 });

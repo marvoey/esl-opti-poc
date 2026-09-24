@@ -32,6 +32,10 @@ export const KNOWN_COMPONENT_NAMES: Record<string, string> = {
   EslFinalCta: 'ESL Final CTA',
   EslLearningHub: 'ESL Learning Hub',
   EslIconCardSingleColumnGrid: 'ESL Icon Card Single Column Grid',
+  EslProductDetailExperience: 'ESL Product Detail Experience',
+  EslProductFamilyExperience: 'ESL Product Family Experience',
+  EslHomeExperience: 'ESL Home Experience',
+  EslHomePage: 'ESL Home Page (Legacy)',
 };
 
 export function getAllowedSectionsFromContentType(

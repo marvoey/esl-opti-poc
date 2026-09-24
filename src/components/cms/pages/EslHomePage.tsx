@@ -5,7 +5,6 @@ export const EslHomeExperienceContentType = contentType({
   displayName: 'ESL Home Experience',
   baseType: '_experience',
   mayContainTypes: [
-    'EslProductDetailExperience',
     'EslProductFamilyExperience',
     'EslHeroSlider',
     'EslSnipeCta',
@@ -20,4 +19,11 @@ export const EslHomeExperienceContentType = contentType({
     'EslSplitContentImage',
     'EslMediaCardGridCarousel',
   ],
+});
+
+export const EslHomePageContentType = contentType({
+  key: 'EslHomePage',
+  displayName: 'ESL Home Page (Legacy)',
+  baseType: '_page',
+  mayContainTypes: ['*'],
 });

@@ -1,7 +1,7 @@
 import { initContentTypeRegistry } from '@optimizely/cms-sdk';
 import { initReactComponentRegistry } from '@optimizely/cms-sdk/react/server';
-import { EslHomeExperienceContentType } from '@/components/cms/pages/EslHomePage';
-import EslHomeExperience from '@/components/cms/pages/EslHomePageRenderer';
+import { EslHomeExperienceContentType, EslHomePageContentType } from '@/components/cms/pages/EslHomePage';
+import EslHomeExperience, { EslHomePage } from '@/components/cms/pages/EslHomePageRenderer';
 import { EslProductDetailExperienceContentType } from '@/components/cms/pages/EslProductDetailPage';
 import EslProductDetailExperience from '@/components/cms/pages/EslProductDetailPageRenderer';
 import { EslProductFamilyExperienceContentType } from '@/components/cms/pages/EslProductFamilyPage';
@@ -92,6 +92,7 @@ export function ensureOptimizelyRegistry() {
 
   initContentTypeRegistry([
     EslHomeExperienceContentType,
+    EslHomePageContentType,
     EslHeroSliderContentType,
     EslHeroSlideContentType,
     EslQuickLinkCardContentType,
@@ -150,6 +151,7 @@ export function ensureOptimizelyRegistry() {
   initReactComponentRegistry({
     resolver: {
       EslHomeExperience,
+      EslHomePage,
       EslProductDetailExperience,
       EslProductFamilyExperience,
       EslHeroSlider,
