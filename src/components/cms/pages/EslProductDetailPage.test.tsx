@@ -65,6 +65,7 @@ describe('EslProductDetailPageRenderer', () => {
       'EslFinalCta',
       'EslLearningHub',
       'EslIconCardSingleColumnGrid',
+      'EslLongTextLeftCardsRight',
     ]);
   });
 

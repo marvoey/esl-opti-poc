@@ -32,6 +32,7 @@ export const EslHomeExperienceContentType = contentType({
     'EslFinalCta',
     'EslLearningHub',
     'EslIconCardSingleColumnGrid',
+    'EslLongTextLeftCardsRight',
   ],
 });
 

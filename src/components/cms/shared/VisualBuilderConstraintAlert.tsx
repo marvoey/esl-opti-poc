@@ -36,6 +36,7 @@ export const KNOWN_COMPONENT_NAMES: Record<string, string> = {
   EslProductFamilyExperience: 'ESL Product Family Experience',
   EslHomeExperience: 'ESL Home Experience',
   EslHomePage: 'ESL Home Page (Legacy)',
+  EslLongTextLeftCardsRight: 'ESL Long Text Left Cards Right',
 };
 
 export function getAllowedSectionsFromContentType(

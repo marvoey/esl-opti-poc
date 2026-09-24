@@ -67,11 +67,12 @@ describe('EslProductFamilyPage Content Type & Renderer', () => {
       'EslFinalCta',
       'EslLearningHub',
       'EslIconCardSingleColumnGrid',
+      'EslLongTextLeftCardsRight',
     ]);
   });
 
-  it('exposes exactly 27 allowed section items', () => {
-    expect(ESL_PRODUCT_FAMILY_ALLOWED_SECTIONS).toHaveLength(27);
+  it('exposes exactly 28 allowed section items', () => {
+    expect(ESL_PRODUCT_FAMILY_ALLOWED_SECTIONS).toHaveLength(28);
     const keys = ESL_PRODUCT_FAMILY_ALLOWED_SECTIONS.map((s) => s.key);
     expect(keys).toContain('EslProductDetailExperience');
     expect(keys).toContain('EslHeroSlider');
@@ -90,6 +91,7 @@ describe('EslProductFamilyPage Content Type & Renderer', () => {
     expect(keys).toContain('EslFinalCta');
     expect(keys).toContain('EslLearningHub');
     expect(keys).toContain('EslIconCardSingleColumnGrid');
+    expect(keys).toContain('EslLongTextLeftCardsRight');
   });
 
   it('returns null when content is missing or nodes are empty (no static fallbacks)', () => {

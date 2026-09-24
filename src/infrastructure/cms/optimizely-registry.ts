@@ -87,6 +87,10 @@ import EslLearningHub from '@/components/cms/components/EslLearningHubRenderer';
 import { EslIconCardSingleColumnGridItemContentType } from '@/components/cms/components/EslIconCardSingleColumnGridItem';
 import { EslIconCardSingleColumnGridContentType } from '@/components/cms/components/EslIconCardSingleColumnGrid';
 import EslIconCardSingleColumnGrid from '@/components/cms/components/EslIconCardSingleColumnGridRenderer';
+import { EslLongTextLeftCardsRightCardContentType } from '@/components/cms/components/EslLongTextLeftCardsRightCard';
+import { EslLongTextLeftCardsRightPromoContentType } from '@/components/cms/components/EslLongTextLeftCardsRightPromo';
+import { EslLongTextLeftCardsRightContentType } from '@/components/cms/components/EslLongTextLeftCardsRight';
+import EslLongTextLeftCardsRight from '@/components/cms/components/EslLongTextLeftCardsRightRenderer';
 
 export function ensureOptimizelyRegistry() {
 
@@ -146,6 +150,9 @@ export function ensureOptimizelyRegistry() {
     EslLearningHubContentType,
     EslIconCardSingleColumnGridItemContentType,
     EslIconCardSingleColumnGridContentType,
+    EslLongTextLeftCardsRightCardContentType,
+    EslLongTextLeftCardsRightPromoContentType,
+    EslLongTextLeftCardsRightContentType,
   ]);
 
   initReactComponentRegistry({
@@ -180,6 +187,7 @@ export function ensureOptimizelyRegistry() {
       EslFinalCta,
       EslLearningHub,
       EslIconCardSingleColumnGrid,
+      EslLongTextLeftCardsRight,
       EslSiteSettings,
       EslStartPage,
     },
