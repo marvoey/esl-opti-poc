@@ -42,8 +42,25 @@ describe('resolvePage', () => {
     await expect(resolvePage('http://localhost:5002', '/')).resolves.toBeNull();
   });
 
-  it('lets Graph errors propagate instead of reporting a missing page', async () => {
-    getContentByPath.mockRejectedValue(new Error('Unknown type "EslNew"'));
-    await expect(resolvePage('http://localhost:5002', '/rates')).rejects.toThrow('Unknown type');
+  it('lets other Graph errors propagate instead of reporting a missing page', async () => {
+    getContentByPath.mockRejectedValue(new Error('HTTP 500: Graph unavailable'));
+    await expect(resolvePage('http://localhost:5002', '/rates')).rejects.toThrow('Graph unavailable');
+  });
+
+  it('renders the page without components the CMS schema does not have yet', async () => {
+    const request = vi.fn().mockResolvedValue({
+      _Content: { items: [{ __typename: 'EslHomeExperience', EslHomeExperience__title: 'Home' }] },
+    });
+    vi.mocked(getGraphClient).mockReturnValue({ getContentByPath, request } as unknown as ReturnType<typeof getGraphClient>);
+    getContentByPath.mockRejectedValue({
+      errors: [{ message: 'Unknown type "EslNewThing".' }],
+      request: { query: 'fragment _IComponent on _IComponent { ...EslNewThing } fragment EslNewThing on EslNewThing { a }', variables: { v: 1 } },
+    });
+
+    await expect(resolvePage('http://localhost:5002', '/')).resolves.toEqual({
+      __typename: 'EslHomeExperience',
+      title: 'Home',
+    });
+    expect(request.mock.calls[0][0]).not.toContain('EslNewThing');
   });
 });

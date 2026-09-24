@@ -32,7 +32,7 @@ Environment:
 | `OPTIMIZELY_APP_HOST` | Default site: the CMS application base URL (Graph `url.base`). Hosts that aren't listed below (Vercel preview URLs, 127.0.0.1) are served as this site. |
 | `OPTIMIZELY_SITE_HOSTS` | Optional. Comma-separated base URLs of additional CMS sites served by the same deployment, e.g. `https://brand-a.org,https://brand-b.org`. |
 
-Because pages use the SDK's generated query, code and CMS schema must match: push schema changes to an environment before deploying code that registers new content types there.
+Pages use the query the SDK builds from the registry. If code registers a component the CMS schema doesn't have yet, Graph rejects that query, so `src/infrastructure/cms/unknownTypeRecovery.ts` retries without the unknown types: the page renders without that component and the server logs `[cms] Graph does not know these registered types`. Push schema changes to an environment when you deploy code that registers new content types there.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
