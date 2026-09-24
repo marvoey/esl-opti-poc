@@ -19,6 +19,7 @@ const albertSans = Albert_Sans({
 
 const leagueSpartan = League_Spartan({
   subsets: ["latin"],
+  weight: ["500", "600", "700"],
   variable: "--font-league-spartan",
   display: "swap",
 });

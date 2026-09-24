@@ -1,5 +1,5 @@
 import React from "react";
-import { CircleCheck } from "@/components/atoms/circle-check/CircleCheck";
+import { CircleHelpIcon } from "@/components/atoms/icons";
 import { Text } from "@/components/atoms/text/Text";
 import { SimpleLink } from "@/components/atoms/link/SimpleLink";
 import styles from "./SnipeCta.module.css";
@@ -18,7 +18,7 @@ export interface SnipeCtaProps {
  * SnipeCta Organism Component
  * Displays membership eligibility call-to-action banner right below the hero slider.
  * Renders an outer section with --gradient-linear-wash background, an inner container,
- * and 3 elements (CircleCheck icon, body typography with bold and regular segments, and SimpleLink).
+ * and 3 elements (CircleHelp icon, body typography with bold and regular segments, and SimpleLink).
  */
 export function SnipeCta({
   title = "Can you join?",
@@ -38,14 +38,13 @@ export function SnipeCta({
       <div className={styles.container}>
         <div className={styles.inner}>
           <div className={styles.header}>
-            <CircleCheck
-              size={28}
-              backgroundColor="var(--color-navy-500)"
-              tickColor="var(--color-turquoise-400)"
+            <CircleHelpIcon
+              size={15}
+              color="var(--color-navy-500)"
               className={styles.icon}
             />
             <Text
-              as="span"
+              as="h2"
               variant="body"
               weight="bold"
               color="primary"

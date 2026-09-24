@@ -1,6 +1,6 @@
 .section {
   width: 100%;
-  background: linear-gradient(138.18deg, var(--color-navy-500) 0%, #001B3D 100%);
+  background: var(--gradient-switch-support);
   padding-block: var(--space-section-block);
 }
 

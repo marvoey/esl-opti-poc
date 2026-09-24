@@ -31,7 +31,7 @@
 }
 
 .cardDark {
-  background: var(--gradient-dark-navy, linear-gradient(135deg, #010E23 0%, #01375A 100%));
+  background: var(--gradient-dark-navy);
 }
 
 .cardLight {

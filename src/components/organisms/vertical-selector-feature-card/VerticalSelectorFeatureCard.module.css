@@ -47,12 +47,12 @@
 }
 
 .title {
-  color: var(--color-text-primary, #00395d);
+  color: var(--color-text-primary, var(--color-navy-500));
   margin: 0;
 }
 
 .description {
-  color: var(--color-text-primary, #00395d);
+  color: var(--color-text-primary, var(--color-navy-500));
   margin: 0;
 }
 
@@ -88,6 +88,11 @@
   border-radius: var(--radius-lg, 0.75rem);
   text-align: left;
   width: 100%;
+}
+
+.tabButton svg {
+  width: var(--size-icon-tab);
+  height: var(--size-icon-tab);
 }
 
 /* Col 2: Feature Card */
@@ -127,12 +132,12 @@
 }
 
 .featureTitle {
-  color: var(--color-text-primary, #00395d);
+  color: var(--color-text-primary, var(--color-navy-500));
   margin: 0;
 }
 
 .featureDescription {
-  color: var(--color-text-primary, #00395d);
+  color: var(--color-text-primary, var(--color-navy-500));
   margin: 0;
   font-size: var(--font-size-body-lg, 1.125rem);
   line-height: var(--line-height-relaxed, 1.6);

@@ -1,6 +1,6 @@
 .section {
   width: 100%;
-  background: var(--gradient-dark-navy, linear-gradient(135deg, #010e23 0%, #01375a 100%));
+  background: var(--gradient-dark-navy);
 }
 
 .container {

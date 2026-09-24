@@ -9,10 +9,12 @@
   --color-navy-500: #00395D;
   --color-navy-850: #003E65;
   --color-navy-800: #01375A; /* Footer gradient end */
-  --color-teal-700: #00A3A3;
+  --color-aqua-500: #00A3A3;
+  --color-teal-700: var(--color-aqua-500); /* Backwards-compatible alias */
   --color-teal-500: #51BFB6; /* Figma: tab active border indicator */
   --color-turquoise-400: #68E0CC;
-  --color-mint-50: #ECFBF8;
+  --color-grey-95: #ECFBF8; /* Figma: "Polar" background */
+  --color-mint-50: var(--color-grey-95); /* Semantic/visual alias matching design system specs */
   --color-mint-100: #EAF9F9; /* Figma: linear wash tint */
   --color-white: #FFFFFF;
   --color-black: #000000;
@@ -52,7 +54,7 @@
   /* --- Tier 2: Semantic Roles (Theme & Layout Mappings) --- */
   --color-bg: var(--color-white);
   --color-bg-subtle: var(--color-slate-50);
-  --color-surface: var(--color-mint-50);
+  --color-surface: var(--color-grey-95);
   --color-surface-raised: var(--color-white);
   --color-surface-subtle: var(--color-slate-50);
   --color-surface-inverse: var(--color-navy-500);
@@ -78,7 +80,8 @@
   --gradient-footer: var(--gradient-dark-navy);
   --gradient-split-radial: radial-gradient(69.11% 69.11% at 50.26% 14.87%, var(--color-sky-alpha-25) 0%, var(--color-aqua-alpha-25) 50%, var(--color-white-alpha-25) 100%);
   --gradient-vertical-selector: radial-gradient(44.47% 44.21% at 54.11% 55.27%, var(--color-sky-300) 7.67%, var(--color-aqua-100) 50%, var(--color-white) 100%);
-  --gradient-final-cta: linear-gradient(107.92deg, var(--color-aqua-100) 0%, var(--color-mint-50) 100%);
+  --gradient-final-cta: linear-gradient(107.92deg, var(--color-aqua-100) 0%, var(--color-grey-95) 100%);
+  --gradient-switch-support: linear-gradient(138.18deg, var(--color-navy-500) 0%, #001B3D 100%);
 
   /* Footer Layout Spacing */
   --space-footer-top: 4rem;         /* 64px */
@@ -91,6 +94,26 @@
      section's desktop rhythm at once. */
   --space-section-block: 5.5rem; /* 88px */
 
+  /* Hero Carousel Badge Spacing */
+  --space-badge-padding: 0.9375rem; /* 15px */
+
+  /* Snipe CTA Header Gap */
+  --space-snipe-cta-header-gap: 0.40625rem; /* 6.5px */
+
+  /* Quick Link Simple Icon Circle */
+  --size-icon-circle: 3.75rem; /* 60px */
+  --scale-icon-circle-hover: 1.2; /* scales to 72px on hover */
+  --size-icon-circle-sm: 2.5rem; /* 40px, mobile list-row layout */
+
+  /* Tabbed Icon Cards Section Spacing */
+  --space-tabbed-icon-cards-margin-bottom: 2rem; /* 32px */
+
+  /* Vertical Selector Feature Card Tab Icon */
+  --size-icon-tab: 1.5rem; /* 24px */
+
+  /* Pill Button Padding */
+  --space-btn-pill-block: 0.875rem; /* 14px */
+
   --color-text-primary: var(--color-navy-500);
   --color-text-secondary: var(--color-neutral-600);
   --color-text-muted: rgba(0, 57, 93, 0.55);
@@ -98,12 +121,12 @@
   --color-text-inverted-muted: var(--color-white-80);
 
   --color-primary: var(--color-navy-500);
-  --color-primary-hover: var(--color-teal-700);
+  --color-primary-hover: var(--color-aqua-500);
   --color-primary-contrast: var(--color-white);
 
-  --color-accent: var(--color-teal-700);
-  --color-accent-subtle: var(--color-mint-50);
-  --color-focus-ring: var(--color-teal-700);
+  --color-accent: var(--color-aqua-500);
+  --color-accent-subtle: var(--color-grey-95);
+  --color-focus-ring: var(--color-aqua-500);
 
   /* --- Tier 3: Component Intent Tokens --- */
   /* Eyebrows */
@@ -258,7 +281,7 @@
 
   /* --- Tracking (Letter Spacing) --- */
   --tracking-display: -0.4px;
-  --tracking-hero-h2-desktop: -0.01em;
+  --tracking-hero-h2-desktop: -0.4px;
   --tracking-hero-h2-mobile: -0.4px;
   --tracking-h1: -0.32px;
   --tracking-h2: -0.24px;
