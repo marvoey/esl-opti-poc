@@ -43,6 +43,8 @@
 /* --- Shapes --- */
 .pill {
   border-radius: var(--radius-full); /* 9999px */
+  padding-inline: var(--space-md); /* 16px */
+  padding-block: var(--space-btn-pill-block); /* 14px */
 }
 
 .rounded {

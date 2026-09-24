@@ -111,7 +111,7 @@ export function TabbedIconCards({
       case "ArrowRight": {
         event.preventDefault();
         const nextIndex = index === lastIndex ? 0 : index + 1;
-        activateTab(tabs[nextIndex].id, nextIndex);
+        activateTab(tabs[nextIndex].id, nextIndex, true);
         break;
       }
       case "ArrowLeft": {
@@ -149,11 +149,19 @@ export function TabbedIconCards({
     ? `${styles.section} ${className}`
     : styles.section;
 
+  const headingId = heading ? `tabbed-icon-cards-heading` : undefined;
+  const sectionAriaLabel = heading
+    ? `${heading} - Tab Panel`
+    : (ariaLabel || "Service Categories - Tab Panel");
+
   return (
-    <section className={combinedSectionClass}>
+    <section
+      className={combinedSectionClass}
+      aria-label={sectionAriaLabel}
+    >
       <div className={styles.container}>
         {heading ? (
-          <Heading level="h3" className={styles.heading}>
+          <Heading id={headingId} level="h3" className={styles.heading}>
             {heading}
           </Heading>
         ) : null}

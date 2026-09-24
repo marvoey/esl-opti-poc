@@ -24,6 +24,7 @@ export function VerticalSelectorFeaturePanel({
       id={`tabpanel-${activeTab.id}`}
       role="tabpanel"
       aria-labelledby={`tab-${activeTab.id}`}
+      tabIndex={0}
       className={styles.featureCard}
     >
       <div className={styles.imageWrapper}>

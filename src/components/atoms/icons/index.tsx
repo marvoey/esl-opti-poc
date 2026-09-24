@@ -11,6 +11,7 @@ import {
   Car,
   Check,
   CircleCheck as LucideCircleCheck,
+  CircleHelp,
   Sprout,
   Sparkles,
   ShieldCheck,
@@ -47,6 +48,7 @@ export type IconName =
   | "car"
   | "check"
   | "circle-check"
+  | "circle-help"
   | "sprout"
   | "sparkles"
   | "shield-check"
@@ -86,6 +88,7 @@ const iconRegistry: Record<IconName, LucideIcon> = {
   car: Car,
   check: Check,
   "circle-check": LucideCircleCheck,
+  "circle-help": CircleHelp,
   sprout: Sprout,
   sparkles: Sparkles,
   "shield-check": ShieldCheck,
@@ -166,6 +169,10 @@ export function CheckIcon(props: IconProps) {
 
 export function CircleCheckIcon(props: IconProps) {
   return <LucideCircleCheck size={props.size ?? 16} aria-hidden={true} {...props} />;
+}
+
+export function CircleHelpIcon(props: IconProps) {
+  return <CircleHelp size={props.size ?? 20} aria-hidden={true} {...props} />;
 }
 
 export function SproutIcon(props: IconProps) {

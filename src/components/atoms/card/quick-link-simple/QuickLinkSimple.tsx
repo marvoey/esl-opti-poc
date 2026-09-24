@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { PiggyBankIcon } from "../../icons";
+import { PiggyBankIcon, ArrowRightIcon } from "../../icons";
 import { Text } from "../../text/Text";
 import styles from "./QuickLinkSimple.module.css";
 
@@ -60,6 +60,7 @@ export function QuickLinkSimple({
       <div className={styles.iconCircle} aria-hidden="true">
         {icon ?? <PiggyBankIcon size={43} />}
       </div>
+      <ArrowRightIcon size={16} className={styles.arrow} aria-hidden="true" />
     </>
   );
 
