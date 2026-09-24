@@ -43,8 +43,8 @@
 /* --- Shapes --- */
 .pill {
   border-radius: var(--radius-full); /* 9999px */
-  padding-inline: var(--space-md); /* 16px */
-  padding-block: var(--space-btn-pill-block); /* 14px */
+  padding-inline: var(--space-btn-pill-inline, 1.5rem); /* 24px */
+  padding-block: var(--space-btn-pill-block, 0.9375rem); /* 15px */
 }
 
 .rounded {
@@ -84,15 +84,16 @@
   transition: var(--transition-all);
 }
 
-/* Arrow Hover Animation:
-   - Default (left-aligned): button increases its size to the right and moves the arrow accordingly
-   - Right-aligned (.alignRight): button increases its size to the left and moves the text label accordingly */
+/* Arrow Button Padding:
+   Buttons with an arrow icon have 16px block padding and 32px inline padding */
 .button.hasArrow {
+  padding-block: var(--space-btn-arrow-block, 1rem); /* 16px */
+  padding-inline: var(--space-btn-arrow-inline, 2rem); /* 32px */
   transition: var(--transition-all), padding-right var(--duration-smart) var(--ease-out-smart), padding-left var(--duration-smart) var(--ease-out-smart), gap var(--duration-smart) var(--ease-out-smart);
 }
 
 .button.hasArrow:hover:not(:disabled) {
-  padding-right: calc(1.5rem + 12px);
+  padding-right: var(--space-btn-arrow-hover-pad, calc(2rem + 12px));
   gap: 1rem; /* 16px (increased from 8px/6px) */
 }
 
@@ -102,8 +103,8 @@
 
 /* Right-aligned variant: expands to the left instead of right */
 .button.hasArrow.alignRight:hover:not(:disabled) {
-  padding-right: 1.5rem;
-  padding-left: calc(1.5rem + 12px);
+  padding-right: var(--space-btn-arrow-inline, 2rem);
+  padding-left: var(--space-btn-arrow-hover-pad, calc(2rem + 12px));
   gap: 1rem; /* 16px (increased from 8px/6px) */
 }
 
@@ -118,8 +119,8 @@
 @media (prefers-reduced-motion: reduce) {
   .button.hasArrow:hover:not(:disabled),
   .button.hasArrow.alignRight:hover:not(:disabled) {
-    padding-right: 1.5rem;
-    padding-left: 1.5rem;
+    padding-right: var(--space-btn-arrow-inline, 2rem);
+    padding-left: var(--space-btn-arrow-inline, 2rem);
   }
 
   .button.hasArrow:hover:not(:disabled) .iconRight,
