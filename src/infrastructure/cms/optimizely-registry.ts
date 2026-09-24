@@ -91,6 +91,9 @@ import { EslLongTextLeftCardsRightCardContentType } from '@/components/cms/compo
 import { EslLongTextLeftCardsRightPromoContentType } from '@/components/cms/components/EslLongTextLeftCardsRightPromo';
 import { EslLongTextLeftCardsRightContentType } from '@/components/cms/components/EslLongTextLeftCardsRight';
 import EslLongTextLeftCardsRight from '@/components/cms/components/EslLongTextLeftCardsRightRenderer';
+import { EslFilterableProductCardGridItemContentType } from '@/components/cms/components/EslFilterableProductCardGridItem';
+import { EslFilterableProductCardGridContentType } from '@/components/cms/components/EslFilterableProductCardGrid';
+import EslFilterableProductCardGrid from '@/components/cms/components/EslFilterableProductCardGridRenderer';
 
 export function ensureOptimizelyRegistry() {
 
@@ -153,6 +156,8 @@ export function ensureOptimizelyRegistry() {
     EslLongTextLeftCardsRightCardContentType,
     EslLongTextLeftCardsRightPromoContentType,
     EslLongTextLeftCardsRightContentType,
+    EslFilterableProductCardGridItemContentType,
+    EslFilterableProductCardGridContentType,
   ]);
 
   initReactComponentRegistry({
@@ -188,6 +193,7 @@ export function ensureOptimizelyRegistry() {
       EslLearningHub,
       EslIconCardSingleColumnGrid,
       EslLongTextLeftCardsRight,
+      EslFilterableProductCardGrid,
       EslSiteSettings,
       EslStartPage,
     },

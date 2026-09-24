@@ -1,0 +1,20 @@
+{
+  "$comment": "Environment guard for the optimizely-cms-saas MCP server and cms:push. Read by .claude/hooks/optimizely-guard.mjs. Testing values are ALSO re-derived from .env at every check; this file only adds what .env cannot express (the production fingerprint). production.appHosts must list EVERY production site host: the fingerprint fails if any of them appears.",
+  "mcpServer": "optimizely-cms-saas",
+  "mcpUrl": "https://cms.mcp.opal.optimizely.com/mcp",
+  "testing": {
+    "envFile": ".env",
+    "cmsUrl": "https://app-fecu01saas6fn6qt001.cms.optimizely.com",
+    "appHost": "http://localhost:5002"
+  },
+  "production": {
+    "envFile": ".env.vercel",
+    "cmsUrl": "https://app-fecu01saas6fn6qp001.cms.optimizely.com",
+    "appHosts": [
+      "https://opti-1920.move-esl-forward.org"
+    ]
+  },
+  "fingerprintQuery": "query EslEnvFingerprint { _Content(where: { _metadata: { types: { in: [\"EslStartPage\"] } } }, limit: 10) { total items { _metadata { key displayName url { base } } } } }",
+  "verificationTtlMinutes": 480,
+  "testContentPrefix": "[WF]"
+}
