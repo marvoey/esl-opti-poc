@@ -1,0 +1,65 @@
+{
+  "enabledMcpjsonServers": [
+    "optimizely-cms-saas"
+  ],
+  "permissions": {
+    "allow": [
+      "mcp__optimizely-cms-saas__cms_list_content_types",
+      "mcp__optimizely-cms-saas__cms_get_content_type_details",
+      "mcp__optimizely-cms-saas__cms_list_property_groups",
+      "mcp__optimizely-cms-saas__cms_list_display_templates",
+      "mcp__optimizely-cms-saas__cms_get_display_template",
+      "mcp__optimizely-cms-saas__cms_get_content_data",
+      "mcp__optimizely-cms-saas__cms_get_content_preview_url",
+      "mcp__optimizely-cms-saas__graph_content_type_schema",
+      "mcp__optimizely-cms-saas__graph_content_graphql_executor",
+      "mcp__optimizely-cms-saas__graph_content_search_tool",
+      "Bash(npm test*)",
+      "Bash(npx vitest run*)",
+      "Bash(npx tsc --noEmit*)",
+      "Bash(npm run lint*)",
+      "Bash(npm run cms:push:local*)",
+      "Bash(node .claude/hooks/optimizely-guard.mjs status)"
+    ],
+    "deny": [
+      "mcp__optimizely-cms-saas__cms_create_content_type",
+      "mcp__optimizely-cms-saas__cms_update_content_type",
+      "mcp__optimizely-cms-saas__cms_delete_content_type",
+      "mcp__optimizely-cms-saas__cms_create_property_group",
+      "mcp__optimizely-cms-saas__cms_create_display_template",
+      "mcp__optimizely-cms-saas__cms_update_display_template",
+      "mcp__optimizely-cms-saas__cms_create_content_variation",
+      "Bash(npm run cms:push:vercel*)",
+      "Bash(npm run cms:push)",
+      "PowerShell(npm run cms:push:vercel*)",
+      "PowerShell(npm run cms:push)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "mcp__.*|Bash|PowerShell",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/optimizely-guard.mjs\" pre",
+            "timeout": 15,
+            "statusMessage": "Optimizely environment guard"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "mcp__optimizely-cms-saas__.*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/optimizely-guard.mjs\" post",
+            "timeout": 15
+          }
+        ]
+      }
+    ]
+  }
+}

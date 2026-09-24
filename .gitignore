@@ -48,9 +48,9 @@ next-env.d.ts
 # specifications
 openspec/
 
-# Claude Code workflow: skills, guard hooks, settings, state (local until validated)
-.claude/
-.mcp.json
+# Claude Code workflow: settings, state (local until validated)
+.claude/state/
+.claude/settings.local.json
 
 # documentation
 [Aa]ccessibility.md

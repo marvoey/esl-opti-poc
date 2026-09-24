@@ -66,6 +66,7 @@ describe('EslProductDetailPageRenderer', () => {
       'EslLearningHub',
       'EslIconCardSingleColumnGrid',
       'EslLongTextLeftCardsRight',
+      'EslFilterableProductCardGrid',
     ]);
   });
 
