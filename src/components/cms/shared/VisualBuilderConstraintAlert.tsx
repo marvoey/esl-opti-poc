@@ -31,6 +31,7 @@ export const KNOWN_COMPONENT_NAMES: Record<string, string> = {
   EslCompareTable: 'ESL Compare Table',
   EslFinalCta: 'ESL Final CTA',
   EslLearningHub: 'ESL Learning Hub',
+  EslIconCardSingleColumnGrid: 'ESL Icon Card Single Column Grid',
 };
 
 export function getAllowedSectionsFromContentType(

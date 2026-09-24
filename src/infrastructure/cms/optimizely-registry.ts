@@ -84,6 +84,9 @@ import { EslFinalCtaContentType } from '@/components/cms/components/EslFinalCta'
 import EslFinalCta from '@/components/cms/components/EslFinalCtaRenderer';
 import { EslLearningHubContentType } from '@/components/cms/components/EslLearningHub';
 import EslLearningHub from '@/components/cms/components/EslLearningHubRenderer';
+import { EslIconCardSingleColumnGridItemContentType } from '@/components/cms/components/EslIconCardSingleColumnGridItem';
+import { EslIconCardSingleColumnGridContentType } from '@/components/cms/components/EslIconCardSingleColumnGrid';
+import EslIconCardSingleColumnGrid from '@/components/cms/components/EslIconCardSingleColumnGridRenderer';
 
 export function ensureOptimizelyRegistry() {
 
@@ -140,6 +143,8 @@ export function ensureOptimizelyRegistry() {
     EslCompareTableContentType,
     EslFinalCtaContentType,
     EslLearningHubContentType,
+    EslIconCardSingleColumnGridItemContentType,
+    EslIconCardSingleColumnGridContentType,
   ]);
 
   initReactComponentRegistry({
@@ -172,6 +177,7 @@ export function ensureOptimizelyRegistry() {
       EslCompareTable,
       EslFinalCta,
       EslLearningHub,
+      EslIconCardSingleColumnGrid,
       EslSiteSettings,
       EslStartPage,
     },

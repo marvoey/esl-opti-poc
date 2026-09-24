@@ -19,5 +19,6 @@ export const EslProductFamilyExperienceContentType = contentType({
     'EslCompareTable',
     'EslFinalCta',
     'EslLearningHub',
+    'EslIconCardSingleColumnGrid',
   ],
 });

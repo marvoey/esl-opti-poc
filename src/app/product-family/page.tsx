@@ -251,6 +251,25 @@ const ESL_PRODUCT_FAMILY_PAGE_EXPERIENCE_QUERY = `
                   showLearningHub
                   heading
                 }
+                ... on EslIconCardSingleColumnGrid {
+                  title
+                  items {
+                    icon
+                    title
+                    link {
+                      text
+                      title
+                      target
+                      url {
+                        default
+                      }
+                    }
+                    description {
+                      json
+                      html
+                    }
+                  }
+                }
               }
             }
           }

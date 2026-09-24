@@ -50,6 +50,7 @@ describe('EslProductDetailPageRenderer', () => {
       'EslAccordionCardGrid',
       'EslSplitContentCta',
       'EslFeatureCardRow',
+      'EslIconCardSingleColumnGrid',
     ]);
   });
 

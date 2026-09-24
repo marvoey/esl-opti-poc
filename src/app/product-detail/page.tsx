@@ -217,6 +217,25 @@ const ESL_PRODUCT_DETAIL_PAGE_EXPERIENCE_QUERY = `
                     }
                   }
                 }
+                ... on EslIconCardSingleColumnGrid {
+                  title
+                  items {
+                    icon
+                    title
+                    link {
+                      text
+                      title
+                      target
+                      url {
+                        default
+                      }
+                    }
+                    description {
+                      json
+                      html
+                    }
+                  }
+                }
               }
             }
           }

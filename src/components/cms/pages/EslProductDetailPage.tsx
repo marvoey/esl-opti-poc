@@ -16,5 +16,6 @@ export const EslProductDetailExperienceContentType = contentType({
     'EslAccordionCardGrid',
     'EslSplitContentCta',
     'EslFeatureCardRow',
+    'EslIconCardSingleColumnGrid',
   ],
 });
