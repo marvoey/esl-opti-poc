@@ -37,11 +37,8 @@
   margin: 0 0 1rem;
 }
 
-.title,
-.headerRow .title,
-.headerRow h2 {
+.title {
   margin: 0;
-  color: var(--color-text-inverted, #ffffff) !important;
 }
 
 .carouselWrapper {
@@ -122,8 +119,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--color-navy-800, #01375a);
-  color: var(--color-text-inverted, #ffffff);
+  background-color: var(--color-surface-inverse);
+  color: var(--color-text-inverted);
   cursor: pointer;
   padding: 0;
 }

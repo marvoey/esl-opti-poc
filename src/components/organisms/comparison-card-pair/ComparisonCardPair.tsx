@@ -37,8 +37,8 @@ function ComparisonCardItem({ card }: { card: ComparisonCardData }) {
           <Badge
             variant="aqua"
             className={styles.badge}
-            borderColor="var(--color-navy-500)"
-            textColor="var(--color-navy-500)"
+            borderColor="var(--color-primary)"
+            textColor="var(--color-primary)"
           >
             {card.badgeText}
           </Badge>

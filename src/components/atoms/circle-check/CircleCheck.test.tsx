@@ -12,10 +12,10 @@ describe("CircleCheck Atom", () => {
     expect(svg.getAttribute("height")).toBe("28");
 
     const circle = svg.querySelector("circle");
-    expect(circle?.getAttribute("fill")).toBe("var(--color-navy-500)");
+    expect(circle?.getAttribute("fill")).toBe("var(--color-primary)");
 
     const path = svg.querySelector("path");
-    expect(path?.getAttribute("stroke")).toBe("var(--color-turquoise-400)");
+    expect(path?.getAttribute("stroke")).toBe("var(--color-aqua-300)");
   });
 
   it("supports custom size, backgroundColor, and tickColor", () => {

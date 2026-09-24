@@ -31,3 +31,32 @@
   letter-spacing: var(--tracking-normal);
   font-weight: var(--font-weight-bold);
 }
+
+/* Semantic Color Modifiers */
+.colorPrimary {
+  color: var(--color-text-primary);
+}
+
+.colorSecondary {
+  color: var(--color-text-secondary);
+}
+
+.colorInverted {
+  color: var(--color-text-inverted);
+}
+
+.colorInvertedMuted {
+  color: var(--color-text-inverted-muted);
+}
+
+.colorAccent {
+  color: var(--color-accent);
+}
+
+.colorVibrant {
+  color: var(--color-border-accent);
+}
+
+.colorInherit {
+  color: inherit;
+}

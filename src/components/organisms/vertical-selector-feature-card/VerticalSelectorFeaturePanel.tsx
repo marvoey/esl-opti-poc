@@ -57,7 +57,7 @@ export function VerticalSelectorFeaturePanel({
               variant="primary"
               shape="pill"
               href={feature.cta.href}
-              rightIcon={<ArrowRightIcon size={16} />}
+              rightIcon={<ArrowRightIcon size={20} />}
               {...featureCtaExternalProps}
             >
               {feature.cta.label}

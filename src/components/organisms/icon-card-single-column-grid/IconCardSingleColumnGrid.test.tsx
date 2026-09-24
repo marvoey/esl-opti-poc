@@ -52,18 +52,18 @@ describe("IconCardSingleColumnGrid Organism", () => {
     expect(within(list).getAllByRole("listitem")).toHaveLength(2);
     expect(screen.getAllByRole("heading", { level: 3 }).map((h) => h.textContent)).toEqual([
       "Checking Accounts",
-      "Savings Accounts",
+      "Savings Accounts(opens in a new tab)",
     ]);
   });
 
   it("links each row title to its href and opens external targets safely", () => {
     render(<IconCardSingleColumnGrid items={items} />);
 
-    const internal = screen.getByRole("link", { name: "Checking Accounts" });
+    const internal = screen.getByRole("link", { name: /^Checking Accounts/ });
     expect(internal.getAttribute("href")).toBe("/personal/checking");
     expect(internal.getAttribute("target")).toBeNull();
 
-    const external = screen.getByRole("link", { name: "Savings Accounts" });
+    const external = screen.getByRole("link", { name: /^Savings Accounts/ });
     expect(external.getAttribute("target")).toBe("_blank");
     expect(external.getAttribute("rel")).toBe("noopener noreferrer");
   });

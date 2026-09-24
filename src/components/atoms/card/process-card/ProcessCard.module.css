@@ -95,7 +95,7 @@
 }
 
 .inverse .badge {
-  background-color: var(--color-teal-alpha-20);
+  background-color: var(--color-card-icon-badge-bg-hover);
   color: var(--color-border-accent);
 }
 
@@ -108,8 +108,8 @@
 }
 
 .inverse:hover {
-  border-color: var(--color-turquoise-400);
-  box-shadow: 0 0 0 2px var(--color-turquoise-400);
+  border-color: var(--color-border-accent);
+  box-shadow: 0 0 0 2px var(--color-border-accent);
   transform: translateY(-1px);
 }
 

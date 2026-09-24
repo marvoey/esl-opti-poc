@@ -29,12 +29,12 @@
 }
 
 .heading {
-  color: var(--color-navy-500);
+  color: var(--color-text-primary);
   margin: 0;
 }
 
 .description {
-  color: var(--color-slate-700);
+  color: var(--color-text-secondary);
   max-width: 42.5rem; /* ~680px, readable line length */
   margin: 0;
 }
@@ -51,7 +51,7 @@
 }
 
 .checkIcon {
-  color: var(--color-teal-700);
+  color: var(--color-accent);
   flex-shrink: 0;
 }
 

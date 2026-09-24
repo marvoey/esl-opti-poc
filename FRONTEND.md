@@ -126,44 +126,67 @@ To eliminate Figma design debt, avoid redundant duplicate tokens, and enable 10-
 
 ### Tier 1: Primitives (Physical Values, Zero Semantics)
 
-- `--color-navy-900`: `#00395D` (Corporate Navy)
-- `--color-teal-700`: `#00A3A3` (Deep Teal)
-- `--color-turquoise-400`: `#68E0CC` (Vibrant Turquoise / Teal Stroke)
-- `--color-mint-50`: `#ECFBF8` (Polar Mint)
+- `--color-navy-950`: `#010E23` (Deep midnight navy)
+- `--color-navy-500`: `#00395D` (Corporate Navy / Primary)
+- `--color-navy-850`: `#003E65` (Guidance Navy)
+- `--color-navy-800`: `#01375A` (Dark Navy gradient stop)
+- `--color-aqua-500`: `#00A3A3` (Deep Aqua / Accent)
+- `--color-aqua-300`: `#68E0CC` (Figma: aqua-300 / Vibrant Accent Stroke)
+- `--color-grey-95`: `#ECFBF8` (Figma: Polar background / Mint Surface)
+- `--color-mint-100`: `#EAF9F9` (Linear wash tint)
+- `--color-blue-100`: `#D5E5F4` (Card stroke / Subtle Border)
+- `--color-aqua-100`: `#D5F3F2` (Ambient glow)
+- `--color-sky-300`: `#87CEF2` (Glow stop / Sky accent)
+- `--color-slate-50`: `#F7F9FB` (Neutral background)
+- `--color-slate-200`: `#B8BFC7` (Muted surface)
+- `--color-neutral-600`: `#4E5059` (Body secondary description)
+- `--color-slate-700`: `#364153` (Dark neutral body)
 - `--color-white`: `#FFFFFF`
 - `--color-black`: `#000000`
-- _Functional Alphas (Collapsed from 11 Figma opacities down to 4)_:
-  - `--color-white-10`: `rgba(255, 255, 255, 0.10)` (Subtle glass borders/cards)
-  - `--color-white-50`: `rgba(255, 255, 255, 0.50)` (Muted text on dark)
-  - `--color-white-80`: `rgba(255, 255, 255, 0.80)` (Readable contrast on dark)
-  - `--color-teal-alpha-20`: `rgba(0, 163, 163, 0.20)` (Icon gradients & subtle focus rings)
 
 ### Tier 2: Semantic Roles (System & Context Mappings)
 
-- `--color-text-primary`: `var(--color-navy-900)` (`#00395D`, Contrast 12.4:1 on white — WCAG AAA)
-- `--color-text-secondary`: `rgba(0, 57, 93, 0.75)` (Muted body copy)
+- `--color-text-primary`: `var(--color-navy-500)` (Contrast 12.4:1 on white — WCAG AAA)
+- `--color-text-secondary`: `var(--color-neutral-600)` (Muted body copy)
 - `--color-text-muted`: `rgba(0, 57, 93, 0.55)` (Footnotes, metadata)
 - `--color-text-inverted`: `var(--color-white)`
+- `--color-text-inverted-muted`: `var(--color-white-80)`
+- `--color-primary`: `var(--color-navy-500)`
+- `--color-primary-hover`: `var(--color-aqua-500)`
+- `--color-primary-contrast`: `var(--color-white)`
+- `--color-accent`: `var(--color-aqua-500)`
+- `--color-accent-subtle`: `var(--color-grey-95)`
+- `--color-focus-ring`: `var(--color-aqua-500)`
 - `--color-bg`: `var(--color-white)` (Clean canvas)
-- `--color-surface`: `var(--color-mint-50)` (`#ECFBF8` for cards and tinted panels)
-- `--color-bg-dark`: `var(--color-navy-900)` (`#00395D` for dark sections/heroes)
-- `--color-border`: `rgba(0, 163, 163, 0.25)`
-- `--color-border-subtle`: `rgba(0, 57, 93, 0.12)`
-- `--color-border-accent`: `var(--color-turquoise-400)` (`#68E0CC`)
+- `--color-bg-subtle`: `var(--color-slate-50)`
+- `--color-surface`: `var(--color-grey-95)` (Tinted polar cards & panels)
+- `--color-surface-raised`: `var(--color-white)` (Raised white cards)
+- `--color-surface-inverse`: `var(--color-navy-500)` (Dark cards & banners)
+- `--color-surface-muted`: `var(--color-slate-200)`
+- `--color-bg-dark`: `var(--color-navy-500)` (Dark section backgrounds)
+- `--color-border`: `var(--color-teal-alpha-20)`
+- `--color-border-subtle`: `var(--color-navy-alpha-12)`
+- `--color-border-accent`: `var(--color-aqua-300)`
+- `--color-border-card`: `var(--color-blue-100)`
+- `--color-border-inverse-subtle`: `var(--color-white-10)`
 
 ### Tier 3: Component Intent Tokens (Multi-Variant Flexibility)
 
-Components consume intent tokens rather than hardcoded hex codes:
+Components consume intent tokens mapped to Tier 2 roles rather than hardcoded hex codes:
 
-| Component   | Prop Variant          | Token Mapped                 | Color Rendered                                                                |
-| :---------- | :-------------------- | :--------------------------- | :---------------------------------------------------------------------------- |
-| `<Eyebrow>` | `color="brand"`       | `--color-eyebrow-brand`      | `#00395D` (Corporate Navy)                                                    |
-| `<Eyebrow>` | `color="accent"`      | `--color-eyebrow-accent`     | `#00A3A3` (Deep Teal)                                                         |
-| `<Eyebrow>` | `color="vibrant"`     | `--color-eyebrow-vibrant`    | `#68E0CC` (Vibrant Turquoise)                                                 |
-| `<Eyebrow>` | `color="inverted"`    | `--color-eyebrow-inverted`   | `#FFFFFF` (White on Dark)                                                     |
-| `<Button>`  | `variant="primary"`   | `--color-btn-primary-bg`     | Navy `#00395D` fill, White text, Turquoise hover (`#68E0CC`) + `elevation/md` |
-| `<Button>`  | `variant="secondary"` | `--color-btn-secondary-bg`   | Mint Polar `#ECFBF8` fill, Navy text, Turquoise hover + `elevation/md`        |
-| `<Button>`  | `variant="outline"`   | `--color-btn-outline-border` | Navy `#00395D` 1.5px border, Turquoise hover fill + `elevation/md`            |
+| Component | Prop Variant | Token Mapped | Semantic Role Destination |
+| :--- | :--- | :--- | :--- |
+| `<Heading>` | `color="primary"` | `styles.primary` | `var(--color-text-primary)` |
+| `<Heading>` | `color="secondary"` | `styles.secondary` | `var(--color-text-secondary)` |
+| `<Heading>` | `color="inverted"` | `styles.inverted` | `var(--color-text-inverted)` |
+| `<Heading>` | `color="accent"` | `styles.accent` | `var(--color-accent)` |
+| `<Stat>` | `color="accent"` | `styles.accent` | `var(--color-accent)` |
+| `<Stat>` | `color="primary"` | `styles.primary` | `var(--color-text-primary)` |
+| `<Stat>` | `color="inverted"` | `styles.inverted` | `var(--color-text-inverted)` |
+| `<Text>` | `variant="eyebrow"` | `styles.eyebrow` | `var(--font-family-eyebrow)`, uppercase |
+| `<Button>` | `variant="primary"` | `--color-btn-primary-bg` | Fill `var(--color-primary)`, text `var(--color-text-inverted)`, hover `var(--color-border-accent)` |
+| `<Button>` | `variant="secondary"` | `--color-btn-secondary-bg` | Fill `var(--color-surface)`, text `var(--color-primary)`, hover `var(--color-border-accent)` |
+| `<Button>` | `variant="outline"` | `--color-btn-outline-border` | Border `var(--color-primary)`, hover `var(--color-border-accent)` |
 
 ---
 

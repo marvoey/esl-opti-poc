@@ -100,11 +100,11 @@ describe('EslIconCardSingleColumnGrid Content Type & Renderer', () => {
     expect(screen.getByRole('heading', { level: 2, name: 'Three decisions' })).toBeDefined();
     expect(screen.getAllByRole('listitem')).toHaveLength(2);
 
-    const checking = screen.getByRole('link', { name: 'Checking Accounts' });
+    const checking = screen.getByRole('link', { name: /^Checking Accounts/ });
     expect(checking.getAttribute('href')).toBe('/personal/checking');
     expect(checking.getAttribute('target')).toBeNull();
 
-    const savings = screen.getByRole('link', { name: 'Savings Accounts' });
+    const savings = screen.getByRole('link', { name: /^Savings Accounts/ });
     expect(savings.getAttribute('target')).toBe('_blank');
     expect(savings.getAttribute('rel')).toBe('noopener noreferrer');
 

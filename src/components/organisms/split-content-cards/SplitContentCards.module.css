@@ -1,7 +1,7 @@
 .section {
   width: 100%;
   position: relative;
-  background-color: var(--color-bg-white, #ffffff);
+  background-color: var(--color-bg);
   background-repeat: no-repeat;
   background-position: center bottom;
   background-size: cover;
@@ -36,16 +36,16 @@
 
 .title {
   margin: 0 0 var(--space-md, 1rem);
-  color: var(--color-text-primary, #012642);
+  color: var(--color-text-primary);
   font-size: clamp(2rem, 3.5vw, 2.75rem);
   line-height: var(--line-height-tight, 1.15);
   font-weight: var(--font-weight-bold, 700);
-  font-family: var(--font-family-display, var(--font-family-base));
+  font-family: var(--font-family-display, var(--font-family-sans));
 }
 
 .description {
   margin: 0 0 var(--space-2xl, 2rem);
-  color: var(--color-text-secondary, #4a5568);
+  color: var(--color-text-secondary);
   font-size: var(--font-size-body-lg, 1.125rem);
   line-height: var(--line-height-relaxed, 1.6);
   max-width: 540px;
@@ -90,7 +90,6 @@
 }
 
 .heroStatValue {
-  color: var(--color-accent, #00a3ad) !important;
   font-size: clamp(2.5rem, 4vw, 3.25rem);
   font-weight: var(--font-weight-bold, 700);
   line-height: 1;
@@ -98,7 +97,7 @@
 }
 
 .heroStatUnit {
-  color: var(--color-text-primary, #012642);
+  color: var(--color-text-primary);
   font-size: 1.25rem;
   font-weight: var(--font-weight-bold, 700);
   line-height: 1;
@@ -131,7 +130,6 @@
 }
 
 .statValue {
-  color: var(--color-accent, #00a3ad) !important;
   font-size: clamp(2rem, 3.5vw, 2.75rem);
   font-weight: var(--font-weight-bold, 700);
   line-height: 1;

@@ -11,8 +11,7 @@
   --color-navy-800: #01375A; /* Footer gradient end */
   --color-aqua-500: #00A3A3;
   --color-teal-700: var(--color-aqua-500); /* Backwards-compatible alias */
-  --color-teal-500: #51BFB6; /* Figma: tab active border indicator */
-  --color-turquoise-400: #68E0CC;
+  --color-aqua-300: #68E0CC; /* Figma: aqua-300 */
   --color-grey-95: #ECFBF8; /* Figma: "Polar" background */
   --color-mint-50: var(--color-grey-95); /* Semantic/visual alias matching design system specs */
   --color-mint-100: #EAF9F9; /* Figma: linear wash tint */
@@ -43,9 +42,9 @@
   --color-navy-alpha-20: rgba(0, 57, 93, 0.20);
   --color-navy-alpha-25: rgba(0, 57, 93, 0.25);
   --color-blue-alpha-25: rgba(213, 229, 244, 0.25);
-  --color-turquoise-alpha-25: rgba(104, 224, 204, 0.25);
-  --color-sky-alpha-25: rgba(135, 206, 242, 0.25);
   --color-aqua-alpha-25: rgba(213, 243, 242, 0.25);
+  --color-aqua-300-alpha-25: rgba(104, 224, 204, 0.25);
+  --color-sky-alpha-25: rgba(135, 206, 242, 0.25);
   --color-white-alpha-25: rgba(255, 255, 255, 0.25);
   --color-sky-alpha-50: rgba(135, 206, 242, 0.50);
   --color-sky-alpha-65: rgba(135, 206, 242, 0.65);
@@ -66,7 +65,7 @@
 
   --color-border: var(--color-teal-alpha-20);
   --color-border-subtle: var(--color-navy-alpha-12);
-  --color-border-accent: var(--color-turquoise-400);
+  --color-border-accent: var(--color-aqua-300);
   --color-border-tab-active: var(--color-teal-500); /* #51BFB6 */
   --color-border-card: var(--color-blue-100);
   --color-border-inverse-subtle: var(--color-white-10);
@@ -209,7 +208,7 @@
   --color-badge-neutral-bg: var(--color-surface-raised);
   --color-badge-neutral-text: var(--color-text-primary);
   --color-badge-neutral-border: var(--color-navy-alpha-15);
-  --color-badge-dark-text: var(--color-turquoise-400);
+  --color-badge-dark-text: var(--color-aqua-300);
   --color-badge-dark-border: var(--color-teal-alpha-40);
 
   /* Cards (QuickLink & QuickLinkSimple) */
@@ -232,7 +231,7 @@
   --footer-bg: var(--gradient-footer);
   --footer-text-primary: var(--color-text-inverted);         /* #FFFFFF */
   --footer-text-muted: var(--color-text-inverted-muted);     /* rgba(255, 255, 255, 0.80) */
-  --footer-link-hover: var(--color-turquoise-400);           /* #68E0CC */
+  --footer-link-hover: var(--color-aqua-300);                /* #68E0CC */
   --footer-border-subtle: var(--color-white-10);             /* rgba(255, 255, 255, 0.10) */
 
   /* Shadows (Figma Elevation Tokens) */
@@ -241,7 +240,7 @@
   --shadow-card: 0 4px 20px 0 rgba(1, 38, 66, 0.06);
   --shadow-card-hover: 0 10px 14px 0 var(--color-sky-alpha-50);
   --shadow-card-hover-intense: 0 14px 20px 0 var(--color-sky-alpha-65);
-  --shadow-chip-hover: 0 2px 8px var(--color-turquoise-alpha-25);
+  --shadow-chip-hover: 0 2px 8px var(--color-aqua-300-alpha-25);
   --shadow-ring-hover: 0 0 0 2px var(--color-border-accent); /* reusable 2px hover ring for interactive cards */
 
   /* --- Typography Families --- */

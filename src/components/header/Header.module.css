@@ -94,11 +94,11 @@
 }
 
 .navLink:hover {
-  color: var(--color-teal-700);
+  color: var(--color-accent);
 }
 
 .navLink:focus-visible {
-  outline: 2px solid var(--color-teal-700);
+  outline: 2px solid var(--color-focus-ring);
   outline-offset: 4px;
   border-radius: var(--radius-sm);
 }
@@ -127,7 +127,7 @@
 }
 
 .navTrigger:focus-visible {
-  outline: 2px solid var(--color-teal-700);
+  outline: 2px solid var(--color-focus-ring);
   outline-offset: 2px;
 }
 
@@ -187,7 +187,7 @@
 }
 
 .mobileToggle:focus-visible {
-  outline: 2px solid var(--color-teal-700);
+  outline: 2px solid var(--color-focus-ring);
   outline-offset: 2px;
 }
 
