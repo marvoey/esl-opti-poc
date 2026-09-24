@@ -1,11 +1,12 @@
 import { getGraphClient } from '@/infrastructure/cms/graphClient';
+import { getDefaultSite } from '@/infrastructure/cms/siteRouting';
 import type { HeaderProps } from '@/components/header/Header';
 import { mapCmsHeaderToProps, type RawCmsHeader } from './headerMapper';
 import '@/infrastructure/cms/optimizely-registry';
 
 const COMBINED_HEADER_QUERY = `
-  query GetCombinedSiteHeader {
-    EslStartPage {
+  query GetCombinedSiteHeader($host: String) {
+    EslStartPage(where: { _metadata: { url: { base: { eq: $host } } } }) {
       items {
         header {
           brandLogo {
@@ -106,7 +107,7 @@ const COMBINED_HEADER_QUERY = `
         }
       }
     }
-    EslSiteSettings {
+    EslSiteSettings(where: { _metadata: { url: { base: { eq: $host } } } }) {
       items {
         header {
           brandLogo {
@@ -211,8 +212,8 @@ const COMBINED_HEADER_QUERY = `
 `;
 
 const COMBINED_HEADER_BASE_QUERY = `
-  query GetCombinedSiteHeaderBase {
-    EslStartPage {
+  query GetCombinedSiteHeaderBase($host: String) {
+    EslStartPage(where: { _metadata: { url: { base: { eq: $host } } } }) {
       items {
         header {
           brandLogo {
@@ -311,7 +312,7 @@ const COMBINED_HEADER_BASE_QUERY = `
         }
       }
     }
-    EslSiteSettings {
+    EslSiteSettings(where: { _metadata: { url: { base: { eq: $host } } } }) {
       items {
         header {
           brandLogo {
@@ -432,7 +433,9 @@ interface HeaderQueryResult {
  * If no published header exists in the CMS, returns null so no hardcoded
  * header appears in the UI (strict headless compliance).
  */
-export async function resolveHeaderContent(): Promise<HeaderProps | null> {
+export async function resolveHeaderContent(
+  origin: string = getDefaultSite().origin
+): Promise<HeaderProps | null> {
   const client = getGraphClient();
   if (!client) {
     return null;
@@ -443,7 +446,7 @@ export async function resolveHeaderContent(): Promise<HeaderProps | null> {
     try {
       const response = (await client.request(
         COMBINED_HEADER_QUERY,
-        {},
+        { host: origin },
         undefined,
         true
       )) as HeaderQueryResult | null;
@@ -468,7 +471,7 @@ export async function resolveHeaderContent(): Promise<HeaderProps | null> {
       try {
         const baseResponse = (await client.request(
           COMBINED_HEADER_BASE_QUERY,
-          {},
+          { host: origin },
           undefined,
           true
         )) as HeaderQueryResult | null;
@@ -491,9 +494,8 @@ export async function resolveHeaderContent(): Promise<HeaderProps | null> {
     }
 
     // 2. Path Fallback: Check if site-settings has header
-    const host = process.env.OPTIMIZELY_APP_HOST || 'http://localhost:5002';
     try {
-      const content = await client.getContentByPath('/site-settings', { host });
+      const content = await client.getContentByPath('/site-settings', { host: origin });
       if (
         content &&
         content.length > 0 &&

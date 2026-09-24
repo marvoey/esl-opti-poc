@@ -1,14 +1,9 @@
-import React, { Suspense } from "react";
+import React from "react";
 import type { Metadata } from "next";
 import Script from "next/script";
 import { Albert_Sans, League_Spartan } from "next/font/google";
 import "@/infrastructure/cms/optimizely-registry";
 import "./globals.css";
-import { Header } from "@/components/header/Header";
-import { Footer } from "@/components/organisms/footer/Footer";
-import { resolveHeaderContent } from "@/infrastructure/cms/resolveHeaderContent";
-import { resolveFooterContent } from "@/infrastructure/cms/resolveFooterContent";
-import { resolveSiteTitle } from "@/infrastructure/cms/resolveSiteTitle";
 
 const albertSans = Albert_Sans({
   subsets: ["latin"],
@@ -25,15 +20,10 @@ const leagueSpartan = League_Spartan({
 
 export const revalidate = 60;
 
+// The site title and title template come from src/app/sites/[site]/layout.tsx.
 export async function generateMetadata(): Promise<Metadata> {
-  const siteTitle = await resolveSiteTitle();
-  const defaultTitle = siteTitle || "ESL Federal Credit Union";
-
   return {
-    title: {
-      default: defaultTitle,
-      template: `%s | ${defaultTitle}`,
-    },
+    title: "ESL Federal Credit Union",
     description: "Enterprise Next.js architecture with Pragmatic Hexagonal Design, CMS Anti-Corruption Layer, and Intrinsic CSS Tokens",
     robots: {
       index: false,
@@ -49,18 +39,6 @@ export async function generateMetadata(): Promise<Metadata> {
       },
     },
   };
-}
-
-async function ServerHeader() {
-  const headerProps = await resolveHeaderContent();
-  if (!headerProps) return null;
-  return <Header {...headerProps} />;
-}
-
-async function ServerFooter() {
-  const footerProps = await resolveFooterContent();
-  if (!footerProps) return null;
-  return <Footer {...footerProps} />;
 }
 
 export default function RootLayout({
@@ -79,13 +57,7 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <Suspense fallback={null}>
-          <ServerHeader />
-        </Suspense>
         {children}
-        <Suspense fallback={null}>
-          <ServerFooter />
-        </Suspense>
       </body>
     </html>
   );

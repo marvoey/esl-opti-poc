@@ -1,11 +1,12 @@
 import { getGraphClient } from '@/infrastructure/cms/graphClient';
+import { getDefaultSite } from '@/infrastructure/cms/siteRouting';
 import type { FooterProps } from '@/components/organisms/footer/Footer';
 import { mapCmsFooterToProps, type RawCmsFooter } from './footerMapper';
 import '@/infrastructure/cms/optimizely-registry';
 
 const COMBINED_FOOTER_QUERY = `
-  query GetCombinedSiteFooter {
-    EslStartPage {
+  query GetCombinedSiteFooter($host: String) {
+    EslStartPage(where: { _metadata: { url: { base: { eq: $host } } } }) {
       items {
         footer {
           brandLogo {
@@ -49,7 +50,7 @@ const COMBINED_FOOTER_QUERY = `
         }
       }
     }
-    EslSiteSettings {
+    EslSiteSettings(where: { _metadata: { url: { base: { eq: $host } } } }) {
       items {
         footer {
           brandLogo {
@@ -102,7 +103,9 @@ const COMBINED_FOOTER_QUERY = `
  * If no published footer exists in the CMS, returns null so no hardcoded
  * footer appears in the UI.
  */
-export async function resolveFooterContent(): Promise<FooterProps | null> {
+export async function resolveFooterContent(
+  origin: string = getDefaultSite().origin
+): Promise<FooterProps | null> {
   const client = getGraphClient();
   if (!client) {
     return null;
@@ -111,7 +114,7 @@ export async function resolveFooterContent(): Promise<FooterProps | null> {
   try {
     // 1. Single round-trip query for both EslStartPage and EslSiteSettings
     try {
-      const response = (await client.request(COMBINED_FOOTER_QUERY, {}, undefined, true)) as {
+      const response = (await client.request(COMBINED_FOOTER_QUERY, { host: origin }, undefined, true)) as {
         EslStartPage?: {
           items?: Array<{
             footer?: RawCmsFooter | null;
@@ -140,9 +143,8 @@ export async function resolveFooterContent(): Promise<FooterProps | null> {
     }
 
     // 2. Path Fallback: Check if site-settings has footer
-    const host = process.env.OPTIMIZELY_APP_HOST || 'http://localhost:5002';
     try {
-      const content = await client.getContentByPath('/site-settings', { host });
+      const content = await client.getContentByPath('/site-settings', { host: origin });
       if (content && content.length > 0 && (content[0] as { footer?: RawCmsFooter }).footer) {
         const mapped = mapCmsFooterToProps((content[0] as { footer?: RawCmsFooter }).footer);
         if (mapped) return mapped;
