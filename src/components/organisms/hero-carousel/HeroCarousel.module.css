@@ -108,8 +108,8 @@
   position: absolute;
   top: 4%;
   right: 2%;
-  width: clamp(74px, 18cqi, 108px);
-  aspect-ratio: 1 / 1;
+  width: 128px;
+  height: 128px;
   border-radius: var(--radius-full);
   background-color: var(--color-navy-500);
   color: var(--color-text-inverted);
@@ -118,7 +118,7 @@
   justify-content: center;
   text-align: center;
   box-shadow: var(--shadow-md);
-  padding: var(--space-3xs);
+  padding: var(--space-badge-padding);
 }
 
 @container (min-width: 860px) {
@@ -128,18 +128,24 @@
 }
 
 .badgePercent {
-  font-family: var(--font-family-sans);
-  font-size: clamp(1.125rem, 3.5cqi, 1.75rem);
-  font-weight: var(--font-weight-black);
-  line-height: 1;
-  letter-spacing: -0.02em;
+  font-family: var(--font-family-display);
+  font-size: 2.5rem; /* 40px, fixed per design spec — not the responsive --font-size-stat clamp */
+  line-height: 2.75rem; /* 44px */
+  letter-spacing: var(--tracking-stat);
+  font-weight: var(--font-weight-bold);
+}
+
+.badgePercentSymbol {
+  font-size: var(--font-size-h4); /* 20px, ~half the number per design */
+  vertical-align: super;
 }
 
 .badgeLabel {
   font-family: var(--font-family-sans);
-  font-size: clamp(0.625rem, 1.8cqi, 0.75rem);
-  font-weight: var(--font-weight-medium);
-  line-height: 1.15;
+  font-size: var(--font-size-button);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-button);
+  letter-spacing: var(--tracking-normal);
   margin-top: 2px;
   white-space: pre-line;
 }
@@ -235,7 +241,7 @@
 }
 
 .controlBtn:hover {
-  background-color: var(--color-mint-50);
+  background-color: var(--color-grey-95);
   transform: translateY(-1px);
 }
 

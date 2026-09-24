@@ -1,6 +1,6 @@
 .snipeCta {
   width: 100%;
-  background: var(--gradient-linear-wash, var(--gradient-mint-wash, linear-gradient(90deg, #ffffff 0%, #eaf9f9 50%, #ffffff 100%)));
+  background: var(--gradient-linear-wash);
 }
 
 .container {
@@ -24,7 +24,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-xs);
+  gap: var(--space-snipe-cta-header-gap);
 }
 
 .icon {
@@ -32,7 +32,7 @@
 }
 
 .title {
-  white-space: nowrap;
+  margin: 0;
 }
 
 .contentWrap {
@@ -51,7 +51,6 @@
   color: var(--color-primary);
   text-decoration: underline;
   text-underline-offset: 3px;
-  white-space: nowrap;
 }
 
 .link:hover {

@@ -37,7 +37,7 @@
 }
 
 .title {
-  color: var(--color-primary, #00395D);
+  color: var(--color-primary, var(--color-navy-500));
   margin: 0;
 }
 
@@ -87,7 +87,7 @@
 }
 
 .cardTitle {
-  color: #00395D;
+  color: var(--color-navy-500);
   margin: 0;
 }
 

@@ -41,11 +41,16 @@ export function SimpleLink({
   icon,
   ...rest
 }: SimpleLinkProps) {
+  const opensInNewTab = "target" in rest && rest.target === "_blank";
+
   const content = (
     <>
-      <Text as="span" variant="body-sm" weight="semibold" color="inherit">
+      <Text as="span" variant="body-sm" weight="bold" color="inherit">
         {children}
       </Text>
+      {opensInNewTab && (
+        <span className={styles.visuallyHidden}>(opens in a new tab)</span>
+      )}
       {icon ?? (
         <ArrowRightIcon
           size={16}

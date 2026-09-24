@@ -258,7 +258,20 @@ export function HeroCarousel({
                       />
                       {(slide.badgeStat || slide.badgeLabel) && (
                         <div className={isSquared ? styles.badgeSquared : styles.badge} aria-hidden="true">
-                          {slide.badgeStat && <span className={styles.badgePercent}>{slide.badgeStat}</span>}
+                          {slide.badgeStat && (() => {
+                            const hasPercentSuffix = slide.badgeStat.trim().endsWith("%");
+                            const statValue = hasPercentSuffix
+                              ? slide.badgeStat.trim().slice(0, -1)
+                              : slide.badgeStat;
+                            return (
+                              <span className={styles.badgePercent}>
+                                {statValue}
+                                {hasPercentSuffix && (
+                                  <span className={styles.badgePercentSymbol}>%</span>
+                                )}
+                              </span>
+                            );
+                          })()}
                           {slide.badgeLabel && <span className={styles.badgeLabel}>{slide.badgeLabel}</span>}
                         </div>
                       )}

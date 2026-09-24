@@ -21,6 +21,7 @@ export interface SideBySideProps {
   className?: string;
   loading?: "eager" | "lazy";
   priority?: boolean;
+  ariaLabel?: string;
 }
 
 export function SideBySide({
@@ -39,6 +40,7 @@ export function SideBySide({
   className = "",
   loading = "lazy",
   priority = false,
+  ariaLabel,
 }: SideBySideProps) {
   const isDark = variant === "dark";
   const autoId = useId();
@@ -73,7 +75,12 @@ export function SideBySide({
     : {};
 
   return (
-    <section id={id} className={combinedSectionClass} aria-labelledby={headingId}>
+    <section
+      id={id}
+      className={combinedSectionClass}
+      aria-label={ariaLabel}
+      aria-labelledby={ariaLabel ? undefined : headingId}
+    >
       <div className={styles.container}>
         <article className={cardClass}>
           <div className={contentClass}>

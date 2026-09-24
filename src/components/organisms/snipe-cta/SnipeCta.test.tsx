@@ -13,8 +13,10 @@ describe("SnipeCta Organism", () => {
     const containerDiv = container.querySelector(".container");
     expect(containerDiv).toBeDefined();
 
-    // 1. CircleCheck icon
-    expect(screen.getByTestId("circle-check")).toBeDefined();
+    // 1. CircleHelp icon
+    const icon = container.querySelector("svg");
+    expect(icon).not.toBeNull();
+    expect(icon?.getAttribute("aria-hidden")).toBe("true");
 
     // 2. Text components
     expect(screen.getByText("Can you join?")).toBeDefined();

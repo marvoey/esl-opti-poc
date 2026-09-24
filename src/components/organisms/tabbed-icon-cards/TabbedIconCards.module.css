@@ -1,6 +1,7 @@
 .section {
   width: 100%;
   container-type: inline-size;
+  margin-bottom: var(--space-tabbed-icon-cards-margin-bottom);
 }
 
 .container {
@@ -19,7 +20,7 @@
 .tabListWrapper {
   position: relative;
   border-bottom: 1px solid var(--color-border-subtle);
-  margin-bottom: var(--space-xl);
+  margin-bottom: 1rem; /* 16px mobile */
 }
 
 .tabList {
@@ -102,6 +103,13 @@
 
 .panel {
   animation: panelFadeIn var(--duration-smart) var(--ease-out-smart);
+  outline: none;
+}
+
+.panel:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 4px;
+  border-radius: var(--radius-md);
 }
 
 @keyframes panelFadeIn {
@@ -119,8 +127,9 @@
 .cardGrid {
   display: grid;
   grid-template-columns: 1fr;
-  align-items: start;
+  align-items: stretch;
   gap: var(--space-md);
+  padding-block: var(--space-sm);
 }
 
 /* Small tablet containers: 2 columns */
@@ -137,10 +146,12 @@
   }
 }
 
-/* Desktop / large containers: single row, capped at 7 columns max */
+/* Desktop / large containers: fluid responsive columns that wrap dynamically without overflowing */
 @container (min-width: 920px) {
   .cardGrid {
-    grid-template-columns: repeat(7, minmax(max-content, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    grid-auto-rows: 176px;
+    align-items: center;
   }
 }
 
@@ -151,6 +162,10 @@
 
   .heading {
     margin-bottom: 2.25rem; /* 36px desktop */
+  }
+
+  .tabListWrapper {
+    margin-bottom: var(--space-tabbed-icon-cards-margin-bottom);
   }
 }
 

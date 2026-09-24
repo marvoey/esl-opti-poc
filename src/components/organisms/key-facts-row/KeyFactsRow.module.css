@@ -31,7 +31,7 @@
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-h3);
   letter-spacing: var(--tracking-h3, -0.16px);
-  color: #00395d;
+  color: var(--color-navy-500);
 }
 
 .subtitle {
