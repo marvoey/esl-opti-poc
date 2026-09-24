@@ -28,6 +28,29 @@ export function unknownTypesFromError(error: unknown): string[] {
   return types;
 }
 
+export type UnknownField = {
+  field: string;
+  type?: string;
+};
+
+/** Field names Graph reported as unknown on a type, e.g. `primaryCtaIcon` on `EslHeroSlideProperty`. */
+export function unknownFieldsFromError(error: unknown): UnknownField[] {
+  const errors = (error as FailedGraphRequest | null)?.errors ?? [];
+  const fields: UnknownField[] = [];
+  for (const e of errors) {
+    if (typeof e?.message === 'string') {
+      const match = e.message.match(/Cannot query field "([^"]+)"(?: on type "([^"]+)")?/);
+      if (match && match[1]) {
+        fields.push({
+          field: match[1],
+          type: match[2] || undefined,
+        });
+      }
+    }
+  }
+  return fields;
+}
+
 /** Removes spreads, inline fragments and fragment definitions of the given types. */
 export function sanitizeQuery(query: string, unknownTypes: string[]): string {
   let sanitized = query;
@@ -47,6 +70,37 @@ export function sanitizeQuery(query: string, unknownTypes: string[]): string {
         }
         sanitized = sanitized.slice(0, fragStart) + sanitized.slice(pos);
       }
+    }
+  }
+  return sanitized;
+}
+
+/** Removes unknown fields (including aliases and nested sub-selections) from the query. */
+export function sanitizeFields(query: string, unknownFields: UnknownField[]): string {
+  let sanitized = query;
+  for (const { field } of unknownFields) {
+    const regex = new RegExp(`(?:[a-zA-Z0-9_]+:)?\\b${field}\\b(?:\\s*\\([^)]*\\))?`, 'g');
+    let match: RegExpExecArray | null;
+    while ((match = regex.exec(sanitized)) !== null) {
+      const matchStart = match.index;
+      let pos = match.index + match[0].length;
+
+      while (pos < sanitized.length && /\s/.test(sanitized[pos])) {
+        pos++;
+      }
+
+      if (sanitized[pos] === '{') {
+        let depth = 1;
+        pos++;
+        while (pos < sanitized.length && depth > 0) {
+          if (sanitized[pos] === '{') depth++;
+          else if (sanitized[pos] === '}') depth--;
+          pos++;
+        }
+      }
+
+      sanitized = sanitized.slice(0, matchStart) + sanitized.slice(pos);
+      regex.lastIndex = matchStart;
     }
   }
   return sanitized;
@@ -95,10 +149,10 @@ export function removeTypePrefix(obj: unknown): unknown {
 }
 
 /**
- * Re-runs a failed SDK request without the types Graph reported as unknown.
- * Returns the raw response, or null when the error is not an unknown-type
+ * Re-runs a failed SDK request without the types or fields Graph reported as unknown.
+ * Returns the raw response, or null when the error is not an unknown-type/field
  * error (the caller should rethrow it). Retries a few times in case Graph
- * reports the unknown types in batches.
+ * reports errors in batches.
  */
 export async function retryWithoutUnknownTypes(
   client: GraphClient,
@@ -109,19 +163,24 @@ export async function retryWithoutUnknownTypes(
   if (!original?.query) return null;
 
   const unknown = new Set<string>();
+  const unknownFields = new Map<string, UnknownField>();
   let current = error;
   for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
     const types = unknownTypesFromError(current);
-    if (types.length === 0) return null;
+    const fields = unknownFieldsFromError(current);
+    if (types.length === 0 && fields.length === 0) return null;
     types.forEach((type) => unknown.add(type));
+    fields.forEach((f) => unknownFields.set(f.field, f));
 
     console.warn(
-      '[cms] Graph does not know these registered types; rendering without them. Push the CMS schema:',
-      [...unknown]
+      '[cms] Graph does not know these registered types or fields; rendering without them. Push the CMS schema:',
+      { types: [...unknown], fields: [...unknownFields.keys()] }
     );
     try {
+      let sanitized = sanitizeQuery(original.query, [...unknown]);
+      sanitized = sanitizeFields(sanitized, [...unknownFields.values()]);
       return await client.request(
-        sanitizeQuery(original.query, [...unknown]),
+        sanitized,
         original.variables,
         previewToken,
         false

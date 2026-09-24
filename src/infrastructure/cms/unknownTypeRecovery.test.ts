@@ -3,7 +3,9 @@ import type { GraphClient } from '@optimizely/cms-sdk';
 import {
   removeTypePrefix,
   retryWithoutUnknownTypes,
+  sanitizeFields,
   sanitizeQuery,
+  unknownFieldsFromError,
   unknownTypesFromError,
 } from './unknownTypeRecovery';
 
@@ -97,5 +99,53 @@ describe('unknownTypeRecovery', () => {
         slides: [{ __typename: 'EslSlide', EslSlide__heading: 'Hi' }],
       })
     ).toEqual({ __typename: 'EslHeroSlider', variant: 'dark', slides: [{ __typename: 'EslSlide', heading: 'Hi' }] });
+  });
+
+  it('reads unknown field names from Graph "Cannot query field" errors', () => {
+    const error = {
+      errors: [
+        { message: 'Cannot query field "primaryCtaIcon" on type "EslHeroSlideProperty". Did you mean "primaryCta"?' },
+        { message: 'Cannot query field "secondaryCtaIcon" on type "EslHeroSlideProperty". Did you mean "secondaryCta"?' },
+      ],
+    };
+    expect(unknownFieldsFromError(error)).toEqual([
+      { field: 'primaryCtaIcon', type: 'EslHeroSlideProperty' },
+      { field: 'secondaryCtaIcon', type: 'EslHeroSlideProperty' },
+    ]);
+  });
+
+  it('sanitizes unknown fields and their aliases from queries', () => {
+    const query = 'fragment F on EslHeroSlideProperty { EslHeroSlideProperty__primaryCtaIcon:primaryCtaIcon EslHeroSlideProperty__primaryCta:primaryCta { text } }';
+    const sanitized = sanitizeFields(query, [{ field: 'primaryCtaIcon' }]);
+    expect(sanitized).not.toContain('primaryCtaIcon');
+    expect(sanitized).toContain('EslHeroSlideProperty__primaryCta:primaryCta { text }');
+  });
+
+  it('sanitizes unknown fields with sub-selections', () => {
+    const query = '{ title unknownSubObject { id name items { x } } description }';
+    const sanitized = sanitizeFields(query, [{ field: 'unknownSubObject' }]);
+    expect(sanitized).not.toContain('unknownSubObject');
+    expect(sanitized).toContain('{ title  description }');
+  });
+
+  it('retries and succeeds when Graph reports Cannot query field errors', async () => {
+    const request = vi.fn().mockResolvedValue({ _Content: { item: { heading: 'Hello' } } });
+    const client = { request } as unknown as GraphClient;
+
+    const error = {
+      errors: [
+        { message: 'Cannot query field "primaryCtaIcon" on type "EslHeroSlideProperty".' },
+      ],
+      request: {
+        query: 'fragment F on EslHeroSlideProperty { EslHeroSlideProperty__primaryCtaIcon:primaryCtaIcon heading }',
+        variables: {},
+      },
+    };
+
+    const res = await retryWithoutUnknownTypes(client, error, 'token-123');
+    expect(res).toEqual({ _Content: { item: { heading: 'Hello' } } });
+    expect(request).toHaveBeenCalledTimes(1);
+    expect(request.mock.calls[0][0]).not.toContain('primaryCtaIcon');
+    expect(request.mock.calls[0][0]).toContain('heading');
   });
 });

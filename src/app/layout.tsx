@@ -51,12 +51,12 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://cdn.optimizely.com" />
         <link rel="dns-prefetch" href="https://cdn.optimizely.com" />
+      </head>
+      <body>
         <Script
           src="https://cdn.optimizely.com/js/4775830914596864.js"
           strategy="beforeInteractive"
         />
-      </head>
-      <body>
         {children}
       </body>
     </html>

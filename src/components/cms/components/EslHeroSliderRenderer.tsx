@@ -12,6 +12,7 @@ export type HeroSlideItem = {
   } | string | null;
   image?: ImageRefContent | null;
   imageAlt?: string | null;
+  primaryCtaIcon?: string | null;
   primaryCta?: {
     text?: string | null;
     title?: string | null;
@@ -23,6 +24,7 @@ export type HeroSlideItem = {
       [key: string]: unknown;
     } | null;
   } | null;
+  secondaryCtaIcon?: string | null;
   secondaryCta?: {
     text?: string | null;
     title?: string | null;
@@ -138,6 +140,15 @@ export default function EslHeroSlider({
         const imageAlt = imageSrc ? resolveMediaAlt(slide, slide.heading || '') : '';
         const primaryCtaResolved = resolveLink(slide.primaryCta);
         const secondaryCtaResolved = resolveLink(slide.secondaryCta);
+        const primaryCtaIcon =
+          slide.primaryCtaIcon && slide.primaryCtaIcon.trim() !== 'none'
+            ? slide.primaryCtaIcon.trim()
+            : undefined;
+        const secondaryCtaIcon =
+          slide.secondaryCtaIcon && slide.secondaryCtaIcon.trim() !== 'none'
+            ? slide.secondaryCtaIcon.trim()
+            : undefined;
+
         return {
           id: `slide-${idx + 1}`,
           eyebrow: slide.eyebrow || '',
@@ -148,10 +159,12 @@ export default function EslHeroSlider({
           primaryCtaHref: primaryCtaResolved.url,
           primaryCtaTarget: primaryCtaResolved.target,
           primaryCtaRel: primaryCtaResolved.rel,
+          primaryCtaIcon,
           secondaryCta: secondaryCtaResolved.text,
           secondaryCtaHref: secondaryCtaResolved.url,
           secondaryCtaTarget: secondaryCtaResolved.target,
           secondaryCtaRel: secondaryCtaResolved.rel,
+          secondaryCtaIcon,
           imageSrc,
           imageAlt,
           badgeStat: slide.badgeStat || '',
