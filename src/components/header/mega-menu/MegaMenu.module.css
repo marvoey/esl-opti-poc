@@ -29,6 +29,10 @@
   gap: var(--space-2xl);
 }
 
+.innerNoPromo {
+  grid-template-columns: 1fr;
+}
+
 .columns {
   display: flex;
   flex-direction: column;

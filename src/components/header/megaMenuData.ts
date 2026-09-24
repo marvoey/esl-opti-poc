@@ -12,18 +12,18 @@ export interface MegaMenuColumn {
 }
 
 export interface MegaMenuPromo {
-  eyebrow: string;
-  heading: string;
-  description: string;
-  ctaLabel: string;
-  ctaHref: string;
+  eyebrow?: string;
+  heading?: string;
+  description?: string;
+  ctaLabel?: string;
+  ctaHref?: string;
 }
 
 export interface MegaMenuData {
   viewAllLabel: string;
   viewAllHref: string;
   columns: MegaMenuColumn[];
-  promo: MegaMenuPromo;
+  promo?: MegaMenuPromo;
 }
 
 export const PERSONAL_MEGA_MENU: MegaMenuData = {

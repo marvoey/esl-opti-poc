@@ -4,6 +4,57 @@ import type { HeaderProps } from '@/components/header/Header';
 import { mapCmsHeaderToProps, type RawCmsHeader } from './headerMapper';
 import '@/infrastructure/cms/optimizely-registry';
 
+const MEGA_MENU_FIELDS = `
+  navLabel
+  cta {
+    text
+    title
+    target
+    url {
+      default
+      hierarchical
+      base
+      internal
+    }
+  }
+  columns {
+    heading
+    items {
+      icon
+      link {
+        text
+        title
+        target
+        url {
+          default
+          hierarchical
+          base
+          internal
+        }
+      }
+    }
+  }
+  promo {
+    eyebrow
+    heading
+    description {
+      json
+      html
+    }
+    cta {
+      text
+      title
+      target
+      url {
+        default
+        hierarchical
+        base
+        internal
+      }
+    }
+  }
+`;
+
 const COMBINED_HEADER_QUERY = `
   query GetCombinedSiteHeader($host: String) {
     EslStartPage(where: { _metadata: { url: { base: { eq: $host } } } }) {
@@ -28,55 +79,8 @@ const COMBINED_HEADER_QUERY = `
               internal
             }
           }
-          megaMenu {
-            navLabel
-            cta {
-              text
-              title
-              target
-              url {
-                default
-                hierarchical
-                base
-                internal
-              }
-            }
-            columns {
-              heading
-              items {
-                icon
-                link {
-                  text
-                  title
-                  target
-                  url {
-                    default
-                    hierarchical
-                    base
-                    internal
-                  }
-                }
-              }
-            }
-            promo {
-              eyebrow
-              heading
-              description {
-                json
-                html
-              }
-              cta {
-                text
-                title
-                target
-                url {
-                  default
-                  hierarchical
-                  base
-                  internal
-                }
-              }
-            }
+          megaMenus {
+            ${MEGA_MENU_FIELDS}
           }
           ctaVariant
           ctaIcon
@@ -129,55 +133,8 @@ const COMBINED_HEADER_QUERY = `
               internal
             }
           }
-          megaMenu {
-            navLabel
-            cta {
-              text
-              title
-              target
-              url {
-                default
-                hierarchical
-                base
-                internal
-              }
-            }
-            columns {
-              heading
-              items {
-                icon
-                link {
-                  text
-                  title
-                  target
-                  url {
-                    default
-                    hierarchical
-                    base
-                    internal
-                  }
-                }
-              }
-            }
-            promo {
-              eyebrow
-              heading
-              description {
-                json
-                html
-              }
-              cta {
-                text
-                title
-                target
-                url {
-                  default
-                  hierarchical
-                  base
-                  internal
-                }
-              }
-            }
+          megaMenus {
+            ${MEGA_MENU_FIELDS}
           }
           ctaVariant
           ctaIcon
@@ -442,7 +399,7 @@ export async function resolveHeaderContent(
   }
 
   try {
-    // 1. Single round-trip query for both EslStartPage and EslSiteSettings (with MegaMenu)
+    // 1. Single round-trip query for both EslStartPage and EslSiteSettings (with MegaMenus)
     try {
       const response = (await client.request(
         COMBINED_HEADER_QUERY,

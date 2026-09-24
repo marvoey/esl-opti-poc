@@ -116,4 +116,57 @@ describe('resolveHeaderContent', () => {
     const result = await resolveHeaderContent();
     expect(result).toBeNull();
   });
+
+  it('resolves multiple megaMenus authored on EslStartPage', async () => {
+    const mockRequest = vi.fn().mockResolvedValue({
+      EslStartPage: {
+        items: [
+          {
+            header: {
+              brandHref: '/',
+              navLinks: [
+                { text: 'Personal', url: { default: '/personal' } },
+                { text: 'Business', url: { default: '/business' } },
+              ],
+              megaMenus: [
+                {
+                  navLabel: 'Personal',
+                  cta: { text: 'All Personal', url: { default: '/personal' } },
+                  columns: [
+                    {
+                      heading: 'MANAGE',
+                      items: [{ icon: 'landmark', link: { text: 'Checking', url: { default: '/checking' } } }],
+                    },
+                  ],
+                },
+                {
+                  navLabel: 'Business',
+                  cta: { text: 'All Business', url: { default: '/business' } },
+                  columns: [
+                    {
+                      heading: 'GROWTH',
+                      items: [{ icon: 'store', link: { text: 'Merchant Services', url: { default: '/merchants' } } }],
+                    },
+                  ],
+                },
+              ],
+            },
+          },
+        ],
+      },
+    });
+
+    vi.spyOn(graphClientModule, 'getGraphClient').mockReturnValue({
+      request: mockRequest,
+      getContentByPath: vi.fn(),
+    } as unknown as NonNullable<ReturnType<typeof graphClientModule.getGraphClient>>);
+
+    const result = await resolveHeaderContent();
+    expect(result).not.toBeNull();
+    expect(result?.navLinks).toHaveLength(2);
+    expect(result?.navLinks?.[0].label).toBe('Personal');
+    expect(result?.navLinks?.[0].megaMenu?.columns[0].heading).toBe('MANAGE');
+    expect(result?.navLinks?.[1].label).toBe('Business');
+    expect(result?.navLinks?.[1].megaMenu?.columns[0].heading).toBe('GROWTH');
+  });
 });

@@ -25,12 +25,15 @@ export const EslHeaderContentType = contentType({
       group: 'content',
       sortOrder: 20,
     },
-    megaMenu: {
-      type: 'component',
-      contentType: EslMegaMenuContentType,
-      displayName: 'Mega Menu (e.g. Personal)',
+    megaMenus: {
+      type: 'array',
+      displayName: 'Mega Menus',
       group: 'content',
       sortOrder: 25,
+      items: {
+        type: 'component',
+        contentType: EslMegaMenuContentType,
+      },
     },
     navLinks: {
       type: 'array',
