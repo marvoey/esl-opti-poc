@@ -71,6 +71,7 @@
     flex-direction: row;
     justify-content: flex-start;
     min-height: auto;
+    height: auto;
     padding: 8px;
     gap: var(--space-md);
     border-radius: var(--radius-md);

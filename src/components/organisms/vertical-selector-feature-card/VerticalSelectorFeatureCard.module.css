@@ -148,9 +148,14 @@
   padding-top: 0.5rem;
 }
 
-/* Responsive: Component is hidden on tablet and mobile (< 1024px) */
+.featureCard:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 4px;
+}
+
+/* Responsive: Component is intentionally hidden on tablet and mobile (< 1024px) */
 @media (max-width: 1023px) {
   .section {
-    display: none !important;
+    display: none;
   }
 }
