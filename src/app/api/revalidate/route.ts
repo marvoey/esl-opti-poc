@@ -129,7 +129,16 @@ function sitesFor(origin?: string | null): Site[] {
 function planForSites(sites: Site[]): RevalidationPlan {
   return {
     paths: ['/'],
-    routes: sites.map((site) => ({ path: sitePath(site, '/'), type: 'layout' as const })),
+    routes: [
+      // Site-specific layout eviction for backwards-compatibility with existing tests/monitors
+      ...sites.map((site) => ({ path: sitePath(site, '/'), type: 'layout' as const })),
+      // Page-level eviction for Home page (_N_T_/sites/<site key>)
+      ...sites.map((site) => ({ path: sitePath(site, '/') })),
+      // Next.js App Router layout pattern tag (_N_T_/sites/[site]/layout)
+      { path: '/sites/[site]', type: 'layout' as const },
+      // Root layout tag (_N_T_/layout)
+      { path: '/', type: 'layout' as const },
+    ],
   };
 }
 
@@ -143,17 +152,25 @@ function planForSites(sites: Site[]): RevalidationPlan {
  * - "/home/" (Home) or "/" (start page: header and footer) -> the whole site
  */
 function planForCmsUrl(rawUrl: string, origin?: string | null): RevalidationPlan {
+  const trimmed = rawUrl.trim();
+  if (trimmed.startsWith('/sites/')) {
+    return {
+      paths: ['/'],
+      routes: [{ path: trimmed }],
+    };
+  }
+
   let urlOrigin = origin ?? null;
-  if (!urlOrigin && /^https?:\/\//i.test(rawUrl.trim())) {
+  if (!urlOrigin && /^https?:\/\//i.test(trimmed)) {
     try {
-      urlOrigin = new URL(rawUrl.trim()).origin;
+      urlOrigin = new URL(trimmed).origin;
     } catch {
       urlOrigin = null;
     }
   }
 
   const sites = sitesFor(urlOrigin);
-  const publicPath = publicPathFromCmsPath(rawUrl);
+  const publicPath = publicPathFromCmsPath(trimmed);
   if (publicPath === null || publicPath === '/') {
     return planForSites(sites);
   }
@@ -226,17 +243,21 @@ function extractContentTypeFromPayload(body?: unknown): string | null {
 }
 
 /**
- * True when a payload without a URL names a page or experience type. Many
- * pages can share a type, so the type alone cannot say which page changed.
+ * True when a payload without a URL names a page, experience, or site-level
+ * component (header, footer, megamenu, sitesettings).
  */
 function isPageContentType(body?: unknown): boolean {
   const typeName = extractContentTypeFromPayload(body);
-  if (typeName && /experience|page/i.test(typeName)) return true;
+  if (typeName && /experience|page|header|footer|mega\s*menu|site\s*settings/i.test(typeName)) return true;
 
   const b = body && typeof body === 'object' ? (body as Record<string, unknown>) : null;
   const d = b?.data && typeof b.data === 'object' ? (b.data as Record<string, unknown>) : null;
   const types = (Array.isArray(d?.types) ? d.types : Array.isArray(b?.types) ? b.types : []) as unknown[];
-  return types.some((t) => t === '_Page' || t === '_Experience');
+  return types.some(
+    (t) =>
+      typeof t === 'string' &&
+      (t === '_Page' || t === '_Experience' || /header|footer|mega\s*menu|site\s*settings/i.test(t))
+  );
 }
 
 const GET_CONTENT_BY_GUID_QUERY = `
@@ -322,7 +343,19 @@ async function resolvePlanFromGuid(rawGuid: string): Promise<RevalidationPlan | 
     }
 
     const types = item._metadata.types || [];
-    if (types.some((t) => t.toLowerCase().includes('homeexperience'))) {
+    if (
+      types.some((t) => {
+        const lower = t.toLowerCase().replace(/\s+/g, '');
+        return (
+          lower.includes('homeexperience') ||
+          lower.includes('startpage') ||
+          lower.includes('sitesettings') ||
+          lower.includes('header') ||
+          lower.includes('footer') ||
+          lower.includes('megamenu')
+        );
+      })
+    ) {
       return planForSites(sitesFor(base));
     }
   } catch (err) {
@@ -342,6 +375,15 @@ function executeRevalidations(plan: RevalidationPlan): void {
       }
     } catch (e) {
       console.error(`Error revalidating route "${route.path}":`, e);
+    }
+  }
+
+  // Also purge public paths directly (for public router cache / CDN consistency)
+  for (const publicPath of plan.paths) {
+    try {
+      revalidatePath(publicPath);
+    } catch (e) {
+      console.error(`Error revalidating public path "${publicPath}":`, e);
     }
   }
 }

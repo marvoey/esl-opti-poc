@@ -720,4 +720,185 @@ describe('On-Demand Revalidation Route Handler (/api/revalidate)', () => {
       expect(revalidatePath).not.toHaveBeenCalledWith(SITE, 'layout');
     });
   });
+
+  describe('nested page hierarchy and global component revalidation', () => {
+    it('correctly revalidates Home page with layout, Home page tag, and public root', async () => {
+      const req = new NextRequest(`http://localhost:5002/api/revalidate?secret=${mockSecret}`, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ data: { url: '/home/' } }),
+      });
+
+      const res = await POST(req);
+      const data = await res.json();
+
+      expect(res.status).toBe(200);
+      expect(data.revalidated).toBe(true);
+      expect(data.path).toBe('/');
+      // Verifies both the Next.js layout pattern tag and the page-level home route
+      expect(revalidatePath).toHaveBeenCalledWith('/sites/[site]', 'layout');
+      expect(revalidatePath).toHaveBeenCalledWith(SITE);
+      expect(revalidatePath).toHaveBeenCalledWith(SITE, 'layout');
+      expect(revalidatePath).toHaveBeenCalledWith('/', 'layout');
+    });
+
+    it('correctly revalidates nested child: Product 1 under Product Family without affecting Product 1 under Product Family 2', async () => {
+      const req = new NextRequest(`http://localhost:5002/api/revalidate?secret=${mockSecret}`, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          data: {
+            publicUrl: 'http://localhost:5002/home/product-family/product-1/',
+          },
+        }),
+      });
+
+      const res = await POST(req);
+      const data = await res.json();
+
+      expect(res.status).toBe(200);
+      expect(data.revalidated).toBe(true);
+      expect(data.path).toBe('/product-family/product-1');
+      expect(revalidatePath).toHaveBeenCalledWith(`${SITE}/product-family/product-1`);
+      expect(revalidatePath).not.toHaveBeenCalledWith(`${SITE}/product-family-2/product-1`);
+    });
+
+    it('correctly revalidates nested child: Product 1 under Product Family 2 without affecting Product 1 under Product Family', async () => {
+      const req = new NextRequest(`http://localhost:5002/api/revalidate?secret=${mockSecret}`, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          data: {
+            publicUrl: 'http://localhost:5002/home/product-family-2/product-1/',
+          },
+        }),
+      });
+
+      const res = await POST(req);
+      const data = await res.json();
+
+      expect(res.status).toBe(200);
+      expect(data.revalidated).toBe(true);
+      expect(data.path).toBe('/product-family-2/product-1');
+      expect(revalidatePath).toHaveBeenCalledWith(`${SITE}/product-family-2/product-1`);
+      expect(revalidatePath).not.toHaveBeenCalledWith(`${SITE}/product-family/product-1`);
+    });
+
+    it('correctly revalidates Product Details under Product Family', async () => {
+      const req = new NextRequest(`http://localhost:5002/api/revalidate?secret=${mockSecret}`, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          data: {
+            url: '/home/product-family/product-details/',
+          },
+        }),
+      });
+
+      const res = await POST(req);
+      const data = await res.json();
+
+      expect(res.status).toBe(200);
+      expect(data.revalidated).toBe(true);
+      expect(data.path).toBe('/product-family/product-details');
+      expect(revalidatePath).toHaveBeenCalledWith(`${SITE}/product-family/product-details`);
+    });
+
+    it('evicts the site layout and home page when EslHeader is published', async () => {
+      const req = new NextRequest(`http://localhost:5002/api/revalidate?secret=${mockSecret}`, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          type: { subject: 'doc', action: 'updated' },
+          data: {
+            contentType: 'EslHeader',
+            types: ['EslHeader', '_Component'],
+          },
+        }),
+      });
+
+      const res = await POST(req);
+      const data = await res.json();
+
+      expect(res.status).toBe(200);
+      expect(data.revalidated).toBe(true);
+      expect(data.source).toBe('contentType');
+      expect(revalidatePath).toHaveBeenCalledWith('/sites/[site]', 'layout');
+      expect(revalidatePath).toHaveBeenCalledWith(SITE);
+    });
+
+    it('evicts the site layout and home page when EslFooter is published', async () => {
+      const req = new NextRequest(`http://localhost:5002/api/revalidate?secret=${mockSecret}`, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          type: 'contentVersion:preview1:published',
+          data: {
+            contentTypeName: 'ESL Footer',
+          },
+        }),
+      });
+
+      const res = await POST(req);
+      const data = await res.json();
+
+      expect(res.status).toBe(200);
+      expect(data.revalidated).toBe(true);
+      expect(data.source).toBe('contentType');
+      expect(revalidatePath).toHaveBeenCalledWith('/sites/[site]', 'layout');
+    });
+
+    it('evicts the site layout and home page when EslMegaMenu is published', async () => {
+      const req = new NextRequest(`http://localhost:5002/api/revalidate?secret=${mockSecret}`, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          type: 'contentVersion:preview1:published',
+          data: {
+            contentTypeName: 'ESL Mega Menu',
+          },
+        }),
+      });
+
+      const res = await POST(req);
+      const data = await res.json();
+
+      expect(res.status).toBe(200);
+      expect(data.revalidated).toBe(true);
+      expect(data.source).toBe('contentType');
+      expect(revalidatePath).toHaveBeenCalledWith('/sites/[site]', 'layout');
+    });
+
+    it('evicts the site layout and home page when EslStartPage is resolved by GUID without URL', async () => {
+      vi.mocked(getGraphClient).mockReturnValue({
+        request: vi.fn().mockResolvedValue({
+          _Content: {
+            items: [
+              {
+                _metadata: {
+                  url: null,
+                  types: ['EslStartPage', '_Page'],
+                },
+              },
+            ],
+          },
+        }),
+      } as unknown as ReturnType<typeof getGraphClient>);
+
+      const req = new NextRequest(`http://localhost:5002/api/revalidate?secret=${mockSecret}`, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ data: { key: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890' } }),
+      });
+
+      const res = await POST(req);
+      const data = await res.json();
+
+      expect(res.status).toBe(200);
+      expect(data.revalidated).toBe(true);
+      expect(data.source).toBe('guid');
+      expect(revalidatePath).toHaveBeenCalledWith('/sites/[site]', 'layout');
+      expect(revalidatePath).toHaveBeenCalledWith(SITE);
+    });
+  });
 });
