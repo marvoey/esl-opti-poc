@@ -18,6 +18,7 @@ export interface ButtonBaseProps {
   variant?: ButtonVariant;
   size?: ButtonSize;
   shape?: ButtonShape;
+  align?: "left" | "right";
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
   fullWidth?: boolean;
@@ -52,6 +53,7 @@ export function Button({
   variant = "primary",
   size = "md",
   shape = "pill",
+  align = "left",
   leftIcon,
   rightIcon,
   fullWidth = false,
@@ -67,12 +69,16 @@ export function Button({
   const shapeClass = shape === "rounded" ? styles.rounded : styles.pill;
   const fullWidthClass = fullWidth ? styles.fullWidth : "";
   const loadingClass = isLoading ? styles.loading : "";
+  const hasArrowClass = rightIcon ? styles.hasArrow : "";
+  const alignRightClass = align === "right" ? styles.alignRight : "";
 
   const classes = [
     styles.button,
     variantClass,
     sizeClass,
     shapeClass,
+    hasArrowClass,
+    alignRightClass,
     fullWidthClass,
     loadingClass,
     className,

@@ -75,6 +75,7 @@ export function VideoStoryCardRow({
               <Button
                 variant="primary"
                 shape="pill"
+                align="right"
                 href={cta.href}
                 rightIcon={<ArrowRightIcon size={20} />}
                 {...ctaExternalProps}

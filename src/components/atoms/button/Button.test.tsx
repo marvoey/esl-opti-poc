@@ -42,14 +42,26 @@ describe("Button Atom Component", () => {
     expect(screen.getByRole("button", { name: "Sign In" })).not.toBeNull();
   });
 
-  it("renders right icon slot properly", () => {
+  it("renders right icon slot properly and applies hasArrow class", () => {
     render(
       <Button rightIcon={<ArrowRightIcon data-testid="arrow-icon" />}>
         Learn more
       </Button>
     );
+    const btn = screen.getByRole("button", { name: "Learn more" });
     expect(screen.getByTestId("arrow-icon")).not.toBeNull();
-    expect(screen.getByRole("button", { name: "Learn more" })).not.toBeNull();
+    expect(btn.className).toContain("hasArrow");
+  });
+
+  it("applies alignRight class when align='right' is specified", () => {
+    render(
+      <Button align="right" rightIcon={<ArrowRightIcon />}>
+        Right Aligned
+      </Button>
+    );
+    const btn = screen.getByRole("button", { name: "Right Aligned" });
+    expect(btn.className).toContain("alignRight");
+    expect(btn.className).toContain("hasArrow");
   });
 
   it("renders polymorphically as a Next.js Link when href is provided", () => {

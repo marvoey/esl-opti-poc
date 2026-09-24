@@ -84,9 +84,48 @@
   transition: var(--transition-all);
 }
 
-/* Smooth arrow micro-interaction on hover */
-.button:hover:not(:disabled) .iconRight {
-  transform: translateX(3px);
+/* Arrow Hover Animation:
+   - Default (left-aligned): button increases its size to the right and moves the arrow accordingly
+   - Right-aligned (.alignRight): button increases its size to the left and moves the text label accordingly */
+.button.hasArrow {
+  transition: var(--transition-all), padding-right var(--duration-smart) var(--ease-out-smart), padding-left var(--duration-smart) var(--ease-out-smart), gap var(--duration-smart) var(--ease-out-smart);
+}
+
+.button.hasArrow:hover:not(:disabled) {
+  padding-right: calc(1.5rem + 12px);
+  gap: 1rem; /* 16px (increased from 8px/6px) */
+}
+
+.button.hasArrow:hover:not(:disabled) .iconRight {
+  transform: translateX(4px);
+}
+
+/* Right-aligned variant: expands to the left instead of right */
+.button.hasArrow.alignRight:hover:not(:disabled) {
+  padding-right: 1.5rem;
+  padding-left: calc(1.5rem + 12px);
+  gap: 1rem; /* 16px (increased from 8px/6px) */
+}
+
+.button.hasArrow.alignRight:hover:not(:disabled) .label {
+  transform: translateX(-4px);
+}
+
+.button.hasArrow.alignRight:hover:not(:disabled) .iconRight {
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button.hasArrow:hover:not(:disabled),
+  .button.hasArrow.alignRight:hover:not(:disabled) {
+    padding-right: 1.5rem;
+    padding-left: 1.5rem;
+  }
+
+  .button.hasArrow:hover:not(:disabled) .iconRight,
+  .button.hasArrow.alignRight:hover:not(:disabled) .label {
+    transform: none;
+  }
 }
 
 /* --- Variants & Hover Animations --- */

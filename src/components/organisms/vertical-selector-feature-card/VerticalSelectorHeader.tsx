@@ -68,6 +68,7 @@ export function VerticalSelectorHeader({
           <Button
             variant="primary"
             shape="pill"
+            align="right"
             href={cta.href}
             rightIcon={<ArrowRightIcon size={20} />}
             {...headerCtaExternalProps}
