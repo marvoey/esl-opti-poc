@@ -32,6 +32,7 @@
   --color-white-50: rgba(255, 255, 255, 0.50);
   --color-white-80: rgba(255, 255, 255, 0.80);
   --color-teal-alpha-20: rgba(0, 163, 163, 0.20);
+  --color-aqua-alpha-20: var(--color-teal-alpha-20);
   --color-teal-alpha-30: rgba(0, 163, 163, 0.30);
   --color-teal-alpha-40: rgba(0, 163, 163, 0.40);
   --color-navy-alpha-04: rgba(0, 57, 93, 0.04);
@@ -211,6 +212,7 @@
   --color-badge-neutral-bg: var(--color-surface-raised);
   --color-badge-neutral-text: var(--color-text-primary);
   --color-badge-neutral-border: var(--color-navy-alpha-15);
+  --color-badge-dark-bg: var(--color-teal-alpha-20);
   --color-badge-dark-text: var(--color-aqua-300);
   --color-badge-dark-border: var(--color-teal-alpha-40);
 
