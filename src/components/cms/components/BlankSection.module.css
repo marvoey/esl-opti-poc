@@ -1,0 +1,25 @@
+/* Layout for the built-in Visual Builder BlankSection (rows of columns) */
+.section {
+  width: 100%;
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.column {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.element {
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .row {
+    flex-direction: row;
+  }
+}

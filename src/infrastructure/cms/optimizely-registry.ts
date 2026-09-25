@@ -95,6 +95,7 @@ import { EslFilterableProductCardGridItemContentType } from '@/components/cms/co
 import { EslFilterableProductCardGridContentType } from '@/components/cms/components/EslFilterableProductCardGrid';
 import EslFilterableProductCardGrid from '@/components/cms/components/EslFilterableProductCardGridRenderer';
 import { EslSeoContract } from '@/components/cms/shared/EslSeoContract';
+import BlankSection from '@/components/cms/components/BlankSectionRenderer';
 
 export function ensureOptimizelyRegistry() {
 
@@ -164,6 +165,7 @@ export function ensureOptimizelyRegistry() {
 
   initReactComponentRegistry({
     resolver: {
+      BlankSection,
       EslHomeExperience,
       EslHomePage,
       EslProductDetailExperience,
