@@ -94,10 +94,12 @@ import EslLongTextLeftCardsRight from '@/components/cms/components/EslLongTextLe
 import { EslFilterableProductCardGridItemContentType } from '@/components/cms/components/EslFilterableProductCardGridItem';
 import { EslFilterableProductCardGridContentType } from '@/components/cms/components/EslFilterableProductCardGrid';
 import EslFilterableProductCardGrid from '@/components/cms/components/EslFilterableProductCardGridRenderer';
+import { EslSeoContract } from '@/components/cms/shared/EslSeoContract';
 
 export function ensureOptimizelyRegistry() {
 
   initContentTypeRegistry([
+    EslSeoContract,
     EslHomeExperienceContentType,
     EslHomePageContentType,
     EslHeroSliderContentType,

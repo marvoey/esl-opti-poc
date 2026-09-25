@@ -5,6 +5,7 @@ export interface ImageOptimizationOptions {
 }
 
 export interface ImageRefContent {
+  key?: string | null;
   item?: {
     Url?: string | null;
     AltText?: string | null;
@@ -16,6 +17,7 @@ export interface ImageRefContent {
     hierarchical?: string | null;
     graph?: string | null;
     base?: string | null;
+    internal?: string | null;
     [key: string]: unknown;
   } | null;
   [key: string]: unknown;
@@ -163,6 +165,11 @@ export function resolveMediaUrl(
     imageRef.url?.hierarchical ||
     imageRef.url?.graph ||
     imageRef.url?.base ||
+    imageRef.url?.internal ||
+    (typeof imageRef.key === 'string' &&
+    (imageRef.key.startsWith('/') || imageRef.key.startsWith('http'))
+      ? imageRef.key
+      : '') ||
     '';
 
   if (!rawUrl) return '';

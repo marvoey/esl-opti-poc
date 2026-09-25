@@ -1,11 +1,13 @@
 import { contentType } from '@optimizely/cms-sdk';
 import { EslHeaderContentType } from '@/components/cms/components/EslHeader';
 import { EslFooterContentType } from '@/components/cms/components/EslFooter';
+import { EslSeoContract } from '@/components/cms/shared/EslSeoContract';
 
 export const EslStartPageContentType = contentType({
   key: 'EslStartPage',
   displayName: 'ESL Start Page',
   baseType: '_page',
+  extends: [EslSeoContract],
   mayContainTypes: ['EslHomeExperience', 'EslHomePage'],
   properties: {
     title: {

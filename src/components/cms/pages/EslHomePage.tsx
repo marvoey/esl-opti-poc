@@ -1,9 +1,11 @@
 import { contentType } from '@optimizely/cms-sdk';
+import { EslSeoContract } from '@/components/cms/shared/EslSeoContract';
 
 export const EslHomeExperienceContentType = contentType({
   key: 'EslHomeExperience',
   displayName: 'ESL Home Experience',
   baseType: '_experience',
+  extends: [EslSeoContract],
   mayContainTypes: [
     'EslProductFamilyExperience',
     'EslHeroSlider',
@@ -41,5 +43,6 @@ export const EslHomePageContentType = contentType({
   key: 'EslHomePage',
   displayName: 'ESL Home Page (Legacy)',
   baseType: '_page',
+  extends: [EslSeoContract],
   mayContainTypes: ['*'],
 });
