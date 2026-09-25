@@ -107,7 +107,7 @@
   margin-top: auto;
 }
 
-.footerLink {
+.footer .footerLink {
   color: var(--color-border-accent);
 }
 

@@ -4,10 +4,13 @@ import { ArrowRightIcon } from "../icons";
 import { Text } from "../text/Text";
 import styles from "./SimpleLink.module.css";
 
+export type SimpleLinkColor = "inherit" | "accent" | "primary";
+
 export interface SimpleLinkBaseProps {
   children: React.ReactNode;
   className?: string;
   icon?: React.ReactNode;
+  color?: SimpleLinkColor;
 }
 
 export type SimpleLinkAsLink = SimpleLinkBaseProps &
@@ -39,6 +42,7 @@ export function SimpleLink({
   children,
   className = "",
   icon,
+  color = "inherit",
   ...rest
 }: SimpleLinkProps) {
   const opensInNewTab = "target" in rest && rest.target === "_blank";
@@ -61,7 +65,8 @@ export function SimpleLink({
     </>
   );
 
-  const classes = [styles.simpleLink, className].filter(Boolean).join(" ");
+  const colorClass = color !== "inherit" ? styles[color] : undefined;
+  const classes = [styles.simpleLink, colorClass, className].filter(Boolean).join(" ");
 
   if ("as" in rest && rest.as === "span") {
     const { as, ...spanProps } = rest as SimpleLinkAsSpan;

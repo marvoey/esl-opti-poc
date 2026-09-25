@@ -80,11 +80,11 @@ export function RatesCard(props: RatesCardProps) {
 
       <footer className={styles.footer}>
         {href ? (
-          <SimpleLink href={href} className={styles.footerLink}>
+          <SimpleLink href={href} color="accent" className={styles.footerLink}>
             {ctaText}
           </SimpleLink>
         ) : (
-          <SimpleLink as="span" className={styles.footerLink}>
+          <SimpleLink as="span" color="accent" className={styles.footerLink}>
             {ctaText}
           </SimpleLink>
         )}
