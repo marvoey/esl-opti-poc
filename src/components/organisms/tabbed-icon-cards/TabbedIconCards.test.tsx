@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from "vitest";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, within } from "@testing-library/react";
 import React from "react";
 import { TabbedIconCards, type TabCategory } from "./TabbedIconCards";
 
@@ -136,6 +136,19 @@ describe("TabbedIconCards Organism", () => {
 
     const grid = container.querySelector("[class*='cardGrid']");
     expect(grid).not.toBeNull();
+  });
+
+  it("renders the cards as a list with one link per list item", () => {
+    render(<TabbedIconCards tabs={MOCK_TABS} />);
+
+    const panel = screen.getByRole("tabpanel");
+    const list = within(panel).getByRole("list");
+    const items = within(list).getAllByRole("listitem");
+
+    expect(items).toHaveLength(7);
+    items.forEach((item) => {
+      expect(within(item).getAllByRole("link")).toHaveLength(1);
+    });
   });
 
   it("supports a custom defaultTabId", () => {

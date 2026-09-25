@@ -54,10 +54,13 @@
 }
 
 .cardsColumn {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--space-md, 1rem);
   width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 /* Frosted Glass Hero Card */
@@ -65,7 +68,8 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  width: 100%;
+  /* Hero card spans the full row; stat cards take 50% each */
+  grid-column: 1 / -1;
   padding: 1.75rem 2rem;
   background-color: var(--color-blue-alpha-25);
   backdrop-filter: blur(12px);
@@ -103,14 +107,6 @@
 
 .heroDescription {
   margin: 0;
-}
-
-/* Dual Stat Cards Row */
-.dualStatsRow {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-md, 1rem);
-  width: 100%;
 }
 
 .statCard {
@@ -176,7 +172,7 @@
 }
 
 @media (max-width: 479px) {
-  .dualStatsRow {
+  .cardsColumn {
     grid-template-columns: 1fr;
   }
 }

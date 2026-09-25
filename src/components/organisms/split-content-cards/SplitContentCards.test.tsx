@@ -52,6 +52,20 @@ describe("SplitContentCards Organism", () => {
     expect(container.querySelector("svg.lucide-star")).not.toBeNull();
   });
 
+  it("groups the hero metric and stat cards into a single semantic list", () => {
+    render(<SplitContentCards />);
+
+    expect(screen.getByRole("list")).toBeDefined();
+    expect(screen.getAllByRole("listitem")).toHaveLength(3);
+  });
+
+  it("renders only the stat cards as list items when the hero metric is absent", () => {
+    render(<SplitContentCards heroMetric={null} />);
+
+    expect(screen.getByRole("list")).toBeDefined();
+    expect(screen.getAllByRole("listitem")).toHaveLength(2);
+  });
+
   it("associates custom section id with heading aria-labelledby", () => {
     const { container } = render(
       <SplitContentCards id="guidance-difference" />
@@ -132,5 +146,6 @@ describe("SplitContentCards Organism", () => {
       })
     ).toBeDefined();
     expect(screen.queryByRole("link")).toBeNull();
+    expect(screen.queryByRole("list")).toBeNull();
   });
 });

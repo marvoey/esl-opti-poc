@@ -99,24 +99,25 @@ export function MetricCardRow({
 
         {/* Div 2: Cards Row (100% Width, Margin-Top: 48px, 3 Columns) */}
         {cards && cards.length > 0 && (
-          <div className={styles.cardsRow}>
+          <ul className={styles.cardsRow} role="list">
             {cards.map((card) => (
-              <RatesCard
-                key={card.id ?? card.title}
-                category={card.category}
-                categoryIcon={card.categoryIcon}
-                rate={card.rate}
-                rateUnit={card.rateUnit}
-                rateLabel={card.rateLabel}
-                title={card.title}
-                description={card.description}
-                ctaText={card.ctaText}
-                href={card.href}
-                variant={card.variant}
-                className={styles.ratesCard}
-              />
+              <li key={card.id ?? card.title} className={styles.cardItem}>
+                <RatesCard
+                  category={card.category}
+                  categoryIcon={card.categoryIcon}
+                  rate={card.rate}
+                  rateUnit={card.rateUnit}
+                  rateLabel={card.rateLabel}
+                  title={card.title}
+                  description={card.description}
+                  ctaText={card.ctaText}
+                  href={card.href}
+                  variant={card.variant}
+                  className={styles.ratesCard}
+                />
+              </li>
             ))}
-          </div>
+          </ul>
         )}
       </div>
     </section>
