@@ -57,6 +57,7 @@ describe('proxy', () => {
     expect(matcher.test('/')).toBe(true);
     expect(matcher.test('/api/revalidate')).toBe(false);
     expect(matcher.test('/_next/static/chunk.js')).toBe(false);
+    expect(matcher.test('/opti-media/globalassets/photo.jpg')).toBe(false);
     expect(matcher.test('/favicon.ico')).toBe(false);
     expect(matcher.test('/robots.txt')).toBe(false);
   });

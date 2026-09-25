@@ -133,8 +133,8 @@ export function SplitContentImage({
               alt={image.alt}
               width={image.width ?? 933}
               height={image.height ?? 1024}
+              sizes="(max-width: 1024px) 100vw, 544px"
               className={styles.image}
-              unoptimized
             />
           </div>
         </div>

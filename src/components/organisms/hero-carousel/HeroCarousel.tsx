@@ -247,12 +247,11 @@ export function HeroCarousel({
                       <Image
                         src={slide.imageSrc}
                         alt={slide.imageAlt || ""}
-                        width={440}
-                        height={440}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 440px"
                         className={isSquared ? styles.imageSquared : styles.image}
                         priority={isFirst}
                         loading={isFirst ? "eager" : "lazy"}
-                        unoptimized={Boolean(slide.imageSrc.startsWith("http"))}
                       />
                       {(slide.badgeStat || slide.badgeLabel) && (
                         <div className={isSquared ? styles.badgeSquared : styles.badge} aria-hidden="true">

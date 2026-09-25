@@ -271,6 +271,7 @@ Components consume intent tokens mapped to Tier 2 roles rather than hardcoded he
 | `<BasicsTileGrid>`  | **Built & Tested** | `src/components/atoms/card/basics-tile/`       | Container orchestrator supporting desktop single-row track (Image 2) and mobile 2x2 grid with interior crosshair borders (Image 3)                       |
 | `<TextLink>`        | **Built & Tested** | `src/components/atoms/link/`                   | Editorial inline link (composes `<Text variant="button">`) with smooth underline reveal and dark/light modes                                             |
 | `<Icon>`            | **Built & Tested** | `src/components/atoms/icons/`                  | Typed Lucide React icon registry with tree-shaking                                                                                                       |
+| `<CmsImage>`        | **Built & Tested** | `src/components/atoms/image/`                  | Universal responsive Next.js image atom with first-party proxying (`/opti-media/`), Cloudflare CDN optimization, and aspect-ratio contract enforcement |
 
 ---
 
@@ -281,3 +282,72 @@ Components consume intent tokens mapped to Tier 2 roles rather than hardcoded he
 | **ESLint 9**     | JS / TS / JSX     | [`eslint.config.mjs`](file:///c:/Projects/ESL/eslint.config.mjs) | `npm run lint:js`  | Next.js Core Web Vitals, TypeScript strictness, React unescaped entities                                          |
 | **Stylelint 16** | CSS / CSS Modules | [`.stylelintrc.mjs`](file:///c:/Projects/ESL/.stylelintrc.mjs)   | `npm run lint:css` | Strict Design Tokens (`color-no-hex: true`), camelCase class naming, zero-unit cleanup, deprecated CSS prevention |
 | **Combined**     | Full Codebase     | —                                                                | `npm run lint`     | Runs both JS and CSS linters sequentially                                                                         |
+
+---
+
+## 8. Responsive Image & Media Infrastructure Contract
+
+### 8.1 The First-Party Media Reverse Proxy (`/opti-media/`)
+
+#### The Browser Privacy Challenge
+Browsers with strict privacy protection (most notably **Firefox Private Browsing / Incognito** with Enhanced Tracking Protection set to Strict mode) consult Disconnect.me and other tracker blocklists. Because Optimizely provides analytics and experimentation tools, `*.optimizely.com` is classified as a third-party tracking domain. When image URLs point directly to `https://app-*.cms.optimizely.com` or `https://images1.cmp.optimizely.com`, Firefox blocks the network requests completely in Private Browsing.
+
+#### The Architectural Solution
+1. **Next.js Reverse Proxy (`next.config.ts`)**:
+   ```ts
+   async rewrites() {
+     return [
+       { source: '/opti-media/cmp/:path*', destination: 'https://images1.cmp.optimizely.com/:path*' },
+       { source: '/opti-media/:path*', destination: `${cmsBase}/:path*` },
+     ];
+   }
+   ```
+2. **Same-Origin Delivery**:
+   All media requests leave the client browser as same-origin requests (`https://<domain>/opti-media/...`). No browser tracker list will ever block them.
+3. **Preserving Cloudflare On-The-Fly Resizing & Edge Optimization**:
+   Optimizely SaaS CMS runs behind Cloudflare. When a path like `/opti-media/cdn-cgi/image/width=600,format=auto,quality=80/...` is rewritten upstream, Cloudflare intercepts `/cdn-cgi/image/...` and performs on-the-fly resizing, WebP/AVIF generation, and edge caching seamlessly.
+4. **Universal Centralized Resolver (`src/infrastructure/cms/mediaUrl.ts`)**:
+   All components and CMS renderers resolve media via `resolveMediaUrl()` and `optimizeMediaUrl()`. Vector SVGs are proxied via `/opti-media/` without rasterization, and local `/images/...` assets remain untouched.
+
+### 8.2 The Responsive Next.js Image & Aspect Ratio Contract
+
+#### Eliminating the `width or height modified, but not the other` Warning
+Next.js `<Image>` compares rendered dimensions (`img.width`, `img.height`) with attribute values. If CSS overrides one dimension without declaring the other responsive (`heightModified !== widthModified`), Next.js emits runtime console warnings.
+
+To maintain 100% compliance across all present and future components:
+1. **CSS Reset Isolation (`globals.css`)**:
+   ```css
+   /* Scope responsive reset strictly to standard HTML img tags, never Next.js images */
+   img:not([data-nimg]), picture, video, canvas, svg {
+     display: block;
+     max-width: 100%;
+     height: auto;
+   }
+   ```
+2. **Container-Driven Fill Pattern (Recommended for Aspect-Ratio Wrappers)**:
+   For containers with predefined aspect ratio or height (e.g., hero slides, circular metric cards, media cards):
+   ```tsx
+   <div className={styles.imageWrapper}> {/* position: relative; aspect-ratio: 1 / 1 */}
+     <Image
+       src={imageSrc}
+       alt={imageAlt}
+       fill
+       sizes="(max-width: 768px) 100vw, 440px"
+       className={styles.image} /* object-fit: cover */
+     />
+   </div>
+   ```
+3. **Intrinsic Dimension Pattern (Recommended for Content Flow Images)**:
+   When rendering with intrinsic `width` and `height`, pair with synchronized responsive styles:
+   ```tsx
+   <Image
+     src={imageSrc}
+     alt={imageAlt}
+     width={720}
+     height={328}
+     style={{ maxWidth: '100%', height: 'auto' }}
+   />
+   ```
+4. **Or use `<CmsImage>`**:
+   Composes both patterns automatically and guarantees URL proxying, Cloudflare CDN sizing, and aspect ratio safety out-of-the-box.
+

@@ -50,9 +50,9 @@ function isOptimizelyDomain(hostname: string): boolean {
 
 /**
  * Applies on-the-fly Cloudflare CDN image resizing and next-gen format conversion
- * to Optimizely CMS / CMP assets.
+ * to Optimizely CMS / CMP assets through a first-party /opti-media/ reverse proxy.
  *
- * Pattern: https://<domain>/cdn-cgi/image/width=<w>,format=<fmt>,quality=<q>/<path>
+ * Pattern: /opti-media/cdn-cgi/image/width=<w>,format=<fmt>,quality=<q>/<path>
  */
 export function optimizeMediaUrl(
   rawUrl?: string | null,
@@ -63,19 +63,55 @@ export function optimizeMediaUrl(
   const trimmed = rawUrl.trim();
   if (!trimmed) return '';
 
-  // SVG images are vector-based; never rasterize or convert them
-  if (trimmed.toLowerCase().endsWith('.svg') || trimmed.includes('.svg?')) {
-    return trimmed;
-  }
-
-  // If already wrapped in cdn-cgi/image, return as-is to prevent double-wrapping
-  if (trimmed.includes('/cdn-cgi/image/')) {
-    return trimmed;
-  }
-
   // Local static public assets (e.g. /images/...) should not be modified
   if (trimmed.startsWith('/images/')) {
     return trimmed;
+  }
+
+  // Already routed via opti-media proxy
+  if (trimmed.startsWith('/opti-media/')) {
+    return trimmed;
+  }
+
+  const isSvg = trimmed.toLowerCase().endsWith('.svg') || trimmed.includes('.svg?');
+
+  // If already wrapped in cdn-cgi/image, rewrite to /opti-media/ proxy to prevent tracker blocking
+  if (trimmed.includes('/cdn-cgi/image/')) {
+    try {
+      const parsed = new URL(trimmed);
+      if (isOptimizelyDomain(parsed.hostname)) {
+        const isCmp = parsed.hostname.toLowerCase().endsWith('.cmp.optimizely.com');
+        const prefix = isCmp ? '/opti-media/cmp' : '/opti-media';
+        const cleanPath = parsed.pathname.replace(/^\/+/, '');
+        const search = parsed.search || '';
+        return `${prefix}/${cleanPath}${search}`;
+      }
+    } catch {
+      if (trimmed.startsWith('/')) {
+        return `/opti-media/${trimmed.replace(/^\/+/, '')}`;
+      }
+    }
+    return trimmed;
+  }
+
+  // SVG images are vector-based; never rasterize or convert them, but route through proxy
+  if (isSvg) {
+    try {
+      const parsed = new URL(trimmed);
+      if (isOptimizelyDomain(parsed.hostname)) {
+        const isCmp = parsed.hostname.toLowerCase().endsWith('.cmp.optimizely.com');
+        const prefix = isCmp ? '/opti-media/cmp' : '/opti-media';
+        const cleanPath = parsed.pathname.replace(/^\/+/, '');
+        const search = parsed.search || '';
+        return `${prefix}/${cleanPath}${search}`;
+      }
+      return trimmed;
+    } catch {
+      if (trimmed.startsWith('/') && !trimmed.startsWith('/images/')) {
+        return `/opti-media/${trimmed.replace(/^\/+/, '')}`;
+      }
+      return trimmed;
+    }
   }
 
   const { width, quality = 80, format = 'auto' } = options;
@@ -91,24 +127,21 @@ export function optimizeMediaUrl(
   try {
     const parsed = new URL(trimmed);
 
-    // Apply Cloudflare image optimization to Optimizely CMS/CMP domains
+    // Apply Cloudflare image optimization to Optimizely CMS/CMP domains via first-party proxy
     if (isOptimizelyDomain(parsed.hostname)) {
+      const isCmp = parsed.hostname.toLowerCase().endsWith('.cmp.optimizely.com');
+      const prefix = isCmp ? '/opti-media/cmp' : '/opti-media';
       const cleanPath = parsed.pathname.replace(/^\/+/, '');
       const search = parsed.search || '';
-      return `${parsed.origin}/cdn-cgi/image/${optionsString}/${cleanPath}${search}`;
+      return `${prefix}/cdn-cgi/image/${optionsString}/${cleanPath}${search}`;
     }
 
     return trimmed;
   } catch {
     // Relative URL (e.g. /globalassets/family.jpg)
     if (trimmed.startsWith('/') && !trimmed.startsWith('/images/')) {
-      const cmsBase = process.env.OPTIMIZELY_CMS_URL || '';
-      if (cmsBase) {
-        const baseClean = cmsBase.replace(/\/$/, '');
-        const fullUrl = `${baseClean}${trimmed}`;
-        return optimizeMediaUrl(fullUrl, options);
-      }
-      return `/cdn-cgi/image/${optionsString}${trimmed}`;
+      const cleanPath = trimmed.replace(/^\/+/, '');
+      return `/opti-media/cdn-cgi/image/${optionsString}/${cleanPath}`;
     }
 
     return trimmed;
