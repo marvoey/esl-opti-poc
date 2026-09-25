@@ -78,10 +78,11 @@
 
 .rateUnit,
 .rateLabel {
-  font-family: var(--font-family-sans);
-  font-size: var(--font-size-body);
-  font-weight: var(--font-weight-bold);
-  line-height: 1;
+  font-family: var(--font-family-sans, "Albert Sans", sans-serif);
+  font-size: 1.875rem; /* 30px */
+  font-weight: 700;
+  line-height: 2.25rem; /* 36px */
+  letter-spacing: 0px;
   color: var(--color-text-inverted);
 }
 

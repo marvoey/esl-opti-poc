@@ -41,14 +41,15 @@ describe("SplitContentCards Organism", () => {
     ).toBeDefined();
   });
 
-  it("renders both dual stat proof-point cards", () => {
-    render(<SplitContentCards />);
+  it("renders both dual stat proof-point cards and star icon on satisfaction metric", () => {
+    const { container } = render(<SplitContentCards />);
 
     expect(screen.getByText("XX")).toBeDefined();
     expect(screen.getByText("years of dividends")).toBeDefined();
 
     expect(screen.getByText("4.8")).toBeDefined();
     expect(screen.getByText("member satisfaction")).toBeDefined();
+    expect(container.querySelector("svg.lucide-star")).not.toBeNull();
   });
 
   it("associates custom section id with heading aria-labelledby", () => {

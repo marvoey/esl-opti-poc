@@ -25,6 +25,7 @@ export const DEFAULT_SPLIT_CONTENT_CARDS_DATA: SplitContentCardsProps = {
       id: "stat-satisfaction",
       value: "4.8",
       label: "member satisfaction",
+      icon: "star",
     },
   ],
 };

@@ -70,9 +70,9 @@ export function ButtonSpecimens() {
         <div className={styles.buttonCardHeader}>
           <Text variant="micro">FIGMA VARIANT 5</Text>
           <Heading level="h4">Pill Button tertiary Icon</Heading>
-          <Text variant="caption">Outline Navy border • Left User icon • 12.4:1 contrast</Text>
+          <Text variant="caption">White fill • Navy border • Left User icon • 12.4:1 contrast</Text>
         </div>
-        <Button variant="outline" leftIcon={<UserIcon />}>
+        <Button variant="tertiary" leftIcon={<UserIcon />}>
           Become a member
         </Button>
       </div>

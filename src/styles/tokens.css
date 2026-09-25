@@ -11,6 +11,7 @@
   --color-navy-800: #01375A; /* Footer gradient end */
   --color-aqua-500: #00A3A3;
   --color-teal-700: var(--color-aqua-500); /* Backwards-compatible alias */
+  --color-teal-500: #51BFB6; /* Figma: Active tab indicator */
   --color-aqua-300: #68E0CC; /* Figma: aqua-300 */
   --color-grey-95: #ECFBF8; /* Figma: "Polar" background */
   --color-mint-50: var(--color-grey-95); /* Semantic/visual alias matching design system specs */
@@ -115,7 +116,6 @@
   --size-side-by-side-image-mobile: 14.375rem; /* 230px */
 
   /* Side By Side Section Spacing */
-  --space-side-by-side-margin-bottom: 2rem; /* 32px */
   --space-side-by-side-text-margin-bottom: 2rem; /* 32px */
 
   /* Button Padding Tokens (Strict Figma Specs) */
@@ -153,18 +153,21 @@
   --color-btn-primary-hover-bg: var(--color-border-accent);
   --color-btn-primary-hover-text: var(--color-primary);
 
-  --color-btn-secondary-bg: var(--color-surface);
+  --color-btn-secondary-bg: var(--color-grey-95);
   --color-btn-secondary-text: var(--color-primary);
   --color-btn-secondary-border: var(--color-primary);
   --color-btn-secondary-hover-bg: var(--color-border-accent);
   --color-btn-secondary-hover-border: var(--color-border-accent);
   --color-btn-secondary-hover-text: var(--color-primary);
 
+  --color-btn-outline-bg: transparent;
   --color-btn-outline-border: var(--color-primary);
   --color-btn-outline-text: var(--color-primary);
   --color-btn-outline-hover-bg: var(--color-border-accent);
   --color-btn-outline-hover-border: var(--color-border-accent);
   --color-btn-outline-hover-text: var(--color-primary);
+
+  --color-btn-tertiary-bg: var(--color-white);
 
   --color-btn-link-text: var(--color-primary);
   --color-btn-link-hover-text: var(--color-primary-hover);
@@ -264,12 +267,15 @@
   --font-size-h2: clamp(1.75rem, 0.417rem + 2.78vw, 2.5rem);               /* 28px -> 40px */
   --font-size-h1: clamp(2.125rem, 0.125rem + 4.17vw, 3.25rem);             /* 34px -> 52px */
   --font-size-stat: clamp(2.5rem, 0.278rem + 4.63vw, 3.75rem);             /* 40px -> 60px */
+  --font-size-stat-sm: 2.5rem;                                             /* 40px (fixed) */
+  --font-size-stat-hero: clamp(2.5rem, 4vw, 3.25rem);                     /* 40px -> 52px (SplitContentCards hero metric) */
   --font-size-hero-h2: clamp(2rem, 0.444rem + 6.48vw, 4.5rem);             /* 32px (mobile) -> 72px (desktop) */
   --font-size-eyebrow: 1rem;                                               /* 16px */
   --font-size-footer-title-mobile: 0.71875rem;                             /* 11.5px */
   --font-size-footer-title-desktop: 1.125rem;                              /* 18px */
 
   /* --- Line Heights (Strict 4px Vertical Rhythm Grid) --- */
+  --line-height-none: 1;                                                   /* Unitless 1:1, for tight numeric displays */
   --line-height-micro: 1rem;                                               /* 16px (4x4) */
   --line-height-caption: 1rem;                                             /* 16px (4x4) */
   --line-height-body-sm: 1.25rem;                                          /* 20px (5x4) */
@@ -282,9 +288,10 @@
   --line-height-eyebrow: 1.125rem;                                         /* 18px */
   --line-height-subhead: clamp(1.75rem, 0.86rem + 1.85vw, 2rem);           /* 28px -> 32px (4x grid) */
   --line-height-h3: clamp(1.75rem, 0.86rem + 1.85vw, 2.25rem);             /* 28px -> 36px (4x grid) */
-  --line-height-h2: clamp(2.25rem, 0.917rem + 2.78vw, 3rem);               /* 36px -> 48px (4x grid) */
+  --line-height-h2: 2.875rem;                                              /* 46px */
   --line-height-h1: clamp(2.5rem, -1.056rem + 7.41vw, 3.75rem);            /* 40px -> 60px (4x grid) */
   --line-height-stat: clamp(2.75rem, 0.528rem + 4.63vw, 4rem);             /* 44px -> 64px (4x grid) */
+  --line-height-stat-sm: 2.75rem;                                          /* 44px (fixed, 4x grid) */
   --line-height-display: clamp(2.75rem, -2.861rem + 11.8vw, 4.75rem);       /* 44px -> 76px (4x grid) */
   --line-height-hero-h2: clamp(2rem, 0.389rem + 6.71vw, 4.75rem);           /* 32px (mobile 100%) -> 76px (desktop) */
   --line-height-footer-title-mobile: 1.078125rem;                            /* 17.25px */
@@ -344,4 +351,23 @@
   --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-all: all var(--duration-smart) var(--ease-out-smart);
+}
+
+/* ==========================================================================
+   Contextual Dark Theme Overrides
+   Any element inside [data-theme="dark"] will automatically inherit these flipped values.
+   This replaces all the manual `isDark ? "vibrant" : "accent"` JS logic.
+   ========================================================================== */
+[data-theme="dark"] {
+  --color-accent: var(--color-aqua-300); /* Flips aqua-500 to aqua-300 automatically */
+  --color-text-primary: var(--color-white);
+  --color-text-secondary: var(--color-sky-300);
+  --color-text-muted: var(--color-text-inverted-muted);
+
+  /* Buttons on dark surfaces use the Polar background (Figma: grey-95) */
+  --color-btn-primary-bg: var(--color-grey-95);
+  --color-btn-primary-text: var(--color-primary);
+  --color-btn-secondary-bg: var(--color-grey-95);
+  --color-btn-outline-bg: var(--color-grey-95);
+  --color-btn-tertiary-bg: var(--color-grey-95);
 }

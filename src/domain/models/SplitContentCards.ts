@@ -11,6 +11,7 @@ export const SplitContentCardsStatItemSchema = z.object({
   id: z.string().optional(),
   value: z.string().min(1, "Stat value is required"),
   label: z.string().min(1, "Stat label is required"),
+  icon: z.string().optional(),
 });
 
 export const SplitContentCardsCtaSchema = z.object({

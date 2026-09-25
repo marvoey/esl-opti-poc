@@ -54,7 +54,7 @@ export function RatesCard(props: RatesCardProps) {
         <span className={styles.iconContainer} aria-hidden="true">
           {categoryIcon ?? <CarIcon size={16} />}
         </span>
-        <Text as="p" variant="label" color="accent" className={styles.category}>
+        <Text as="p" variant="label" color="vibrant" className={styles.category}>
           {category}
         </Text>
       </header>
@@ -70,7 +70,7 @@ export function RatesCard(props: RatesCardProps) {
       </div>
 
       <div className={styles.body}>
-        <Text as="p" variant="body" weight="bold" color="inverted" className={styles.title}>
+        <Text as="h3" variant="body" weight="bold" color="inverted" className={styles.title}>
           {title}
         </Text>
         <Text as="p" variant="body" color="inverted" className={styles.description}>

@@ -38,6 +38,7 @@ export function SplitContentCta({
       id={id}
       className={`${styles.section} ${className}`}
       aria-labelledby={title ? `${id ?? "split-content-cta"}-heading` : undefined}
+      data-theme="dark"
     >
       <div className={styles.container}>
         <div className={styles.layout}>
@@ -52,7 +53,7 @@ export function SplitContentCta({
               </Heading>
             )}
             {description && (
-              <Text variant="body" color="inverted" className={styles.description}>
+              <Text variant="body" color="secondary" className={styles.description}>
                 {description}
               </Text>
             )}
