@@ -45,7 +45,7 @@ export function SideBySide({
   const isDark = variant === "dark";
   const autoId = useId();
   const headingId = `${id ?? autoId}-heading`;
-  const resolvedEyebrowColor = eyebrowColor ?? (isDark ? "vibrant" : "accent");
+  const resolvedEyebrowColor = eyebrowColor ?? "accent";
 
   const combinedSectionClass = className
     ? `${styles.section} ${className}`
@@ -82,7 +82,7 @@ export function SideBySide({
       aria-labelledby={ariaLabel ? undefined : headingId}
     >
       <div className={styles.container}>
-        <article className={cardClass}>
+        <article className={cardClass} data-theme={variant}>
           <div className={contentClass}>
             <Text
               as="span"

@@ -41,17 +41,17 @@ export function MediaCardGrid({
   const gridLayoutClass = isTwoCols ? styles.grid2 : styles.grid3;
 
   return (
-    <section id={id} className={sectionClassName} aria-labelledby={headingId}>
+    <section id={id} className={sectionClassName} aria-labelledby={headingId} data-theme="dark">
       <div className={styles.container}>
         {/* Div 1: Header Row */}
         <div className={styles.headerRow}>
           {eyebrow && (
-            <Text as="span" variant="eyebrow" color="vibrant" className={styles.eyebrow}>
+            <Text as="span" variant="eyebrow" color="accent" className={styles.eyebrow}>
               {eyebrow}
             </Text>
           )}
           {title && (
-            <Heading level={headingLevel} id={headingId} color="inverted" className={styles.title}>
+            <Heading level={headingLevel} id={headingId} className={styles.title}>
               {title}
             </Heading>
           )}
