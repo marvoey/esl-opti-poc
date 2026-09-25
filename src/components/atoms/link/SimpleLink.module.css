@@ -10,6 +10,14 @@
   text-decoration: none;
 }
 
+.accent {
+  color: var(--color-border-accent);
+}
+
+.primary {
+  color: var(--color-primary);
+}
+
 .simpleLink:focus-visible {
   outline: 2px solid var(--color-focus-ring);
   outline-offset: 3px;
