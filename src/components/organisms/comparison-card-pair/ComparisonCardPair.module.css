@@ -1,6 +1,6 @@
 .section {
   width: 100%;
-  background-color: var(--color-bg-subtle, #F7F9FB);
+  background-color: var(--color-bg-subtle);
   padding-block: var(--space-section-block, 5.5rem);
 }
 
@@ -32,7 +32,7 @@
 }
 
 .eyebrow {
-  color: var(--color-accent, #00A3A3);
+  color: var(--color-accent);
   margin: 0;
 }
 
@@ -64,7 +64,7 @@
 
 /* White Card Surface */
 .card {
-  background-color: var(--color-surface-raised, #FFFFFF);
+  background-color: var(--color-surface-raised);
   border-radius: 1rem; /* 16px border radius */
   padding-block: 1.5rem; /* 24px padding-block */
   padding-inline: 1.25rem; /* 20px padding-inline */
@@ -111,11 +111,11 @@
   display: flex;
   align-items: center;
   gap: 0.625rem;
-  color: var(--color-text-primary, #1A1A1A);
+  color: var(--color-text-primary);
 }
 
 .featureIcon {
-  color: #00A3A3; /* Color #00A3A3 for all icons */
+  color: var(--color-accent); /* Color var(--color-accent) for all icons */
   flex-shrink: 0;
   display: inline-flex;
   align-items: center;

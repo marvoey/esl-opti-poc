@@ -1,9 +1,11 @@
 import { contentType } from '@optimizely/cms-sdk';
+import { EslSeoContract } from '@/components/cms/shared/EslSeoContract';
 
 export const EslProductFamilyExperienceContentType = contentType({
   key: 'EslProductFamilyExperience',
   displayName: 'ESL Product Family Experience',
   baseType: '_experience',
+  extends: [EslSeoContract],
   mayContainTypes: [
     'EslProductDetailExperience',
     'EslHeroSlider',

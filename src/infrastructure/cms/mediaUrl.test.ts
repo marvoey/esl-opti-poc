@@ -24,18 +24,24 @@ describe('mediaUrl', () => {
       expect(optimizeMediaUrl('   ')).toBe('');
     });
 
-    it('preserves SVG files without transforming them', () => {
+    it('preserves SVG files without transforming them but routes them through proxy', () => {
       const svgUrl = 'https://app-fecu01saas6fn6qt001.cms.optimizely.com/globalassets/skyline-illustration.svg';
-      expect(optimizeMediaUrl(svgUrl, { width: 600 })).toBe(svgUrl);
+      expect(optimizeMediaUrl(svgUrl, { width: 600 })).toBe(
+        '/opti-media/globalassets/skyline-illustration.svg'
+      );
 
       const svgWithQuery = 'https://app-fecu01saas6fn6qt001.cms.optimizely.com/globalassets/logo.svg?v=1';
-      expect(optimizeMediaUrl(svgWithQuery, { width: 600 })).toBe(svgWithQuery);
+      expect(optimizeMediaUrl(svgWithQuery, { width: 600 })).toBe(
+        '/opti-media/globalassets/logo.svg?v=1'
+      );
     });
 
-    it('does not re-wrap URLs that already contain /cdn-cgi/image/', () => {
+    it('does not re-wrap URLs that already contain /cdn-cgi/image/ and routes through proxy', () => {
       const alreadyOptimized =
         'https://app-fecu01saas6fn6qt001.cms.optimizely.com/cdn-cgi/image/width=600,format=auto,quality=80/globalassets/family.jpg';
-      expect(optimizeMediaUrl(alreadyOptimized, { width: 400 })).toBe(alreadyOptimized);
+      expect(optimizeMediaUrl(alreadyOptimized, { width: 400 })).toBe(
+        '/opti-media/cdn-cgi/image/width=600,format=auto,quality=80/globalassets/family.jpg'
+      );
     });
 
     it('preserves local static /images/ paths untouched', () => {
@@ -43,19 +49,19 @@ describe('mediaUrl', () => {
       expect(optimizeMediaUrl(local, { width: 500 })).toBe(local);
     });
 
-    it('transforms Optimizely CMS URLs using Cloudflare CDN-CGI syntax', () => {
+    it('transforms Optimizely CMS URLs using Cloudflare CDN-CGI syntax via first-party proxy', () => {
       const raw = 'https://app-fecu01saas6fn6qt001.cms.optimizely.com/globalassets/family.jpg';
       const result = optimizeMediaUrl(raw, { width: 600, format: 'auto', quality: 80 });
       expect(result).toBe(
-        'https://app-fecu01saas6fn6qt001.cms.optimizely.com/cdn-cgi/image/width=600,format=auto,quality=80/globalassets/family.jpg'
+        '/opti-media/cdn-cgi/image/width=600,format=auto,quality=80/globalassets/family.jpg'
       );
     });
 
-    it('transforms Optimizely CMP DAM URLs correctly', () => {
+    it('transforms Optimizely CMP DAM URLs correctly via first-party proxy', () => {
       const raw = 'https://images1.cmp.optimizely.com/Zz00OTg4ODhmMmIwNjkxMWYxOGE0NTc2N2U2ZDA3YWY2Yw==';
       const result = optimizeMediaUrl(raw, { width: 700 });
       expect(result).toBe(
-        'https://images1.cmp.optimizely.com/cdn-cgi/image/width=700,format=auto,quality=80/Zz00OTg4ODhmMmIwNjkxMWYxOGE0NTc2N2U2ZDA3YWY2Yw=='
+        '/opti-media/cmp/cdn-cgi/image/width=700,format=auto,quality=80/Zz00OTg4ODhmMmIwNjkxMWYxOGE0NTc2N2U2ZDA3YWY2Yw=='
       );
     });
 
@@ -68,7 +74,7 @@ describe('mediaUrl', () => {
       const relative = '/globalassets/family.jpg';
       const result = optimizeMediaUrl(relative, { width: 600 });
       expect(result).toBe(
-        'https://app-fecu01saas6fn6qt001.cms.optimizely.com/cdn-cgi/image/width=600,format=auto,quality=80/globalassets/family.jpg'
+        '/opti-media/cdn-cgi/image/width=600,format=auto,quality=80/globalassets/family.jpg'
       );
     });
   });
@@ -87,7 +93,7 @@ describe('mediaUrl', () => {
       };
       const result = resolveMediaUrl(ref, { width: 500 });
       expect(result).toBe(
-        'https://app-fecu01saas6fn6qt001.cms.optimizely.com/cdn-cgi/image/width=500,format=auto,quality=80/globalassets/loan.jpg'
+        '/opti-media/cdn-cgi/image/width=500,format=auto,quality=80/globalassets/loan.jpg'
       );
     });
 
@@ -99,7 +105,7 @@ describe('mediaUrl', () => {
       };
       const result = resolveMediaUrl(ref, { width: 500 });
       expect(result).toBe(
-        'https://app-fecu01saas6fn6qt001.cms.optimizely.com/cdn-cgi/image/width=500,format=auto,quality=80/globalassets/wealth.jpg'
+        '/opti-media/cdn-cgi/image/width=500,format=auto,quality=80/globalassets/wealth.jpg'
       );
     });
   });

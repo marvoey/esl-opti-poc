@@ -82,7 +82,6 @@
 
 .slide {
   min-width: 0;
-  flex-shrink: 0;
   display: flex;
   /* Desktop: 3 cards visible */
   flex: 0 0 calc((100% - 2 * 2rem) / 3);

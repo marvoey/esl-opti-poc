@@ -1,6 +1,6 @@
 .section {
   width: 100%;
-  background-color: var(--color-bg, #FFFFFF);
+  background-color: var(--color-bg);
 }
 
 .container {

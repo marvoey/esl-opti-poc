@@ -121,7 +121,7 @@
 
 .navTrigger:hover,
 .navTriggerActive {
-  color: var(--color-text-inverted, #ffffff);
+  color: var(--color-text-inverted);
   background-color: var(--color-primary);
   font-weight: var(--font-weight-bold);
 }

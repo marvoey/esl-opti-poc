@@ -66,3 +66,4 @@ export {
 } from "./icons";
 export { StepBadge, type StepBadgeProps } from "./step-badge/StepBadge";
 export { BrandLogo, type BrandLogoProps } from "./logo";
+export { CmsImage, type CmsImageProps } from "./image";

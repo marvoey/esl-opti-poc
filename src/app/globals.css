@@ -27,7 +27,7 @@ body {
 }
 
 /* Accessible Media & Images */
-img,
+img:not([data-nimg]),
 picture,
 video,
 canvas,
