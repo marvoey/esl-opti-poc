@@ -79,10 +79,10 @@ Create only new files under `src/components/organisms/<kebab-name>/`:
 | `<kebabName>Data.ts` | Typed fixture props used by tests (the only place sample copy lives). |
 | `<PascalName>.test.tsx` | Written first. Vitest + Testing Library: renders every slot, omits empty optional slots, heading level, alt text, links/buttons roles, variant classes, list lengths. |
 | `<PascalName>.tsx` | Pure presentational component. Plain domain props, no CMS/SDK imports. RSC unless a leaf needs state. |
-| `<PascalName>.module.css` | Tokens only; Grid for 2D, Flex for 1D; `@container` queries; max 3 nesting levels; no `font-*`, `line-height`, `letter-spacing` (typography comes from atoms); animate only `transform`/`opacity`. |
+| `<PascalName>.module.css` | Tokens only (strictly no raw hex colors, use `var(--color-...)` or `currentColor`); Grid for 2D, Flex for 1D; `@container` queries; max 3 nesting levels; no `font-*`, `line-height`, `letter-spacing` (typography comes from atoms); animate only `transform`/`opacity`. |
 | `index.ts` | Barrel export of the component, its prop types and fixtures. |
 
-Run `npx vitest run src/components/organisms/<kebab-name>` until green, then `npm run lint:css`.
+Run `npx vitest run src/components/organisms/<kebab-name>` until green, then `npm run lint:css`. TypeScript must be strictly typed (no `any` types; prefer `unknown` or explicit types).
 
 **Gate 3:** organism tests pass; stylelint clean.
 
@@ -110,7 +110,7 @@ From this point until the push in Phase 6, the CMS doesn't know the new type. Pa
 
 ## Phase 6: Local verification, drift check, push to testing
 
-1. `npm test`, `npx tsc --noEmit`, `npm run lint`, `npm run lint:css`. All must pass. Compare the test count against the pre-change baseline; no existing test may break.
+1. Run `npm run check` (or `npm run lint:all && npx tsc --noEmit && npm test`). All must pass with 0 errors. Compare the test count against the pre-change baseline; no existing test may break.
 2. **Schema drift check.** Build the manifest without sending it: `mkdir -p .claude/state && npm run cms:push:local -- --dryRun --output .claude/state/manifest.json` (the CLI does not create the folder; `--dryRun` returns before anything is sent). Then, with MCP `cms_get_content_type_details`, compare the live definitions of every `Esl*` type in the manifest:
    - New keys from this component: expected to be absent live.
    - Any existing type whose live definition differs from the manifest means someone else pushed newer schema, or your branch is stale. **Stop** and report the differences. `--force` would overwrite their changes.

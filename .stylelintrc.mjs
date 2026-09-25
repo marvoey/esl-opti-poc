@@ -38,10 +38,14 @@ const config = {
     "rule-empty-line-before": null,
     "import-notation": null,
     "property-no-vendor-prefix": null,
+    "media-feature-range-notation": null,
+    "declaration-block-no-redundant-longhand-properties": null,
+    "number-max-precision": null,
     "value-keyword-case": [
       "lower",
       {
         ignoreProperties: ["--font-family-sans", "--font-family-mono", "font-family"],
+        ignoreKeywords: ["currentColor"],
       },
     ],
   },

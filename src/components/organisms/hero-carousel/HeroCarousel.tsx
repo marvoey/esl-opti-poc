@@ -6,7 +6,7 @@ import { ArrowRight, ChevronLeft, ChevronRight, Pause, Play } from "lucide-react
 import useEmblaCarousel from "embla-carousel-react";
 import { Carousel, CarouselSlide } from "@/components/molecules/carousel/Carousel";
 import { Text } from "@/components/atoms/text/Text";
-import { Button } from "@/components/atoms/button/Button";
+import { Button, type ButtonVariant } from "@/components/atoms/button/Button";
 import { Icon, type IconName } from "@/components/atoms/icons";
 import styles from "./HeroCarousel.module.css";
 
@@ -40,11 +40,11 @@ export interface HeroCarouselProps {
   slides?: SlideItem[];
   variant?: "default" | "squared";
   editProps?: {
-    eyebrow?: Record<string, any>;
-    heading?: Record<string, any>;
-    description?: Record<string, any>;
-    primaryCta?: Record<string, any>;
-    primaryCtaText?: Record<string, any>;
+    eyebrow?: Record<string, unknown>;
+    heading?: Record<string, unknown>;
+    description?: Record<string, unknown>;
+    primaryCta?: Record<string, unknown>;
+    primaryCtaText?: Record<string, unknown>;
   };
 }
 
@@ -70,8 +70,9 @@ export function HeroCarousel({
     if (typeof window === "undefined" || !window.matchMedia) return;
 
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let timer: ReturnType<typeof setTimeout> | undefined;
     if (mediaQuery.matches) {
-      setIsPlaying(false);
+      timer = setTimeout(() => setIsPlaying(false), 0);
     }
     const handleChange = (e: MediaQueryListEvent) => {
       if (e.matches) {
@@ -80,7 +81,10 @@ export function HeroCarousel({
     };
 
     mediaQuery.addEventListener("change", handleChange);
-    return () => mediaQuery.removeEventListener("change", handleChange);
+    return () => {
+      if (timer) clearTimeout(timer);
+      mediaQuery.removeEventListener("change", handleChange);
+    };
   }, []);
 
   const scrollPrev = useCallback(() => {
@@ -212,7 +216,7 @@ export function HeroCarousel({
                     {slide.primaryCta && (
                       <div {...(isFirst && (editProps?.primaryCta || editProps?.primaryCtaText) ? (editProps.primaryCta || editProps.primaryCtaText) : {})}>
                         <Button
-                          variant={(slide.primaryCtaVariant as any) || "primary"}
+                          variant={(slide.primaryCtaVariant as ButtonVariant) || "primary"}
                           leftIcon={primaryIcons.leftIcon}
                           rightIcon={primaryIcons.rightIcon}
                           className={styles.actionBtn}
@@ -226,7 +230,7 @@ export function HeroCarousel({
                     )}
                     {slide.secondaryCta && (
                       <Button
-                        variant={(slide.secondaryCtaVariant as any) || "secondary"}
+                        variant={(slide.secondaryCtaVariant as ButtonVariant) || "secondary"}
                         leftIcon={secondaryIcons.leftIcon}
                         rightIcon={secondaryIcons.rightIcon}
                         className={styles.actionBtn}
