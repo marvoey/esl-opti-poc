@@ -112,15 +112,16 @@
   transform: none;
 }
 
-/* Right-aligned variant: expands to the left instead of right */
+/* Right-aligned variant: grows on the x-axis to the right, moves text to the right, y-axis untouched */
 .button.hasArrow.alignRight:hover:not(:disabled) {
   padding-right: var(--space-btn-arrow-inline, 2rem);
   padding-left: var(--space-btn-arrow-hover-pad, calc(2rem + 12px));
   gap: 1rem; /* 16px */
+  transform: translateX(1.25rem) translateY(0);
 }
 
 .button.hasArrow.alignRight:hover:not(:disabled) .label {
-  transform: translateX(-4px);
+  transform: none;
 }
 
 .button.hasArrow.alignRight:hover:not(:disabled) .iconRight {
@@ -132,6 +133,7 @@
   .button.hasArrow.alignRight:hover:not(:disabled) {
     padding-right: var(--space-btn-arrow-inline, 2rem);
     padding-left: var(--space-btn-arrow-inline, 2rem);
+    transform: none;
   }
 
   .button.hasArrow:hover:not(:disabled) .iconRight,
@@ -157,7 +159,7 @@
   transform: translateY(-1px);
 }
 
-/* 2. Secondary Variant (Mint Polar -> Turquoise Hover + elevation/md) */
+/* 2. Secondary Variant (Mint Polar -> Turquoise Hover; no-arrow buttons are color-only) */
 .secondary {
   background-color: var(--color-btn-secondary-bg);
   color: var(--color-btn-secondary-text);
@@ -168,6 +170,10 @@
   background-color: var(--color-btn-secondary-hover-bg);
   color: var(--color-btn-secondary-hover-text);
   border-color: var(--color-btn-secondary-hover-border);
+}
+
+/* Only secondary buttons with an arrow keep the lift + elevation; plain ones are color-only */
+.secondary.hasArrow:hover:not(:disabled) {
   box-shadow: var(--shadow-elevation-md);
   transform: translateY(-1px);
 }
@@ -175,9 +181,13 @@
 /* 3. Outline & Tertiary Variant (Navy Border -> Turquoise Hover + elevation/md) */
 .outline,
 .tertiary {
-  background-color: transparent;
+  background-color: var(--color-btn-outline-bg);
   color: var(--color-btn-outline-text);
   border-color: var(--color-btn-outline-border);
+}
+
+.tertiary {
+  background-color: var(--color-btn-tertiary-bg);
 }
 
 .outline:hover:not(:disabled),

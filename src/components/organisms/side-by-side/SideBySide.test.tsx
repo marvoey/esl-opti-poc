@@ -30,8 +30,10 @@ describe("SideBySide Organism", () => {
       screen.getByRole("heading", { level: 3, name: BASE_PROPS.headline })
     ).toBeDefined();
 
+    // Eyebrow uses the accent token; the dark shade comes from the [data-theme="dark"] override
     const eyebrow = screen.getByText(BASE_PROPS.eyebrow);
-    expect(eyebrow.className).toMatch(/vibrant/i);
+    expect(eyebrow.className).toMatch(/accent/i);
+    expect(card?.getAttribute("data-theme")).toBe("dark");
   });
 
   it("renders Variant B (Light) with mirrored layout and correct typography tokens", () => {

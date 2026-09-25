@@ -3,7 +3,7 @@ import { Heading, type HeadingLevel } from "@/components/atoms/heading/Heading";
 import { Text } from "@/components/atoms/text/Text";
 import { Button } from "@/components/atoms/button/Button";
 import { Stat } from "@/components/atoms/stat/Stat";
-import { ArrowRightIcon } from "@/components/atoms/icons";
+import { ArrowRightIcon, StarIcon } from "@/components/atoms/icons";
 import { DEFAULT_SPLIT_CONTENT_CARDS_DATA } from "./splitContentCardsData";
 import styles from "./SplitContentCards.module.css";
 
@@ -18,6 +18,7 @@ export interface SplitContentCardsStatItemData {
   id?: string;
   value: string;
   label: string;
+  icon?: string | null;
 }
 
 export interface SplitContentCardsCtaData {
@@ -102,7 +103,7 @@ export function SplitContentCards({
             <Text
               as={typeof description === "string" ? "p" : "div"}
               variant="body-lg"
-              color="secondary"
+              color="primary"
               className={styles.description}
             >
               {description}
@@ -162,22 +163,38 @@ export function SplitContentCards({
           {/* Bottom Dual Stat Cards */}
           {statCards && statCards.length > 0 && (
             <div className={styles.dualStatsRow}>
-              {statCards.map((stat) => (
-                <div
-                  key={stat.id ?? `${stat.label}-${stat.value}`}
-                  className={styles.statCard}
-                >
-                  <Stat color="accent" className={styles.statValue}>{stat.value}</Stat>
-                  <Text
-                    as="p"
-                    variant="body"
-                    color="primary"
-                    className={styles.statLabel}
+              {statCards.map((stat) => {
+                const hasStar =
+                  stat.icon === "star" ||
+                  stat.id === "stat-satisfaction" ||
+                  /satisfaction/i.test(stat.label ?? "");
+
+                return (
+                  <div
+                    key={stat.id ?? `${stat.label}-${stat.value}`}
+                    className={styles.statCard}
                   >
-                    {stat.label}
-                  </Text>
-                </div>
-              ))}
+                    <div className={styles.statValueGroup}>
+                      <Stat color="accent" size="sm" className={styles.statValue}>{stat.value}</Stat>
+                      {hasStar && (
+                        <StarIcon
+                          size={24}
+                          fill="currentColor"
+                          className={styles.statStarIcon}
+                        />
+                      )}
+                    </div>
+                    <Text
+                      as="p"
+                      variant="body"
+                      color="primary"
+                      className={styles.statLabel}
+                    >
+                      {stat.label}
+                    </Text>
+                  </div>
+                );
+              })}
             </div>
           )}
         </div>

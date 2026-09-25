@@ -32,6 +32,7 @@ import {
   Wallet,
   ShieldAlert,
   ChevronDown,
+  Star,
   type LucideProps,
   type LucideIcon,
 } from "lucide-react";
@@ -68,7 +69,8 @@ export type IconName =
   | "key-round"
   | "wallet"
   | "shield-alert"
-  | "chevron-down";
+  | "chevron-down"
+  | "star";
 
 export interface IconProps extends Omit<LucideProps, "ref"> {
   size?: number | string;
@@ -109,6 +111,7 @@ const iconRegistry: Record<IconName, LucideIcon> = {
   wallet: Wallet,
   "shield-alert": ShieldAlert,
   "chevron-down": ChevronDown,
+  star: Star,
 };
 
 /**
@@ -222,4 +225,9 @@ export function MapPinIcon(props: IconProps) {
 export function ChevronDownIcon(props: IconProps) {
   return <ChevronDown size={props.size ?? 16} aria-hidden={true} {...props} />;
 }
+
+export function StarIcon(props: IconProps) {
+  return <Star size={props.size ?? 20} aria-hidden={true} {...props} />;
+}
+
 

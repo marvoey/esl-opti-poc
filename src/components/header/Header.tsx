@@ -435,6 +435,7 @@ export function Header({
                   shape="pill"
                   href={signInHref}
                   leftIcon={<UserIcon size={16} />}
+                  className={styles.mobileSignInButton}
                   fullWidth
                 >
                   {signInText}

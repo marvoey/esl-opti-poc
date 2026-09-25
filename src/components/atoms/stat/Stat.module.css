@@ -9,6 +9,11 @@
   display: block;
 }
 
+.sizeSm {
+  font-size: var(--font-size-stat-sm);
+  line-height: var(--line-height-stat-sm);
+}
+
 /* Semantic Color Modifiers */
 .colorPrimary {
   color: var(--color-text-primary);
