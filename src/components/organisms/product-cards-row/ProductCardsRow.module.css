@@ -1,6 +1,6 @@
 .section {
   width: 100%;
-  background-color: #F7F9FB;
+  background-color: var(--color-bg-subtle);
 }
 
 .container {
@@ -56,7 +56,7 @@
   gap: var(--space-xs, 8px);
   padding-inline: var(--space-xs, 8px);
   padding-block: var(--space-md, 16px);
-  background-color: var(--color-surface-raised, #FFFFFF);
+  background-color: var(--color-surface-raised);
   border-radius: 0.75rem;
   min-width: 0;
 }

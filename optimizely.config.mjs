@@ -22,5 +22,10 @@ export default buildConfig({
       displayName: 'Footer',
       sortOrder: 20,
     },
+    {
+      key: 'seo',
+      displayName: 'SEO',
+      sortOrder: 30,
+    },
   ],
 });

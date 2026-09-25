@@ -43,7 +43,7 @@ export function RatesCard(props: RatesCardProps) {
   const href = "href" in rest ? (rest.href as string) : undefined;
   
   const divProps = { ...rest } as React.HTMLAttributes<HTMLElement>;
-  if ("href" in divProps) delete (divProps as any).href;
+  if ("href" in divProps) delete (divProps as Record<string, unknown>).href;
 
   const variantClass = variant === "active" ? styles.active : styles.default;
   const classes = [styles.card, variantClass, className].filter(Boolean).join(" ");

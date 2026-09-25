@@ -31,8 +31,8 @@ export function VerticalSelectorFeaturePanel({
         <Image
           src={feature.image.src}
           alt={feature.image.alt}
-          width={feature.image.width ?? 720}
-          height={feature.image.height ?? 328}
+          fill
+          sizes="(max-width: 1024px) 100vw, 720px"
           className={styles.featureImage}
         />
       </div>

@@ -88,8 +88,8 @@ export function CircularImageMetricRow({
                 <Image
                   src={item.image.src}
                   alt={item.image.alt}
-                  width={item.image.width ?? 300}
-                  height={item.image.height ?? 300}
+                  fill
+                  sizes="300px"
                   className={styles.circleImage}
                 />
               </div>

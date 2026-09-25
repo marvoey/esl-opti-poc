@@ -35,7 +35,7 @@ export type EslVideoStoryCardRowData = Omit<
 type LinkContent = NonNullable<EslVideoStoryCardRowData['cta']>;
 type RichTextContent =
   | Partial<NonNullable<ContentProps<typeof EslVideoStoryCardRowContentType>['description']>>
-  | { html?: string | null; json?: any }
+  | { html?: string | null; json?: unknown }
   | string;
 
 const ICON_MAP: Record<string, React.ReactNode> = {
@@ -53,7 +53,7 @@ export function renderRichText(richTextObj?: RichTextContent | null): React.Reac
   if (!richTextObj) return '';
   if (typeof richTextObj === 'string') return richTextObj;
   if ('json' in richTextObj && richTextObj.json) {
-    return <RichText content={richTextObj.json} />;
+    return <RichText content={richTextObj.json as Parameters<typeof RichText>[0]['content']} />;
   }
   if ('html' in richTextObj && richTextObj.html) {
     return <div dangerouslySetInnerHTML={{ __html: richTextObj.html }} />;

@@ -37,7 +37,7 @@
 }
 
 .eyebrow {
-  color: var(--color-border-accent, #68E0CC);
+  color: var(--color-border-accent);
   margin: 0;
 }
 

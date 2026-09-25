@@ -1,6 +1,6 @@
 .section {
   width: 100%;
-  background-color: var(--color-bg, #FFFFFF);
+  background-color: var(--color-bg);
 }
 
 .container {
@@ -53,7 +53,7 @@
 }
 
 .card {
-  background-color: var(--color-surface-raised, #FFFFFF);
+  background-color: var(--color-surface-raised);
   border: 1px solid var(--color-card-stroke);
   border-radius: var(--radius-md-lg);
   min-width: 0;

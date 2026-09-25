@@ -4,6 +4,7 @@ import type {
   FooterLinkItem,
   FooterBrandSection,
 } from '@/components/organisms/footer/Footer';
+import { optimizeMediaUrl } from './mediaUrl';
 
 export type RawCmsLink = {
   text?: string | null;
@@ -97,12 +98,7 @@ export function resolveCmsMediaUrl(media?: RawCmsMedia | null): string {
 
   if (!url) return '';
 
-  if (url.startsWith('/') && !url.startsWith('/images/')) {
-    const cmsBase = process.env.OPTIMIZELY_CMS_URL || '';
-    return cmsBase ? `${cmsBase.replace(/\/$/, '')}${url}` : url;
-  }
-
-  return url;
+  return optimizeMediaUrl(url);
 }
 
 /**

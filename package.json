@@ -8,6 +8,8 @@
     "start": "next start -p 5002",
     "lint": "eslint",
     "lint:css": "stylelint \"src/**/*.css\"",
+    "lint:all": "eslint && stylelint \"src/**/*.css\"",
+    "check": "eslint && stylelint \"src/**/*.css\" && tsc --noEmit && vitest run",
     "test": "vitest run",
     "cms:push": "optimizely-cms-cli config push --force",
     "cms:push:local": "node --env-file=.env ./node_modules/@optimizely/cms-cli/bin/run.js config push --force",
