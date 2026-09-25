@@ -5,7 +5,7 @@
   width: 100%;
   border-radius: var(--radius-xl);
   background-color: var(--color-navy-alpha-25);
-  border: 1px solid rgba(104, 224, 204, 0.15);
+  border: 1px solid transparent;
   overflow: hidden;
   box-shadow: var(--shadow-elevation-sm, 0 2px 4px rgba(0, 0, 0, 0.08));
   transition: transform var(--duration-smart, 0.25s) var(--ease-out-smart, cubic-bezier(0.16, 1, 0.3, 1)),
