@@ -68,6 +68,9 @@ export function SplitContentCards({
     ? { backgroundImage: `url(${backgroundImage})` }
     : undefined;
 
+  const hasStatCards = statCards !== undefined && statCards.length > 0;
+  const hasCards = Boolean(heroMetric) || hasStatCards;
+
   return (
     <section
       id={id}
@@ -125,52 +128,53 @@ export function SplitContentCards({
         </div>
 
         {/* Column 2: Proof-Point Glass Metric Cards */}
-        <div className={styles.cardsColumn}>
-          {/* Top Hero Card */}
-          {heroMetric && (
-            <div className={styles.heroCard}>
-              {heroMetric.subhead && (
-                <Text
-                  as="span"
-                  variant="eyebrow"
-                  color="primary"
-                  className={styles.heroSubhead}
-                >
-                  {heroMetric.subhead}
-                </Text>
-              )}
-
-              <div className={styles.heroStatGroup}>
-                <Stat color="accent" className={styles.heroStatValue}>{heroMetric.value}</Stat>
-                {heroMetric.unit && (
-                  <span className={styles.heroStatUnit}>{heroMetric.unit}</span>
+        {/* role="list" restores list semantics in Safari/VoiceOver when list-style: none */}
+        {hasCards && (
+          <ul className={styles.cardsColumn} role="list">
+            {/* Top Hero Card */}
+            {heroMetric && (
+              <li className={styles.heroCard}>
+                {heroMetric.subhead && (
+                  <Text
+                    as="span"
+                    variant="eyebrow"
+                    color="primary"
+                    className={styles.heroSubhead}
+                  >
+                    {heroMetric.subhead}
+                  </Text>
                 )}
-              </div>
 
-              {heroMetric.description && (
-                <Text
-                  as="p"
-                  variant="body"
-                  color="primary"
-                  className={styles.heroDescription}
-                >
-                  {heroMetric.description}
-                </Text>
-              )}
-            </div>
-          )}
+                <div className={styles.heroStatGroup}>
+                  <Stat color="accent" className={styles.heroStatValue}>{heroMetric.value}</Stat>
+                  {heroMetric.unit && (
+                    <span className={styles.heroStatUnit}>{heroMetric.unit}</span>
+                  )}
+                </div>
 
-          {/* Bottom Dual Stat Cards */}
-          {statCards && statCards.length > 0 && (
-            <div className={styles.dualStatsRow}>
-              {statCards.map((stat) => {
+                {heroMetric.description && (
+                  <Text
+                    as="p"
+                    variant="body"
+                    color="primary"
+                    className={styles.heroDescription}
+                  >
+                    {heroMetric.description}
+                  </Text>
+                )}
+              </li>
+            )}
+
+            {/* Stat Cards (50% each) */}
+            {hasStatCards &&
+              statCards.map((stat) => {
                 const hasStar =
                   stat.icon === "star" ||
                   stat.id === "stat-satisfaction" ||
                   /satisfaction/i.test(stat.label ?? "");
 
                 return (
-                  <div
+                  <li
                     key={stat.id ?? `${stat.label}-${stat.value}`}
                     className={styles.statCard}
                   >
@@ -192,12 +196,11 @@ export function SplitContentCards({
                     >
                       {stat.label}
                     </Text>
-                  </div>
+                  </li>
                 );
               })}
-            </div>
-          )}
-        </div>
+          </ul>
+        )}
       </div>
     </section>
   );

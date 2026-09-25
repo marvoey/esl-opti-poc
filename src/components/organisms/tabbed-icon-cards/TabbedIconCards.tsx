@@ -220,17 +220,18 @@ export function TabbedIconCards({
           tabIndex={0}
           className={styles.panel}
         >
-          <div className={styles.cardGrid}>
+          <ul className={styles.cardGrid}>
             {activeTab.cards.map((card) => (
-              <QuickLinkSimple
-                key={card.id}
-                title={card.title}
-                href={card.href}
-                icon={card.icon}
-                variant={card.variant ?? "default"}
-              />
+              <li key={card.id}>
+                <QuickLinkSimple
+                  title={card.title}
+                  href={card.href}
+                  icon={card.icon}
+                  variant={card.variant ?? "default"}
+                />
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       </div>
     </section>

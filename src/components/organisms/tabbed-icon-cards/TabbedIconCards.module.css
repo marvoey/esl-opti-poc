@@ -129,7 +129,10 @@
   grid-template-columns: 1fr;
   align-items: stretch;
   gap: var(--space-md);
+  margin: 0;
   padding-block: var(--space-sm);
+  padding-inline: 0;
+  list-style: none;
 }
 
 /* Small tablet containers: 2 columns */
