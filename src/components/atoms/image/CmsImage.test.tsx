@@ -51,7 +51,8 @@ describe('CmsImage Atom', () => {
 
     const img = screen.getByRole('img', { name: 'CMP image' });
     const decodedSrc = decodeURIComponent(img.getAttribute('src') || '');
-    expect(decodedSrc).toContain('/opti-media/cmp/cdn-cgi/image/');
+    expect(decodedSrc).toContain('/opti-media/cmp/');
+    expect(decodedSrc).toContain('width=700');
   });
 
   it('preserves local static /images/... paths without proxying', () => {

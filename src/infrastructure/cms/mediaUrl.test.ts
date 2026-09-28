@@ -61,7 +61,7 @@ describe('mediaUrl', () => {
       const raw = 'https://images1.cmp.optimizely.com/Zz00OTg4ODhmMmIwNjkxMWYxOGE0NTc2N2U2ZDA3YWY2Yw==';
       const result = optimizeMediaUrl(raw, { width: 700 });
       expect(result).toBe(
-        '/opti-media/cmp/cdn-cgi/image/width=700,format=auto,quality=80/Zz00OTg4ODhmMmIwNjkxMWYxOGE0NTc2N2U2ZDA3YWY2Yw=='
+        '/opti-media/cmp/Zz00OTg4ODhmMmIwNjkxMWYxOGE0NTc2N2U2ZDA3YWY2Yw==?width=700'
       );
     });
 
