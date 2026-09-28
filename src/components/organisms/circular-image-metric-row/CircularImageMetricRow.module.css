@@ -4,12 +4,9 @@
 }
 
 .container {
+  composes: container from "../../../styles/layout.module.css";
   display: flex;
   flex-direction: column;
-  width: 100%;
-  max-width: var(--container-max-w);
-  margin-inline: auto;
-  padding-inline: var(--container-gutter);
   padding-block: var(--space-section-block);
 }
 
@@ -61,7 +58,7 @@
   color: var(--color-text-primary);
   margin: 0;
   font-size: var(--font-size-body-lg);
-  line-height: var(--line-height-body-lg, 1.5);
+  line-height: var(--line-height-body-lg);
 }
 
 /* Col 2: CTA Column */
@@ -83,18 +80,13 @@
 .metricsRow {
   width: 100%;
   margin-top: 3rem; /* 48px */
+  margin-bottom: 0;
+  padding: 0;
+  list-style: none;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
   align-items: start;
-}
-
-@media (width < 768px) {
-  .metricsRow {
-    grid-template-columns: 1fr;
-    gap: 2.5rem;
-    justify-items: center;
-  }
 }
 
 /* Metric Column Card */
@@ -102,6 +94,15 @@
   width: 100%;
   max-width: 18.75rem; /* 300px */
   margin-inline: auto;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.textContent {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -132,7 +133,7 @@
 .stat {
   font-family: var(--font-family-display);
   font-size: var(--font-size-stat);
-  line-height: var(--line-height-stat, 1.1);
+  line-height: var(--line-height-stat);
   font-weight: var(--font-weight-bold);
   color: var(--color-accent);
   text-align: center;
@@ -148,4 +149,46 @@
   color: var(--color-text-primary);
   text-align: center;
   margin: 0;
+}
+
+@media (width < 1024px) {
+  .metricsRow {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .metricCard {
+    max-width: 100%;
+    display: grid;
+    grid-template-columns: clamp(100px, 30%, 160px) 1fr;
+    gap: var(--space-md); /* 16px */
+    align-items: center;
+    text-align: left;
+  }
+
+  .imageWrapper {
+    width: 100%;
+    min-width: 100px;
+    max-width: 160px;
+    margin-bottom: 0;
+  }
+
+  .textContent {
+    align-items: flex-start;
+    text-align: left;
+    min-width: 0;
+  }
+
+  .textContent:only-child {
+    grid-column: 1 / -1;
+  }
+
+  .stat {
+    text-align: left;
+    margin: 0 0 0.25rem;
+  }
+
+  .metricLabel {
+    text-align: left;
+  }
 }

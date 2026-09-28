@@ -11,10 +11,7 @@
 }
 
 .container {
-  width: 100%;
-  max-width: var(--container-max-w);
-  margin-inline: auto;
-  padding-inline: var(--container-gutter);
+  composes: container from "../../styles/layout.module.css";
 }
 
 .inner {
@@ -44,8 +41,8 @@
 }
 
 .brandLink:focus-visible {
-  outline: 2px solid var(--color-primary);
-  outline-offset: 4px;
+  outline: var(--focus-ring-width) solid var(--color-primary);
+  outline-offset: var(--focus-ring-offset-lg);
 }
 
 .logo {
@@ -98,8 +95,8 @@
 }
 
 .navLink:focus-visible {
-  outline: 2px solid var(--color-focus-ring);
-  outline-offset: 4px;
+  outline: var(--focus-ring-width) solid var(--color-focus-ring);
+  outline-offset: var(--focus-ring-offset-lg);
   border-radius: var(--radius-sm);
 }
 
@@ -127,8 +124,8 @@
 }
 
 .navTrigger:focus-visible {
-  outline: 2px solid var(--color-focus-ring);
-  outline-offset: 2px;
+  outline: var(--focus-ring-width) solid var(--color-focus-ring);
+  outline-offset: var(--focus-ring-offset);
 }
 
 .navChevron {
@@ -189,8 +186,8 @@
 }
 
 .mobileToggle:focus-visible {
-  outline: 2px solid var(--color-focus-ring);
-  outline-offset: 2px;
+  outline: var(--focus-ring-width) solid var(--color-focus-ring);
+  outline-offset: var(--focus-ring-offset);
 }
 
 .hamburger,
@@ -307,4 +304,13 @@
   flex-direction: column;
   gap: var(--space-sm);
   margin-top: var(--space-md);
+}
+
+/* Forced colors (Windows High Contrast): the inline SVG logo is filled with a brand token that
+   Chromium does not remap, so it could vanish on a dark system canvas. Following the link's
+   forced text color keeps it visible in every palette. */
+@media (forced-colors: active) {
+  .logo path {
+    fill: currentColor;
+  }
 }

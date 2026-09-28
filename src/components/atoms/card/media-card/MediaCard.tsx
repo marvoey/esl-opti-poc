@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { Badge, type BadgeVariant } from "@/components/atoms/badge/Badge";
+import { Text } from "@/components/atoms/text/Text";
 import { ArrowRightIcon } from "@/components/atoms/icons";
 import styles from "./MediaCard.module.css";
 
@@ -69,11 +70,14 @@ export function MediaCard({
 
         <h3 className={styles.title}>{title}</h3>
 
-        {typeof description === "string" ? (
-          <p className={styles.description}>{description}</p>
-        ) : (
-          <div className={styles.description}>{description}</div>
-        )}
+        <Text
+          as={typeof description === "string" ? "p" : "div"}
+          variant="body"
+          color="inverted-muted"
+          className={styles.description}
+        >
+          {description}
+        </Text>
 
         {href && (
           <a href={href} className={styles.cta} {...externalProps}>

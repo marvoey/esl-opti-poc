@@ -65,8 +65,8 @@
 }
 
 .button {
-  font-size: var(--font-size-button);
-  line-height: var(--line-height-button);
+  font-size: var(--font-size-btn);
+  line-height: var(--line-height-btn);
   letter-spacing: var(--tracking-normal);
   font-weight: var(--font-weight-bold);
 }
@@ -83,7 +83,7 @@
 }
 
 .h1 {
-  font-family: var(--font-family-display, var(--font-family-sans));
+  font-family: var(--font-family-display);
   font-size: var(--font-size-h1);
   line-height: var(--line-height-h1);
   letter-spacing: var(--tracking-h1);
@@ -108,18 +108,18 @@
 
 .footerTitle {
   font-family: var(--font-family-sans);
-  font-size: var(--font-size-footer-title-mobile, 0.7188rem);
-  line-height: var(--line-height-footer-title-mobile, 1.0781rem);
-  letter-spacing: var(--tracking-footer-title-mobile, 1.035px);
+  font-size: var(--font-size-footer-title-mobile);
+  line-height: var(--line-height-footer-title-mobile);
+  letter-spacing: var(--tracking-footer-title-mobile);
   font-weight: var(--font-weight-bold);
   text-transform: uppercase;
 }
 
 @media (width >= 1024px) {
   .footerTitle {
-    font-size: var(--font-size-footer-title-desktop, 1.125rem);
-    line-height: var(--line-height-footer-title-desktop, 1.75rem);
-    letter-spacing: var(--tracking-footer-title-desktop, 0);
+    font-size: var(--font-size-footer-title-desktop);
+    line-height: var(--line-height-footer-title-desktop);
+    letter-spacing: var(--tracking-footer-title-desktop);
     font-weight: var(--font-weight-medium);
     text-transform: none;
   }
@@ -135,7 +135,7 @@
 }
 
 .colorBrand {
-  color: var(--color-eyebrow-brand, var(--color-text-primary));
+  color: var(--color-eyebrow-brand);
 }
 
 .colorMuted {

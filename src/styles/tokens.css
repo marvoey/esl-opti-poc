@@ -1,23 +1,29 @@
 /* ==========================================================================
    Design Tokens - Enterprise Intrinsic Design System
    Media-Query Agnostic • Fluid Scales via clamp()
+
+   Tiers: primitives (raw values) -> semantic roles -> component intent,
+   plus the foundation scales (type, space, radii, elevation, motion).
+   Semantic and component tokens reference primitives; they never hold raw colors.
+   Tokens used by a single component are declared on that component's root
+   selector in its CSS module (component scope), not here.
    ========================================================================== */
 
 :root {
   /* --- Tier 1: Primitives (Zero Semantic Meaning) --- */
   --color-navy-950: #010E23; /* Footer gradient start */
+  --color-navy-900: #001B3D; /* SwitchSupport gradient end */
   --color-navy-500: #00395D;
   --color-navy-850: #003E65;
   --color-navy-800: #01375A; /* Footer gradient end */
   --color-aqua-500: #00A3A3;
-  --color-teal-700: var(--color-aqua-500); /* Backwards-compatible alias */
+  --color-teal-600: #008080; /* Testimonial card placeholder icon (legacy value) */
   --color-teal-500: #51BFB6; /* Figma: Active tab indicator */
   --color-aqua-300: #68E0CC; /* Figma: aqua-300 */
-  --color-grey-95: #ECFBF8; /* Figma: "Polar" background */
-  --color-mint-50: var(--color-grey-95); /* Semantic/visual alias matching design system specs */
+  --color-grey-95: #ECFBF8; /* Figma: "Polar" background (a.k.a. mint-50) */
   --color-mint-100: #EAF9F9; /* Figma: linear wash tint */
-  --color-white: #FFFFFF;
-  --color-black: #000000;
+  --color-white: #FFF;
+  --color-black: #000;
 
   --color-blue-100: #D5E5F4; /* Figma: card/stroke */
   --color-aqua-100: #D5F3F2; /* Figma: hero ambient glow */
@@ -25,127 +31,85 @@
   --color-slate-50: #F7F9FB;  /* Figma: section neutral background */
   --color-slate-200: #B8BFC7; /* Figma: process/neutral surface */
   --color-neutral-600: #4E5059; /* Figma: neutral/body description */
-  --color-slate-600: var(--color-neutral-600); /* Backwards-compatible alias */
   --color-slate-700: #364153; /* Figma: FinalCta body description */
 
-  --color-white-10: rgba(255, 255, 255, 0.10);
-  --color-white-50: rgba(255, 255, 255, 0.50);
-  --color-white-80: rgba(255, 255, 255, 0.80);
-  --color-teal-alpha-20: rgba(0, 163, 163, 0.20);
-  --color-aqua-alpha-20: var(--color-teal-alpha-20);
-  --color-teal-alpha-30: rgba(0, 163, 163, 0.30);
-  --color-teal-alpha-40: rgba(0, 163, 163, 0.40);
-  --color-navy-alpha-04: rgba(0, 57, 93, 0.04);
-  --color-navy-alpha-06: rgba(0, 57, 93, 0.06);
-  --color-navy-alpha-08: rgba(0, 57, 93, 0.08);
-  --color-navy-alpha-12: rgba(0, 57, 93, 0.12);
-  --color-navy-alpha-15: rgba(0, 57, 93, 0.15);
-  --color-navy-alpha-18: rgba(0, 57, 93, 0.18);
-  --color-navy-alpha-20: rgba(0, 57, 93, 0.20);
-  --color-navy-alpha-25: rgba(0, 57, 93, 0.25);
-  --color-blue-alpha-25: rgba(213, 229, 244, 0.25);
-  --color-aqua-alpha-25: rgba(213, 243, 242, 0.25);
-  --color-aqua-300-alpha-25: rgba(104, 224, 204, 0.25);
-  --color-sky-alpha-25: rgba(135, 206, 242, 0.25);
-  --color-white-alpha-25: rgba(255, 255, 255, 0.25);
-  --color-sky-alpha-50: rgba(135, 206, 242, 0.50);
-  --color-sky-alpha-65: rgba(135, 206, 242, 0.65);
-  --color-black-alpha-10: rgba(0, 0, 0, 0.10);
+  /* Alpha variants: <palette>-alpha-<opacity %> */
+  --color-white-alpha-10: rgb(255 255 255 / 10%);
+  --color-white-alpha-25: rgb(255 255 255 / 25%);
+  --color-white-alpha-80: rgb(255 255 255 / 80%);
+  --color-white-alpha-85: rgb(255 255 255 / 85%);
+  --color-teal-alpha-12: rgb(0 163 163 / 12%);
+  --color-teal-alpha-20: rgb(0 163 163 / 20%);
+  --color-teal-alpha-40: rgb(0 163 163 / 40%);
+  --color-navy-alpha-04: rgb(0 57 93 / 4%);
+  --color-navy-alpha-06: rgb(0 57 93 / 6%);
+  --color-navy-alpha-08: rgb(0 57 93 / 8%);
+  --color-navy-alpha-12: rgb(0 57 93 / 12%);
+  --color-navy-alpha-15: rgb(0 57 93 / 15%);
+  --color-navy-alpha-18: rgb(0 57 93 / 18%);
+  --color-navy-alpha-20: rgb(0 57 93 / 20%);
+  --color-navy-alpha-25: rgb(0 57 93 / 25%);
+  --color-navy-alpha-55: rgb(0 57 93 / 55%);
+  --color-navy-400-alpha-75: rgb(7 69 111 / 75%); /* #07456F at 75% */
+  --color-navy-ink-alpha-25: rgb(1 38 66 / 25%);  /* #012642 at 25% */
+  --color-blue-alpha-25: rgb(213 229 244 / 25%);
+  --color-aqua-alpha-25: rgb(213 243 242 / 25%);
+  --color-aqua-300-alpha-25: rgb(104 224 204 / 25%);
+  --color-sky-alpha-25: rgb(135 206 242 / 25%);
+  --color-sky-alpha-50: rgb(135 206 242 / 50%);
+  --color-sky-alpha-65: rgb(135 206 242 / 65%);
+  --color-black-alpha-10: rgb(0 0 0 / 10%);
+  --color-black-alpha-20: rgb(0 0 0 / 20%);
 
   /* --- Tier 2: Semantic Roles (Theme & Layout Mappings) --- */
   --color-bg: var(--color-white);
   --color-bg-subtle: var(--color-slate-50);
   --color-surface: var(--color-grey-95);
   --color-surface-raised: var(--color-white);
-  --color-surface-subtle: var(--color-slate-50);
   --color-surface-inverse: var(--color-navy-500);
   --color-surface-muted: var(--color-slate-200);
 
-  --color-overlay-backdrop: rgba(0, 57, 93, 0.85);
-  --color-overlay-white: rgba(255, 255, 255, 0.85);
-  --color-bg-dark: var(--color-navy-500);
+  --color-overlay-white: var(--color-white-alpha-85);
 
   --color-border: var(--color-teal-alpha-20);
   --color-border-subtle: var(--color-navy-alpha-12);
   --color-border-accent: var(--color-aqua-300);
   --color-border-tab-active: var(--color-teal-500); /* #51BFB6 */
   --color-border-card: var(--color-blue-100);
-  --color-border-inverse-subtle: var(--color-white-10);
+  --color-border-inverse-subtle: var(--color-white-alpha-10);
+
+  --color-text-primary: var(--color-navy-500);
+  --color-text-secondary: var(--color-neutral-600);
+  --color-text-muted: var(--color-navy-alpha-55);
+  --color-text-inverted: var(--color-white);
+  --color-text-inverted-muted: var(--color-white-alpha-80);
+
+  --color-primary: var(--color-navy-500);
+  --color-primary-hover: var(--color-aqua-500);
+
+  --color-accent: var(--color-aqua-500);
+  --color-accent-subtle: var(--color-grey-95);
+  --color-focus-ring: var(--color-aqua-500);
 
   /* Gradients */
   --gradient-hero-glow: radial-gradient(58.07% 88.19% at 17.99% 3.33%, var(--color-sky-300) 4.85%, var(--color-aqua-100) 50%, var(--color-white) 100%);
-  --gradient-ambient-sky: var(--gradient-hero-glow);
-  --gradient-mint-wash: linear-gradient(90deg, var(--color-white) 0%, var(--color-mint-100) 50%, var(--color-white) 100%);
-  --gradient-linear-wash: var(--gradient-mint-wash);
+  --gradient-linear-wash: linear-gradient(90deg, var(--color-white) 0%, var(--color-mint-100) 50%, var(--color-white) 100%);
   --gradient-dark-navy: linear-gradient(135deg, var(--color-navy-950) 0%, var(--color-navy-800) 100%);
-  --gradient-footer: var(--gradient-dark-navy);
   --gradient-split-radial: radial-gradient(69.11% 69.11% at 50.26% 14.87%, var(--color-sky-alpha-25) 0%, var(--color-aqua-alpha-25) 50%, var(--color-white-alpha-25) 100%);
   --gradient-vertical-selector: radial-gradient(44.47% 44.21% at 54.11% 55.27%, var(--color-sky-300) 7.67%, var(--color-aqua-100) 50%, var(--color-white) 100%);
   --gradient-final-cta: linear-gradient(107.92deg, var(--color-aqua-100) 0%, var(--color-grey-95) 100%);
-  --gradient-switch-support: linear-gradient(138.18deg, var(--color-navy-500) 0%, #001B3D 100%);
+  --gradient-switch-support: linear-gradient(138.18deg, var(--color-navy-500) 0%, var(--color-navy-900) 100%);
   --gradient-side-by-side: radial-gradient(53.7% 53.29% at 52.69% 64.36%, var(--color-sky-300) 7.67%, var(--color-aqua-100) 50%, var(--color-white) 100%);
-
-  /* Footer Layout Spacing */
-  --space-footer-top: 4rem;         /* 64px */
-  --space-footer-bottom: 7.9375rem; /* 127px */
-  --space-footer-row-gap: 3rem;     /* 48px */
-  --space-footer-col-gap: 2.5rem;   /* 40px */
 
   /* Section Layout Spacing — vertical padding for standard content section
      containers on desktop. Change this single value to re-tune every
      section's desktop rhythm at once. */
   --space-section-block: 5.5rem; /* 88px */
 
-  /* Hero Carousel Badge Spacing */
-  --space-badge-padding: 0.9375rem; /* 15px */
+  /* --- Tier 3: Component Intent Tokens (shared or themeable component APIs) --- */
 
-  /* Snipe CTA Header Gap */
-  --space-snipe-cta-header-gap: 0.40625rem; /* 6.5px */
-
-  /* Quick Link Simple Icon Circle */
-  --size-icon-circle: 3.75rem; /* 60px */
-  --scale-icon-circle-hover: 1.2; /* scales to 72px on hover */
-  --size-icon-circle-sm: 2.5rem; /* 40px, mobile list-row layout */
-
-  /* Tabbed Icon Cards Section Spacing */
-  --space-tabbed-icon-cards-margin-bottom: 2rem; /* 32px */
-
-  /* Vertical Selector Feature Card Tab Icon */
-  --size-icon-tab: 1.5rem; /* 24px */
-
-  /* Side By Side Mobile Image Height */
-  --size-side-by-side-image-mobile: 14.375rem; /* 230px */
-
-  /* Side By Side Section Spacing */
-  --space-side-by-side-text-margin-bottom: 2rem; /* 32px */
-
-  /* Button Padding Tokens (Strict Figma Specs) */
-  --space-btn-pill-block: 0.9375rem;     /* 15px */
-  --space-btn-pill-inline: 1.5rem;       /* 24px */
-  --space-btn-arrow-block: 1rem;         /* 16px */
-  --space-btn-arrow-inline: 2rem;        /* 32px */
-  --space-btn-arrow-hover-pad: 2.75rem;  /* 32px + 12px = 44px */
-
-  --color-text-primary: var(--color-navy-500);
-  --color-text-secondary: var(--color-neutral-600);
-  --color-text-muted: rgba(0, 57, 93, 0.55);
-  --color-text-inverted: var(--color-white);
-  --color-text-inverted-muted: var(--color-white-80);
-
-  --color-primary: var(--color-navy-500);
-  --color-primary-hover: var(--color-aqua-500);
-  --color-primary-contrast: var(--color-white);
-
-  --color-accent: var(--color-aqua-500);
-  --color-accent-subtle: var(--color-grey-95);
-  --color-focus-ring: var(--color-aqua-500);
-
-  /* --- Tier 3: Component Intent Tokens --- */
   /* Eyebrows */
   --color-eyebrow-brand: var(--color-primary);
-  --color-eyebrow-accent: var(--color-accent);
-  --color-eyebrow-vibrant: var(--color-border-accent);
-  --color-eyebrow-inverted: var(--color-text-inverted);
   --color-eyebrow-guidance: var(--color-navy-850);
 
   /* Buttons */
@@ -175,7 +139,6 @@
 
   /* Editorial Text Links */
   --color-link-default: var(--color-primary);
-  --color-link-default-hover: var(--color-primary);
   --color-link-inverted: var(--color-text-inverted);
   --color-link-inverted-hover: var(--color-border-accent);
 
@@ -193,7 +156,6 @@
   /* Tab Buttons */
   --color-tab-bg: var(--color-surface-raised);
   --color-tab-text: var(--color-text-primary);
-  --color-tab-inactive: rgba(7, 69, 111, 0.75); /* #07456F at 75% opacity */
   --color-tab-border: var(--color-border-subtle);
   --color-tab-icon: var(--color-accent);
   --color-tab-hover-bg: var(--color-surface);
@@ -229,24 +191,22 @@
   --color-card-placeholder-border: var(--color-navy-alpha-08);
   --color-card-placeholder-pattern: var(--color-navy-alpha-06);
 
-  /* Vertical Selector */
-  --color-vertical-selector-bg: var(--gradient-vertical-selector);
-
-  /* Footer */
-  --footer-bg: var(--gradient-footer);
-  --footer-text-primary: var(--color-text-inverted);         /* #FFFFFF */
-  --footer-text-muted: var(--color-text-inverted-muted);     /* rgba(255, 255, 255, 0.80) */
-  --footer-link-hover: var(--color-aqua-300);                /* #68E0CC */
-  --footer-border-subtle: var(--color-white-10);             /* rgba(255, 255, 255, 0.10) */
+  /* Snipe CTA Header Gap — kept global: its exact 6.5px rem ratio needs the 6-decimal
+     precision that stylelint allows only in tokens.css */
+  --space-snipe-cta-header-gap: 0.40625rem; /* 6.5px */
 
   /* Shadows (Figma Elevation Tokens) */
   --shadow-elevation-sm: 0 1px 2px 0 var(--color-black-alpha-10);
   --shadow-elevation-md: 0 4px 12px 0 var(--color-black-alpha-10);
-  --shadow-card: 0 4px 20px 0 rgba(1, 38, 66, 0.06);
   --shadow-card-hover: 0 10px 14px 0 var(--color-sky-alpha-50);
   --shadow-card-hover-intense: 0 14px 20px 0 var(--color-sky-alpha-65);
   --shadow-chip-hover: 0 2px 8px var(--color-aqua-300-alpha-25);
   --shadow-ring-hover: 0 0 0 2px var(--color-border-accent); /* reusable 2px hover ring for interactive cards */
+
+  /* ==========================================================================
+     Foundation Scales (primitive tier): typography, spacing, layout, radii,
+     borders, z-index, elevation and motion
+     ========================================================================== */
 
   /* --- Typography Families --- */
   --font-family-sans: var(--font-albert-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -255,13 +215,13 @@
   --font-family-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
   /* --- Font Sizes (Fluid Clamp: 768px Mobile -> 1200px Desktop) --- */
+  --font-size-base: 1rem;                                                  /* 16px, document body size (matches the root default) */
   --font-size-micro: 0.75rem;                                              /* 12px */
-  --font-size-caption: 0.875rem;                                           /* 14px */
   --font-size-body-sm: 0.875rem;                                           /* 14px */
+  --font-size-caption: var(--font-size-body-sm);                           /* 14px, caption role (same size as body-sm today) */
   --font-size-body: 1rem;                                                  /* 16px */
   --font-size-btn: 1rem;                                                   /* 16px (Figma: Button Label) */
-  --font-size-button: var(--font-size-btn);
-  --font-size-body-lg: clamp(1.125rem, 0.902rem + 0.46vw, 1.25rem);          /* 18px -> 20px */
+  --font-size-body-lg: clamp(1.125rem, 0.902rem + 0.46vw, 1.25rem);        /* 18px -> 20px */
   --font-size-subhead: clamp(1.125rem, 0.463rem + 1.39vw, 1.5rem);         /* 18px -> 24px */
   --font-size-label: 1.125rem;                                             /* 18px */
   --font-size-h4: 1.25rem;                                                 /* 20px */
@@ -270,19 +230,21 @@
   --font-size-h1: clamp(2.125rem, 0.125rem + 4.17vw, 3.25rem);             /* 34px -> 52px */
   --font-size-stat: clamp(2.5rem, 0.278rem + 4.63vw, 3.75rem);             /* 40px -> 60px */
   --font-size-stat-sm: 2.5rem;                                             /* 40px (fixed) */
-  --font-size-stat-hero: clamp(2.5rem, 4vw, 3.25rem);                     /* 40px -> 52px (SplitContentCards hero metric) */
+  --font-size-stat-hero: clamp(2.5rem, 4vw, 3.25rem);                      /* 40px -> 52px (SplitContentCards hero metric) */
   --font-size-hero-h2: clamp(2rem, 0.444rem + 6.48vw, 4.5rem);             /* 32px (mobile) -> 72px (desktop) */
   --font-size-eyebrow: 1rem;                                               /* 16px */
   --font-size-footer-title-mobile: 0.71875rem;                             /* 11.5px */
   --font-size-footer-title-desktop: 1.125rem;                              /* 18px */
 
   /* --- Line Heights (Strict 4px Vertical Rhythm Grid) --- */
+  --line-height-normal: normal;                                            /* UA default, document body line height */
+  --line-height-tight: 1.15;                                               /* Unitless, SplitContentCards title */
+  --line-height-relaxed: 1.6;                                              /* Unitless, VerticalSelectorFeatureCard body copy */
   --line-height-none: 1;                                                   /* Unitless 1:1, for tight numeric displays */
   --line-height-micro: 1rem;                                               /* 16px (4x4) */
   --line-height-caption: 1rem;                                             /* 16px (4x4) */
   --line-height-body-sm: 1.25rem;                                          /* 20px (5x4) */
   --line-height-btn: 1.25rem;                                              /* 20px (5x4 - Figma: Button Label) */
-  --line-height-button: var(--line-height-btn);
   --line-height-body: 1.5rem;                                              /* 24px (6x4) */
   --line-height-h4: 1.5rem;                                                /* 24px (6x4) */
   --line-height-body-lg: 1.6875rem;                                        /* 27px */
@@ -294,10 +256,10 @@
   --line-height-h1: clamp(2.5rem, -1.056rem + 7.41vw, 3.75rem);            /* 40px -> 60px (4x grid) */
   --line-height-stat: clamp(2.75rem, 0.528rem + 4.63vw, 4rem);             /* 44px -> 64px (4x grid) */
   --line-height-stat-sm: 2.75rem;                                          /* 44px (fixed, 4x grid) */
-  --line-height-display: clamp(2.75rem, -2.861rem + 11.8vw, 4.75rem);       /* 44px -> 76px (4x grid) */
-  --line-height-hero-h2: clamp(2rem, 0.389rem + 6.71vw, 4.75rem);           /* 32px (mobile 100%) -> 76px (desktop) */
-  --line-height-footer-title-mobile: 1.078125rem;                            /* 17.25px */
-  --line-height-footer-title-desktop: 1.75rem;                               /* 28px (7x4 grid) */
+  --line-height-display: clamp(2.75rem, -2.861rem + 11.8vw, 4.75rem);      /* 44px -> 76px (4x grid) */
+  --line-height-hero-h2: clamp(2rem, 0.389rem + 6.71vw, 4.75rem);          /* 32px (mobile 100%) -> 76px (desktop) */
+  --line-height-footer-title-mobile: 1.078125rem;                          /* 17.25px */
+  --line-height-footer-title-desktop: 1.75rem;                             /* 28px (7x4 grid) */
 
   /* --- Tracking (Letter Spacing) --- */
   --tracking-display: -0.4px;
@@ -308,6 +270,7 @@
   --tracking-h3: -0.16px;
   --tracking-stat: -0.16px;
   --tracking-normal: 0;
+  --tracking-wider: 0.08em;
   --tracking-eyebrow: 2.2px;
   --tracking-footer-title-mobile: 1.035px;
   --tracking-footer-title-desktop: 0px;
@@ -329,6 +292,7 @@
   --space-xl: clamp(2rem, 1.75rem + 1.25vw, 2.75rem);
   --space-2xl: clamp(3rem, 2.5rem + 2.5vw, 4.5rem);
   --space-3xl: clamp(4rem, 3.25rem + 3.75vw, 6rem);
+  --space-4xl: 4rem; /* 64px (fixed) */
 
   /* --- Layout & Container Widths --- */
   --container-max-w: 1200px;
@@ -342,17 +306,51 @@
   --radius-xl: 1rem;
   --radius-full: 9999px;
 
-  /* --- Elevations (Shadows) --- */
-  --shadow-sm: 0 1px 2px 0 hsl(220 25% 10% / 0.05);
-  --shadow-md: 0 4px 6px -1px hsl(220 25% 10% / 0.08), 0 2px 4px -2px hsl(220 25% 10% / 0.06);
-  --shadow-lg: 0 10px 15px -3px hsl(220 25% 10% / 0.08), 0 4px 6px -4px hsl(220 25% 10% / 0.05);
+  /* --- Borders & Focus Rings --- */
+  --border-width-thin: 1px;
+  --border-width-thick: 2px;
+  --focus-ring-width: var(--border-width-thick);
+  --focus-ring-offset: 2px;
+  --focus-ring-offset-md: 3px;
+  --focus-ring-offset-lg: 4px;
+  --focus-ring-offset-inset: -2px;
+  --focus-ring-offset-inset-lg: -4px;
 
-  /* --- Transitions & Timing (Figma Smart Animate 300ms Ease-Out) --- */
+  /* --- Z-Index Layers --- */
+  --z-modal: 9999;
+
+  /* --- Elevations (Shadows) — generic scale; distinct values from the Figma
+     --shadow-elevation-* tokens above, so the two scales are not merged --- */
+  --shadow-sm: 0 1px 2px 0 hsl(220deg 25% 10% / 5%);
+  --shadow-md: 0 4px 6px -1px hsl(220deg 25% 10% / 8%), 0 2px 4px -2px hsl(220deg 25% 10% / 6%);
+  --shadow-lg: 0 10px 15px -3px hsl(220deg 25% 10% / 8%), 0 4px 6px -4px hsl(220deg 25% 10% / 5%);
+
+  /* --- Transitions & Timing ---
+     Figma Smart Animate: 300ms ease-out (--duration-smart + --ease-out-smart).
+     --transition-fast keeps its own standard easing (0.4, 0, 0.2, 1), which differs from
+     --ease-out-smart, so the two timing systems are not merged. */
   --ease-out-smart: cubic-bezier(0, 0, 0.2, 1);
   --duration-smart: 300ms;
-  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-fast: 150ms;
+  --transition-fast: var(--duration-fast) cubic-bezier(0.4, 0, 0.2, 1);
   --transition-all: all var(--duration-smart) var(--ease-out-smart);
+
+  /* Near-zero rather than 0 so transitionend / animationend events still fire. */
+  --duration-reduced-motion: 0.01ms;
+}
+
+/* ==========================================================================
+   Reduced Motion
+   Users who ask the OS for reduced motion get near-instant transitions and animations.
+   Only the base duration tokens are overridden: the composite --transition-* tokens are
+   built from them and resolve to the reduced values automatically. Component-scoped duration
+   tokens (declared on a module's root selector) are overridden in their own module.
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-smart: var(--duration-reduced-motion);
+    --duration-fast: var(--duration-reduced-motion);
+  }
 }
 
 /* ==========================================================================

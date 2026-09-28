@@ -4,12 +4,9 @@
 }
 
 .container {
+  composes: container from "../../../styles/layout.module.css";
   display: flex;
   flex-direction: column;
-  width: 100%;
-  max-width: var(--container-max-w);
-  margin-inline: auto;
-  padding-inline: var(--container-gutter);
   padding-block: var(--space-section-block);
 }
 
@@ -61,7 +58,7 @@
   color: var(--color-text-primary);
   margin: 0;
   font-size: var(--font-size-body-lg);
-  line-height: var(--line-height-body-lg, 1.5);
+  line-height: var(--line-height-body-lg);
 }
 
 /* Col 2: CTA Column */
@@ -83,6 +80,9 @@
 .cardsRow {
   width: 100%;
   margin-top: 3rem; /* 48px */
+  margin-bottom: 0;
+  padding: 0;
+  list-style: none;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
@@ -95,6 +95,11 @@
     gap: 1.5rem;
     justify-items: center;
   }
+}
+
+.cardItem {
+  display: flex;
+  width: 100%;
 }
 
 .testimonialCard {

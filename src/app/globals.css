@@ -1,70 +1,95 @@
-@import "../styles/tokens.css";
+/* ==========================================================================
+   Cascade layers (lowest to highest priority):
+   - tokens: design tokens (custom properties) from tokens.css
+   - reset:  defensive element reset (box model, media, form controls, links)
+   - base:   document-level styles (html, body) and global layout utilities
+   - primitives: shared CSS Module primitives (styles/layout.module.css), composed by modules;
+                 declared here AND in that file with the same full statement, because the first
+                 stylesheet that mentions a layer fixes its order and modules may load first
+   tokens comes first because Turbopack emits an @import'ed file as its own CSS module ahead of
+   this file (and ahead of this statement), so tokens is always the first layer the browser sees;
+   declaring it first keeps the statement truthful. The tokens layer only declares custom
+   properties, which no other layer declares, so its position does not affect rendering.
+   CSS Modules and any rule left outside a layer are UNLAYERED, and unlayered
+   normal declarations always beat layered ones regardless of specificity, so
+   components (and the few unlayered overrides below) always win over this file.
+   ========================================================================== */
+@layer tokens, reset, base, primitives;
 
-/* Modern Defensive Reset */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+@import "../styles/tokens.css" layer(tokens);
+
+@layer reset {
+  /* Modern Defensive Reset */
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Accessible Media & Images (raw <img> is handled unlayered below) */
+  picture,
+  video,
+  canvas,
+  svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Form & Interactive Elements */
+  input,
+  button,
+  textarea,
+  select {
+    font: inherit;
+    color: inherit;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
 }
 
-html {
-  -webkit-text-size-adjust: 100%;
-  tab-size: 4;
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    tab-size: 4;
+  }
+
+  body {
+    min-height: 100vh;
+    background-color: var(--color-bg);
+    color: var(--color-text-primary);
+    font-family: var(--font-family-sans);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-normal);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  /* Layout Utilities */
+  .container {
+    width: 100%;
+    max-width: 1200px;
+    margin-inline: auto;
+    padding-inline: 15px;
+  }
 }
 
-body {
-  min-height: 100vh;
-  background-color: var(--color-bg);
-  color: var(--color-text-primary);
-  font-family: var(--font-family-sans);
-  font-size: var(--font-size-base);
-  line-height: var(--line-height-normal);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
-}
-
-/* Accessible Media & Images */
-img:not([data-nimg]),
-picture,
-video,
-canvas,
-svg {
+/* Intentionally UNLAYERED: at specificity 0,1,1 this rule beats single-class module rules on raw
+   <img> elements (e.g. Header .logo { height: 50px } keeps rendering at height: auto). Inside a
+   layer it would lose to every module rule and change rendering. next/image output (data-nimg)
+   is excluded so its inline sizing is untouched. */
+img:not([data-nimg]) {
   display: block;
   max-width: 100%;
   height: auto;
 }
 
-/* Form & Interactive Elements */
-input,
-button,
-textarea,
-select {
-  font: inherit;
-  color: inherit;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-/* Reduced Motion Guardrail: Disables disruptive loops & smooth scrolling for vestibular safety */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-iteration-count: 1 !important;
-    scroll-behavior: auto !important;
-  }
-}
-
-/* Layout Utilities */
-.container {
-  width: 100%;
-  max-width: 1200px;
-  margin-inline: auto;
-  padding-inline: 15px;
-}
+/* Reduced motion needs no important-flagged overrides: tokens.css collapses every duration token under
+   prefers-reduced-motion: reduce, and modules with infinite animations or component-scoped
+   durations handle the preference next to the rule they affect. */

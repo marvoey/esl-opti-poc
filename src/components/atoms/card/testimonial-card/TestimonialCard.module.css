@@ -4,22 +4,37 @@
    ========================================================================== */
 
 .card {
+  /* Component tokens for the card (<article>) subtree */
+  --size-testimonial-card-max-width: 23.5rem;             /* 376px */
+  --size-testimonial-card-min-height: 25.5rem;            /* 408px */
+  --size-testimonial-card-media-height: 13.125rem;        /* 210px */
+  --size-testimonial-card-play-circle: 3rem;              /* 48px */
+  --size-testimonial-card-icon: 1.5rem;                   /* 24px */
+  --space-testimonial-card-padding: 1.5rem;               /* 24px */
+  --space-testimonial-card-header-gap: 0.75rem;           /* 12px */
+  --space-testimonial-card-play-icon-offset: 0.1875rem;   /* 3px, optically centers the play triangle */
+  --line-height-testimonial-card-author-meta: 1.3125rem;  /* 21px */
+  --translate-testimonial-card-hover-lift: -0.125rem;     /* -2px */
+  --scale-testimonial-card-thumbnail-hover: 1.03;
+  --scale-testimonial-card-play-hover: 1.1;
+  --color-testimonial-card-hover-overlay: var(--color-black-alpha-20);
+
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 376px;
-  min-height: 408px;
+  max-width: var(--size-testimonial-card-max-width);
+  min-height: var(--size-testimonial-card-min-height);
   border-radius: var(--radius-xl);
   overflow: hidden;
   background-color: var(--color-surface-raised);
-  border: 1px solid var(--color-border-card);
+  border: var(--border-width-thin) solid var(--color-border-card);
   box-shadow: var(--shadow-elevation-sm);
   transition: var(--transition-all);
   box-sizing: border-box;
 }
 
 .card:hover {
-  transform: translateY(-2px);
+  transform: translateY(var(--translate-testimonial-card-hover-lift));
   box-shadow: var(--shadow-ring-hover), var(--shadow-elevation-md);
   border-color: var(--color-border-accent);
 }
@@ -27,7 +42,7 @@
 .mediaWrapper {
   position: relative;
   width: 100%;
-  height: 210px;
+  height: var(--size-testimonial-card-media-height);
   overflow: hidden;
   background-color: var(--color-surface);
   flex-shrink: 0;
@@ -38,10 +53,12 @@
 }
 
 .clickableMedia:focus-visible {
-  outline: 2px solid var(--color-focus-ring);
-  outline-offset: -2px;
+  outline: var(--focus-ring-width) solid var(--color-focus-ring);
+  outline-offset: var(--focus-ring-offset-inset);
 }
 
+.mediaWrapper img.thumbnail,
+.mediaWrapper .thumbnail,
 .thumbnail {
   width: 100%;
   height: 100%;
@@ -51,13 +68,13 @@
 }
 
 .clickableMedia:hover .thumbnail {
-  transform: scale(1.03);
+  transform: scale(var(--scale-testimonial-card-thumbnail-hover));
 }
 
 .hoverOverlay {
   position: absolute;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: var(--color-testimonial-card-hover-overlay);
   opacity: 0;
   transition: opacity var(--duration-smart) var(--ease-out-smart);
   pointer-events: none;
@@ -80,8 +97,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 48px;
-  height: 48px;
+  width: var(--size-testimonial-card-play-circle);
+  height: var(--size-testimonial-card-play-circle);
   border-radius: var(--radius-full);
   background-color: var(--color-surface-raised);
   box-shadow: var(--shadow-elevation-md);
@@ -90,21 +107,21 @@
 }
 
 .clickableMedia:hover .playCircle {
-  transform: scale(1.1);
-  background-color: var(--color-white-80);
+  transform: scale(var(--scale-testimonial-card-play-hover));
+  background-color: var(--color-white-alpha-80);
 }
 
 .playIcon {
   color: var(--color-primary);
   fill: currentColor;
-  margin-left: 3px; /* Optically center triangle within circle */
+  margin-left: var(--space-testimonial-card-play-icon-offset); /* Optically center triangle within circle */
 }
 
 .content {
-  padding: 24px;
+  padding: var(--space-testimonial-card-padding);
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: var(--space-md);
   flex: 1;
   box-sizing: border-box;
 }
@@ -112,15 +129,22 @@
 .header {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: var(--space-testimonial-card-header-gap);
 }
 
 .iconWrapper {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  inline-size: var(--size-testimonial-card-icon);
+  block-size: var(--size-testimonial-card-icon);
   color: var(--color-accent);
   flex-shrink: 0;
+}
+
+.iconWrapper svg {
+  inline-size: 100%;
+  block-size: 100%;
 }
 
 .title {
@@ -140,12 +164,12 @@
 }
 
 .authorRow {
-  margin-top: auto;
+  margin: auto 0 0;
   overflow-wrap: break-word;
 }
 
 .authorMeta {
-  line-height: 21px;
+  line-height: var(--line-height-testimonial-card-author-meta);
 }
 
 /* ==========================================================================
@@ -153,6 +177,22 @@
    ========================================================================== */
 
 .lightboxBackdrop {
+  /* Component tokens for the lightbox. The <dialog> renders as a sibling of the card
+     <article> (not a descendant), so it cannot inherit the card tokens and declares its own */
+  --size-testimonial-card-lightbox-max-width: 55rem;            /* 880px */
+  --size-testimonial-card-lightbox-close: 2rem;                 /* 32px */
+  --size-testimonial-card-lightbox-close-sm: 1.75rem;           /* 28px, mobile */
+  --space-testimonial-card-lightbox-padding: 1.5rem;            /* 24px */
+  --space-testimonial-card-lightbox-padding-top: 1.25rem;       /* 20px */
+  --space-testimonial-card-lightbox-header-margin-sm: 0.75rem;  /* 12px, mobile */
+  --line-height-testimonial-card-lightbox-title: 1.25;
+  --blur-testimonial-card-lightbox-backdrop: 0.5rem;            /* 8px */
+  --shadow-testimonial-card-lightbox: 0 25px 50px -12px var(--color-navy-ink-alpha-25);
+  --duration-testimonial-card-lightbox-fade: 200ms;
+  --duration-testimonial-card-lightbox-scale: 250ms;
+  --scale-testimonial-card-lightbox-enter: 0.95;
+  --scale-testimonial-card-lightbox-close-hover: 1.05;
+
   position: fixed;
   inset: 0;
   width: 100vw;
@@ -161,16 +201,16 @@
   max-height: 100vh;
   margin: 0;
   border: none;
-  z-index: 9999;
-  background-color: var(--color-overlay-white, rgba(255, 255, 255, 0.85));
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  z-index: var(--z-modal);
+  background-color: var(--color-overlay-white);
+  backdrop-filter: blur(var(--blur-testimonial-card-lightbox-backdrop));
+  -webkit-backdrop-filter: blur(var(--blur-testimonial-card-lightbox-backdrop));
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24px;
+  padding: var(--space-testimonial-card-lightbox-padding);
   box-sizing: border-box;
-  animation: fadeIn 200ms var(--ease-out-smart);
+  animation: fadeIn var(--duration-testimonial-card-lightbox-fade) var(--ease-out-smart);
 }
 
 .lightboxBackdrop::backdrop {
@@ -180,13 +220,13 @@
 .lightboxContainer {
   position: relative;
   width: 100%;
-  max-width: 880px;
+  max-width: var(--size-testimonial-card-lightbox-max-width);
   background-color: var(--color-white);
-  border-radius: var(--radius-xl, 1rem); /* 16px */
-  border: 1px solid var(--color-border-subtle, rgba(0, 57, 93, 0.08));
-  padding: 1.25rem 1.5rem 1.5rem; /* 20px top, 24px sides & bottom */
-  box-shadow: 0 25px 50px -12px rgba(1, 38, 66, 0.25);
-  animation: scaleUp 250ms var(--ease-out-smart);
+  border-radius: var(--radius-xl);
+  border: var(--border-width-thin) solid var(--color-border-subtle);
+  padding: var(--space-testimonial-card-lightbox-padding-top) var(--space-testimonial-card-lightbox-padding) var(--space-testimonial-card-lightbox-padding);
+  box-shadow: var(--shadow-testimonial-card-lightbox);
+  animation: scaleUp var(--duration-testimonial-card-lightbox-scale) var(--ease-out-smart);
   display: flex;
   flex-direction: column;
 }
@@ -195,17 +235,17 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 1rem;
-  gap: 1rem;
+  margin-bottom: var(--space-md);
+  gap: var(--space-md);
 }
 
 .lightboxTitle {
   margin: 0;
-  font-family: var(--font-family-display, var(--font-family-sans));
-  font-size: var(--font-size-body-lg, 1.125rem);
-  font-weight: var(--font-weight-bold, 700);
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-body-lg);
+  font-weight: var(--font-weight-bold);
   color: var(--color-text-primary);
-  line-height: var(--line-height-tight, 1.25);
+  line-height: var(--line-height-testimonial-card-lightbox-title);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -213,15 +253,15 @@
 
 .closeButton {
   background: transparent;
-  border: 1px solid var(--color-text-primary);
+  border: var(--border-width-thin) solid var(--color-text-primary);
   color: var(--color-text-primary);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
+  width: var(--size-testimonial-card-lightbox-close);
+  height: var(--size-testimonial-card-lightbox-close);
+  border-radius: var(--radius-full);
   padding: 0;
   flex-shrink: 0;
   transition: all var(--duration-smart) var(--ease-out-smart);
@@ -231,18 +271,18 @@
   background-color: var(--color-surface);
   border-color: var(--color-border-accent);
   color: var(--color-primary);
-  transform: scale(1.05);
+  transform: scale(var(--scale-testimonial-card-lightbox-close-hover));
 }
 
 .closeButton:focus-visible {
-  outline: 2px solid var(--color-focus-ring);
-  outline-offset: 2px;
+  outline: var(--focus-ring-width) solid var(--color-focus-ring);
+  outline-offset: var(--focus-ring-offset);
 }
 
 .videoWrapper {
   width: 100%;
   aspect-ratio: 16 / 9;
-  border-radius: var(--radius-md, 0.5rem);
+  border-radius: var(--radius-md);
   overflow: hidden;
   background-color: var(--color-black);
 }
@@ -255,27 +295,27 @@
   display: block;
 }
 
-@media (max-width: 767px) {
+@media (width <= 767px) {
   .lightboxBackdrop {
-    padding: 1rem;
+    padding: var(--space-md);
   }
 
   .lightboxContainer {
-    padding: 1rem;
-    border-radius: var(--radius-lg, 0.75rem);
+    padding: var(--space-md);
+    border-radius: var(--radius-lg);
   }
 
   .lightboxHeader {
-    margin-bottom: 0.75rem;
+    margin-bottom: var(--space-testimonial-card-lightbox-header-margin-sm);
   }
 
   .lightboxTitle {
-    font-size: var(--font-size-body, 1rem);
+    font-size: var(--font-size-body);
   }
 
   .closeButton {
-    width: 28px;
-    height: 28px;
+    width: var(--size-testimonial-card-lightbox-close-sm);
+    height: var(--size-testimonial-card-lightbox-close-sm);
   }
 }
 
@@ -283,6 +323,7 @@
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -291,10 +332,29 @@
 @keyframes scaleUp {
   from {
     opacity: 0;
-    transform: scale(0.95);
+    transform: scale(var(--scale-testimonial-card-lightbox-enter));
   }
+
   to {
     opacity: 1;
     transform: scale(1);
+  }
+}
+
+/* Reduced motion: the lightbox's component-scoped duration tokens collapse to the global
+   reduced-motion duration (the global duration tokens are overridden in tokens.css). */
+@media (prefers-reduced-motion: reduce) {
+  .lightboxBackdrop {
+    --duration-testimonial-card-lightbox-fade: var(--duration-reduced-motion);
+    --duration-testimonial-card-lightbox-scale: var(--duration-reduced-motion);
+  }
+}
+
+/* Forced colors (Windows High Contrast): box-shadows are dropped and author colors are replaced
+   by the user's palette, so indicators drawn only with shadows or color changes disappear.
+   System colors restore them: Highlight marks focus, hover and selected states. */
+@media (forced-colors: active) {
+  .card:hover {
+    border-color: Highlight;
   }
 }

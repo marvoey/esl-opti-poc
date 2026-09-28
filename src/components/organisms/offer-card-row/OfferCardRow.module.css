@@ -4,12 +4,9 @@
 }
 
 .container {
+  composes: container from "../../../styles/layout.module.css";
   display: flex;
   flex-direction: column;
-  width: 100%;
-  max-width: var(--container-max-w, 1200px);
-  margin: 0 auto;
-  padding-inline: var(--container-gutter, 2.5rem);
   padding-block: var(--space-section-block);
 }
 
@@ -54,6 +51,7 @@
   flex: 1 1 auto;
   min-width: 0;
   overflow: hidden;
+
   /* Give the card hover glow (box-shadow) room to render without being
      clipped by this viewport's overflow: hidden; the negative margin cancels
      the padding's effect on surrounding layout. */
@@ -83,6 +81,7 @@
 .slide {
   min-width: 0;
   display: flex;
+
   /* Desktop: 3 cards visible */
   flex: 0 0 calc((100% - 2 * 2rem) / 3);
 }
@@ -125,12 +124,12 @@
 }
 
 .navButton svg {
-  transition: transform var(--duration-smart, 0.2s) var(--ease-out-smart, ease-out);
+  transition: transform var(--duration-smart) var(--ease-out-smart);
 }
 
 .navButton:focus-visible {
-  outline: 2px solid var(--color-focus-ring);
-  outline-offset: -4px;
+  outline: var(--focus-ring-width) solid var(--color-focus-ring);
+  outline-offset: var(--focus-ring-offset-inset-lg);
 }
 
 .navButton:hover:not(:disabled) svg {

@@ -4,10 +4,7 @@
 }
 
 .container {
-  width: 100%;
-  max-width: var(--container-max-w, 1200px);
-  margin: 0 auto;
-  padding-inline: var(--container-gutter, 2.5rem);
+  composes: container from "../../../styles/layout.module.css";
 }
 
 .inner {

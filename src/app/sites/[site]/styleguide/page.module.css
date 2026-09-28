@@ -5,11 +5,9 @@
 }
 
 .contentContainer {
+  composes: container from "../../../../styles/layout.module.css";
   flex: 1;
-  max-width: var(--container-max-w);
-  margin-inline: auto;
-  padding: var(--space-xl) var(--container-gutter);
-  width: 100%;
+  padding-block: var(--space-xl);
 }
 
 .heroSection {
@@ -195,4 +193,13 @@
   padding: 1rem;
   background-color: var(--color-surface);
   box-sizing: border-box;
+}
+
+/* Forced colors (Windows High Contrast): box-shadows are dropped and author colors are replaced
+   by the user's palette, so indicators drawn only with shadows or color changes disappear.
+   System colors restore them: Highlight marks focus, hover and selected states. */
+@media (forced-colors: active) {
+  .pillarCard:hover {
+    border-color: Highlight;
+  }
 }

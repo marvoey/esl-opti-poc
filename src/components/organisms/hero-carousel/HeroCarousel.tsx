@@ -4,6 +4,7 @@ import React, { useState, useCallback, useEffect } from "react";
 import Image from "next/image";
 import { ArrowRight, ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
+import { withReducedMotion } from "@/components/molecules/carousel/emblaMotion";
 import { Carousel, CarouselSlide } from "@/components/molecules/carousel/Carousel";
 import { Text } from "@/components/atoms/text/Text";
 import { Button, type ButtonVariant } from "@/components/atoms/button/Button";
@@ -58,11 +59,13 @@ export function HeroCarousel({
   variant = "default",
   editProps,
 }: HeroCarouselProps) {
-  const [emblaRef, emblaApi] = useEmblaCarousel({
-    align: "start",
-    loop: true,
-    skipSnaps: false,
-  });
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    withReducedMotion({
+      align: "start",
+      loop: true,
+      skipSnaps: false,
+    })
+  );
   const [isPlaying, setIsPlaying] = useState(true);
 
   // WCAG 2.2 SC 2.2.2: Sync with prefers-reduced-motion after mount to avoid hydration mismatch

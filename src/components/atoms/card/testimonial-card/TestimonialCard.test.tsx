@@ -101,4 +101,39 @@ describe("TestimonialCard Component & parseVideoSource helper", () => {
     fireEvent.keyDown(window, { key: "Escape" });
     expect(screen.queryByRole("dialog")).toBeNull();
   });
+
+  it("renders the default header icon at 24x24", () => {
+    const { container } = render(
+      <TestimonialCard
+        imageSrc="/images/testimonials/marcia.png"
+        imageAlt="Marcia at her café"
+        title="Expanded her business"
+        quote="Their business banking solutions helped me grow my company."
+        author={{ name: "Marcia", role: "café owner", location: "Finger Lakes" }}
+      />
+    );
+
+    const icon = container.querySelector("[class*='iconWrapper'] svg");
+    expect(icon?.getAttribute("width")).toBe("24");
+    expect(icon?.getAttribute("height")).toBe("24");
+  });
+
+  it("wraps the author name and meta in a single paragraph", () => {
+    render(
+      <TestimonialCard
+        imageSrc="/images/testimonials/marcia.png"
+        imageAlt="Marcia at her café"
+        title="Expanded her business"
+        quote="Their business banking solutions helped me grow my company."
+        author={{ name: "Marcia", role: "café owner", location: "Finger Lakes" }}
+      />
+    );
+
+    const authorRow = screen.getByText("Marcia, café owner").parentElement;
+    expect(authorRow?.tagName).toBe("P");
+    expect(authorRow?.textContent).toContain("Finger Lakes");
+    authorRow?.querySelectorAll("span").forEach((span) => {
+      expect(span.className).toContain("weightBold");
+    });
+  });
 });

@@ -4,10 +4,7 @@
 }
 
 .container {
-  width: 100%;
-  max-width: var(--container-max-w, 1200px);
-  margin: 0 auto;
-  padding-inline: var(--container-gutter, 2.5rem);
+  composes: container from "../../../styles/layout.module.css";
   padding-block: var(--space-section-block);
 }
 
@@ -85,8 +82,8 @@
 }
 
 .trigger:focus-visible {
-  outline: 2px solid var(--color-focus-ring);
-  outline-offset: 3px;
+  outline: var(--focus-ring-width) solid var(--color-focus-ring);
+  outline-offset: var(--focus-ring-offset-md);
 }
 
 .term {
@@ -127,5 +124,14 @@
 
   .panelOuter {
     transition: none;
+  }
+}
+
+/* Forced colors (Windows High Contrast): box-shadows are dropped and author colors are replaced
+   by the user's palette, so indicators drawn only with shadows or color changes disappear.
+   System colors restore them: Highlight marks focus, hover and selected states. */
+@media (forced-colors: active) {
+  .card:hover {
+    border-color: Highlight;
   }
 }
