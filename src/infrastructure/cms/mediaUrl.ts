@@ -129,13 +129,22 @@ export function optimizeMediaUrl(
   try {
     const parsed = new URL(trimmed);
 
-    // Apply Cloudflare image optimization to Optimizely CMS/CMP domains via first-party proxy
+    // Apply Cloudflare image optimization to Optimizely CMS domains, and native resizing to Optimizely CMP DAM domains via first-party proxy
     if (isOptimizelyDomain(parsed.hostname)) {
       const isCmp = parsed.hostname.toLowerCase().endsWith('.cmp.optimizely.com');
-      const prefix = isCmp ? '/opti-media/cmp' : '/opti-media';
       const cleanPath = parsed.pathname.replace(/^\/+/, '');
+
+      if (isCmp) {
+        // Optimizely CMP DAM natively supports dynamic query parameters (e.g. ?width=...).
+        // Bypassing Cloudflare /cdn-cgi/image/ allows DAM asset versioning to update immediately without 24-hour edge cache locks.
+        const queryParams = new URLSearchParams(parsed.search);
+        if (width && width > 0) queryParams.set('width', String(width));
+        const queryString = queryParams.toString();
+        return `/opti-media/cmp/${cleanPath}${queryString ? `?${queryString}` : ''}`;
+      }
+
       const search = parsed.search || '';
-      return `${prefix}/cdn-cgi/image/${optionsString}/${cleanPath}${search}`;
+      return `/opti-media/cdn-cgi/image/${optionsString}/${cleanPath}${search}`;
     }
 
     return trimmed;
