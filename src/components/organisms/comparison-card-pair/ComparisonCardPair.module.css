@@ -1,23 +1,20 @@
 .section {
   width: 100%;
   background-color: var(--color-bg-subtle);
-  padding-block: var(--space-section-block, 5.5rem);
+  padding-block: var(--space-section-block);
 }
 
 
-@media (max-width: 767px) {
+@media (width <= 767px) {
   .section {
     padding-block: 2rem;
   }
 }
 
 .container {
+  composes: container from "../../../styles/layout.module.css";
   display: flex;
   flex-direction: column;
-  width: 100%;
-  max-width: var(--container-max-w, 80rem);
-  margin-inline: auto;
-  padding-inline: var(--container-gutter, 1.5rem);
   gap: 1.375rem; /* Exactly 22px gap between Row 1 and Row 2 */
 }
 
@@ -28,7 +25,7 @@
   flex-direction: column;
   align-items: flex-start;
   text-align: left;
-  gap: var(--space-md, 1rem); /* 16px gap between text elements */
+  gap: var(--space-md); /* 16px gap between text elements */
 }
 
 .eyebrow {
@@ -37,12 +34,12 @@
 }
 
 .title {
-  color: var(--color-primary, var(--color-navy-500));
+  color: var(--color-primary);
   margin: 0;
 }
 
 .description {
-  color: var(--color-text-secondary, var(--color-neutral-600));
+  color: var(--color-text-secondary);
   margin: 0;
   max-width: 48rem;
 }
@@ -55,7 +52,7 @@
   width: 100%;
 }
 
-@media (max-width: 767px) {
+@media (width <= 767px) {
   .cardsGrid {
     grid-template-columns: 1fr;
     row-gap: 1.375rem; /* 22px row gap when stacked */
@@ -82,7 +79,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: var(--space-sm, 0.5rem);
+  gap: var(--space-sm);
   width: 100%;
 }
 
@@ -128,7 +125,7 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: var(--space-sm, 0.75rem);
+  gap: var(--space-sm);
 }
 
 /* Card CTA Action — two buttons: stacked on mobile, 2 cols with 24px gap on desktop */
@@ -137,7 +134,7 @@
   width: 100%;
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--space-sm, 0.75rem);
+  gap: var(--space-sm);
 }
 
 @media (width >= 768px) {

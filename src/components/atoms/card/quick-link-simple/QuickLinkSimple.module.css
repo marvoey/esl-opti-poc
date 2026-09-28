@@ -24,8 +24,8 @@
 }
 
 .card:focus-visible {
-  outline: 2px solid var(--color-focus-ring);
-  outline-offset: 3px;
+  outline: var(--focus-ring-width) solid var(--color-focus-ring);
+  outline-offset: var(--focus-ring-offset-md);
 }
 
 .title {
@@ -43,6 +43,10 @@
 }
 
 .iconCircle {
+  /* Component tokens */
+  --size-icon-circle: 3.75rem;     /* 60px */
+  --scale-icon-circle-hover: 1.2;  /* scales to 72px on hover */
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -130,7 +134,7 @@
   color: var(--color-text-inverted);
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .default:hover {
     min-height: 176px;
     height: 176px;
@@ -160,7 +164,7 @@
   box-shadow: 0 0 0 2px var(--color-card-ring-hover), var(--shadow-card-hover-intense);
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .inverse:hover {
     min-height: 176px;
     height: 176px;
@@ -170,4 +174,14 @@
 
 .card:active {
   transform: scale(0.985) translateY(0);
+}
+
+/* Forced colors (Windows High Contrast): box-shadows are dropped and author colors are replaced
+   by the user's palette, so indicators drawn only with shadows or color changes disappear.
+   System colors restore them: Highlight marks focus, hover and selected states. */
+@media (forced-colors: active) {
+  .default:hover,
+  .inverse:hover {
+    border-color: Highlight;
+  }
 }

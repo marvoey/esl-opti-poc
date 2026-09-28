@@ -18,7 +18,7 @@
   width: 100%;
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .row {
     flex-direction: row;
   }

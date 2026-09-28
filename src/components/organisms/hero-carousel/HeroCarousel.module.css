@@ -6,10 +6,7 @@
 }
 
 .heroContainer {
-  width: 100%;
-  max-width: var(--container-max-w, 1200px);
-  margin: 0 auto;
-  padding-inline: var(--container-gutter, 2.5rem);
+  composes: container from "../../../styles/layout.module.css";
 }
 
 .slideTrack {
@@ -104,6 +101,9 @@
 }
 
 .badge {
+  /* Component token */
+  --space-badge-padding: 0.9375rem;  /* 15px */
+
   display: none;
   position: absolute;
   top: 4%;
@@ -142,9 +142,9 @@
 
 .badgeLabel {
   font-family: var(--font-family-sans);
-  font-size: var(--font-size-button);
+  font-size: var(--font-size-btn);
   font-weight: var(--font-weight-bold);
-  line-height: var(--line-height-button);
+  line-height: var(--line-height-btn);
   letter-spacing: var(--tracking-normal);
   margin-top: 2px;
   white-space: pre-line;
@@ -165,7 +165,7 @@
   border: none;
   object-fit: cover;
   display: block;
-  box-shadow: 0 4px 20px rgba(0, 40, 69, 0.08);
+  box-shadow: 0 4px 20px rgb(0 40 69 / 8%);
 }
 
 .badgeSquared {
@@ -182,7 +182,7 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  box-shadow: 0 8px 24px rgba(0, 40, 69, 0.25);
+  box-shadow: 0 8px 24px rgb(0 40 69 / 25%);
   padding: var(--space-3xs);
   z-index: 2;
 }
@@ -246,6 +246,6 @@
 }
 
 .controlBtn:focus-visible {
-  outline: 2px solid var(--color-focus-ring);
-  outline-offset: 3px;
+  outline: var(--focus-ring-width) solid var(--color-focus-ring);
+  outline-offset: var(--focus-ring-offset-md);
 }

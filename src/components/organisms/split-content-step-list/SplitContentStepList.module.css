@@ -11,14 +11,10 @@
 }
 
 .container {
-  width: 100%;
-  max-width: var(--container-max-w, 1200px);
-  margin: 0 auto;
-  padding-inline: var(--container-gutter, 2.5rem);
+  composes: container from "../../../styles/layout.module.css";
   display: grid;
   grid-template-columns: 1fr;
-  column-gap: clamp(2rem, 4vw, 4rem);
-  row-gap: 24px;
+  gap: 24px clamp(2rem, 4vw, 4rem);
 }
 
 @media (width >= 1024px) {

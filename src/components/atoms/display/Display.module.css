@@ -1,6 +1,9 @@
 .display {
   font-family: var(--font-family-display);
-  font-size: var(--font-size-display);
+
+  /* No display font-size token exists yet; inherit keeps the current rendering
+     (the previous undefined token was invalid at computed-value time and inherited). */
+  font-size: inherit;
   line-height: var(--line-height-display);
   letter-spacing: var(--tracking-display);
   font-weight: var(--font-weight-black);

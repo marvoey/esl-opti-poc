@@ -99,7 +99,7 @@ export function TestimonialCard({
         <div className={styles.content}>
           <div className={styles.header}>
             <span className={styles.iconWrapper} aria-hidden="true">
-              {icon ?? <StoreIcon size={22} />}
+              {icon ?? <StoreIcon size={24} />}
             </span>
             <Text as="p" variant="body-sm" weight="bold" color="primary" className={styles.title}>
               {title}
@@ -118,16 +118,16 @@ export function TestimonialCard({
             </Text>
           </blockquote>
 
-          <div className={styles.authorRow}>
+          <p className={styles.authorRow}>
             <Text as="span" variant="body-sm" weight="bold" color="accent" className={styles.authorPrimary}>
               {authorPrimary}
             </Text>
             {authorMeta && (
-              <Text as="span" variant="body-sm" weight="medium" color="primary" className={styles.authorMeta}>
+              <Text as="span" variant="body-sm" weight="bold" color="primary" className={styles.authorMeta}>
                 {" "}· {authorMeta}
               </Text>
             )}
-          </div>
+          </p>
         </div>
       </article>
 

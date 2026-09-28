@@ -1,0 +1,28 @@
+/* ==========================================================================
+   Shared layout primitives (CSS Module).
+   Consume from another module with:
+     .container { composes: container from "<relative path>/styles/layout.module.css"; }
+   and keep only the declarations that differ (padding-block, display, gap, ...).
+
+   The primitives live in the `primitives` cascade layer, so every CSS Module rule (unlayered)
+   overrides them regardless of specificity or stylesheet load order.
+
+   Layer order MUST be stated in full here, identical to globals.css: the first stylesheet that
+   mentions a layer name fixes its position, and CSS Modules can load before globals.css (e.g. when
+   a component registry is imported first in a layout). If this file were the first to mention
+   `primitives` without the full statement, `primitives` would be ordered before `reset`, and the
+   reset's `* { margin: 0; padding: 0 }` would override the container's margin and padding.
+   ========================================================================== */
+@layer tokens, reset, base, primitives;
+
+@layer primitives {
+  /* Page-width content wrapper: full width up to the container max width, centered, with the
+     horizontal gutter. */
+  .container {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: var(--container-max-w);
+    margin-inline: auto;
+    padding-inline: var(--container-gutter);
+  }
+}

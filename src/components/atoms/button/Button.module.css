@@ -1,4 +1,11 @@
 .button {
+  /* Component tokens (strict Figma padding specs) */
+  --space-btn-pill-block: 0.9375rem;     /* 15px */
+  --space-btn-pill-inline: 1.5rem;       /* 24px */
+  --space-btn-arrow-block: 1rem;         /* 16px */
+  --space-btn-arrow-inline: 2rem;        /* 32px */
+  --space-btn-arrow-hover-pad: 2.75rem;  /* 32px + 12px = 44px */
+
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -23,8 +30,8 @@
 
 /* --- WCAG 2.2 AA High Contrast Focus Indicator --- */
 .button:focus-visible {
-  outline: 2px solid var(--color-focus-ring);
-  outline-offset: 3px;
+  outline: var(--focus-ring-width) solid var(--color-focus-ring);
+  outline-offset: var(--focus-ring-offset-md);
 }
 
 /* --- Sizes & Intrinsic Floors --- */
@@ -43,8 +50,8 @@
 /* --- Shapes --- */
 .pill {
   border-radius: var(--radius-full); /* 9999px */
-  padding-inline: var(--space-btn-pill-inline, 1.5rem); /* 24px */
-  padding-block: var(--space-btn-pill-block, 0.9375rem); /* 15px */
+  padding-inline: var(--space-btn-pill-inline); /* 24px */
+  padding-block: var(--space-btn-pill-block); /* 15px */
 }
 
 .rounded {
@@ -57,6 +64,7 @@
 }
 
 /* --- Slots & Icon Transitions --- */
+
 /* Typography Name: Button Label (16px / 20px LH / 700 Bold / Albert Sans) */
 .label {
   display: inline-flex;
@@ -94,8 +102,8 @@
 /* Arrow Button Padding:
    Buttons with an arrow icon have 16px block padding and 32px inline padding */
 .button.hasArrow {
-  padding-block: var(--space-btn-arrow-block, 1rem); /* 16px */
-  padding-inline: var(--space-btn-arrow-inline, 2rem); /* 32px */
+  padding-block: var(--space-btn-arrow-block); /* 16px */
+  padding-inline: var(--space-btn-arrow-inline); /* 32px */
   transition: var(--transition-all), padding-right var(--duration-smart) var(--ease-out-smart), padding-left var(--duration-smart) var(--ease-out-smart), gap var(--duration-smart) var(--ease-out-smart);
 }
 
@@ -103,8 +111,8 @@
    - Left-aligned (.button.hasArrow): button increases its size to the left (padding-left expands, icon right stays stable)
    - Right-aligned (.alignRight): keeps expanding to the left as well */
 .button.hasArrow:hover:not(:disabled) {
-  padding-left: var(--space-btn-arrow-hover-pad, calc(2rem + 12px));
-  padding-right: var(--space-btn-arrow-inline, 2rem);
+  padding-left: var(--space-btn-arrow-hover-pad);
+  padding-right: var(--space-btn-arrow-inline);
   gap: 1rem; /* 16px */
 }
 
@@ -114,8 +122,8 @@
 
 /* Right-aligned variant: grows on the x-axis to the right, moves text to the right, y-axis untouched */
 .button.hasArrow.alignRight:hover:not(:disabled) {
-  padding-right: var(--space-btn-arrow-inline, 2rem);
-  padding-left: var(--space-btn-arrow-hover-pad, calc(2rem + 12px));
+  padding-right: var(--space-btn-arrow-inline);
+  padding-left: var(--space-btn-arrow-hover-pad);
   gap: 1rem; /* 16px */
   transform: translateX(1.25rem) translateY(0);
 }
@@ -131,8 +139,8 @@
 @media (prefers-reduced-motion: reduce) {
   .button.hasArrow:hover:not(:disabled),
   .button.hasArrow.alignRight:hover:not(:disabled) {
-    padding-right: var(--space-btn-arrow-inline, 2rem);
-    padding-left: var(--space-btn-arrow-inline, 2rem);
+    padding-right: var(--space-btn-arrow-inline);
+    padding-left: var(--space-btn-arrow-inline);
     transform: none;
   }
 

@@ -81,9 +81,9 @@ export function CircularImageMetricRow({
         </div>
 
         {/* Div 2: Metrics Row (100% Width, Margin-Top: 48px) */}
-        <div className={styles.metricsRow}>
+        <ul className={styles.metricsRow} role="list">
           {metrics.map((item) => (
-            <div key={item.id ?? item.stat} className={styles.metricCard}>
+            <li key={item.id ?? item.stat} className={styles.metricCard}>
               <div className={styles.imageWrapper}>
                 <Image
                   src={item.image.src}
@@ -93,25 +93,27 @@ export function CircularImageMetricRow({
                   className={styles.circleImage}
                 />
               </div>
-              <Text
-                as="span"
-                variant="stat"
-                color="accent"
-                className={styles.stat}
-              >
-                {item.stat}
-              </Text>
-              <Text
-                as="p"
-                variant="body"
-                color="primary"
-                className={styles.metricLabel}
-              >
-                {item.label}
-              </Text>
-            </div>
+              <div className={styles.textContent}>
+                <Text
+                  as="span"
+                  variant="stat"
+                  color="accent"
+                  className={styles.stat}
+                >
+                  {item.stat}
+                </Text>
+                <Text
+                  as="p"
+                  variant="body"
+                  color="primary"
+                  className={styles.metricLabel}
+                >
+                  {item.label}
+                </Text>
+              </div>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </section>
   );

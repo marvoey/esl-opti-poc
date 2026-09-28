@@ -4,12 +4,9 @@
 }
 
 .container {
+  composes: container from "../../../styles/layout.module.css";
   display: flex;
   flex-direction: column;
-  width: 100%;
-  max-width: var(--container-max-w);
-  margin-inline: auto;
-  padding-inline: var(--container-gutter);
   padding-block: var(--space-section-block);
 }
 
@@ -61,7 +58,7 @@
   color: var(--color-text-secondary);
   margin: 0;
   font-size: var(--font-size-body-lg);
-  line-height: var(--line-height-body-lg, 1.5);
+  line-height: var(--line-height-body-lg);
 }
 
 /* Col 2: CTA Column */
@@ -118,7 +115,7 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  border-radius: var(--radius-xl, 1rem); /* 16px */
+  border-radius: var(--radius-xl); /* 16px */
   border: 1px solid var(--color-border-card);
   background-color: var(--color-surface-raised);
   overflow: hidden;
@@ -148,8 +145,8 @@
 }
 
 .cardLink:focus-visible {
-  outline: 2px solid var(--color-focus-ring);
-  outline-offset: -2px;
+  outline: var(--focus-ring-width) solid var(--color-focus-ring);
+  outline-offset: var(--focus-ring-offset-inset);
 }
 
 .mediaWrapper {
@@ -190,4 +187,13 @@
   margin: 0;
   color: var(--color-text-primary);
   overflow-wrap: break-word;
+}
+
+/* Forced colors (Windows High Contrast): box-shadows are dropped and author colors are replaced
+   by the user's palette, so indicators drawn only with shadows or color changes disappear.
+   System colors restore them: Highlight marks focus, hover and selected states. */
+@media (forced-colors: active) {
+  .card:hover {
+    border-color: Highlight;
+  }
 }

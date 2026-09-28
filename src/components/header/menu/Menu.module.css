@@ -6,7 +6,9 @@
 }
 
 .menuItemLink {
-  font-size: var(--font-size-sm);
+  /* No small font-size token exists; inherit keeps the current rendering
+     (the previous undefined token was invalid at computed-value time and inherited). */
+  font-size: inherit;
   font-weight: var(--font-weight-medium);
   color: var(--color-text-secondary);
   transition: color var(--transition-fast);

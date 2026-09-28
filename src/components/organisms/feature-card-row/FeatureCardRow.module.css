@@ -4,10 +4,8 @@
 }
 
 .container {
+  composes: container from "../../../styles/layout.module.css";
   padding-block: var(--space-section-block);
-  max-width: var(--container-max-w, 1200px);
-  margin: 0 auto;
-  padding-inline: var(--container-gutter, 2.5rem);
 }
 
 @media (width < 768px) {
@@ -21,7 +19,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: var(--space-xs, 8px);
+  gap: var(--space-xs);
 }
 
 .eyebrow {
@@ -59,7 +57,7 @@
 .iconBadge {
   width: 40px;
   height: 40px;
-  border-radius: var(--radius-full, 9999px);
+  border-radius: var(--radius-full);
   display: flex;
   align-items: center;
   justify-content: center;

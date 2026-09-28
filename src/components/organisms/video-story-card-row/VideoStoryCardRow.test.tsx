@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import React from "react";
 import { VideoStoryCardRow } from "./VideoStoryCardRow";
 import { DEFAULT_VIDEO_STORY_CARD_ROW } from "./videoStoryCardRowData";
@@ -50,5 +50,17 @@ describe("VideoStoryCardRow Organism", () => {
     const section = container.querySelector("section");
     expect(section).toBeDefined();
     expect(section?.getAttribute("aria-labelledby")).toBe("test-story-row-heading");
+  });
+
+  it("renders the testimonial cards as a list with one card per list item", () => {
+    render(<VideoStoryCardRow {...DEFAULT_VIDEO_STORY_CARD_ROW} />);
+
+    const list = screen.getByRole("list");
+    const items = within(list).getAllByRole("listitem");
+
+    expect(items).toHaveLength(DEFAULT_VIDEO_STORY_CARD_ROW.cards!.length);
+    items.forEach((item) => {
+      expect(within(item).getAllByRole("article")).toHaveLength(1);
+    });
   });
 });

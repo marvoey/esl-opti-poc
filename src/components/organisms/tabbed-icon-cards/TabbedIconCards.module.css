@@ -1,13 +1,14 @@
 .section {
+  /* Component token (also read by .tabListWrapper, a descendant) */
+  --space-tabbed-icon-cards-margin-bottom: 2rem;  /* 32px */
+
   width: 100%;
   container-type: inline-size;
   margin-bottom: var(--space-tabbed-icon-cards-margin-bottom);
 }
 
 .container {
-  max-width: var(--container-max-w, 1200px);
-  margin: 0 auto;
-  padding-inline: var(--container-gutter, 2.5rem);
+  composes: container from "../../../styles/layout.module.css";
   padding-block: 4rem; /* 64px */
 }
 
@@ -43,11 +44,14 @@
 }
 
 .tabButton:focus-visible {
-  outline: 2px solid var(--color-focus-ring);
-  outline-offset: 3px;
+  outline: var(--focus-ring-width) solid var(--color-focus-ring);
+  outline-offset: var(--focus-ring-offset-md);
 }
 
 .tabButtonInactive {
+  /* Component token */
+  --color-tab-inactive: var(--color-navy-400-alpha-75);  /* #07456F at 75% opacity */
+
   color: var(--color-tab-inactive);
 }
 
@@ -107,8 +111,8 @@
 }
 
 .panel:focus-visible {
-  outline: 2px solid var(--color-focus-ring);
-  outline-offset: 4px;
+  outline: var(--focus-ring-width) solid var(--color-focus-ring);
+  outline-offset: var(--focus-ring-offset-lg);
   border-radius: var(--radius-md);
 }
 
@@ -175,5 +179,14 @@
 
   .panel {
     animation: none;
+  }
+}
+
+/* Forced colors (Windows High Contrast): box-shadows are dropped and author colors are replaced
+   by the user's palette, so indicators drawn only with shadows or color changes disappear.
+   System colors restore them: Highlight marks focus, hover and selected states. */
+@media (forced-colors: active) {
+  .activeIndicator {
+    background-color: Highlight;
   }
 }

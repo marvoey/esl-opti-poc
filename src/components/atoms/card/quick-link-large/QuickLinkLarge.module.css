@@ -22,8 +22,8 @@
 }
 
 .card:focus-visible {
-  outline: 2px solid var(--color-focus-ring);
-  outline-offset: 3px;
+  outline: var(--focus-ring-width) solid var(--color-focus-ring);
+  outline-offset: var(--focus-ring-offset-md);
 }
 
 .title {
@@ -107,4 +107,13 @@
 
 .card:active {
   transform: scale(0.985) translateY(0);
+}
+
+/* Forced colors (Windows High Contrast): box-shadows are dropped and author colors are replaced
+   by the user's palette, so indicators drawn only with shadows or color changes disappear.
+   System colors restore them: Highlight marks focus, hover and selected states. */
+@media (forced-colors: active) {
+  .active {
+    border-color: Highlight;
+  }
 }

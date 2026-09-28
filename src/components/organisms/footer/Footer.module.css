@@ -1,18 +1,26 @@
 .footerSection {
-  background: var(--footer-bg);
+  /* Component tokens: declared on the footer root, inherited by every footer element */
+  --space-footer-top: 4rem;          /* 64px */
+  --space-footer-bottom: 7.9375rem;  /* 127px */
+  --space-footer-row-gap: 3rem;      /* 48px */
+  --space-footer-col-gap: 2.5rem;    /* 40px */
+  --color-footer-bg: var(--gradient-dark-navy);
+  --color-footer-text-primary: var(--color-text-inverted);
+  --color-footer-text-muted: var(--color-text-inverted-muted);
+  --color-footer-link-hover: var(--color-aqua-300);
+  --color-footer-border-subtle: var(--color-white-alpha-10);
+
+  background: var(--color-footer-bg);
   padding-top: var(--space-footer-top);
   padding-bottom: var(--space-footer-bottom);
-  color: var(--footer-text-muted);
+  color: var(--color-footer-text-muted);
   width: 100%;
   position: relative;
   overflow: hidden;
 }
 
 .container {
-  width: 100%;
-  max-width: var(--container-max-w, 1200px);
-  margin: 0 auto;
-  padding-inline: var(--container-gutter, 2.5rem);
+  composes: container from "../../../styles/layout.module.css";
 }
 
 /* 2 Rows Grid Container with 48px row gap */
@@ -27,16 +35,14 @@
 .row1 {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  column-gap: 20px; /* Strict 20px gap between 50% width nav columns */
-  row-gap: var(--space-xl); /* 32px vertical gap */
+  gap: var(--space-xl) 20px; /* 32px row gap; strict 20px column gap between 50% width nav columns */
 }
 
 /* Desktop: Strict 5 Columns with 40px column gap */
-@media (min-width: 1024px) {
+@media (width >= 1024px) {
   .row1 {
     grid-template-columns: 1.4fr repeat(4, 1fr);
-    column-gap: var(--space-footer-col-gap); /* 40px column gap on desktop */
-    row-gap: 0;
+    gap: 0 var(--space-footer-col-gap); /* no row gap; 40px column gap on desktop */
   }
 }
 
@@ -50,7 +56,7 @@
   gap: var(--space-md); /* 16px */
 }
 
-@media (min-width: 1024px) {
+@media (width >= 1024px) {
   .brandCol {
     grid-column: auto;
     width: auto;
@@ -67,8 +73,8 @@
 }
 
 .brandLogo:focus-visible {
-  outline: 2px solid var(--footer-link-hover);
-  outline-offset: 2px;
+  outline: var(--focus-ring-width) solid var(--color-footer-link-hover);
+  outline-offset: var(--focus-ring-offset);
 }
 
 .logoImage {
@@ -80,7 +86,7 @@
 }
 
 .brandText {
-  color: var(--footer-text-primary);
+  color: var(--color-footer-text-primary);
   margin: 0;
 }
 
@@ -96,7 +102,7 @@
 }
 
 .navTitle {
-  color: var(--footer-text-primary);
+  color: var(--color-footer-text-primary);
   margin: 0;
 }
 
@@ -112,7 +118,7 @@
 .footerLink {
   text-decoration: none;
   font-weight: var(--font-weight-regular);
-  color: var(--footer-text-muted);
+  color: var(--color-footer-text-muted);
   opacity: 0.7; /* 70% opacity on mobile */
   transition: color var(--duration-smart) var(--ease-out-smart),
               opacity var(--duration-smart) var(--ease-out-smart);
@@ -120,11 +126,11 @@
 
 .footerLink:hover {
   text-decoration: none;
-  color: var(--footer-link-hover);
+  color: var(--color-footer-link-hover);
   opacity: 1;
 }
 
-@media (min-width: 1024px) {
+@media (width >= 1024px) {
   .footerLink {
     opacity: 0.9; /* 90% opacity on desktop */
   }
@@ -133,7 +139,7 @@
 /* Row 2: 1 Full-Width Column */
 .row2 {
   grid-column: 1 / -1;
-  border-top: 1px solid var(--footer-border-subtle);
+  border-top: 1px solid var(--color-footer-border-subtle);
   padding-top: var(--space-lg); /* 24px */
   display: flex;
   flex-direction: column;
@@ -142,8 +148,7 @@
 
 .legalFirstRow {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  flex-flow: row wrap;
   align-items: center;
   gap: var(--space-xs); /* 8px */
 }
@@ -154,26 +159,23 @@
 
 .legalLinksList {
   list-style: none;
-  list-style-type: none;
   padding: 0;
   margin: 0;
   display: inline-flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  flex-flow: row wrap;
   align-items: center;
   gap: var(--space-xs); /* 8px */
 }
 
 .legalLinkItem {
   list-style: none;
-  list-style-type: none;
   display: inline-flex;
   align-items: center;
   gap: var(--space-xs); /* 8px */
 }
 
 .legalPipe {
-  color: var(--footer-text-muted);
+  color: var(--color-footer-text-muted);
   opacity: 0.5;
   user-select: none;
 }
@@ -181,7 +183,7 @@
 .legalLink {
   text-decoration: none;
   font-weight: var(--font-weight-regular);
-  color: var(--footer-text-muted);
+  color: var(--color-footer-text-muted);
   opacity: 0.7; /* 70% mobile */
   transition: color var(--duration-smart) var(--ease-out-smart),
               opacity var(--duration-smart) var(--ease-out-smart);
@@ -189,11 +191,11 @@
 
 .legalLink:hover {
   text-decoration: none;
-  color: var(--footer-link-hover);
+  color: var(--color-footer-link-hover);
   opacity: 1;
 }
 
-@media (min-width: 1024px) {
+@media (width >= 1024px) {
   .legalLink {
     opacity: 0.9; /* 90% desktop */
   }
@@ -210,6 +212,6 @@
 /* Keyboard focus rings for interactive elements per WCAG 2.2 AA */
 .footerSection a:focus-visible,
 .footerSection button:focus-visible {
-  outline: 2px solid var(--footer-link-hover);
-  outline-offset: 2px;
+  outline: var(--focus-ring-width) solid var(--color-footer-link-hover);
+  outline-offset: var(--focus-ring-offset);
 }

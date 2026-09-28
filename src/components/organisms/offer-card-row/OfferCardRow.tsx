@@ -2,6 +2,7 @@
 
 import React, { useId, useState, useCallback, useEffect } from "react";
 import useEmblaCarousel from "embla-carousel-react";
+import { withReducedMotion } from "@/components/molecules/carousel/emblaMotion";
 import type { EmblaCarouselType } from "embla-carousel";
 import { Heading, type HeadingLevel } from "@/components/atoms/heading/Heading";
 import { Text } from "@/components/atoms/text/Text";
@@ -72,11 +73,13 @@ export function OfferCardRow({
   const headingId = `${id ?? autoId}-heading`;
   const carouselId = `${id ?? autoId}-carousel`;
 
-  const [emblaRef, emblaApi] = useEmblaCarousel({
-    align: "start",
-    containScroll: "trimSnaps",
-    slidesToScroll: 1,
-  });
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    withReducedMotion({
+      align: "start",
+      containScroll: "trimSnaps",
+      slidesToScroll: 1,
+    })
+  );
 
   const [canScrollPrev, setCanScrollPrev] = useState(false);
   const [canScrollNext, setCanScrollNext] = useState(cards.length > 3);

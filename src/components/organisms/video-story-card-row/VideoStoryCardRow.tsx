@@ -88,22 +88,23 @@ export function VideoStoryCardRow({
 
         {/* Div 2: Cards Row (100% Width, Margin-Top: 48px, 3 Columns) */}
         {cards && cards.length > 0 && (
-          <div className={styles.cardsRow}>
+          <ul className={styles.cardsRow}>
             {cards.map((card) => (
-              <TestimonialCard
-                key={card.id ?? card.title}
-                imageSrc={card.imageSrc}
-                imageAlt={card.imageAlt}
-                videoUrl={card.videoUrl}
-                videoTitle={card.videoTitle}
-                icon={card.icon}
-                title={card.title}
-                quote={card.quote}
-                author={card.author}
-                className={styles.testimonialCard}
-              />
+              <li key={card.id ?? card.title} className={styles.cardItem}>
+                <TestimonialCard
+                  imageSrc={card.imageSrc}
+                  imageAlt={card.imageAlt}
+                  videoUrl={card.videoUrl}
+                  videoTitle={card.videoTitle}
+                  icon={card.icon}
+                  title={card.title}
+                  quote={card.quote}
+                  author={card.author}
+                  className={styles.testimonialCard}
+                />
+              </li>
             ))}
-          </div>
+          </ul>
         )}
       </div>
     </section>

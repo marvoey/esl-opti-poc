@@ -7,11 +7,11 @@
   background-color: var(--color-navy-alpha-25);
   border: 1px solid transparent;
   overflow: hidden;
-  box-shadow: var(--shadow-elevation-sm, 0 2px 4px rgba(0, 0, 0, 0.08));
-  transition: transform var(--duration-smart, 0.25s) var(--ease-out-smart, cubic-bezier(0.16, 1, 0.3, 1)),
-              background-color var(--duration-smart, 0.25s) var(--ease-out-smart, cubic-bezier(0.16, 1, 0.3, 1)),
-              border-color var(--duration-smart, 0.25s) var(--ease-out-smart, cubic-bezier(0.16, 1, 0.3, 1)),
-              box-shadow var(--duration-smart, 0.25s) var(--ease-out-smart, cubic-bezier(0.16, 1, 0.3, 1));
+  box-shadow: var(--shadow-elevation-sm);
+  transition: transform var(--duration-smart) var(--ease-out-smart),
+              background-color var(--duration-smart) var(--ease-out-smart),
+              border-color var(--duration-smart) var(--ease-out-smart),
+              box-shadow var(--duration-smart) var(--ease-out-smart);
   text-decoration: none;
   color: inherit;
   position: relative;
@@ -21,7 +21,7 @@
   transform: translateY(-4px);
   background-color: var(--color-navy-alpha-20);
   border-color: var(--color-border-accent);
-  box-shadow: var(--shadow-ring-hover), 0 8px 24px rgba(104, 224, 204, 0.2);
+  box-shadow: var(--shadow-ring-hover), 0 8px 24px rgb(104 224 204 / 20%);
 }
 
 .mediaWrapper {
@@ -37,7 +37,7 @@
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform var(--duration-smart, 0.25s) var(--ease-out-smart, cubic-bezier(0.16, 1, 0.3, 1));
+  transition: transform var(--duration-smart) var(--ease-out-smart);
 }
 
 .card:hover .thumbnail {
@@ -66,12 +66,12 @@
 }
 
 .description {
-  color: var(--color-text-inverted-muted, rgba(255, 255, 255, 0.8));
-  font-family: var(--font-family-sans);
-  font-size: 0.9375rem;
-  line-height: 1.5;
   margin: 0 0 1.25rem;
   flex-grow: 1;
+}
+
+.description p {
+  margin: 0;
 }
 
 .cta {
@@ -83,7 +83,7 @@
   font-size: var(--font-size-body-sm);
   font-weight: var(--font-weight-semibold);
   text-decoration: none;
-  transition: color var(--duration-fast, 0.15s) ease;
+  transition: color var(--duration-fast) ease;
 }
 
 .cta:hover {
@@ -93,9 +93,18 @@
 .ctaIcon {
   display: inline-flex;
   align-items: center;
-  transition: transform var(--duration-fast, 0.15s) ease;
+  transition: transform var(--duration-fast) ease;
 }
 
 .card:hover .ctaIcon {
   transform: translateX(4px);
+}
+
+/* Forced colors (Windows High Contrast): box-shadows are dropped and author colors are replaced
+   by the user's palette, so indicators drawn only with shadows or color changes disappear.
+   System colors restore them: Highlight marks focus, hover and selected states. */
+@media (forced-colors: active) {
+  .card:hover {
+    border-color: Highlight;
+  }
 }
