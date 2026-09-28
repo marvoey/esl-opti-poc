@@ -28,6 +28,7 @@
 
 /* Variant 3: Dark Taxonomy (box-shadow inset + Turquoise text) */
 .dark,
+.teal,
 .tealOutline {
   background-color: var(--color-badge-dark-bg);
   border-color: transparent;
