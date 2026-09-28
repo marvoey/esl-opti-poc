@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import React from "react";
 import { LearningHub } from "./LearningHub";
 import { DEFAULT_LEARNING_HUB_PROPS } from "./learningHubData";
@@ -57,6 +57,18 @@ describe("LearningHub Organism", () => {
       );
       // No interactive element nested inside the link itself.
       expect(links[0].querySelectorAll("a, button")).toHaveLength(0);
+    });
+  });
+
+  it("renders the cards as a list with one card per list item", () => {
+    render(<LearningHub {...DEFAULT_LEARNING_HUB_PROPS} />);
+
+    const list = screen.getByRole("list");
+    const items = within(list).getAllByRole("listitem");
+
+    expect(items).toHaveLength(DEFAULT_LEARNING_HUB_PROPS.cards.length);
+    items.forEach((item) => {
+      expect(within(item).getAllByRole("article")).toHaveLength(1);
     });
   });
 

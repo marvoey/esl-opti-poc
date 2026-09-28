@@ -1,5 +1,6 @@
 import React, { useId } from "react";
 import NextLink from "next/link";
+import Image from "next/image";
 import { Heading, type HeadingLevel } from "@/components/atoms/heading/Heading";
 import { Text } from "@/components/atoms/text/Text";
 import { Button } from "@/components/atoms/button/Button";
@@ -31,11 +32,15 @@ function LearningHubCard({ card }: LearningHubCardProps) {
 
   const media = (
     <div className={styles.mediaWrapper}>
-      <img
-        src={card.imageSrc}
-        alt={card.imageAlt ?? ""}
-        className={styles.thumbnail}
-      />
+      {card.imageSrc && (
+        <Image
+          src={card.imageSrc}
+          alt={card.imageAlt ?? ""}
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 360px"
+          className={styles.thumbnail}
+        />
+      )}
       <Badge
         variant="aqua"
         borderColor="var(--color-text-primary)"
@@ -168,11 +173,13 @@ export function LearningHub({
 
         {/* Div 2: Cards Row (3 Columns Desktop, Horizontal Scroll-Snap Mobile) */}
         {cards && cards.length > 0 && (
-          <div className={styles.cardsRow}>
+          <ul className={styles.cardsRow} role="list">
             {cards.map((card, index) => (
-              <LearningHubCard key={card.id ?? `${card.title}-${index}`} card={card} />
+              <li key={card.id ?? `${card.title}-${index}`} className={styles.cardItem}>
+                <LearningHubCard card={card} />
+              </li>
             ))}
-          </div>
+          </ul>
         )}
       </div>
     </section>

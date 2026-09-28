@@ -34,11 +34,6 @@
 
 .subtitle {
   margin: 0;
-  font-family: var(--font-family-sans);
-  font-size: var(--font-size-body);
-  font-weight: var(--font-weight-regular);
-  line-height: var(--line-height-body);
-  color: var(--color-text-secondary);
 }
 
 /* 2-column grid layout for mobile */

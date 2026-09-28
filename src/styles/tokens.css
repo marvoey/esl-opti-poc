@@ -339,19 +339,6 @@
   --duration-reduced-motion: 0.01ms;
 }
 
-/* ==========================================================================
-   Reduced Motion
-   Users who ask the OS for reduced motion get near-instant transitions and animations.
-   Only the base duration tokens are overridden: the composite --transition-* tokens are
-   built from them and resolve to the reduced values automatically. Component-scoped duration
-   tokens (declared on a module's root selector) are overridden in their own module.
-   ========================================================================== */
-@media (prefers-reduced-motion: reduce) {
-  :root {
-    --duration-smart: var(--duration-reduced-motion);
-    --duration-fast: var(--duration-reduced-motion);
-  }
-}
 
 /* ==========================================================================
    Contextual Dark Theme Overrides

@@ -1,5 +1,6 @@
 import React from "react";
 import { BasicsTile } from "@/components/atoms/card/basics-tile/BasicsTile";
+import { Text } from "@/components/atoms/text/Text";
 import {
   DEFAULT_KEY_FACTS_TILES,
   type KeyFactsRowProps,
@@ -31,7 +32,16 @@ export function KeyFactsRow({
           <h3 id={headingId} className={styles.title}>
             {title}
           </h3>
-          {subtitle && <p className={styles.subtitle}>{subtitle}</p>}
+          {subtitle && (
+            <Text
+              as="p"
+              variant="body"
+              color="secondary"
+              className={styles.subtitle}
+            >
+              {subtitle}
+            </Text>
+          )}
         </header>
 
         <div className={styles.tileTrack}>

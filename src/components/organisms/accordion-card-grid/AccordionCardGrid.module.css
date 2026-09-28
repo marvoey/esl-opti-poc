@@ -95,6 +95,16 @@
   flex-shrink: 0;
   display: inline-flex;
   color: var(--color-accent);
+  transition: color var(--duration-smart) var(--ease-out-smart),
+              transform var(--duration-smart) var(--ease-out-smart);
+}
+
+.trigger:hover .icon {
+  color: var(--color-text-primary);
+}
+
+.trigger[aria-expanded="true"] .icon {
+  transform: rotate(180deg);
 }
 
 .panelOuter {
@@ -108,23 +118,23 @@
 }
 
 .panelInner {
+  min-height: 0;
   overflow: hidden;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity var(--duration-smart) var(--ease-out-smart),
+              transform var(--duration-smart) var(--ease-out-smart);
+}
+
+.panelOuter.expanded .panelInner {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .definition {
   margin: 0;
   padding-inline: 1rem;
   padding-bottom: 1rem;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .card {
-    transition: none;
-  }
-
-  .panelOuter {
-    transition: none;
-  }
 }
 
 /* Forced colors (Windows High Contrast): box-shadows are dropped and author colors are replaced
