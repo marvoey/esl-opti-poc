@@ -17,7 +17,6 @@
 }
 
 .cardDark {
-  background-color: var(--color-navy-950);
   background: var(--gradient-dark-navy);
 }
 
