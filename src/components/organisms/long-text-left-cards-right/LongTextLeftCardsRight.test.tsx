@@ -2,7 +2,8 @@ import { describe, it, expect } from "vitest";
 import { render, screen, within } from "@testing-library/react";
 import React from "react";
 import { LongTextLeftCardsRight } from "./LongTextLeftCardsRight";
-import { CardIcon, LONG_TEXT_LEFT_CARDS_RIGHT_ICON_NAMES } from "./longTextLeftCardsRightIcons";
+import { CardIcon } from "./longTextLeftCardsRightIcons";
+import { LONG_TEXT_LEFT_CARDS_RIGHT_ICON_NAMES } from "./longTextLeftCardsRightIconNames";
 import { DEFAULT_LONG_TEXT_LEFT_CARDS_RIGHT_PROPS } from "./longTextLeftCardsRightData";
 
 const items = [
