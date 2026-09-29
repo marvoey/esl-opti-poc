@@ -33,24 +33,27 @@ export const EslIconCardSingleColumnGridItemContentType = contentType({
     },
     title: {
       type: 'string',
-      displayName: 'Row Title',
+      displayName: 'Heading',
       description: 'Rows without a title are not shown.',
       group: 'content',
       sortOrder: 20,
     },
     link: {
       type: 'link',
-      displayName: 'Row Link',
+      displayName: 'CTA Link',
       description: 'Destination of the row title. Without a URL the title shows without an arrow.',
       group: 'content',
       sortOrder: 30,
     },
     description: {
       type: 'richText',
-      displayName: 'Row Description',
+      displayName: 'Copy',
       description: 'Start with a bold lead sentence, as in the design.',
       group: 'content',
       sortOrder: 40,
+      editorSettings: {
+        preset: 'default',
+      },
     },
   },
 });

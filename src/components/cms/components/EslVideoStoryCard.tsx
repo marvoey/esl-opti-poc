@@ -45,13 +45,13 @@ export const EslVideoStoryCardContentType = contentType({
     },
     title: {
       type: 'string',
-      displayName: 'Story Headline',
+      displayName: 'Heading',
       group: 'content',
       sortOrder: 35,
     },
     quote: {
       type: 'richText',
-      displayName: 'Testimonial Quote',
+      displayName: 'Copy',
       group: 'content',
       sortOrder: 40,
       editorSettings: {

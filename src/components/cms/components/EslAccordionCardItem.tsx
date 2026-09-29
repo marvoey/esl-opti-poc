@@ -8,15 +8,18 @@ export const EslAccordionCardItemContentType = contentType({
   properties: {
     term: {
       type: 'string',
-      displayName: 'Term / Heading',
+      displayName: 'Heading',
       group: 'content',
       sortOrder: 10,
     },
     definition: {
       type: 'richText',
-      displayName: 'Definition / Content',
+      displayName: 'Copy',
       group: 'content',
       sortOrder: 20,
+      editorSettings: {
+        preset: 'default',
+      },
     },
   },
 });

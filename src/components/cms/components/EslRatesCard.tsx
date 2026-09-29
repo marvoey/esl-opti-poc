@@ -45,19 +45,19 @@ export const EslRatesCardContentType = contentType({
     },
     title: {
       type: 'string',
-      displayName: 'Title (e.g. Auto loans)',
+      displayName: 'Heading',
       group: 'content',
       sortOrder: 40,
     },
     description: {
       type: 'string',
-      displayName: 'Description Copy',
+      displayName: 'Copy',
       group: 'content',
       sortOrder: 50,
     },
     cta: {
       type: 'link',
-      displayName: 'Call to Action Link',
+      displayName: 'CTA Link',
       group: 'content',
       sortOrder: 60,
     },

@@ -8,21 +8,24 @@ export const EslComparisonCardItemContentType = contentType({
   properties: {
     title: {
       type: 'string',
-      displayName: 'Card Title',
+      displayName: 'Heading',
       group: 'content',
       sortOrder: 10,
     },
     badgeText: {
       type: 'string',
-      displayName: 'Badge Text (Optional)',
+      displayName: 'Eyebrow',
       group: 'content',
       sortOrder: 20,
     },
     description: {
       type: 'richText',
-      displayName: 'Card Description',
+      displayName: 'Copy',
       group: 'content',
       sortOrder: 30,
+      editorSettings: {
+        preset: 'default',
+      },
     },
     features: {
       type: 'array',
@@ -36,13 +39,13 @@ export const EslComparisonCardItemContentType = contentType({
     },
     cta: {
       type: 'link',
-      displayName: 'Primary CTA Button',
+      displayName: 'Primary CTA Link',
       group: 'content',
       sortOrder: 50,
     },
     secondaryCta: {
       type: 'link',
-      displayName: 'Secondary CTA Button (Optional)',
+      displayName: 'Secondary CTA Link',
       group: 'content',
       sortOrder: 60,
     },

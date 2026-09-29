@@ -9,19 +9,19 @@ export const EslSplitContentCardsContentType = contentType({
   properties: {
     eyebrow: {
       type: 'string',
-      displayName: 'Eyebrow Text',
+      displayName: 'Eyebrow',
       group: 'content',
       sortOrder: 10,
     },
     title: {
       type: 'string',
-      displayName: 'Heading Title',
+      displayName: 'Heading',
       group: 'content',
       sortOrder: 20,
     },
     description: {
       type: 'richText',
-      displayName: 'Description Copy',
+      displayName: 'Copy',
       group: 'content',
       sortOrder: 30,
       editorSettings: {
@@ -30,7 +30,7 @@ export const EslSplitContentCardsContentType = contentType({
     },
     cta: {
       type: 'link',
-      displayName: 'Call to Action Button',
+      displayName: 'CTA Link',
       group: 'content',
       sortOrder: 40,
     },
@@ -43,7 +43,7 @@ export const EslSplitContentCardsContentType = contentType({
     },
     heroMetricSubhead: {
       type: 'string',
-      displayName: 'Hero Metric Subhead',
+      displayName: 'Subheading',
       group: 'content',
       sortOrder: 60,
     },
@@ -61,7 +61,7 @@ export const EslSplitContentCardsContentType = contentType({
     },
     heroMetricDescription: {
       type: 'string',
-      displayName: 'Hero Metric Description',
+      displayName: 'Copy',
       group: 'content',
       sortOrder: 90,
     },

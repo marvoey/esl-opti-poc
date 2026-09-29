@@ -9,13 +9,13 @@ export const EslMediaCardGridCarouselContentType = contentType({
   properties: {
     eyebrow: {
       type: 'string',
-      displayName: 'Eyebrow Text',
+      displayName: 'Eyebrow',
       group: 'content',
       sortOrder: 10,
     },
     title: {
       type: 'string',
-      displayName: 'Heading Title',
+      displayName: 'Heading',
       group: 'content',
       sortOrder: 20,
     },
