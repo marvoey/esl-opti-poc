@@ -8,12 +8,7 @@ import type {
   ComparisonFeatureItem,
 } from '@/components/organisms/comparison-card-pair/comparisonCardPairData';
 import type { EslComparisonCardPairData } from './EslComparisonCardPair';
-
-type RichTextPayload = {
-  html?: string | null;
-  json?: unknown | null;
-  [key: string]: unknown;
-};
+import { extractPlainText, type RichTextPayload } from '@/components/cms/utils/cmsRichText';
 
 type CmsLink = {
   text?: string | null;
@@ -76,46 +71,80 @@ type Props = {
   id?: string;
 };
 
-function extractTextFromJson(node: unknown): string {
-  if (!node || typeof node !== 'object') return '';
-  const obj = node as Record<string, unknown>;
-  let result = '';
-  if (typeof obj.text === 'string') {
-    result += obj.text;
-  }
-  if (Array.isArray(obj.children)) {
-    for (const child of obj.children) {
-      result += extractTextFromJson(child);
-    }
-  }
-  if (Array.isArray(obj.content)) {
-    for (const item of obj.content) {
-      result += extractTextFromJson(item);
-    }
-  }
-  return result;
+
+function mapFeature(
+  rawFeature: ComparisonFeatureItemInput | null | undefined,
+  cIdx: number,
+  fIdx: number
+): ComparisonFeatureItem | null {
+  if (!rawFeature) return null;
+  const feature = (rawFeature && 'component' in rawFeature && rawFeature.component
+    ? rawFeature.component
+    : rawFeature) as ComparisonFeatureItemInput;
+  const text = feature.text?.trim() || '';
+  if (!text) return null;
+  const iconType: 'check' | 'credit-card' =
+    feature.iconType === 'credit-card' ? 'credit-card' : 'check';
+  return {
+    id: feature.id || feature._id || `feature-${cIdx + 1}-${fIdx + 1}`,
+    text,
+    iconType,
+  };
 }
 
-export function extractPlainText(
-  val?: RichTextPayload | string | null
-): string {
-  if (!val) return '';
-  if (typeof val === 'string') return val.trim();
-  if (typeof val === 'object' && val !== null) {
-    if (typeof val.html === 'string' && val.html.trim()) {
-      return val.html.replace(/<[^>]*>/g, '').trim();
-    }
-    if (val.json && typeof val.json === 'object') {
-      return extractTextFromJson(val.json).trim();
+function mapCard(
+  rawCard: ComparisonCardItemInput | null | undefined,
+  cIdx: number
+): ComparisonCardData | null {
+  if (!rawCard) return null;
+  const card = (rawCard && 'component' in rawCard && rawCard.component
+    ? rawCard.component
+    : rawCard) as ComparisonCardItemInput;
+
+  const cardTitle = card.title?.trim() || '';
+  const badgeText = card.badgeText?.trim() || undefined;
+  const cardDesc = extractPlainText(card.cardDescription || card.description);
+
+  const rawFeatures = card.features;
+  const mappedFeatures: ComparisonFeatureItem[] = [];
+  if (rawFeatures && Array.isArray(rawFeatures)) {
+    for (let fIdx = 0; fIdx < rawFeatures.length; fIdx++) {
+      const feat = mapFeature(rawFeatures[fIdx], cIdx, fIdx);
+      if (feat) mappedFeatures.push(feat);
     }
   }
-  return '';
+
+  let cta: ComparisonCardData['cta'] = undefined;
+  const ctaLabel = card.cta?.text?.trim() || card.cta?.title?.trim();
+  const ctaHref = card.cta?.url?.default?.trim();
+  if (ctaLabel || ctaHref) {
+    cta = { label: ctaLabel || '', href: ctaHref || '#', external: card.cta?.target === '_blank' };
+  }
+
+  let secondaryCta: ComparisonCardData['secondaryCta'] = undefined;
+  const secLabel = card.secondaryCta?.text?.trim() || card.secondaryCta?.title?.trim();
+  const secHref = card.secondaryCta?.url?.default?.trim();
+  if (secLabel && secHref) {
+    secondaryCta = { label: secLabel, href: secHref, external: card.secondaryCta?.target === '_blank' };
+  }
+
+  return {
+    id: card.id || card._id || `card-${cIdx + 1}`,
+    title: cardTitle,
+    badgeText,
+    description: cardDesc,
+    features: mappedFeatures as [ComparisonFeatureItem, ComparisonFeatureItem, ComparisonFeatureItem],
+    cta,
+    secondaryCta,
+  };
 }
 
-export default function EslComparisonCardPair({
-  content,
-  id = 'family-comparison-card-pair',
-}: Props) {
+function mapProps(content: Props['content']): {
+  eyebrow?: string;
+  title: string;
+  description?: string;
+  cards: ComparisonCardData[];
+} | null {
   if (!content) return null;
 
   const effectiveContent = (content && 'component' in content && content.component
@@ -134,90 +163,32 @@ export default function EslComparisonCardPair({
   }
 
   const mappedCards: ComparisonCardData[] = [];
-
   for (let cIdx = 0; cIdx < rawCards.length; cIdx++) {
-    const rawCard = rawCards[cIdx];
-    if (!rawCard) continue;
-
-    const card = (rawCard && 'component' in rawCard && rawCard.component
-      ? rawCard.component
-      : rawCard) as ComparisonCardItemInput;
-
-    const cardTitle = card.title?.trim() || '';
-    const badgeText = card.badgeText?.trim() || undefined;
-    const cardDesc = extractPlainText(card.cardDescription || card.description);
-
-    const rawFeatures = card.features;
-    const mappedFeatures: ComparisonFeatureItem[] = [];
-
-    if (rawFeatures && Array.isArray(rawFeatures)) {
-      for (let fIdx = 0; fIdx < rawFeatures.length; fIdx++) {
-        const rawFeature = rawFeatures[fIdx];
-        if (!rawFeature) continue;
-
-        const feature = (rawFeature && 'component' in rawFeature && rawFeature.component
-          ? rawFeature.component
-          : rawFeature) as ComparisonFeatureItemInput;
-
-        const text = feature.text?.trim() || '';
-        if (!text) continue;
-
-        const iconType: 'check' | 'credit-card' =
-          feature.iconType === 'credit-card' ? 'credit-card' : 'check';
-
-        mappedFeatures.push({
-          id: feature.id || feature._id || `feature-${cIdx + 1}-${fIdx + 1}`,
-          text,
-          iconType,
-        });
-      }
-    }
-
-    let cta: ComparisonCardData['cta'] = undefined;
-    const ctaLabel = card.cta?.text?.trim() || card.cta?.title?.trim();
-    const ctaHref = card.cta?.url?.default?.trim();
-
-    if (ctaLabel || ctaHref) {
-      cta = {
-        label: ctaLabel || '',
-        href: ctaHref || '#',
-        external: card.cta?.target === '_blank',
-      };
-    }
-
-    let secondaryCta: ComparisonCardData['secondaryCta'] = undefined;
-    const secLabel = card.secondaryCta?.text?.trim() || card.secondaryCta?.title?.trim();
-    const secHref = card.secondaryCta?.url?.default?.trim();
-    if (secLabel && secHref) {
-      secondaryCta = {
-        label: secLabel,
-        href: secHref,
-        external: card.secondaryCta?.target === '_blank',
-      };
-    }
-
-    mappedCards.push({
-      id: card.id || card._id || `card-${cIdx + 1}`,
-      title: cardTitle,
-      badgeText,
-      description: cardDesc,
-      features: mappedFeatures as [ComparisonFeatureItem, ComparisonFeatureItem, ComparisonFeatureItem],
-      cta,
-      secondaryCta,
-    });
+    const card = mapCard(rawCards[cIdx], cIdx);
+    if (card) mappedCards.push(card);
   }
 
   if (mappedCards.length === 0) {
     return null;
   }
 
+  return { eyebrow, title, description, cards: mappedCards };
+}
+
+export default function EslComparisonCardPair({
+  content,
+  id = 'family-comparison-card-pair',
+}: Props) {
+  const props = mapProps(content);
+  if (!props) return null;
+
   return (
     <ComparisonCardPair
       id={id}
-      eyebrow={eyebrow}
-      title={title}
-      description={description}
-      cards={mappedCards}
+      eyebrow={props.eyebrow}
+      title={props.title}
+      description={props.description}
+      cards={props.cards}
     />
   );
 }

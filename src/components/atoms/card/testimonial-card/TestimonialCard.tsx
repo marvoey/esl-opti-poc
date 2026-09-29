@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useCallback } from "react";
+import Image from "next/image";
 import { StoreIcon, PlayIcon } from "../../icons";
 import { Text } from "../../text/Text";
 import styles from "./TestimonialCard.module.css";
@@ -94,7 +95,7 @@ export function TestimonialCard({
           className={`${styles.mediaWrapper} ${hasVideo ? styles.clickableMedia : ""}`}
           {...mediaInteractiveProps(hasVideo, videoTitle, openLightbox, handleKeyDown)}
         >
-          <img src={imageSrc} alt={imageAlt} className={styles.thumbnail} />
+          <Image src={imageSrc} alt={imageAlt} fill className={styles.thumbnail} sizes="(max-width: 768px) 100vw, 50vw" />
 
           {hasVideo && <div className={styles.hoverOverlay} aria-hidden="true" />}
 

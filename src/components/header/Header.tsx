@@ -50,7 +50,7 @@ function renderCtaIcon(iconName?: IconName) {
     : { leftIcon: icon, rightIcon: undefined };
 }
 
-export const DEFAULT_HEADER_NAV_LINKS: HeaderNavLink[] = [
+const DEFAULT_HEADER_NAV_LINKS: HeaderNavLink[] = [
   {
     id: "nav-personal",
     label: "Personal",

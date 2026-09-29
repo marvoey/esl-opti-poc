@@ -4,7 +4,6 @@ import React, { useState, useCallback, useEffect } from "react";
 import Image from "next/image";
 import { ArrowRight, ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
-import { withReducedMotion } from "@/components/molecules/carousel/emblaMotion";
 import { Carousel, CarouselSlide } from "@/components/molecules/carousel/Carousel";
 import { Text } from "@/components/atoms/text/Text";
 import { Button, type ButtonVariant } from "@/components/atoms/button/Button";
@@ -61,13 +60,11 @@ export function HeroCarousel({
   headingLevel = "h2",
   editProps,
 }: HeroCarouselProps) {
-  const [emblaRef, emblaApi] = useEmblaCarousel(
-    withReducedMotion({
-      align: "start",
-      loop: true,
-      skipSnaps: false,
-    })
-  );
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    align: "start",
+    loop: true,
+    skipSnaps: false,
+  });
   const [isPlaying, setIsPlaying] = useState(true);
 
   // WCAG 2.2 SC 2.2.2: Sync with prefers-reduced-motion after mount to avoid hydration mismatch
@@ -104,36 +101,33 @@ export function HeroCarousel({
     setIsPlaying((prev) => !prev);
   }, []);
 
+  const slideCount = slides?.length ?? 0;
+
   // Autoplay effect with Page Visibility API guard to prevent blank slides when tab is backgrounded
   useEffect(() => {
-    if (!emblaApi || !isPlaying || (slides && slides.length <= 1)) return;
+    if (!emblaApi || !isPlaying || slideCount <= 1) return;
 
     let intervalId: ReturnType<typeof setInterval> | null = null;
 
-    const startAutoplay = () => {
+    function tick() {
+      if (typeof document !== "undefined" && document.hidden) return;
+      emblaApi?.scrollNext();
+    }
+
+    function startAutoplay() {
       if (intervalId) clearInterval(intervalId);
-      intervalId = setInterval(() => {
-        if (typeof document !== "undefined" && document.hidden) return;
-        emblaApi.scrollNext();
-      }, 6000);
-    };
+      intervalId = setInterval(tick, 6000);
+    }
 
-    const stopAutoplay = () => {
-      if (intervalId) {
-        clearInterval(intervalId);
-        intervalId = null;
-      }
-    };
-
-    const handleVisibilityChange = () => {
+    function handleVisibilityChange() {
       if (typeof document !== "undefined" && document.hidden) {
-        stopAutoplay();
+        if (intervalId) { clearInterval(intervalId); intervalId = null; }
       } else {
         // Tab became visible: re-sync Embla loop and recalculate dimensions
-        emblaApi.reInit();
+        emblaApi?.reInit();
         startAutoplay();
       }
-    };
+    }
 
     if (typeof document === "undefined" || !document.hidden) {
       startAutoplay();
@@ -144,12 +138,12 @@ export function HeroCarousel({
     }
 
     return () => {
-      stopAutoplay();
+      if (intervalId) clearInterval(intervalId);
       if (typeof document !== "undefined") {
         document.removeEventListener("visibilitychange", handleVisibilityChange);
       }
     };
-  }, [emblaApi, isPlaying, slides]);
+  }, [emblaApi, isPlaying, slideCount]);
 
   const activeSlides = slides && slides.length > 0 ? slides : [];
 
@@ -260,7 +254,6 @@ export function HeroCarousel({
                         sizes="(max-width: 768px) 100vw, 440px"
                         className={isSquared ? styles.imageSquared : styles.image}
                         priority={isFirst}
-                        loading={isFirst ? "eager" : "lazy"}
                       />
                       {(slide.badgeStat || slide.badgeLabel) && (
                         <div className={isSquared ? styles.badgeSquared : styles.badge} aria-hidden="true">

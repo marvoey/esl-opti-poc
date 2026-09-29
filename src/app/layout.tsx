@@ -7,14 +7,14 @@ import "./globals.css";
 
 const albertSans = Albert_Sans({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800", "900"],
+  weight: "variable",
   variable: "--font-albert-sans",
   display: "swap",
 });
 
 const leagueSpartan = League_Spartan({
   subsets: ["latin"],
-  weight: ["500", "600", "700"],
+  weight: "variable",
   variable: "--font-league-spartan",
   display: "swap",
 });

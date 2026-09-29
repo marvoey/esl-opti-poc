@@ -48,7 +48,10 @@ function renderRichText(content?: RichTextPayload | string | null): React.ReactN
   return null;
 }
 
-export default function EslDisclosure({ content, id = 'disclosure' }: Props) {
+function mapProps(content: Props['content']): {
+  heading?: string;
+  items: DisclosureItem[];
+} | null {
   if (!content) return null;
 
   const effectiveContent = (content && 'component' in content && content.component
@@ -88,11 +91,18 @@ export default function EslDisclosure({ content, id = 'disclosure' }: Props) {
     return null;
   }
 
+  return { heading, items: mappedItems };
+}
+
+export default function EslDisclosure({ content, id = 'disclosure' }: Props) {
+  const props = mapProps(content);
+  if (!props) return null;
+
   return (
     <Disclosure
       id={id}
-      heading={heading}
-      items={mappedItems}
+      heading={props.heading}
+      items={props.items}
     />
   );
 }

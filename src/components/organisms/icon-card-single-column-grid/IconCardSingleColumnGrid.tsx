@@ -49,7 +49,7 @@ export function IconCardSingleColumnGrid({
 
         <ul className={styles.list}>
           {items.map((item, index) => (
-            <li key={item.id || `${item.title}-${index}`} className={styles.row}>
+            <li key={item.id ?? item.title} className={styles.row}>
               <div className={styles.label}>
                 <Icon
                   name={item.icon ?? "piggy-bank"}

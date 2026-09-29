@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRightIcon } from "../../icons";
 import { Text } from "../../text/Text";
 import styles from "./QuickLink.module.css";
@@ -41,7 +42,7 @@ export function QuickLink({
     <>
       <div className={styles.imagePlaceholder} aria-hidden={!imageAlt}>
         {imageSrc ? (
-          <img src={imageSrc} alt={imageAlt} className={styles.thumbnail} />
+          <Image src={imageSrc} alt={imageAlt} width={52} height={52} className={styles.thumbnail} />
         ) : (
           <div className={styles.patternPlaceholder} />
         )}

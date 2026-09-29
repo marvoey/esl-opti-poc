@@ -1,6 +1,5 @@
 .section {
   width: 100%;
-  background-color: var(--color-navy-900);
   background: var(--gradient-switch-support);
   padding-block: var(--space-section-block);
 }

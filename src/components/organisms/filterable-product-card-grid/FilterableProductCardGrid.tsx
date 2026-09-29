@@ -28,6 +28,9 @@ export interface FilterableProductCardGridProps {
   className?: string;
 }
 
+const EMPTY_FILTERS: string[] = [];
+const EMPTY_ITEMS: FilterableProductCard[] = [];
+
 export function FilterableProductCardGrid({
   id,
   eyebrow,
@@ -35,8 +38,8 @@ export function FilterableProductCardGrid({
   headingLevel = "h2",
   description,
   allFilterLabel,
-  filters = [],
-  items = [],
+  filters = EMPTY_FILTERS,
+  items = EMPTY_ITEMS,
   noResultsText,
   className = "",
 }: FilterableProductCardGridProps) {

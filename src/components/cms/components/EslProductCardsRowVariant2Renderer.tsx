@@ -71,10 +71,12 @@ function renderRichText(content?: RichTextPayload | string | null): React.ReactN
   return null;
 }
 
-export default function EslProductCardsRowVariant2({
-  content,
-  id = 'account-tools',
-}: Props) {
+function mapProps(content: Props['content']): {
+  eyebrow?: string;
+  title?: string;
+  description: React.ReactNode;
+  items: ProductCardsRowVariant2Item[];
+} | null {
   if (!content) return null;
 
   const effectiveContent = (content && 'component' in content && content.component
@@ -127,13 +129,23 @@ export default function EslProductCardsRowVariant2({
     return null;
   }
 
+  return { eyebrow, title, description, items: mappedItems };
+}
+
+export default function EslProductCardsRowVariant2({
+  content,
+  id = 'account-tools',
+}: Props) {
+  const props = mapProps(content);
+  if (!props) return null;
+
   return (
     <ProductCardsRowVariant2
       id={id}
-      eyebrow={eyebrow}
-      title={title}
-      description={description}
-      items={mappedItems}
+      eyebrow={props.eyebrow}
+      title={props.title}
+      description={props.description}
+      items={props.items}
     />
   );
 }

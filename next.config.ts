@@ -1,8 +1,14 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  experimental: {
+    optimizeCss: true,
+  },
   images: {
-    unoptimized: true,
+    formats: ["image/avif", "image/webp"],
+    localPatterns: [
+      { pathname: '/**' },
+    ],
     remotePatterns: [
       {
         protocol: 'https',

@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Text } from "../../text/Text";
 import styles from "./QuickLinkLarge.module.css";
 
@@ -60,7 +61,7 @@ export function QuickLinkLarge({
       </Text>
       <div className={styles.imageWrapper}>
         {imageSrc ? (
-          <img src={imageSrc} alt={imageAlt} className={styles.image} />
+          <Image src={imageSrc} alt={imageAlt} width={124} height={124} className={styles.image} />
         ) : (
           <div className={styles.placeholder} aria-hidden="true" />
         )}
