@@ -265,57 +265,120 @@ function MobileDrawer({
   );
 }
 
+interface DesktopActionsProps {
+  hasCmsActions: boolean;
+  ctaText?: string;
+  ctaHref?: string;
+  ctaVariant: "primary" | "outline";
+  ctaLeftIcon?: React.ReactNode;
+  ctaRightIcon?: React.ReactNode;
+  ctaBlank: boolean;
+  secondaryCtaText?: string;
+  secondaryCtaHref?: string;
+  secondaryCtaVariant: "primary" | "outline";
+  secondaryCtaLeftIcon?: React.ReactNode;
+  secondaryCtaRightIcon?: React.ReactNode;
+  secondaryCtaBlank: boolean;
+  joinText: string;
+  joinHref: string;
+  signInText: string;
+  signInHref: string;
+  mobileOpen: boolean;
+  drawerId: string;
+  onMobileToggle: () => void;
+}
+
+function DesktopActions({
+  hasCmsActions,
+  ctaText, ctaHref, ctaVariant, ctaLeftIcon, ctaRightIcon, ctaBlank,
+  secondaryCtaText, secondaryCtaHref, secondaryCtaVariant, secondaryCtaLeftIcon, secondaryCtaRightIcon, secondaryCtaBlank,
+  joinText, joinHref, signInText, signInHref,
+  mobileOpen, drawerId, onMobileToggle,
+}: DesktopActionsProps) {
+  return (
+    <div className={styles.actions}>
+      {hasCmsActions ? (
+        <>
+          {ctaText && ctaHref && (
+            <Button
+              variant={ctaVariant}
+              size="sm"
+              shape="pill"
+              href={ctaHref}
+              leftIcon={ctaLeftIcon}
+              rightIcon={ctaRightIcon}
+              className={styles.ctaButton}
+              target={ctaBlank ? "_blank" : undefined}
+              rel={ctaBlank ? "noopener noreferrer" : undefined}
+            >
+              {ctaText}
+            </Button>
+          )}
+          {secondaryCtaText && secondaryCtaHref && (
+            <Button
+              variant={secondaryCtaVariant}
+              size="sm"
+              shape="pill"
+              href={secondaryCtaHref}
+              leftIcon={secondaryCtaLeftIcon}
+              rightIcon={secondaryCtaRightIcon}
+              className={styles.secondaryCtaButton}
+              target={secondaryCtaBlank ? "_blank" : undefined}
+              rel={secondaryCtaBlank ? "noopener noreferrer" : undefined}
+            >
+              {secondaryCtaText}
+            </Button>
+          )}
+        </>
+      ) : (
+        <>
+          <Button variant="outline" size="sm" shape="pill" href={joinHref} className={styles.joinButton}>
+            {joinText}
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            shape="pill"
+            href={signInHref}
+            leftIcon={<UserIcon size={16} />}
+            className={styles.signInButton}
+          >
+            {signInText}
+          </Button>
+        </>
+      )}
+
+      <button
+        type="button"
+        className={styles.mobileToggle}
+        aria-expanded={mobileOpen}
+        aria-controls={drawerId}
+        aria-label={mobileOpen ? "Close menu" : "Open menu"}
+        onClick={onMobileToggle}
+      >
+        {mobileOpen ? <CloseIcon size={22} /> : <span className={styles.hamburger} aria-hidden="true" />}
+      </button>
+    </div>
+  );
+}
+
 // ---------------------------------------------------------------------------
-// Header
+// Hook: mega-menu open state + outside-click / escape dismissal
 // ---------------------------------------------------------------------------
 
-export function Header({
-  logoUrl,
-  logoAlt,
-  brandHref = "/",
-  navLinks,
-  joinText = "Join",
-  joinHref = "/join",
-  signInText = "Sign in",
-  signInHref = "/sign-in",
-  ctaText,
-  ctaHref,
-  ctaTarget,
-  ctaExternal,
-  ctaVariant,
-  ctaIcon,
-  secondaryCtaText,
-  secondaryCtaHref,
-  secondaryCtaTarget,
-  secondaryCtaExternal,
-  secondaryCtaVariant,
-  secondaryCtaIcon,
-  navigation,
-}: HeaderProps = {}) {
-  const resolvedLinks: HeaderNavLink[] = navLinks
-    ? navLinks
-    : navigation?.items
-    ? navigation.items.map((item) => ({
-        id: item.id,
-        label: item.label,
-        href: item.href,
-        isExternal: item.isExternal,
-      }))
-    : DEFAULT_HEADER_NAV_LINKS;
+interface HeaderInteractions {
+  autoId: string;
+  openId: string | null;
+  mobileOpen: boolean;
+  setMobileOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  headerRef: React.RefObject<HTMLElement | null>;
+  cancelClose: () => void;
+  scheduleClose: () => void;
+  openMenu: (id: string) => void;
+  toggleMenu: (id: string) => void;
+}
 
-  const resolvedBrandHref = navigation?.brandHref ?? brandHref;
-  const isCtaBlank = ctaTarget === "_blank" || Boolean(ctaExternal);
-  const isSecondaryCtaBlank = secondaryCtaTarget === "_blank" || Boolean(secondaryCtaExternal);
-  const hasCmsActions = Boolean((ctaText && ctaHref) || (secondaryCtaText && secondaryCtaHref));
-
-  const primaryIconProps = renderCtaIcon(ctaIcon);
-  const secondaryIconProps = renderCtaIcon(secondaryCtaIcon);
-
-  const resolvedPrimaryVariant: "primary" | "outline" =
-    ctaVariant === "light" || ctaVariant === "outline" ? "outline" : "primary";
-  const resolvedSecondaryVariant: "primary" | "outline" =
-    secondaryCtaVariant === "dark" || secondaryCtaVariant === "primary" ? "primary" : "outline";
-
+function useHeaderInteractions(): HeaderInteractions {
   const autoId = useId();
   const [openId, setOpenId] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -364,8 +427,73 @@ export function Header({
     };
   }, []);
 
+  return { autoId, openId, mobileOpen, setMobileOpen, headerRef, cancelClose, scheduleClose, openMenu, toggleMenu };
+}
+
+// ---------------------------------------------------------------------------
+// Prop resolution (pure — no hooks)
+// ---------------------------------------------------------------------------
+
+interface ResolvedHeaderProps {
+  resolvedLinks: HeaderNavLink[];
+  resolvedBrandHref: string;
+  isCtaBlank: boolean;
+  isSecondaryCtaBlank: boolean;
+  hasCmsActions: boolean;
+  primaryIconProps: ReturnType<typeof renderCtaIcon>;
+  secondaryIconProps: ReturnType<typeof renderCtaIcon>;
+  resolvedPrimaryVariant: "primary" | "outline";
+  resolvedSecondaryVariant: "primary" | "outline";
+}
+
+function resolveHeaderProps(props: HeaderProps): ResolvedHeaderProps {
+  const { navLinks, navigation, brandHref = "/", ctaTarget, ctaExternal, ctaText, ctaHref,
+    secondaryCtaTarget, secondaryCtaExternal, secondaryCtaText, secondaryCtaHref,
+    ctaVariant, ctaIcon, secondaryCtaVariant, secondaryCtaIcon } = props;
+
+  const resolvedLinks: HeaderNavLink[] = navLinks
+    ? navLinks
+    : navigation?.items
+    ? navigation.items.map((item) => ({ id: item.id, label: item.label, href: item.href, isExternal: item.isExternal }))
+    : DEFAULT_HEADER_NAV_LINKS;
+
+  return {
+    resolvedLinks,
+    resolvedBrandHref: navigation?.brandHref ?? brandHref,
+    isCtaBlank: ctaTarget === "_blank" || Boolean(ctaExternal),
+    isSecondaryCtaBlank: secondaryCtaTarget === "_blank" || Boolean(secondaryCtaExternal),
+    hasCmsActions: Boolean((ctaText && ctaHref) || (secondaryCtaText && secondaryCtaHref)),
+    primaryIconProps: renderCtaIcon(ctaIcon),
+    secondaryIconProps: renderCtaIcon(secondaryCtaIcon),
+    resolvedPrimaryVariant: ctaVariant === "light" || ctaVariant === "outline" ? "outline" : "primary",
+    resolvedSecondaryVariant: secondaryCtaVariant === "dark" || secondaryCtaVariant === "primary" ? "primary" : "outline",
+  };
+}
+
+// ---------------------------------------------------------------------------
+// Header
+// ---------------------------------------------------------------------------
+
+export function Header(props: HeaderProps = {}) {
+  const {
+    logoUrl, logoAlt,
+    ctaText, ctaHref, secondaryCtaText, secondaryCtaHref,
+    joinText = "Join", joinHref = "/join",
+    signInText = "Sign in", signInHref = "/sign-in",
+  } = props;
+
+  const {
+    resolvedLinks, resolvedBrandHref, isCtaBlank, isSecondaryCtaBlank, hasCmsActions,
+    primaryIconProps, secondaryIconProps, resolvedPrimaryVariant, resolvedSecondaryVariant,
+  } = resolveHeaderProps(props);
+
+  const { autoId, openId, mobileOpen, setMobileOpen, headerRef, cancelClose, scheduleClose, openMenu, toggleMenu } =
+    useHeaderInteractions();
+
+  const drawerId = `${autoId}-mobile-drawer`;
+
   const drawerProps: MobileDrawerProps = {
-    id: `${autoId}-mobile-drawer`,
+    id: drawerId,
     links: resolvedLinks,
     openId,
     onToggle: toggleMenu,
@@ -405,69 +533,17 @@ export function Header({
             onToggle={toggleMenu}
           />
 
-          <div className={styles.actions}>
-            {hasCmsActions ? (
-              <>
-                {ctaText && ctaHref && (
-                  <Button
-                    variant={resolvedPrimaryVariant}
-                    size="sm"
-                    shape="pill"
-                    href={ctaHref}
-                    leftIcon={primaryIconProps.leftIcon}
-                    rightIcon={primaryIconProps.rightIcon}
-                    className={styles.ctaButton}
-                    target={isCtaBlank ? "_blank" : undefined}
-                    rel={isCtaBlank ? "noopener noreferrer" : undefined}
-                  >
-                    {ctaText}
-                  </Button>
-                )}
-                {secondaryCtaText && secondaryCtaHref && (
-                  <Button
-                    variant={resolvedSecondaryVariant}
-                    size="sm"
-                    shape="pill"
-                    href={secondaryCtaHref}
-                    leftIcon={secondaryIconProps.leftIcon}
-                    rightIcon={secondaryIconProps.rightIcon}
-                    className={styles.secondaryCtaButton}
-                    target={isSecondaryCtaBlank ? "_blank" : undefined}
-                    rel={isSecondaryCtaBlank ? "noopener noreferrer" : undefined}
-                  >
-                    {secondaryCtaText}
-                  </Button>
-                )}
-              </>
-            ) : (
-              <>
-                <Button variant="outline" size="sm" shape="pill" href={joinHref} className={styles.joinButton}>
-                  {joinText}
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  shape="pill"
-                  href={signInHref}
-                  leftIcon={<UserIcon size={16} />}
-                  className={styles.signInButton}
-                >
-                  {signInText}
-                </Button>
-              </>
-            )}
-
-            <button
-              type="button"
-              className={styles.mobileToggle}
-              aria-expanded={mobileOpen}
-              aria-controls={drawerProps.id}
-              aria-label={mobileOpen ? "Close menu" : "Open menu"}
-              onClick={() => setMobileOpen((open) => !open)}
-            >
-              {mobileOpen ? <CloseIcon size={22} /> : <span className={styles.hamburger} aria-hidden="true" />}
-            </button>
-          </div>
+          <DesktopActions
+            hasCmsActions={hasCmsActions}
+            ctaText={ctaText} ctaHref={ctaHref} ctaVariant={resolvedPrimaryVariant}
+            ctaLeftIcon={primaryIconProps.leftIcon} ctaRightIcon={primaryIconProps.rightIcon} ctaBlank={isCtaBlank}
+            secondaryCtaText={secondaryCtaText} secondaryCtaHref={secondaryCtaHref} secondaryCtaVariant={resolvedSecondaryVariant}
+            secondaryCtaLeftIcon={secondaryIconProps.leftIcon} secondaryCtaRightIcon={secondaryIconProps.rightIcon} secondaryCtaBlank={isSecondaryCtaBlank}
+            joinText={joinText} joinHref={joinHref} signInText={signInText} signInHref={signInHref}
+            mobileOpen={mobileOpen}
+            drawerId={drawerId}
+            onMobileToggle={() => setMobileOpen((open) => !open)}
+          />
         </div>
       </div>
 
