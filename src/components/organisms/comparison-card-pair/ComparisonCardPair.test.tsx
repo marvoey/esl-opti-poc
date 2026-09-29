@@ -17,6 +17,17 @@ describe("ComparisonCardPair", () => {
     ).toBeDefined();
   });
 
+  it("renders cards inside an unordered list with role='list' and li elements", () => {
+    const { container } = render(<ComparisonCardPair />);
+
+    const list = container.querySelector("ul[class*='cardsGrid']");
+    expect(list).not.toBeNull();
+    expect(list?.getAttribute("role")).toBe("list");
+
+    const items = list?.querySelectorAll(":scope > li[class*='cardItem']");
+    expect(items?.length).toBe(2);
+  });
+
   it("renders two comparison cards with correct details", () => {
     render(<ComparisonCardPair />);
 
@@ -48,7 +59,7 @@ describe("ComparisonCardPair", () => {
   it("renders 3 feature items per card with correct structure", () => {
     const { container } = render(<ComparisonCardPair />);
 
-    const lists = container.querySelectorAll("ul");
+    const lists = container.querySelectorAll("ul[class*='featureList']");
     expect(lists.length).toBe(2);
 
     lists.forEach((list) => {

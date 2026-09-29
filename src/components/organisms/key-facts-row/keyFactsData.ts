@@ -10,6 +10,7 @@ export interface KeyFactsTileItem {
 export interface KeyFactsRowProps extends React.HTMLAttributes<HTMLElement> {
   title?: string;
   subtitle?: string;
+  headingLevel?: "h2" | "h3";
   tiles?: KeyFactsTileItem[];
   id?: string;
   className?: string;

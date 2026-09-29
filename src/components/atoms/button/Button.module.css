@@ -136,19 +136,6 @@
   transform: none;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .button.hasArrow:hover:not(:disabled),
-  .button.hasArrow.alignRight:hover:not(:disabled) {
-    padding-right: var(--space-btn-arrow-inline);
-    padding-left: var(--space-btn-arrow-inline);
-    transform: none;
-  }
-
-  .button.hasArrow:hover:not(:disabled) .iconRight,
-  .button.hasArrow.alignRight:hover:not(:disabled) .label {
-    transform: none;
-  }
-}
 
 /* --- Variants & Hover Animations --- */
 

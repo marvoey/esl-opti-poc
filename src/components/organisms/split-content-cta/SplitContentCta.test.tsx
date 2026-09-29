@@ -63,4 +63,13 @@ describe("SplitContentCta Organism", () => {
       expect(screen.getAllByText(option.ctaText).length).toBeGreaterThan(0);
     });
   });
+
+  it("renders cards inside an unordered list with role='list' and li elements", () => {
+    const { container } = render(<SplitContentCta options={MOCK_OPTIONS} />);
+    const list = container.querySelector("ul[class*='cardsCol']");
+    expect(list).not.toBeNull();
+    expect(list?.getAttribute("role")).toBe("list");
+    const items = list?.querySelectorAll(":scope > li[class*='cardItem']");
+    expect(items?.length).toBe(2);
+  });
 });

@@ -178,5 +178,5 @@ export default function EslHeroSlider({
     return null;
   }
 
-  return <HeroCarousel variant={resolvedVariant} slides={customSlides} />;
+  return <HeroCarousel variant={resolvedVariant} slides={customSlides} headingLevel="h1" />;
 }

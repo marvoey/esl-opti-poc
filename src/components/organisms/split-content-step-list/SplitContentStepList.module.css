@@ -74,4 +74,15 @@
 .stepCard {
   max-width: none;
   width: 100%;
+  cursor: default;
+}
+
+/* SplitContentStepList step cards should not have hover effect */
+.stepItem .stepCard:hover,
+.stepItem .stepCard:active,
+.stepItem > *:hover,
+.stepItem > *:active {
+  transform: none !important;
+  box-shadow: none !important;
+  border-color: var(--color-border-inverse-subtle) !important;
 }

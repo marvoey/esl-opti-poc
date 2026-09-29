@@ -94,6 +94,7 @@ function ComparisonCardItem({ card }: { card: ComparisonCardData }) {
               href={card.secondaryCta.href}
               target={card.secondaryCta.external ? "_blank" : undefined}
               rel={card.secondaryCta.external ? "noopener noreferrer" : undefined}
+              aria-label={card.secondaryCta.label.toLowerCase() === "learn more" ? `Learn more about ${card.title}` : undefined}
             >
               {card.secondaryCta.label}
             </Button>
@@ -144,18 +145,20 @@ export function ComparisonCardPair({
             {title}
           </Heading>
           {description && (
-            <Text as="p" variant="body" className={styles.description}>
+            <Text as="p" variant="body-lg" color="primary" className={styles.description}>
               {description}
             </Text>
           )}
         </header>
 
         {/* Row 2: 2 Columns 50% on desktop, stacked on mobile */}
-        <div className={styles.cardsGrid}>
+        <ul className={styles.cardsGrid} role="list">
           {cards.slice(0, 2).map((card) => (
-            <ComparisonCardItem key={card.id} card={card} />
+            <li key={card.id} className={styles.cardItem}>
+              <ComparisonCardItem card={card} />
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </section>
   );

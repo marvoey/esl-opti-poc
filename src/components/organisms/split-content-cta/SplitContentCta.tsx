@@ -53,31 +53,33 @@ export function SplitContentCta({
               </Heading>
             )}
             {description && (
-              <Text variant="body" color="secondary" className={styles.description}>
+              <Text variant="body" color="inverted" className={styles.description}>
                 {description}
               </Text>
             )}
           </div>
 
-          <div className={styles.cardsCol}>
+          <ul className={styles.cardsCol} role="list">
             {options.map((option) => (
-              <IconContentCard
-                key={option.id}
-                href={option.href}
-                icon={
-                  typeof option.icon === "string" ? (
-                    <Icon name={option.icon as IconName} size={24} aria-hidden="true" />
-                  ) : (
-                    option.icon
-                  )
-                }
-                title={option.title}
-                description={option.description}
-                ctaText={option.ctaText}
-                variant="inverse"
-              />
+              <li key={option.id} className={styles.cardItem}>
+                <IconContentCard
+                  href={option.href}
+                  icon={
+                    typeof option.icon === "string" ? (
+                      <Icon name={option.icon as IconName} size={24} aria-hidden="true" />
+                    ) : (
+                      option.icon
+                    )
+                  }
+                  title={option.title}
+                  description={option.description}
+                  ctaText={option.ctaText}
+                  variant="inverse"
+                  className={styles.ctaCard}
+                />
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       </div>
     </section>

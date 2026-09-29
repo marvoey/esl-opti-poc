@@ -51,6 +51,9 @@ export default async function SiteLayout({ children, params }: Props) {
 
   return (
     <>
+      <a href="#main-content" className="skipLink">
+        Skip to main content
+      </a>
       <Suspense fallback={null}>
         <ServerHeader origin={site.origin} />
       </Suspense>

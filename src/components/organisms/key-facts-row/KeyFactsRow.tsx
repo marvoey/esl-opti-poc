@@ -1,5 +1,6 @@
 import React from "react";
 import { BasicsTile } from "@/components/atoms/card/basics-tile/BasicsTile";
+import { Text } from "@/components/atoms/text/Text";
 import {
   DEFAULT_KEY_FACTS_TILES,
   type KeyFactsRowProps,
@@ -13,11 +14,13 @@ export function KeyFactsRow({
   title = "Details at a glance",
   subtitle = "Applies to both checking accounts",
   tiles = DEFAULT_KEY_FACTS_TILES,
+  headingLevel = "h2",
   id,
   className = "",
   ...rest
 }: KeyFactsRowProps) {
   const headingId = id ? `${id}-heading` : "key-facts-heading";
+  const HeadingTag = headingLevel;
 
   return (
     <section
@@ -28,25 +31,34 @@ export function KeyFactsRow({
     >
       <div className={styles.container}>
         <header className={styles.header}>
-          <h3 id={headingId} className={styles.title}>
+          <HeadingTag id={headingId} className={styles.title}>
             {title}
-          </h3>
-          {subtitle && <p className={styles.subtitle}>{subtitle}</p>}
+          </HeadingTag>
+          {subtitle && (
+            <Text
+              as="p"
+              variant="body"
+              color="secondary"
+              className={styles.subtitle}
+            >
+              {subtitle}
+            </Text>
+          )}
         </header>
 
-        <div className={styles.tileTrack}>
+        <ul className={styles.tileTrack} role="list">
           {tiles.map((tile) => (
-            <BasicsTile
-              key={tile.id || tile.callout}
-              callout={tile.callout}
-              value={tile.value}
-              description={tile.description}
-              order="value-first"
-              valueSize="body"
-              className={styles.tileItem}
-            />
+            <li key={tile.id || tile.callout} className={styles.tileItem}>
+              <BasicsTile
+                callout={tile.callout}
+                value={tile.value}
+                description={tile.description}
+                order="value-first"
+                valueSize="body"
+              />
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </section>
   );

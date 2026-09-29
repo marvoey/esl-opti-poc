@@ -49,6 +49,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return metadata;
 }
 
+/**
+ * Escapes <, >, and & in a JSON string so it is safe to embed inside a <script> element.
+ * JSON.stringify alone does not escape these; a value like "</script>" breaks out of
+ * the script block and enables XSS. Unicode escapes are valid JSON and invisible to parsers.
+ */
+function safeJsonLd(data: unknown): string {
+  return JSON.stringify(data)
+    .replace(/</g, "\\u003c")
+    .replace(/>/g, "\\u003e")
+    .replace(/&/g, "\\u0026");
+}
+
 /** Every CMS page of every site: the page at this URL, whatever its content type. */
 export default async function CmsPage({ params }: Props) {
   const context = await loadPageContext(params);
@@ -63,11 +75,11 @@ export default async function CmsPage({ params }: Props) {
   );
 
   return (
-    <main>
+    <main id="main-content">
       {jsonLd && (
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }}
         />
       )}
       <OptimizelyComponent content={context.content} />

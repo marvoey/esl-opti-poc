@@ -54,8 +54,6 @@ async function handleMediaRequest(
       });
     }
 
-    const responseHeaders = new Headers();
-
     // Preserve important content and cache validation headers
     const headersToPreserve = [
       'content-type',
@@ -65,17 +63,16 @@ async function handleMediaRequest(
       'accept-ranges',
     ];
 
+    const preservedHeaders: Record<string, string> = {};
     for (const header of headersToPreserve) {
       const val = upstreamRes.headers.get(header);
-      if (val) responseHeaders.set(header, val);
+      if (val) preservedHeaders[header] = val;
     }
-
-    // Override upstream 24-hour cache with our 5-minute stale-while-revalidate policy
-    responseHeaders.set('Cache-Control', CACHE_CONTROL_HEADER);
 
     return new NextResponse(request.method === 'HEAD' ? null : upstreamRes.body, {
       status: upstreamRes.status,
-      headers: responseHeaders,
+      // Override upstream cache with our no-cache, must-revalidate policy
+      headers: { ...preservedHeaders, 'Cache-Control': CACHE_CONTROL_HEADER },
     });
   } catch (error) {
     console.error(`[opti-media proxy] Error fetching ${upstreamUrl}:`, error);

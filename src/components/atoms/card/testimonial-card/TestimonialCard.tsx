@@ -26,6 +26,22 @@ export interface TestimonialCardProps {
   className?: string;
 }
 
+function mediaInteractiveProps(
+  hasVideo: boolean,
+  videoTitle: string | undefined,
+  openLightbox: () => void,
+  handleKeyDown: (e: React.KeyboardEvent) => void
+): React.HTMLAttributes<HTMLDivElement> {
+  if (!hasVideo) return {};
+  return {
+    onClick: openLightbox,
+    role: "button",
+    tabIndex: 0,
+    "aria-label": videoTitle ? `Play video: ${videoTitle}` : "Play testimonial video",
+    onKeyDown: handleKeyDown,
+  };
+}
+
 /**
  * TestimonialCard Component (Figma: "❖ Testimonial card")
  * High-performance media card optimized with the Facade Pattern:
@@ -76,11 +92,7 @@ export function TestimonialCard({
         {/* Media Thumbnail with Play Overlay */}
         <div
           className={`${styles.mediaWrapper} ${hasVideo ? styles.clickableMedia : ""}`}
-          onClick={hasVideo ? openLightbox : undefined}
-          role={hasVideo ? "button" : undefined}
-          tabIndex={hasVideo ? 0 : undefined}
-          aria-label={hasVideo ? (videoTitle ? `Play video: ${videoTitle}` : "Play testimonial video") : undefined}
-          onKeyDown={hasVideo ? handleKeyDown : undefined}
+          {...mediaInteractiveProps(hasVideo, videoTitle, openLightbox, handleKeyDown)}
         >
           <img src={imageSrc} alt={imageAlt} className={styles.thumbnail} />
 

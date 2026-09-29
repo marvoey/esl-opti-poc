@@ -36,8 +36,8 @@ export interface CompareTableData {
   fullComparisonLink: { label: string; href: string };
 }
 
-/** Placeholder — no destination route exists yet (spec resolved decision #3). */
-export const COMPARE_TABLE_FULL_COMPARISON_HREF = "#";
+/** Default anchor target for full comparison section or page. */
+export const COMPARE_TABLE_FULL_COMPARISON_HREF = "#compare-table";
 
 export const DEFAULT_COMPARE_TABLE_DATA: CompareTableData = {
   eyebrow: "SIDE BY SIDE",
