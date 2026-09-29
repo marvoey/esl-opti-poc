@@ -7,27 +7,30 @@ export const EslLongTextLeftCardsRightPromoContentType = contentType({
   properties: {
     eyebrow: {
       type: 'string',
-      displayName: 'Promo Badge',
+      displayName: 'Eyebrow',
       description: 'Pill text, e.g. "Something at ESL that helps here".',
       group: 'content',
       sortOrder: 10,
     },
     heading: {
       type: 'string',
-      displayName: 'Promo Heading',
+      displayName: 'Heading',
       description: 'The promo box is hidden when this is empty.',
       group: 'content',
       sortOrder: 20,
     },
     description: {
       type: 'richText',
-      displayName: 'Promo Description',
+      displayName: 'Copy',
       group: 'content',
       sortOrder: 30,
+      editorSettings: {
+        preset: 'default',
+      },
     },
     cta: {
       type: 'link',
-      displayName: 'Promo Link',
+      displayName: 'CTA Link',
       group: 'content',
       sortOrder: 40,
     },

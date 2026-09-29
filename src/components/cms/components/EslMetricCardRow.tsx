@@ -17,25 +17,25 @@ export const EslMetricCardRowContentType = contentType({
   properties: {
     eyebrow: {
       type: 'string',
-      displayName: 'Eyebrow Text',
+      displayName: 'Eyebrow',
       group: 'content',
       sortOrder: 10,
     },
     title: {
       type: 'string',
-      displayName: 'Title',
+      displayName: 'Heading',
       group: 'content',
       sortOrder: 20,
     },
     description: {
       type: 'string',
-      displayName: 'Description Copy',
+      displayName: 'Copy',
       group: 'content',
       sortOrder: 30,
     },
     cta: {
       type: 'link',
-      displayName: 'Call to Action (Button)',
+      displayName: 'CTA Link',
       group: 'content',
       sortOrder: 40,
     },

@@ -15,15 +15,18 @@ export const EslSwitchSupportContentType = contentType({
     },
     title: {
       type: 'string',
-      displayName: 'Heading Title',
+      displayName: 'Heading',
       group: 'content',
       sortOrder: 20,
     },
     description: {
       type: 'richText',
-      displayName: 'Description',
+      displayName: 'Copy',
       group: 'content',
       sortOrder: 30,
+      editorSettings: {
+        preset: 'default',
+      },
     },
     steps: {
       type: 'array',
@@ -37,13 +40,13 @@ export const EslSwitchSupportContentType = contentType({
     },
     cta: {
       type: 'link',
-      displayName: 'Call to Action (Button)',
+      displayName: 'Primary CTA Link',
       group: 'content',
       sortOrder: 50,
     },
     link: {
       type: 'link',
-      displayName: 'Secondary Link (with CircleCheck)',
+      displayName: 'Secondary CTA Link',
       group: 'content',
       sortOrder: 60,
     },

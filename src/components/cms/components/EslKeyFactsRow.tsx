@@ -9,13 +9,13 @@ export const EslKeyFactsRowContentType = contentType({
   properties: {
     title: {
       type: 'string',
-      displayName: 'Heading Title',
+      displayName: 'Heading',
       group: 'content',
       sortOrder: 10,
     },
     subtitle: {
       type: 'string',
-      displayName: 'Subtitle / Description',
+      displayName: 'Subheading',
       group: 'content',
       sortOrder: 20,
     },

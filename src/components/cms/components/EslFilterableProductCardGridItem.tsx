@@ -8,16 +8,19 @@ export const EslFilterableProductCardGridItemContentType = contentType({
   properties: {
     title: {
       type: 'string',
-      displayName: 'Card Title',
+      displayName: 'Heading',
       description: 'Cards without a title are not shown.',
       group: 'content',
       sortOrder: 10,
     },
     description: {
       type: 'richText',
-      displayName: 'Card Description',
+      displayName: 'Copy',
       group: 'content',
       sortOrder: 20,
+      editorSettings: {
+        preset: 'default',
+      },
     },
     rate: {
       type: 'string',
@@ -39,7 +42,7 @@ export const EslFilterableProductCardGridItemContentType = contentType({
     },
     link: {
       type: 'link',
-      displayName: 'Card Link',
+      displayName: 'CTA Link',
       description: 'The link text is the label, e.g. "See Details".',
       group: 'content',
       sortOrder: 50,

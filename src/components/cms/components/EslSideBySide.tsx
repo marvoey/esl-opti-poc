@@ -8,19 +8,19 @@ export const EslSideBySideContentType = contentType({
   properties: {
     eyebrow: {
       type: 'string',
-      displayName: 'Eyebrow Text',
+      displayName: 'Eyebrow',
       group: 'content',
       sortOrder: 10,
     },
     headline: {
       type: 'string',
-      displayName: 'Headline',
+      displayName: 'Heading',
       group: 'content',
       sortOrder: 20,
     },
     body: {
       type: 'richText',
-      displayName: 'Body Copy',
+      displayName: 'Copy',
       group: 'content',
       sortOrder: 30,
       editorSettings: {
@@ -42,7 +42,7 @@ export const EslSideBySideContentType = contentType({
     },
     cta: {
       type: 'link',
-      displayName: 'Call to Action (Button)',
+      displayName: 'CTA Link',
       group: 'content',
       sortOrder: 50,
     },

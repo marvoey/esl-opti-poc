@@ -14,7 +14,7 @@ export const EslFinalCtaContentType = contentType({
     },
     heading: {
       type: 'string',
-      displayName: 'Heading (Optional override)',
+      displayName: 'Heading',
       group: 'content',
       sortOrder: 20,
     },

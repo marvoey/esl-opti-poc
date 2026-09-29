@@ -20,7 +20,7 @@ export const EslMediaCardContentType = contentType({
     },
     badge: {
       type: 'string',
-      displayName: 'Badge Label (e.g. Limited Time)',
+      displayName: 'Eyebrow',
       group: 'content',
       sortOrder: 20,
     },
@@ -39,13 +39,13 @@ export const EslMediaCardContentType = contentType({
     },
     title: {
       type: 'string',
-      displayName: 'Card Title',
+      displayName: 'Heading',
       group: 'content',
       sortOrder: 30,
     },
     description: {
       type: 'richText',
-      displayName: 'Description Copy',
+      displayName: 'Copy',
       group: 'content',
       sortOrder: 40,
       editorSettings: {
@@ -54,7 +54,7 @@ export const EslMediaCardContentType = contentType({
     },
     cta: {
       type: 'link',
-      displayName: 'Call to Action Link',
+      displayName: 'CTA Link',
       group: 'content',
       sortOrder: 50,
     },

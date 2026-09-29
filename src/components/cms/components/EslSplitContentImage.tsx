@@ -4,17 +4,17 @@ export const EslSplitContentImageContentType = contentType({
   key: 'EslSplitContentImage',
   displayName: 'ESL Split Content Image',
   baseType: '_component',
-  compositionBehaviors: ['sectionEnabled'],
+  compositionBehaviors: ['sectionEnabled', 'elementEnabled'],
   properties: {
     title: {
       type: 'string',
-      displayName: 'Heading Title',
+      displayName: 'Heading',
       group: 'content',
       sortOrder: 10,
     },
     description: {
       type: 'richText',
-      displayName: 'Description Copy (Rich Text)',
+      displayName: 'Copy',
       group: 'content',
       sortOrder: 20,
       editorSettings: {
@@ -23,13 +23,13 @@ export const EslSplitContentImageContentType = contentType({
     },
     primaryCta: {
       type: 'link',
-      displayName: 'Primary Call to Action Button',
+      displayName: 'Primary CTA Link',
       group: 'content',
       sortOrder: 30,
     },
     secondaryCta: {
       type: 'link',
-      displayName: 'Secondary Call to Action Button',
+      displayName: 'Secondary CTA Link',
       group: 'content',
       sortOrder: 40,
     },

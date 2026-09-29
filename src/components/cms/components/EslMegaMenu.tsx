@@ -15,7 +15,7 @@ export const EslMegaMenuContentType = contentType({
     },
     cta: {
       type: 'link',
-      displayName: 'Call to Action Button',
+      displayName: 'CTA Link',
       group: 'content',
       sortOrder: 10,
     },

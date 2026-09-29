@@ -7,7 +7,7 @@ export const EslQuickLinkCardContentType = contentType({
   properties: {
     title: {
       type: 'string',
-      displayName: 'Card Title',
+      displayName: 'Heading',
       group: 'content',
     },
     url: {

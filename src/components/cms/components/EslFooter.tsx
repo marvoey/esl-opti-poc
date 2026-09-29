@@ -27,7 +27,7 @@ export const EslFooterContentType = contentType({
     },
     brandCta: {
       type: 'link',
-      displayName: 'Brand CTA Button',
+      displayName: 'CTA Link',
       group: 'content',
       sortOrder: 20,
     },

@@ -8,19 +8,19 @@ export const EslSnipeCtaContentType = contentType({
   properties: {
     title: {
       type: 'string',
-      displayName: 'Title',
+      displayName: 'Heading',
       group: 'content',
       sortOrder: 10,
     },
     description: {
       type: 'string',
-      displayName: 'Description',
+      displayName: 'Copy',
       group: 'content',
       sortOrder: 20,
     },
     link: {
       type: 'link',
-      displayName: 'Link',
+      displayName: 'CTA Link',
       group: 'content',
       sortOrder: 30,
     },

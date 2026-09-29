@@ -14,9 +14,12 @@ export const EslDisclosureItemContentType = contentType({
     },
     regularText: {
       type: 'richText',
-      displayName: 'Regular Text',
+      displayName: 'Copy',
       group: 'content',
       sortOrder: 20,
+      editorSettings: {
+        preset: 'default',
+      },
     },
   },
 });

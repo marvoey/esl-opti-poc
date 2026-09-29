@@ -10,15 +10,18 @@ export const EslLongTextLeftCardsRightContentType = contentType({
   properties: {
     title: {
       type: 'string',
-      displayName: 'Title',
+      displayName: 'Heading',
       group: 'content',
       sortOrder: 10,
     },
     body: {
       type: 'richText',
-      displayName: 'Body Copy',
+      displayName: 'Copy',
       group: 'content',
       sortOrder: 20,
+      editorSettings: {
+        preset: 'default',
+      },
     },
     promo: {
       type: 'component',

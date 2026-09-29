@@ -9,21 +9,24 @@ export const EslProductCardsRowContentType = contentType({
   properties: {
     eyebrow: {
       type: 'string',
-      displayName: 'Eyebrow Text',
+      displayName: 'Eyebrow',
       group: 'content',
       sortOrder: 10,
     },
     title: {
       type: 'string',
-      displayName: 'Title',
+      displayName: 'Heading',
       group: 'content',
       sortOrder: 20,
     },
     description: {
       type: 'richText',
-      displayName: 'Section Description',
+      displayName: 'Copy',
       group: 'content',
       sortOrder: 30,
+      editorSettings: {
+        preset: 'default',
+      },
     },
     items: {
       type: 'array',

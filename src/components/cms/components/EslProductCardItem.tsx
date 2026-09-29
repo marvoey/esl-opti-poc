@@ -8,15 +8,18 @@ export const EslProductCardItemContentType = contentType({
   properties: {
     title: {
       type: 'string',
-      displayName: 'Card Title',
+      displayName: 'Heading',
       group: 'content',
       sortOrder: 10,
     },
     description: {
       type: 'richText',
-      displayName: 'Card Description',
+      displayName: 'Copy',
       group: 'content',
       sortOrder: 20,
+      editorSettings: {
+        preset: 'default',
+      },
     },
   },
 });
