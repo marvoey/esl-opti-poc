@@ -18,6 +18,7 @@
   --color-navy-800: #01375A; /* Footer gradient end */
   --color-aqua-500: #00A3A3;
   --color-teal-600: #008080; /* Testimonial card placeholder icon (legacy value) */
+  --color-teal-700: #006E6D; /* WCAG 2.1 AA accessible teal on light backgrounds (>= 5.8:1) */
   --color-teal-500: #51BFB6; /* Figma: Active tab indicator */
   --color-aqua-300: #68E0CC; /* Figma: aqua-300 */
   --color-grey-95: #ECFBF8; /* Figma: "Polar" background (a.k.a. mint-50) */
@@ -87,9 +88,10 @@
   --color-primary: var(--color-navy-500);
   --color-primary-hover: var(--color-aqua-500);
 
-  --color-accent: var(--color-aqua-500);
+  --color-accent: var(--color-teal-700);
+  --color-text-accent: var(--color-teal-700);
   --color-accent-subtle: var(--color-grey-95);
-  --color-focus-ring: var(--color-aqua-500);
+  --color-focus-ring: var(--color-teal-700);
 
   /* Gradients */
   --gradient-hero-glow: radial-gradient(58.07% 88.19% at 17.99% 3.33%, var(--color-sky-300) 4.85%, var(--color-aqua-100) 50%, var(--color-white) 100%);

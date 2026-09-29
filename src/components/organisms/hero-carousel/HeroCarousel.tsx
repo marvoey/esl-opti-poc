@@ -40,6 +40,7 @@ export interface HeroCarouselProps {
   ariaLabel?: string;
   slides?: SlideItem[];
   variant?: "default" | "squared";
+  headingLevel?: "h1" | "h2";
   editProps?: {
     eyebrow?: Record<string, unknown>;
     heading?: Record<string, unknown>;
@@ -57,6 +58,7 @@ export function HeroCarousel({
   ariaLabel = "Featured hero slider",
   slides = HERO_SLIDES,
   variant = "default",
+  headingLevel = "h2",
   editProps,
 }: HeroCarouselProps) {
   const [emblaRef, emblaApi] = useEmblaCarousel(
@@ -193,7 +195,7 @@ export function HeroCarousel({
                     className={styles.headingArea}
                     {...(isFirst && editProps?.heading ? editProps.heading : {})}
                   >
-                    <Text as="h2" variant="hero-h2" color="primary">
+                    <Text as={headingLevel} variant="hero-h2" color="primary">
                       {slide.titleLine1}
                       {slide.titleLine2 && (
                         <>

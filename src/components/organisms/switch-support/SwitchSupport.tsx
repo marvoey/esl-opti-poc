@@ -154,17 +154,18 @@ export function SwitchSupport({
           description={description}
         />
 
-        <div className={styles.grid}>
+        <ol className={styles.grid} role="list">
           {steps.map((item) => (
-            <ProcessCard
-              key={item.id}
-              step={item.step}
-              title={item.title}
-              description={item.description}
-              variant="inverse"
-            />
+            <li key={item.id} className={styles.stepItem}>
+              <ProcessCard
+                step={item.step}
+                title={item.title}
+                description={item.description}
+                variant="inverse"
+              />
+            </li>
           ))}
-        </div>
+        </ol>
 
         <SwitchSupportActions
           ctaLabel={ctaLabel}

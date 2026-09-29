@@ -161,7 +161,7 @@ export function CompareTable({
         <p className={styles.fullComparison}>
           <Button
             variant="link"
-            href={fullComparisonLink.href}
+            href={fullComparisonLink.href === "#" ? `#${sectionId}` : fullComparisonLink.href}
             rightIcon={<ArrowRightIcon size={18} aria-hidden="true" />}
           >
             {fullComparisonLink.label}

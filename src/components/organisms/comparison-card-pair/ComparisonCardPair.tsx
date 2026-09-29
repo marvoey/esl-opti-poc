@@ -94,6 +94,7 @@ function ComparisonCardItem({ card }: { card: ComparisonCardData }) {
               href={card.secondaryCta.href}
               target={card.secondaryCta.external ? "_blank" : undefined}
               rel={card.secondaryCta.external ? "noopener noreferrer" : undefined}
+              aria-label={card.secondaryCta.label.toLowerCase() === "learn more" ? `Learn more about ${card.title}` : undefined}
             >
               {card.secondaryCta.label}
             </Button>

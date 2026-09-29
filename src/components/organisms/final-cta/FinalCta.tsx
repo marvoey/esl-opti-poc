@@ -28,12 +28,14 @@ export function FinalCta({
   const sectionClassName = className
     ? `${styles.section} ${className}`
     : styles.section;
+  const sectionId = id || "final-cta";
+  const headingId = `${sectionId}-heading`;
 
   return (
-    <section id={id} className={sectionClassName}>
+    <section id={sectionId} aria-labelledby={headingId} className={sectionClassName}>
       <div className={styles.container}>
         <div className={styles.content}>
-          <Heading level="h2" className={styles.heading}>
+          <Heading level="h2" id={headingId} className={styles.heading}>
             {heading}
           </Heading>
           <Text as="p" variant="body" className={styles.description}>
@@ -43,7 +45,7 @@ export function FinalCta({
             <Button
               variant="primary"
               href={buttonHref}
-              rightIcon={<ArrowRightIcon size={20} />}
+              rightIcon={<ArrowRightIcon size={20} aria-hidden="true" />}
             >
               {buttonText}
             </Button>
