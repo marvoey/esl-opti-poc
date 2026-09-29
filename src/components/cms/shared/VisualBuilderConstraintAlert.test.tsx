@@ -1,11 +1,8 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
-import {
-  VisualBuilderConstraintAlert,
-  getAllowedSectionsFromContentType,
-  type AllowedSectionItem,
-} from './VisualBuilderConstraintAlert';
+import { VisualBuilderConstraintAlert } from './VisualBuilderConstraintAlert';
+import { getAllowedSectionsFromContentType, type AllowedSectionItem } from './visualBuilderConstraintUtils';
 
 describe('VisualBuilderConstraintAlert', () => {
   const mockAllowedTypes: readonly AllowedSectionItem[] = [

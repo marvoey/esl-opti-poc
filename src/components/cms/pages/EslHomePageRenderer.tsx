@@ -6,10 +6,8 @@ import {
   type ComponentContainerProps,
 } from '@optimizely/cms-sdk/react/server';
 import { EslHomeExperienceContentType } from './EslHomePage';
-import {
-  VisualBuilderConstraintAlert,
-  getAllowedSectionsFromContentType,
-} from '../shared/VisualBuilderConstraintAlert';
+import { VisualBuilderConstraintAlert } from '../shared/VisualBuilderConstraintAlert';
+import { getAllowedSectionsFromContentType } from '../shared/visualBuilderConstraintUtils';
 
 const {
   allowedKeys: ALLOWED_HOME_TYPE_KEYS,

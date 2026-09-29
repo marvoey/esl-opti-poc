@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import { EslStartPageContentType } from './EslStartPage';
 import EslStartPage from './EslStartPageRenderer';
-import { getAllowedSectionsFromContentType } from '../shared/VisualBuilderConstraintAlert';
+import { getAllowedSectionsFromContentType } from '../shared/visualBuilderConstraintUtils';
 
 describe('EslStartPage', () => {
   it('defines EslStartPageContentType with baseType _page and mayContainTypes limited to ESL Home Experience and ESL Home Legacy', () => {

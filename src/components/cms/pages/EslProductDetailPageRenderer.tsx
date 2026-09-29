@@ -7,10 +7,8 @@ import {
 
 
 import { EslProductDetailExperienceContentType } from './EslProductDetailPage';
-import {
-  VisualBuilderConstraintAlert,
-  getAllowedSectionsFromContentType,
-} from '../shared/VisualBuilderConstraintAlert';
+import { VisualBuilderConstraintAlert } from '../shared/VisualBuilderConstraintAlert';
+import { getAllowedSectionsFromContentType } from '../shared/visualBuilderConstraintUtils';
 
 const {
   allowedKeys: ALLOWED_PRODUCT_DETAIL_TYPE_KEYS,
