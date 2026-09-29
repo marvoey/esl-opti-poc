@@ -46,6 +46,7 @@ export function FinalCta({
               variant="primary"
               href={buttonHref}
               rightIcon={<ArrowRightIcon size={20} aria-hidden="true" />}
+              className={styles.button}
             >
               {buttonText}
             </Button>
