@@ -254,6 +254,7 @@ export function HeroCarousel({
                         sizes="(max-width: 768px) 100vw, 440px"
                         className={isSquared ? styles.imageSquared : styles.image}
                         priority={isFirst}
+                        fetchPriority={isFirst ? "high" : "auto"}
                       />
                       {(slide.badgeStat || slide.badgeLabel) && (
                         <div className={isSquared ? styles.badgeSquared : styles.badge} aria-hidden="true">
