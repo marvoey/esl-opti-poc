@@ -54,6 +54,7 @@ function SwitchSupportHeader({ headingId, eyebrow, title, description }: SwitchS
         <Heading
           level="h2"
           id={headingId}
+          color="inverted"
           className={styles.heading}
         >
           {title}
