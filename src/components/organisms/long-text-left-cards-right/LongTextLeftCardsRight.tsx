@@ -4,7 +4,8 @@ import { type HeadingLevel, Heading } from "@/components/atoms/heading/Heading";
 import { Text } from "@/components/atoms/text/Text";
 import { Badge } from "@/components/atoms/badge/Badge";
 import { SimpleLink } from "@/components/atoms/link/SimpleLink";
-import { CardIcon, type LongTextLeftCardsRightIconName } from "./longTextLeftCardsRightIcons";
+import { CardIcon } from "./longTextLeftCardsRightIcons";
+import { type LongTextLeftCardsRightIconName } from "./longTextLeftCardsRightIconNames";
 import styles from "./LongTextLeftCardsRight.module.css";
 
 export interface LongTextLeftCardsRightLink {

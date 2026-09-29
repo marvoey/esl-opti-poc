@@ -40,6 +40,17 @@
   margin-block: 15px;
 }
 
+@media (width < 768px) {
+  .actionWrapper {
+    width: 100%;
+  }
+
+  .button {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
 .eligibilityNote {
   display: inline-flex;
   align-items: center;

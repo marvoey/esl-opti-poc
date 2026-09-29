@@ -5,10 +5,8 @@ import {
   type ComponentContainerProps,
 } from '@optimizely/cms-sdk/react/server';
 import { EslProductFamilyExperienceContentType } from './EslProductFamilyPage';
-import {
-  VisualBuilderConstraintAlert,
-  getAllowedSectionsFromContentType,
-} from '../shared/VisualBuilderConstraintAlert';
+import { VisualBuilderConstraintAlert } from '../shared/VisualBuilderConstraintAlert';
+import { getAllowedSectionsFromContentType } from '../shared/visualBuilderConstraintUtils';
 
 const {
   allowedKeys: ALLOWED_PRODUCT_FAMILY_TYPE_KEYS,

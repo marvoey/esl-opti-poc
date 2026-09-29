@@ -5,10 +5,10 @@ export type {
   LongTextLeftCardsRightPromo,
   LongTextLeftCardsRightLink,
 } from "./LongTextLeftCardsRight";
+export { CardIcon } from "./longTextLeftCardsRightIcons";
 export {
-  CardIcon,
   LONG_TEXT_LEFT_CARDS_RIGHT_ICON_NAMES,
   isLongTextLeftCardsRightIconName,
   type LongTextLeftCardsRightIconName,
-} from "./longTextLeftCardsRightIcons";
+} from "./longTextLeftCardsRightIconNames";
 export { DEFAULT_LONG_TEXT_LEFT_CARDS_RIGHT_PROPS } from "./longTextLeftCardsRightData";
