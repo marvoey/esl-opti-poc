@@ -14,7 +14,6 @@
   border-radius: var(--radius-xl);
   box-sizing: border-box;
   text-decoration: none;
-  transition: var(--transition-all);
   position: relative;
 }
 
@@ -57,12 +56,6 @@
 }
 
 
-.mint:hover {
-  border-color: var(--color-border-accent);
-  box-shadow: var(--shadow-ring-hover);
-  transform: translateY(-1px);
-}
-
 /* --- Variant 2: Neutral (Slate / Neutral Surface with Turquoise Badge) --- */
 .neutral {
   background-color: var(--color-surface-muted);
@@ -83,11 +76,6 @@
 }
 
 
-.neutral:hover {
-  transform: translateY(-1px);
-  filter: brightness(1.03);
-}
-
 /* --- Variant 3: Inverse (Transparent surface directly on dark backgrounds) --- */
 .inverse {
   background-color: transparent;
@@ -107,22 +95,11 @@
   color: var(--color-text-inverted-muted);
 }
 
-.inverse:hover {
-  border-color: var(--color-border-accent);
-  box-shadow: 0 0 0 2px var(--color-border-accent);
-  transform: translateY(-1px);
-}
-
-.card:active {
-  transform: scale(0.99) translateY(0);
-}
-
 /* Forced colors (Windows High Contrast): box-shadows are dropped and author colors are replaced
    by the user's palette, so indicators drawn only with shadows or color changes disappear.
-   System colors restore them: Highlight marks focus, hover and selected states. */
+   System colors restore focus state. */
 @media (forced-colors: active) {
-  .mint:hover,
-  .inverse:hover {
-    border-color: Highlight;
+  .card:focus-visible {
+    outline-color: Highlight;
   }
 }
