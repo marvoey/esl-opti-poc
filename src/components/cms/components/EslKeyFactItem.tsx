@@ -20,9 +20,12 @@ export const EslKeyFactItemContentType = contentType({
     },
     description: {
       type: 'richText',
-      displayName: 'Description Copy',
+      displayName: 'Copy',
       group: 'content',
       sortOrder: 30,
+      editorSettings: {
+        preset: 'default',
+      },
     },
   },
 });

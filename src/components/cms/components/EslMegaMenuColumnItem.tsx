@@ -31,7 +31,7 @@ export const EslMegaMenuColumnItemContentType = contentType({
     },
     link: {
       type: 'link',
-      displayName: 'Link',
+      displayName: 'CTA Link',
       group: 'content',
       sortOrder: 20,
     },

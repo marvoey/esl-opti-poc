@@ -7,25 +7,28 @@ export const EslMegaMenuPromoContentType = contentType({
   properties: {
     eyebrow: {
       type: 'string',
-      displayName: 'Promo Eyebrow',
+      displayName: 'Eyebrow',
       group: 'content',
       sortOrder: 10,
     },
     heading: {
       type: 'string',
-      displayName: 'Promo Heading',
+      displayName: 'Heading',
       group: 'content',
       sortOrder: 20,
     },
     description: {
       type: 'richText',
-      displayName: 'Promo Description',
+      displayName: 'Copy',
       group: 'content',
       sortOrder: 30,
+      editorSettings: {
+        preset: 'default',
+      },
     },
     cta: {
       type: 'link',
-      displayName: 'Promo Call to Action Link',
+      displayName: 'CTA Link',
       group: 'content',
       sortOrder: 40,
     },

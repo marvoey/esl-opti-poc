@@ -9,7 +9,7 @@ export const EslIconCardSingleColumnGridContentType = contentType({
   properties: {
     title: {
       type: 'string',
-      displayName: 'Title',
+      displayName: 'Heading',
       group: 'content',
       sortOrder: 10,
     },

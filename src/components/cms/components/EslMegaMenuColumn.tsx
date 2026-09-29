@@ -8,7 +8,7 @@ export const EslMegaMenuColumnContentType = contentType({
   properties: {
     heading: {
       type: 'string',
-      displayName: 'Column Heading (e.g. Manage, Borrow, Spend)',
+      displayName: 'Heading',
       group: 'content',
       sortOrder: 10,
     },

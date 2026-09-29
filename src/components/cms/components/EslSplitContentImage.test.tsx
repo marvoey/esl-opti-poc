@@ -64,7 +64,7 @@ describe('EslSplitContentImage CMS Component', () => {
     expect(EslSplitContentImageContentType.key).toBe('EslSplitContentImage');
     expect(EslSplitContentImageContentType.displayName).toBe('ESL Split Content Image');
     expect(EslSplitContentImageContentType.baseType).toBe('_component');
-    expect(EslSplitContentImageContentType.compositionBehaviors).toEqual(['sectionEnabled']);
+    expect(EslSplitContentImageContentType.compositionBehaviors).toEqual(['sectionEnabled', 'elementEnabled']);
 
     expect(EslSplitContentImageContentType.properties).toHaveProperty('title');
     expect(EslSplitContentImageContentType.properties.description.type).toBe('richText');

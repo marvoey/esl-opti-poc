@@ -9,19 +9,19 @@ export const EslVideoStoryCardRowContentType = contentType({
   properties: {
     eyebrow: {
       type: 'string',
-      displayName: 'Eyebrow Text',
+      displayName: 'Eyebrow',
       group: 'content',
       sortOrder: 10,
     },
     title: {
       type: 'string',
-      displayName: 'Heading Title',
+      displayName: 'Heading',
       group: 'content',
       sortOrder: 20,
     },
     description: {
       type: 'richText',
-      displayName: 'Description Copy',
+      displayName: 'Copy',
       group: 'content',
       sortOrder: 30,
       editorSettings: {
@@ -30,7 +30,7 @@ export const EslVideoStoryCardRowContentType = contentType({
     },
     cta: {
       type: 'link',
-      displayName: 'Call to Action Button',
+      displayName: 'CTA Link',
       group: 'content',
       sortOrder: 40,
     },

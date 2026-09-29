@@ -7,7 +7,7 @@ export const EslFooterNavColumnContentType = contentType({
   properties: {
     title: {
       type: 'string',
-      displayName: 'Column Title',
+      displayName: 'Heading',
       group: 'content',
       sortOrder: 10,
     },

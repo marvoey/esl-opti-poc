@@ -25,19 +25,22 @@ export const EslProductCardsRowVariant2ItemContentType = contentType({
     },
     title: {
       type: 'string',
-      displayName: 'Card Title',
+      displayName: 'Heading',
       group: 'content',
       sortOrder: 20,
     },
     description: {
       type: 'richText',
-      displayName: 'Card Description',
+      displayName: 'Copy',
       group: 'content',
       sortOrder: 30,
+      editorSettings: {
+        preset: 'default',
+      },
     },
     link: {
       type: 'link',
-      displayName: 'Link / Call to Action',
+      displayName: 'CTA Link',
       group: 'content',
       sortOrder: 40,
     },

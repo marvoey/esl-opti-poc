@@ -14,15 +14,18 @@ export const EslSwitchSupportStepContentType = contentType({
     },
     title: {
       type: 'string',
-      displayName: 'Step Title',
+      displayName: 'Heading',
       group: 'content',
       sortOrder: 20,
     },
     description: {
       type: 'richText',
-      displayName: 'Step Description',
+      displayName: 'Copy',
       group: 'content',
       sortOrder: 30,
+      editorSettings: {
+        preset: 'default',
+      },
     },
   },
 });

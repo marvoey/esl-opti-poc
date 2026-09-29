@@ -25,19 +25,19 @@ export const EslHeroSlideContentType = contentType({
   properties: {
     eyebrow: {
       type: 'string',
-      displayName: 'Eyebrow Text',
+      displayName: 'Eyebrow',
       group: 'content',
       sortOrder: 10,
     },
     heading: {
       type: 'string',
-      displayName: 'Slide Heading',
+      displayName: 'Heading',
       group: 'content',
       sortOrder: 20,
     },
     body: {
       type: 'richText',
-      displayName: 'Body Copy',
+      displayName: 'Copy',
       group: 'content',
       sortOrder: 30,
       editorSettings: {

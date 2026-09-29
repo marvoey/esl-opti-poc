@@ -76,7 +76,7 @@ export const EslHeaderContentType = contentType({
     },
     cta: {
       type: 'link',
-      displayName: 'Primary CTA Button',
+      displayName: 'Primary CTA Link',
       group: 'content',
       sortOrder: 42,
     },
@@ -112,7 +112,7 @@ export const EslHeaderContentType = contentType({
     },
     secondaryCta: {
       type: 'link',
-      displayName: 'Secondary CTA Button',
+      displayName: 'Secondary CTA Link',
       group: 'content',
       sortOrder: 47,
     },
