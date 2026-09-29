@@ -95,7 +95,7 @@ export function FilterableProductCardGridBoard({
       {visible.length > 0 ? (
         <ul id={gridId} className={styles.grid}>
           {visible.map((item, index) => (
-            <li key={item.id || `${item.title}-${index}`} className={styles.card}>
+            <li key={item.id ?? item.title} className={styles.card}>
               <h3 className={styles.cardTitle}>
                 <Text as="span" variant="button" weight="semibold" color="inherit">
                   {item.title}

@@ -48,6 +48,56 @@ function blockTag(node: React.ReactNode) {
   return typeof node === "string" ? "p" : "div";
 }
 
+function PromoSection({ promo }: { promo: LongTextLeftCardsRightPromo }) {
+  return (
+    <div className={styles.promo}>
+      {promo.eyebrow && <Badge variant="dark">{promo.eyebrow}</Badge>}
+      <h3 className={styles.promoHeading}>
+        <Text as="span" variant="subhead" color="inverted">{promo.heading}</Text>
+      </h3>
+      {promo.description && (
+        <Text as={blockTag(promo.description)} variant="body-sm" color="inverted" className={styles.promoDescription}>
+          {promo.description}
+        </Text>
+      )}
+      {promo.cta && (
+        <SimpleLink href={promo.cta.href} target={promo.cta.target} rel={relFor(promo.cta.target)} className={styles.promoLink}>
+          {promo.cta.label}
+        </SimpleLink>
+      )}
+    </div>
+  );
+}
+
+function CardItem({ item }: { item: LongTextLeftCardsRightCard }) {
+  return (
+    <li className={styles.card}>
+      {item.icon && <CardIcon name={item.icon} size={24} className={styles.cardIcon} />}
+      <div className={styles.cardText}>
+        {item.eyebrow && (
+          <Text as="span" variant="micro" color="inherit">
+            {item.eyebrow}
+          </Text>
+        )}
+        <h3 className={styles.cardTitle}>
+          {item.href ? (
+            <Link href={item.href} target={item.target} rel={relFor(item.target)} className={styles.cardLink}>
+              <Text as="span" variant="button" weight="semibold" color="inherit">{item.title}</Text>
+            </Link>
+          ) : (
+            <Text as="span" variant="button" weight="semibold" color="inherit">{item.title}</Text>
+          )}
+        </h3>
+        {item.description && (
+          <Text as={blockTag(item.description)} variant="body-sm" color="inherit" className={styles.cardDescription}>
+            {item.description}
+          </Text>
+        )}
+      </div>
+    </li>
+  );
+}
+
 export function LongTextLeftCardsRight({
   id,
   title,
@@ -85,79 +135,13 @@ export function LongTextLeftCardsRight({
               </Text>
             )}
 
-            {hasPromo && promo && (
-              <div className={styles.promo}>
-                {promo.eyebrow && <Badge variant="dark">{promo.eyebrow}</Badge>}
-                <h3 className={styles.promoHeading}>
-                  <Text as="span" variant="subhead" color="inverted">
-                    {promo.heading}
-                  </Text>
-                </h3>
-                {promo.description && (
-                  <Text
-                    as={blockTag(promo.description)}
-                    variant="body-sm"
-                    color="inverted"
-                    className={styles.promoDescription}
-                  >
-                    {promo.description}
-                  </Text>
-                )}
-                {promo.cta && (
-                  <SimpleLink
-                    href={promo.cta.href}
-                    target={promo.cta.target}
-                    rel={relFor(promo.cta.target)}
-                    className={styles.promoLink}
-                  >
-                    {promo.cta.label}
-                  </SimpleLink>
-                )}
-              </div>
-            )}
+            {hasPromo && promo && <PromoSection promo={promo} />}
           </div>
 
           {hasItems && (
             <ul className={styles.cards}>
-              {items.map((item, index) => (
-                <li key={item.id || `${item.title}-${index}`} className={styles.card}>
-                  {item.icon && <CardIcon name={item.icon} size={24} className={styles.cardIcon} />}
-                  <div className={styles.cardText}>
-                    {item.eyebrow && (
-                      <Text as="span" variant="micro" color="inherit">
-                        {item.eyebrow}
-                      </Text>
-                    )}
-                    <h3 className={styles.cardTitle}>
-                      {item.href ? (
-                        <Link
-                          href={item.href}
-                          target={item.target}
-                          rel={relFor(item.target)}
-                          className={styles.cardLink}
-                        >
-                          <Text as="span" variant="button" weight="semibold" color="inherit">
-                            {item.title}
-                          </Text>
-                        </Link>
-                      ) : (
-                        <Text as="span" variant="button" weight="semibold" color="inherit">
-                          {item.title}
-                        </Text>
-                      )}
-                    </h3>
-                    {item.description && (
-                      <Text
-                        as={blockTag(item.description)}
-                        variant="body-sm"
-                        color="inherit"
-                        className={styles.cardDescription}
-                      >
-                        {item.description}
-                      </Text>
-                    )}
-                  </div>
-                </li>
+              {items.map((item) => (
+                <CardItem key={item.id ?? item.title} item={item} />
               ))}
             </ul>
           )}

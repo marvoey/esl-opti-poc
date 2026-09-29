@@ -54,10 +54,12 @@ function renderRichText(content?: RichTextPayload | string | null): React.ReactN
   return null;
 }
 
-export default function EslProductCardsRow({
-  content,
-  id = 'product-fit',
-}: Props) {
+function mapProps(content: Props['content']): {
+  eyebrow?: string;
+  title?: string;
+  description: React.ReactNode;
+  items: ProductCardItem[];
+} | null {
   if (!content) return null;
 
   const effectiveContent = (content && 'component' in content && content.component
@@ -101,13 +103,23 @@ export default function EslProductCardsRow({
     return null;
   }
 
+  return { eyebrow, title, description, items: mappedItems };
+}
+
+export default function EslProductCardsRow({
+  content,
+  id = 'product-fit',
+}: Props) {
+  const props = mapProps(content);
+  if (!props) return null;
+
   return (
     <ProductCardsRow
       id={id}
-      eyebrow={eyebrow}
-      title={title}
-      description={description}
-      items={mappedItems}
+      eyebrow={props.eyebrow}
+      title={props.title}
+      description={props.description}
+      items={props.items}
     />
   );
 }

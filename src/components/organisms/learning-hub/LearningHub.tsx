@@ -175,7 +175,7 @@ export function LearningHub({
         {cards && cards.length > 0 && (
           <ul className={styles.cardsRow} role="list">
             {cards.map((card, index) => (
-              <li key={card.id ?? `${card.title}-${index}`} className={styles.cardItem}>
+              <li key={card.id ?? card.title} className={styles.cardItem}>
                 <LearningHubCard card={card} />
               </li>
             ))}

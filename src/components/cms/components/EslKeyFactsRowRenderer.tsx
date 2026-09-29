@@ -59,7 +59,11 @@ function renderRichTextToString(desc?: RichTextPayload | string | null): string 
   return '';
 }
 
-export default function EslKeyFactsRow({ content, id = 'key-facts' }: Props) {
+function mapProps(content: Props['content']): {
+  title?: string;
+  subtitle?: string;
+  tiles: KeyFactsTileItem[];
+} | null {
   const effectiveContent = (content && 'component' in content && content.component
     ? content.component
     : content) as EslKeyFactsRowComponentData | undefined;
@@ -97,12 +101,23 @@ export default function EslKeyFactsRow({ content, id = 'key-facts' }: Props) {
     return null;
   }
 
+  return {
+    title: effectiveContent?.title?.trim() || undefined,
+    subtitle: effectiveContent?.subtitle?.trim() || undefined,
+    tiles: mappedTiles,
+  };
+}
+
+export default function EslKeyFactsRow({ content, id = 'key-facts' }: Props) {
+  const props = mapProps(content);
+  if (!props) return null;
+
   return (
     <KeyFactsRow
       id={id}
-      title={effectiveContent?.title?.trim() || undefined}
-      subtitle={effectiveContent?.subtitle?.trim() || undefined}
-      tiles={mappedTiles}
+      title={props.title}
+      subtitle={props.subtitle}
+      tiles={props.tiles}
     />
   );
 }

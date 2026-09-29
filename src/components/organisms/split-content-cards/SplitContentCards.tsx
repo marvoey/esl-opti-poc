@@ -40,6 +40,49 @@ export interface SplitContentCardsProps {
   className?: string;
 }
 
+function isStarStat(stat: SplitContentCardsStatItemData): boolean {
+  return (
+    stat.icon === "star" ||
+    stat.id === "stat-satisfaction" ||
+    /satisfaction/i.test(stat.label ?? "")
+  );
+}
+
+function HeroMetricCard({ metric }: { metric: SplitContentCardsHeroMetricData }) {
+  return (
+    <li className={styles.heroCard}>
+      {metric.subhead && (
+        <Text as="span" variant="eyebrow" color="primary" className={styles.heroSubhead}>
+          {metric.subhead}
+        </Text>
+      )}
+      <div className={styles.heroStatGroup}>
+        <Stat color="accent" className={styles.heroStatValue}>{metric.value}</Stat>
+        {metric.unit && <span className={styles.heroStatUnit}>{metric.unit}</span>}
+      </div>
+      {metric.description && (
+        <Text as="p" variant="body" color="primary" className={styles.heroDescription}>
+          {metric.description}
+        </Text>
+      )}
+    </li>
+  );
+}
+
+function StatCard({ stat }: { stat: SplitContentCardsStatItemData }) {
+  return (
+    <li className={styles.statCard}>
+      <div className={styles.statValueGroup}>
+        <Stat color="accent" size="sm" className={styles.statValue}>{stat.value}</Stat>
+        {isStarStat(stat) && (
+          <StarIcon size={24} fill="currentColor" className={styles.statStarIcon} />
+        )}
+      </div>
+      <Text as="p" variant="body" color="primary" className={styles.statLabel}>{stat.label}</Text>
+    </li>
+  );
+}
+
 /**
  * SplitContentCards Organism
  * A conversion and brand-equity showcase section pairing a narrative content column
@@ -132,73 +175,13 @@ export function SplitContentCards({
         {hasCards && (
           <ul className={styles.cardsColumn} role="list">
             {/* Top Hero Card */}
-            {heroMetric && (
-              <li className={styles.heroCard}>
-                {heroMetric.subhead && (
-                  <Text
-                    as="span"
-                    variant="eyebrow"
-                    color="primary"
-                    className={styles.heroSubhead}
-                  >
-                    {heroMetric.subhead}
-                  </Text>
-                )}
-
-                <div className={styles.heroStatGroup}>
-                  <Stat color="accent" className={styles.heroStatValue}>{heroMetric.value}</Stat>
-                  {heroMetric.unit && (
-                    <span className={styles.heroStatUnit}>{heroMetric.unit}</span>
-                  )}
-                </div>
-
-                {heroMetric.description && (
-                  <Text
-                    as="p"
-                    variant="body"
-                    color="primary"
-                    className={styles.heroDescription}
-                  >
-                    {heroMetric.description}
-                  </Text>
-                )}
-              </li>
-            )}
+            {heroMetric && <HeroMetricCard metric={heroMetric} />}
 
             {/* Stat Cards (50% each) */}
             {hasStatCards &&
-              statCards.map((stat) => {
-                const hasStar =
-                  stat.icon === "star" ||
-                  stat.id === "stat-satisfaction" ||
-                  /satisfaction/i.test(stat.label ?? "");
-
-                return (
-                  <li
-                    key={stat.id ?? `${stat.label}-${stat.value}`}
-                    className={styles.statCard}
-                  >
-                    <div className={styles.statValueGroup}>
-                      <Stat color="accent" size="sm" className={styles.statValue}>{stat.value}</Stat>
-                      {hasStar && (
-                        <StarIcon
-                          size={24}
-                          fill="currentColor"
-                          className={styles.statStarIcon}
-                        />
-                      )}
-                    </div>
-                    <Text
-                      as="p"
-                      variant="body"
-                      color="primary"
-                      className={styles.statLabel}
-                    >
-                      {stat.label}
-                    </Text>
-                  </li>
-                );
-              })}
+              statCards.map((stat) => (
+                <StatCard key={stat.id ?? `${stat.label}-${stat.value}`} stat={stat} />
+              ))}
           </ul>
         )}
       </div>

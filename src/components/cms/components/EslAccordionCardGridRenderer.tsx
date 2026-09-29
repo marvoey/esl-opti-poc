@@ -4,12 +4,7 @@ import {
   type AccordionCardItem,
 } from '@/components/organisms/accordion-card-grid';
 import type { EslAccordionCardGridData } from './EslAccordionCardGrid';
-
-type RichTextPayload = {
-  html?: string | null;
-  json?: unknown | null;
-  [key: string]: unknown;
-};
+import { extractPlainText, type RichTextPayload } from '@/components/cms/utils/cmsRichText';
 
 type AccordionCardItemInput = {
   _id?: string | null;
@@ -39,46 +34,13 @@ type Props = {
   id?: string;
 };
 
-function extractTextFromJson(node: unknown): string {
-  if (!node || typeof node !== 'object') return '';
-  const obj = node as Record<string, unknown>;
-  let result = '';
-  if (typeof obj.text === 'string') {
-    result += obj.text;
-  }
-  if (Array.isArray(obj.children)) {
-    for (const child of obj.children) {
-      result += extractTextFromJson(child);
-    }
-  }
-  if (Array.isArray(obj.content)) {
-    for (const item of obj.content) {
-      result += extractTextFromJson(item);
-    }
-  }
-  return result;
-}
 
-export function extractPlainText(
-  val?: RichTextPayload | string | null
-): string {
-  if (!val) return '';
-  if (typeof val === 'string') return val.trim();
-  if (typeof val === 'object' && val !== null) {
-    if (typeof val.html === 'string' && val.html.trim()) {
-      return val.html.replace(/<[^>]*>/g, '').trim();
-    }
-    if (val.json && typeof val.json === 'object') {
-      return extractTextFromJson(val.json).trim();
-    }
-  }
-  return '';
-}
-
-export default function EslAccordionCardGrid({
-  content,
-  id = 'glossary',
-}: Props) {
+function mapProps(content: Props['content']): {
+  eyebrow?: string;
+  title?: string;
+  description?: string;
+  items: AccordionCardItem[];
+} | null {
   if (!content) return null;
 
   const effectiveContent = (content && 'component' in content && content.component
@@ -122,13 +84,23 @@ export default function EslAccordionCardGrid({
     return null;
   }
 
+  return { eyebrow, title, description, items: mappedItems };
+}
+
+export default function EslAccordionCardGrid({
+  content,
+  id = 'glossary',
+}: Props) {
+  const props = mapProps(content);
+  if (!props) return null;
+
   return (
     <AccordionCardGrid
       id={id}
-      eyebrow={eyebrow}
-      title={title}
-      description={description}
-      items={mappedItems}
+      eyebrow={props.eyebrow}
+      title={props.title}
+      description={props.description}
+      items={props.items}
     />
   );
 }

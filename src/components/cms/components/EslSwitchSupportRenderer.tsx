@@ -78,7 +78,16 @@ function resolveLink(linkObj?: LinkPayload | null) {
   return { text: text.trim(), url: rawUrl.trim() };
 }
 
-export default function EslSwitchSupport({ content, id = 'switch-support' }: Props) {
+function mapProps(content: Props['content']): {
+  eyebrow?: string;
+  title?: string;
+  description?: React.ReactNode;
+  steps: SwitchSupportStep[];
+  ctaLabel?: string;
+  ctaHref?: string;
+  linkLabel?: string;
+  linkHref?: string;
+} | null {
   if (!content) return null;
 
   const effectiveContent = (content && 'component' in content && content.component
@@ -104,8 +113,7 @@ export default function EslSwitchSupport({ content, id = 'switch-support' }: Pro
 
       const stepNumber = typeof item.step === 'number' ? item.step : idx + 1;
       const stepTitle = item.title?.trim() || '';
-      const stepDesc =
-        renderRichText(item.description) || '';
+      const stepDesc = renderRichText(item.description) || '';
 
       if (!stepTitle && !stepDesc) continue;
 
@@ -134,17 +142,33 @@ export default function EslSwitchSupport({ content, id = 'switch-support' }: Pro
     return null;
   }
 
+  return {
+    eyebrow,
+    title,
+    description,
+    steps: mappedSteps,
+    ctaLabel: ctaLabel || undefined,
+    ctaHref: ctaHref || undefined,
+    linkLabel: linkLabel || undefined,
+    linkHref: linkHref || undefined,
+  };
+}
+
+export default function EslSwitchSupport({ content, id = 'switch-support' }: Props) {
+  const props = mapProps(content);
+  if (!props) return null;
+
   return (
     <SwitchSupport
       id={id}
-      eyebrow={eyebrow}
-      title={title}
-      description={description}
-      steps={mappedSteps}
-      ctaLabel={ctaLabel || undefined}
-      ctaHref={ctaHref || undefined}
-      linkLabel={linkLabel || undefined}
-      linkHref={linkHref || undefined}
+      eyebrow={props.eyebrow}
+      title={props.title}
+      description={props.description}
+      steps={props.steps}
+      ctaLabel={props.ctaLabel}
+      ctaHref={props.ctaHref}
+      linkLabel={props.linkLabel}
+      linkHref={props.linkHref}
     />
   );
 }
