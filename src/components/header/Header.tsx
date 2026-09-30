@@ -3,6 +3,7 @@
 import React, { useCallback, useEffect, useId, useRef, useState } from "react";
 import Link from "next/link";
 import { BrandLogo } from "@/components/atoms/logo/BrandLogo";
+import { CmsImage } from "@/components/atoms/image/CmsImage";
 import { Button } from "@/components/atoms/button/Button";
 import { UserIcon, ChevronDownIcon, CloseIcon, Icon, type IconName } from "@/components/atoms/icons";
 import type { NavigationModel } from "@/domain/models/Navigation";
@@ -95,16 +96,17 @@ function DesktopNav({ links, autoId, openId, onOpen, onScheduleClose, onCancelCl
                   type="button"
                   className={`${styles.navTrigger} ${isOpen ? styles.navTriggerActive : ""}`}
                   aria-expanded={isOpen}
-                  aria-haspopup="true"
                   aria-controls={panelId}
                   onClick={() => onToggle(itemId)}
                 >
-                  {link.label}
+                  <span className={styles.navLabel} data-label={link.label}>
+                    {link.label}
+                  </span>
                   <ChevronDownIcon size={14} className={styles.navChevron} />
                 </button>
                 {isOpen && (
                   <div onMouseEnter={onCancelClose} onMouseLeave={onScheduleClose}>
-                    <MegaMenu id={panelId} data={link.megaMenu} />
+                    <MegaMenu id={panelId} label={link.label} data={link.megaMenu} />
                   </div>
                 )}
               </li>
@@ -516,7 +518,16 @@ export function Header(props: HeaderProps = {}) {
               aria-label={logoAlt || "ESL Federal Credit Union - Home"}
             >
               {logoUrl ? (
-                <img src={logoUrl} alt={logoAlt || "Brand Logo"} width={83} height={50} className={styles.logo} />
+                <CmsImage
+                  src={logoUrl}
+                  alt={logoAlt || "Brand Logo"}
+                  width={83}
+                  height={50}
+                  optimizeWidth={166}
+                  className={styles.logo}
+                  style={{ height: 50 }}
+                  priority
+                />
               ) : (
                 <BrandLogo width={83} height={50} color="var(--color-primary)" className={styles.logo} />
               )}

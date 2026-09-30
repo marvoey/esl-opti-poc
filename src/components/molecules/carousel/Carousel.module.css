@@ -38,7 +38,7 @@
   background-color: var(--color-surface-raised);
   color: var(--color-primary);
   cursor: pointer;
-  transition: var(--transition-all);
+  transition: var(--transition-ui);
 }
 
 .controlBtn:hover:not(:disabled) {

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, useMemo } from "react";
 import Image from "next/image";
 import { ArrowRight, ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
@@ -66,6 +66,33 @@ export function HeroCarousel({
     skipSnaps: false,
   });
   const [isPlaying, setIsPlaying] = useState(true);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  // null until Embla reports, so no slide is inert during SSR/first paint.
+  const [slidesInView, setSlidesInView] = useState<number[] | null>(null);
+
+  // Embla hands back an array; derive the Set once per change so the per-slide
+  // lookup below is O(1) without keeping a derived structure in state.
+  const inViewSet = useMemo(
+    () => (slidesInView === null ? null : new Set(slidesInView)),
+    [slidesInView]
+  );
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    const onSelect = () => setSelectedIndex(emblaApi.selectedScrollSnap());
+    const onInView = () => setSlidesInView(emblaApi.slidesInView());
+    onSelect();
+    onInView();
+    emblaApi.on("select", onSelect);
+    emblaApi.on("slidesInView", onInView);
+    emblaApi.on("reInit", onInView);
+    return () => {
+      emblaApi.off("select", onSelect);
+      emblaApi.off("slidesInView", onInView);
+      emblaApi.off("reInit", onInView);
+    };
+  }, [emblaApi]);
 
   // WCAG 2.2 SC 2.2.2: Sync with prefers-reduced-motion after mount to avoid hydration mismatch
   useEffect(() => {
@@ -171,7 +198,11 @@ export function HeroCarousel({
           const primaryIcons = resolveSlideCtaIcon(slide.primaryCtaIcon);
           const secondaryIcons = resolveSlideCtaIcon(slide.secondaryCtaIcon);
           return (
-            <CarouselSlide key={slide.id} className={styles.slideItem}>
+            <CarouselSlide
+              key={slide.id}
+              className={styles.slideItem}
+              inert={inViewSet !== null && !inViewSet.has(index)}
+            >
               <article className={styles.slideContent}>
                 <div className={styles.textGroup}>
                   {/* 1. Eyebrow */}
@@ -189,7 +220,10 @@ export function HeroCarousel({
                     className={styles.headingArea}
                     {...(isFirst && editProps?.heading ? editProps.heading : {})}
                   >
-                    <Text as={headingLevel} variant="hero-h2" color="primary">
+                    {/* Only the first slide may carry the requested level: every slide
+                        is mounted at once, so using h1 throughout would emit one h1
+                        per slide (WCAG 1.3.1). */}
+                    <Text as={isFirst ? headingLevel : "h2"} variant="hero-h2" color="primary">
                       {slide.titleLine1}
                       {slide.titleLine2 && (
                         <>
@@ -283,6 +317,18 @@ export function HeroCarousel({
           );
         })}
       </Carousel>
+
+      {/* SC 4.1.3: announce slide changes. Kept silent while auto-rotating, per the
+          APG carousel pattern, so the rotation does not continuously interrupt. */}
+      {activeSlides.length > 1 && (
+        <div
+          className={styles.visuallyHidden}
+          aria-live={isPlaying ? "off" : "polite"}
+          aria-atomic="true"
+        >
+          {`Slide ${selectedIndex + 1} of ${activeSlides.length}`}
+        </div>
+      )}
 
       {/* Accessible Navigation Controls (only shown when multiple slides exist) */}
       {activeSlides.length > 1 && (

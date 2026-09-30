@@ -1,3 +1,12 @@
+/**
+ * Prefer importing atoms directly, e.g. `@/components/atoms/button/Button`.
+ *
+ * Importing from this barrel pulls every re-exported module into the consuming
+ * chunk: each atom imports its own CSS module, which is a module-scope side
+ * effect, and the package does not declare `sideEffects`, so the bundler cannot
+ * prove the unused ones are safe to drop. Use it only where a module genuinely
+ * needs most of the atoms (the styleguide), never in page or block code.
+ */
 export { Display, type DisplayProps } from "./display/Display";
 export { Heading, type HeadingProps, type HeadingLevel, type HeadingTag } from "./heading/Heading";
 export { Text, Micro, Caption, ButtonLabel, Eyebrow, type TextProps, type TextVariant, type TextColor, type TextWeight, type TextTag } from "./text/Text";

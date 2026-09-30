@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import { CmsImage } from "@/components/atoms/image/CmsImage";
 import { Text } from "@/components/atoms/text/Text";
 import { Button } from "@/components/atoms/button/Button";
 import type { FooterBrandSection } from "./Footer";
@@ -23,9 +24,12 @@ export function FooterBrand({ brand }: FooterBrandProps) {
           {brand.logo ? (
             brand.logo
           ) : (
-            <img
-              src={brand.logoUrl}
+            <CmsImage
+              src={brand.logoUrl as string}
               alt={brand.logoAlt || brand.wordmark || "ESL"}
+              width={83}
+              height={50}
+              optimizeWidth={166}
               className={styles.logoImage}
             />
           )}

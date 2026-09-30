@@ -9,7 +9,7 @@
   cursor: pointer;
   user-select: none;
   box-sizing: border-box;
-  transition: var(--transition-all);
+  transition: var(--transition-ui);
   border: 2px solid transparent;
 }
 

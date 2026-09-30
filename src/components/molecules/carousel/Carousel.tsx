@@ -29,6 +29,12 @@ export interface CarouselProps {
 export interface CarouselSlideProps {
   children: React.ReactNode;
   className?: string;
+  /**
+   * Marks a slide that is scrolled out of the clipped viewport. Embla keeps every
+   * slide mounted, so without this their links and buttons stay in the tab order
+   * while invisible (WCAG 2.4.3 Focus Order, 2.4.7 Focus Visible).
+   */
+  inert?: boolean;
 }
 
 export function Carousel({
@@ -138,7 +144,7 @@ export function Carousel({
   );
 }
 
-export function CarouselSlide({ children, className }: CarouselSlideProps) {
+export function CarouselSlide({ children, className, inert }: CarouselSlideProps) {
   const slideClass = className
     ? `${styles.slide} ${className}`
     : styles.slide;
@@ -148,6 +154,7 @@ export function CarouselSlide({ children, className }: CarouselSlideProps) {
       className={slideClass}
       role="group"
       aria-roledescription="slide"
+      inert={inert}
     >
       {children}
     </div>

@@ -113,13 +113,29 @@
   cursor: pointer;
   padding: var(--space-2xs) var(--space-sm);
   border-radius: var(--radius-md);
-  transition: var(--transition-all);
+  transition: var(--transition-ui);
 }
 
 .navTrigger:hover,
 .navTriggerActive {
   color: var(--color-text-inverted);
   background-color: var(--color-primary);
+  font-weight: var(--font-weight-bold);
+}
+
+/* Reserve the bold width up front via a hidden bold copy of the label, so the
+   weight change on hover thickens the glyphs in place instead of widening the
+   trigger and shifting its siblings. */
+.navLabel {
+  display: inline-block;
+}
+
+.navLabel::after {
+  content: attr(data-label);
+  display: block;
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
   font-weight: var(--font-weight-bold);
 }
 
@@ -289,7 +305,13 @@
   gap: var(--space-2xs);
 }
 
+/* Block-level with a minimum height so the whole row is tappable and the target
+   clears the 24px floor in WCAG 2.2 SC 2.5.8; the bare inline text was ~17px. */
 .mobileColumnLink {
+  display: flex;
+  align-items: center;
+  min-block-size: var(--size-target-min);
+  padding-block: var(--space-2xs);
   font-size: var(--font-size-body-sm);
   color: var(--color-text-primary);
   text-decoration: none;

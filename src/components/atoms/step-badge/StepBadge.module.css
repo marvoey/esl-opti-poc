@@ -6,7 +6,7 @@
   height: 32px;
   border-radius: var(--radius-full);
   flex-shrink: 0;
-  transition: var(--transition-all);
+  transition: var(--transition-ui);
 }
 
 .stepNumber {

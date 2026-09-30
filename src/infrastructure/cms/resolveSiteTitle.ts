@@ -1,3 +1,4 @@
+import { cache } from 'react';
 import { getGraphClient } from '@/infrastructure/cms/graphClient';
 import { getDefaultSite } from '@/infrastructure/cms/siteRouting';
 import '@/infrastructure/cms/optimizely-registry';
@@ -23,10 +24,12 @@ interface SiteTitleResponse {
 /**
  * Resolves the site title from EslStartPage in Optimizely Graph.
  * Falls back to null if not configured or query fails.
+ *
+ * Wrapped in `cache` so `generateMetadata` and the page share one request.
  */
-export async function resolveSiteTitle(
+export const resolveSiteTitle = cache(async (
   origin: string = getDefaultSite().origin
-): Promise<string | null> {
+): Promise<string | null> => {
   const client = getGraphClient();
   if (!client) {
     return null;
@@ -43,4 +46,4 @@ export async function resolveSiteTitle(
     console.warn('Could not resolve CMS site title:', error);
     return null;
   }
-}
+});

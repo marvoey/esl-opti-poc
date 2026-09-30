@@ -20,6 +20,8 @@ export interface TestimonialCardProps {
   imageAlt?: string;
   videoUrl?: string;
   videoTitle?: string;
+  /** WebVTT captions for a local video (WCAG 1.2.2, Level A). */
+  captionsSrc?: string;
   icon?: React.ReactNode;
   title: string;
   quote: React.ReactNode | string;
@@ -55,6 +57,7 @@ export function TestimonialCard({
   imageAlt = "Testimonial video thumbnail",
   videoUrl,
   videoTitle,
+  captionsSrc,
   icon,
   title,
   quote,
@@ -152,6 +155,7 @@ export function TestimonialCard({
           videoSource={videoSource}
           title={title}
           videoTitle={videoTitle}
+          captionsSrc={captionsSrc}
         />
       )}
     </>

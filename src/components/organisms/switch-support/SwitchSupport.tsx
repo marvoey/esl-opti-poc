@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useId } from "react";
 import { Heading } from "@/components/atoms/heading/Heading";
 import { Text } from "@/components/atoms/text/Text";
 import { ProcessCard } from "@/components/atoms/card/process-card/ProcessCard";
@@ -136,10 +136,14 @@ export function SwitchSupport({
   linkHref,
   className = "",
 }: SwitchSupportProps) {
+  const autoId = useId();
+
   if (!steps || steps.length === 0) return null;
 
-  const headingId = id ? `${id}-heading` : undefined;
-  const labelledBy = title ? (headingId ?? "switch-support-heading") : undefined;
+  // Always resolve to a real, unique id so aria-labelledby cannot dangle when the
+  // CMS block omits `id`, and so two instances on one page do not collide.
+  const headingId = `${id ?? `switch-support-${autoId.replace(/:/g, "")}`}-heading`;
+  const labelledBy = title ? headingId : undefined;
 
   return (
     <section
