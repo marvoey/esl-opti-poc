@@ -7,10 +7,12 @@ import styles from "./MegaMenu.module.css";
 
 export interface MegaMenuProps {
   id: string;
+  /** Names the panel's region landmark; without it the role is not exposed. */
+  label?: string;
   data: MegaMenuData;
 }
 
-export function MegaMenu({ id, data }: MegaMenuProps) {
+export function MegaMenu({ id, label, data }: MegaMenuProps) {
   const hasPromo = Boolean(
     data.promo &&
       (data.promo.heading?.trim() ||
@@ -20,7 +22,7 @@ export function MegaMenu({ id, data }: MegaMenuProps) {
   );
 
   return (
-    <div id={id} className={styles.panel} role="region">
+    <div id={id} className={styles.panel} role="region" aria-label={label}>
       <div className={`${styles.inner} ${!hasPromo ? styles.innerNoPromo : ""}`}>
         <div className={styles.columns}>
           {data.viewAllLabel && data.viewAllHref && (

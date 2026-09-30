@@ -29,7 +29,7 @@
   background-color: var(--color-surface-raised);
   border: var(--border-width-thin) solid var(--color-border-card);
   box-shadow: var(--shadow-elevation-sm);
-  transition: var(--transition-all);
+  transition: var(--transition-ui);
   box-sizing: border-box;
 }
 

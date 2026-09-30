@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useId, useState, useCallback, useEffect } from "react";
+import React, { useId, useState, useCallback, useEffect, useMemo } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import { withReducedMotion } from "@/components/molecules/carousel/emblaMotion";
 import type { EmblaCarouselType } from "embla-carousel";
@@ -89,14 +89,32 @@ export function OfferCardRow({
     setCanScrollNext(api.canScrollNext());
   }, []);
 
+  // null until Embla reports, so no card is inert during SSR/first paint.
+  const [slidesInView, setSlidesInView] = useState<number[] | null>(null);
+
+  // Embla hands back an array; derive the Set once per change so the per-slide
+  // lookup below is O(1) without keeping a derived structure in state.
+  const inViewSet = useMemo(
+    () => (slidesInView === null ? null : new Set(slidesInView)),
+    [slidesInView]
+  );
+
   useEffect(() => {
     if (!emblaApi) return;
+    const onInView = () => setSlidesInView(emblaApi.slidesInView());
     emblaApi.on("select", onSelect);
     emblaApi.on("reInit", onSelect);
-    queueMicrotask(() => onSelect(emblaApi));
+    emblaApi.on("slidesInView", onInView);
+    emblaApi.on("reInit", onInView);
+    queueMicrotask(() => {
+      onSelect(emblaApi);
+      onInView();
+    });
     return () => {
       emblaApi.off("select", onSelect);
       emblaApi.off("reInit", onSelect);
+      emblaApi.off("slidesInView", onInView);
+      emblaApi.off("reInit", onInView);
     };
   }, [emblaApi, onSelect]);
 
@@ -161,6 +179,7 @@ export function OfferCardRow({
                     role="group"
                     aria-roledescription="slide"
                     aria-label={`${index + 1} of ${cards.length}`}
+                    inert={inViewSet !== null && !inViewSet.has(index)}
                   >
                     <MediaCard
                       {...card}

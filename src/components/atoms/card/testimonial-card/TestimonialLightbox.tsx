@@ -11,6 +11,12 @@ export interface TestimonialLightboxProps {
   videoSource: VideoSource;
   title: string;
   videoTitle?: string;
+  /**
+   * WebVTT captions for a local video. Prerecorded video with audio requires
+   * captions (WCAG 1.2.2, Level A), so local sources should always supply this.
+   */
+  captionsSrc?: string;
+  captionsLang?: string;
 }
 
 export function TestimonialLightbox({
@@ -19,6 +25,8 @@ export function TestimonialLightbox({
   videoSource,
   title,
   videoTitle,
+  captionsSrc,
+  captionsLang = "en",
 }: TestimonialLightboxProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
@@ -105,7 +113,17 @@ export function TestimonialLightbox({
               controls
               playsInline
               className={styles.videoElement}
-            />
+            >
+              {captionsSrc && (
+                <track
+                  kind="captions"
+                  src={captionsSrc}
+                  srcLang={captionsLang}
+                  label="Captions"
+                  default
+                />
+              )}
+            </video>
           ) : (
             <iframe
               src={videoSource.src}

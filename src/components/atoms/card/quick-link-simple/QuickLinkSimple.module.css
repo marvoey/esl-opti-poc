@@ -18,7 +18,12 @@
   cursor: pointer;
   box-sizing: border-box;
   text-align: center;
-  transition: var(--transition-all);
+
+  /* Height is animated on hover (152px -> 176px at >=768px), so it must be listed
+     explicitly now that the shared token no longer transitions `all`. */
+  transition: var(--transition-ui),
+    min-height var(--duration-smart) var(--ease-out-smart),
+    height var(--duration-smart) var(--ease-out-smart);
   position: relative;
   background-clip: padding-box;
 }
@@ -54,7 +59,7 @@
   height: var(--size-icon-circle);
   border-radius: var(--radius-full);
   flex-shrink: 0;
-  transition: var(--transition-all);
+  transition: var(--transition-ui);
 }
 
 .card:hover .iconCircle {

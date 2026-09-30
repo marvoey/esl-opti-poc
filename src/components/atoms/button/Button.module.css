@@ -4,7 +4,8 @@
   --space-btn-pill-inline: 1.5rem;       /* 24px */
   --space-btn-arrow-block: 1rem;         /* 16px */
   --space-btn-arrow-inline: 2rem;        /* 32px */
-  --space-btn-arrow-hover-pad: 2.75rem;  /* 32px + 12px = 44px */
+  --space-btn-arrow-growth: 0.625rem;    /* 10px the box expands on hover */
+  --space-btn-arrow-hover-pad: calc(var(--space-btn-arrow-inline) + var(--space-btn-arrow-growth));
 
   display: inline-flex;
   align-items: center;
@@ -19,7 +20,7 @@
   border: 1.5px solid transparent;
 
   /* Reusable smooth transition token across all states */
-  transition: var(--transition-all);
+  transition: var(--transition-ui);
   will-change: transform, box-shadow, background-color, color, border-color;
 }
 
@@ -71,7 +72,7 @@
   align-items: center;
   justify-content: center;
   white-space: nowrap;
-  transition: var(--transition-all);
+  transition: var(--transition-ui);
 }
 
 /* Mobile: button label matches Body Small typography (14px / 20px LH) */
@@ -89,7 +90,7 @@
   justify-content: center;
   flex-shrink: 0;
   color: inherit;
-  transition: var(--transition-all);
+  transition: var(--transition-ui);
 }
 
 .iconRight svg {
@@ -99,37 +100,44 @@
   min-height: 20px;
 }
 
-/* Arrow Button Padding:
-   Buttons with an arrow icon have 16px block padding and 32px inline padding */
+/* Arrow Button: content is centered at rest (symmetric inline padding).
+   On hover the box expands by --space-btn-arrow-growth on one edge only, and the
+   moving slot follows it via transform so the label/arrow spacing opens up. */
 .button.hasArrow {
-  padding-block: var(--space-btn-arrow-block); /* 16px */
-  padding-inline: var(--space-btn-arrow-inline); /* 32px */
-  transition: var(--transition-all), padding-right var(--duration-smart) var(--ease-out-smart), padding-left var(--duration-smart) var(--ease-out-smart), gap var(--duration-smart) var(--ease-out-smart);
+  padding-block: var(--space-btn-arrow-block);   /* 16px */
+  padding-inline: var(--space-btn-arrow-inline); /* 32px — symmetric, content centered */
+  transition: var(--transition-ui), padding-right var(--duration-smart) var(--ease-out-smart);
 }
 
-/* Arrow Hover Animation:
-   - Left-aligned (.button.hasArrow): button increases its size to the left (padding-left expands, icon right stays stable)
-   - Right-aligned (.alignRight): keeps expanding to the left as well */
+.button.hasArrow .label,
+.button.hasArrow .iconRight {
+  transition: transform var(--duration-smart) var(--ease-out-smart);
+}
+
+/* Default: box extends to the right; the arrow travels with it, label stays anchored. */
 .button.hasArrow:hover:not(:disabled) {
-  padding-left: var(--space-btn-arrow-hover-pad);
-  padding-right: var(--space-btn-arrow-inline);
-  gap: 1rem; /* 16px */
+  padding-right: var(--space-btn-arrow-hover-pad);
 }
 
 .button.hasArrow:hover:not(:disabled) .iconRight {
-  transform: none;
+  transform: translateX(var(--space-btn-arrow-growth));
 }
 
-/* Right-aligned variant: grows on the x-axis to the right, moves text to the right, y-axis untouched */
+/* Right-aligned: box extends to the left instead. The negative translateX re-anchors the
+   right edge so the growth reads as leftward, and the label travels with it while the
+   arrow stays anchored. */
+.button.hasArrow.alignRight {
+  transition: var(--transition-ui), padding-left var(--duration-smart) var(--ease-out-smart);
+}
+
 .button.hasArrow.alignRight:hover:not(:disabled) {
-  padding-right: var(--space-btn-arrow-inline);
   padding-left: var(--space-btn-arrow-hover-pad);
-  gap: 1rem; /* 16px */
-  transform: translateX(1.25rem) translateY(0);
+  padding-right: var(--space-btn-arrow-inline);
+  transform: translateX(calc(-1 * var(--space-btn-arrow-growth))) translateY(0);
 }
 
 .button.hasArrow.alignRight:hover:not(:disabled) .label {
-  transform: none;
+  transform: translateX(calc(-1 * var(--space-btn-arrow-growth)));
 }
 
 .button.hasArrow.alignRight:hover:not(:disabled) .iconRight {

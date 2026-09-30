@@ -92,6 +92,12 @@ export function FilterableProductCardGridBoard({
         </div>
       )}
 
+      {/* SC 4.1.3: filtering swaps the grid contents with no visual focus change,
+          so the new result count has to be announced. */}
+      <div className={styles.visuallyHidden} aria-live="polite" aria-atomic="true">
+        {visible.length === 1 ? "1 result" : `${visible.length} results`}
+      </div>
+
       {visible.length > 0 ? (
         <ul id={gridId} className={styles.grid}>
           {visible.map((item, index) => (

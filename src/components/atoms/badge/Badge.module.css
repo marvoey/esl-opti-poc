@@ -9,7 +9,7 @@
   box-sizing: border-box;
   white-space: nowrap;
   border: 1px solid transparent;
-  transition: var(--transition-all);
+  transition: var(--transition-ui);
 }
 
 /* Variant 1: Aqua (Mint Polar background + Teal border & text) */

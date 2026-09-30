@@ -8,7 +8,7 @@
   cursor: pointer;
   width: fit-content;
   box-sizing: border-box;
-  transition: var(--transition-all);
+  transition: var(--transition-ui);
 }
 
 .textLink:focus-visible {

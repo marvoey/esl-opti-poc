@@ -6,6 +6,7 @@ import { Button } from "@/components/atoms/button/Button";
 export default function NotFound() {
   return (
     <main
+      id="main-content"
       className="container"
       style={{
         padding: "120px 24px",

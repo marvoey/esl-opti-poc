@@ -136,7 +136,7 @@
   overflow: hidden;
   box-sizing: border-box;
   box-shadow: var(--shadow-elevation-sm);
-  transition: var(--transition-all);
+  transition: var(--transition-ui);
 }
 
 .card:hover {

@@ -26,11 +26,16 @@ async function loadPageContext(params: Props["params"]) {
   if (!site) return null;
 
   const publicPath = `/${slug.join("/")}`;
-  const content = await resolvePage(site.origin, publicPath);
+  // Both depend only on site.origin, which resolves synchronously from params.
+  const [content, siteTitle] = await Promise.all([
+    resolvePage(site.origin, publicPath),
+    resolveSiteTitle(site.origin),
+  ]);
   return {
     site,
     publicPath,
     content,
+    siteTitle,
   };
 }
 
@@ -38,12 +43,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const context = await loadPageContext(params);
   if (!context) return {};
 
-  const siteTitle = await resolveSiteTitle(context.site.origin);
   const { metadata } = await resolvePageMetadata(
     context.content as (Record<string, unknown> & EslSeoProperties) | null,
     context.site.origin,
     context.publicPath,
-    siteTitle
+    context.siteTitle
   );
 
   return metadata;
@@ -66,12 +70,11 @@ export default async function CmsPage({ params }: Props) {
   const context = await loadPageContext(params);
   if (!context?.content) notFound();
 
-  const siteTitle = await resolveSiteTitle(context.site.origin);
   const { jsonLd } = await resolvePageMetadata(
     context.content as (Record<string, unknown> & EslSeoProperties) | null,
     context.site.origin,
     context.publicPath,
-    siteTitle
+    context.siteTitle
   );
 
   return (

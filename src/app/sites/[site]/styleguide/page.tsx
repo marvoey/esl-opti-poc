@@ -9,7 +9,7 @@ import styles from "./page.module.css";
 export default function StyleguidePage() {
   return (
     <div className={styles.mainWrapper}>
-      <main className={styles.contentContainer}>
+      <main id="main-content" className={styles.contentContainer}>
         <StyleguideHero />
         <ArchitecturePillars />
         <ComponentMatrix />

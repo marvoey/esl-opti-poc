@@ -12,7 +12,7 @@
   cursor: pointer;
   text-decoration: none;
   box-sizing: border-box;
-  transition: var(--transition-all);
+  transition: var(--transition-ui);
   box-shadow: var(--shadow-sm);
   text-align: left;
 }
@@ -69,7 +69,7 @@
   align-items: center;
   justify-content: center;
   color: var(--color-text-primary);
-  transition: var(--transition-all);
+  transition: var(--transition-ui);
 }
 
 .card:hover .arrowWrapper {

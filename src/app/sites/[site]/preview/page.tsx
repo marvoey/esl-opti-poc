@@ -85,7 +85,7 @@ async function PreviewPage({ searchParams }: Props) {
     : '';
 
   return (
-    <main>
+    <main id="main-content">
       {injectorUrl && <Script src={injectorUrl} strategy="afterInteractive" />}
       <PreviewComponent />
       <OptimizelyComponent content={content} />

@@ -9,7 +9,7 @@
   cursor: pointer;
   user-select: none;
   box-sizing: border-box;
-  transition: var(--transition-all);
+  transition: var(--transition-ui);
   border: 2px solid transparent;
   text-align: left;
 }
@@ -24,7 +24,7 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  transition: var(--transition-all);
+  transition: var(--transition-ui);
 }
 
 .label {

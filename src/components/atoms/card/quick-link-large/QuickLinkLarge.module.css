@@ -16,7 +16,7 @@
   cursor: pointer;
   box-sizing: border-box;
   text-align: center;
-  transition: var(--transition-all);
+  transition: var(--transition-ui);
   position: relative;
   background-clip: padding-box;
 }

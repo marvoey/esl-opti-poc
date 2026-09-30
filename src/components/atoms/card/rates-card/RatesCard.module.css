@@ -9,7 +9,7 @@
   background-color: var(--color-surface-inverse);
   text-decoration: none;
   color: inherit;
-  transition: var(--transition-all);
+  transition: var(--transition-ui);
   position: relative;
   outline: none;
 }

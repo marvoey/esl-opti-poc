@@ -153,7 +153,11 @@ describe("Footer Organism", () => {
 
     const img = screen.getByRole("img", { name: "ESL Logo" });
     expect(img).toBeDefined();
-    expect(img.getAttribute("src")).toBe("https://cdn.example.com/esl-logo.png");
+    // next/image serves the logo through its optimizer, so the CMS URL is carried
+    // in the `url` query param rather than being the src verbatim.
+    expect(decodeURIComponent(img.getAttribute("src") ?? "")).toContain(
+      "https://cdn.example.com/esl-logo.png"
+    );
   });
 
   it("does not render brand logo link or image when neither logo nor logoUrl is provided", () => {

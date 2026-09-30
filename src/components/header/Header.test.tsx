@@ -48,7 +48,11 @@ describe("Header Component", () => {
 
     const logoImg = screen.getByAltText("ESL Federal Credit Union");
     expect(logoImg).toBeDefined();
-    expect(logoImg.getAttribute("src")).toBe("https://cdn.example.com/esl-header-logo.png");
+    // next/image serves the logo through its optimizer, so the CMS URL is carried
+    // in the `url` query param rather than being the src verbatim.
+    expect(decodeURIComponent(logoImg.getAttribute("src") ?? "")).toContain(
+      "https://cdn.example.com/esl-header-logo.png"
+    );
 
     // Nav links
     expect(screen.getByRole("link", { name: "Home" })).toBeDefined();
