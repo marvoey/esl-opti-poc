@@ -91,7 +91,7 @@
     font-weight: var(--font-weight-semibold);
     border-radius: var(--radius-sm);
     text-decoration: underline;
-    box-shadow: var(--shadow-modal);
+    box-shadow: var(--shadow-elevation-md);
   }
 
   .skipLink:focus {

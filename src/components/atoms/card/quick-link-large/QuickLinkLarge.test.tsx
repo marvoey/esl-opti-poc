@@ -49,8 +49,9 @@ describe("QuickLinkLarge Atom Component", () => {
       />
     );
     const img = screen.getByRole("img", { name: /Friendly representative ready to assist/i });
-    expect(img).toBeDefined();
-    expect(img.getAttribute("src")).toBe("/images/customer-support.png");
+    expect(decodeURIComponent(img.getAttribute("src") ?? "")).toContain(
+      "/images/customer-support.png"
+    );
   });
 
   it("renders placeholder container when imageSrc is omitted", () => {

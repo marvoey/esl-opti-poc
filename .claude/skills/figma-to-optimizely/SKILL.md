@@ -20,6 +20,7 @@ Reference files (read when the phase says so):
 ## Non-negotiable rules
 
 1. **New component, zero regressions.** Every component that already exists and works stays exactly as it is: its organism, atoms it uses, CSS, content type, renderer, tests and behavior. You create new files for the new component. You may import existing atoms/helpers read-only. If an existing atom is not quite right, wrap or compose it inside the new component's folder; never edit it.
+   - **Direct Atom Import Rule**: Always import atoms directly from their dedicated paths (e.g. `@/components/atoms/heading/Heading`, `@/components/atoms/button/Button`). **Never import from the `@/components/atoms` barrel index**, because re-exported modules pull all 20+ atom CSS modules into every consuming chunk.
 2. **Integration touchpoints are additive only.** To make the component available on a page you must add lines to a small set of shared files (registry, `mayContainTypes`, `KNOWN_COMPONENT_NAMES`, page tests). Only append entries. Never reorder, rename, reformat or delete existing entries. See `references/integration-touchpoints.md`.
 3. **Testing instance only.** Every MCP call and every push targets the testing instance defined by `.env`. The guard hook (`.claude/hooks/optimizely-guard.mjs`) enforces this; never try to bypass it, and never run or suggest `npm run cms:push`, `npm run cms:push:vercel`, or anything referencing `.env.vercel`. Production sync is manual and human-only.
 4. **Code owns the schema.** Content types, property groups and display templates are defined in `src/components/cms/**` and `optimizely.config.mjs`, and reach the CMS only through `npm run cms:push:local`. MCP schema-write tools are denied by design. MCP is used to *read* schema, write *test content*, and *verify*.
@@ -46,11 +47,13 @@ Reference files (read when the phase says so):
 Study the image and produce a written spec before touching code. Show it to the user and get confirmation. Include:
 
 - **Name:** PascalName, kebab folder name, content type key `Esl<PascalName>`, display name `ESL <Human Name>`.
-- **Anatomy:** every region of the design, top to bottom, with the atom that renders it. Typography maps only to `<Heading level>` / `<Text variant>` (see `FRONTEND.md` §6 and `src/components/atoms/index.ts`); buttons to `<Button variant>`; links to `<TextLink>`; icons to `Icon` names that exist.
-- **Fields:** a table of property name, CMS type, required?, group, sortOrder, and the Figma element it comes from. Use `references/cms-patterns.md` for type mapping.
-- **Child item types:** any repeated card/row/tile becomes its own `_component` content type (`elementEnabled`) referenced by an `array` of `component` on the parent.
+- **Anatomy:** every region of the design, top to bottom, with the atom that renders it. Typography maps only to `<Heading level>` / `<Text variant>` / `<Eyebrow>` / `<Display>` / `<Stat>` (see `FRONTEND.md` §1 & §6); buttons to `<Button variant>` (`primary`, `secondary`, `outline`); links to `<TextLink>` or `<SimpleLink>`; badges to `<Badge>`; icons to `Icon` names that exist; images to `<CmsImage>` or container-fill Next `<Image>`.
+- **Heading hierarchy:** the organism must accept an optional `headingLevel?: HeadingLevel` prop (defaulting to `"h2"`) to allow pages to preserve WCAG 1.3.1 heading structure.
+- **Fields:** a table of property name, CMS type, required?, group, sortOrder, and the Figma element it comes from. Use `references/cms-patterns.md` for type mapping and standardized DisplayNames.
+- **Child item types:** any repeated card/row/tile becomes its own `_component` content type (`elementEnabled`) referenced by an `array` of `component` on the parent, rendered inside semantic `<ul>`/`<ol>` and `<li>` elements.
 - **Visual options:** variants in the design (theme, alignment, image side, density) become **display template settings**, not string fields.
-- **Tokens:** colors, spacing and radii mapped to existing `var(--…)` tokens in `src/styles/tokens.css`. List any gap explicitly; do not invent tokens silently.
+- **Tokens:** strictly follow the 3-Tier Design Token Architecture (`FRONTEND.md` §3 & §5). Tier 1 primitives (e.g. `--color-navy-950`, raw hex) are **strictly forbidden** in component CSS. Consume only Tier 2 semantic tokens (`--color-text-primary`, `--color-surface`, `--color-border-card`, `--color-border-accent`, etc.). Transitions use `--transition-all`, `--duration-smart`, and `--ease-out-smart` for `transform`/`opacity`.
+- **Vertical rhythm:** normalize line heights to integer multiples of 4px to avoid fractional baseline drift.
 - **Interactivity:** what, if anything, needs a `"use client"` leaf (tabs, carousel, accordion). Everything else is RSC.
 - **Target pages:** which experience types allow the component in Visual Builder. **Default: all three** (`EslHomeExperience`, `EslProductFamilyExperience`, `EslProductDetailExperience`). Use a subset only when the user names specific pages; do not ask when they don't. State the choice in the spec either way ("all three (default)" or the pages the user named), so it can be corrected at Gate 1.
 - **Accessibility:** heading level in page outline, landmarks, alt text source, focus order, reduced motion.
@@ -62,7 +65,14 @@ Study the image and produce a written spec before touching code. Show it to the 
 Read `references/mcp-tools.md` first. Then:
 
 1. `cms_list_content_types` (BaseType `_component`): confirm `Esl<PascalName>` and every child key are unused. Also check no branch already claims them: `git grep -n "key: 'Esl<PascalName>'" $(git for-each-ref --format='%(refname)' refs/remotes/origin)`.
-2. `cms_get_content_type_details` with `ContentTypeKeys` for 2-3 existing components closest to the design, `IncludeRelatedTypes: true`. Align field names (`eyebrow`, `title`/`heading`, `description`/`body`, `image`, `imageAlt`, `cta`, `secondaryCta`, `items`), property groups and `compositionBehaviors` with what is live.
+2. `cms_get_content_type_details` with `ContentTypeKeys` for 2-3 existing components closest to the design, `IncludeRelatedTypes: true`. Align field names, property groups, and standardized field DisplayNames (commit `b562370`):
+   - `eyebrow`: `displayName: 'Eyebrow'`
+   - `title`: `displayName: 'Heading'`
+   - `description`: `displayName: 'Copy'` (for descriptions/body copy)
+   - `cta`: `displayName: 'CTA Link'`
+   - `subhead`: `displayName: 'Subheading'`
+   - `image`: `displayName: 'Image'` or `displayName: 'Background Image'`
+   - `sortOrder` in increments of 10 (`10, 20, 30...`).
 3. `cms_list_property_groups` (IncludeSystemGroups false): reuse an existing group key. If a new group is truly needed, it is added in `optimizely.config.mjs`, never through MCP.
 4. `cms_list_display_templates`, and `cms_get_display_template` for any template on similar components: reuse setting names and choice keys where they fit.
 5. `graph_content_type_schema` with the analogous type keys as `searchPhrase`: learn how each property type is projected into Graph (rich text `{ json html }`, links `{ text title target url { default } }`, images `{ key url { default } }`). The renderer's field mapping and the Phase 7 query must follow these shapes.
@@ -77,9 +87,9 @@ Create only new files under `src/components/organisms/<kebab-name>/`:
 | File | Purpose |
 |---|---|
 | `<kebabName>Data.ts` | Typed fixture props used by tests (the only place sample copy lives). |
-| `<PascalName>.test.tsx` | Written first. Vitest + Testing Library: renders every slot, omits empty optional slots, heading level, alt text, links/buttons roles, variant classes, list lengths. |
+| `<PascalName>.test.tsx` | Written first. Vitest + Testing Library: renders every slot, omits empty optional slots, heading level, alt text, links/buttons roles, variant classes, list lengths. **Next `<Image>` testing rule:** assert image URLs using `decodeURIComponent(img.getAttribute('src') ?? '').toContain('/images/...')` rather than strict `toBe()`. |
 | `<PascalName>.tsx` | Pure presentational component. Plain domain props, no CMS/SDK imports. RSC unless a leaf needs state. |
-| `<PascalName>.module.css` | Tokens only (strictly no raw hex colors, use `var(--color-...)` or `currentColor`); Grid for 2D, Flex for 1D; `@container` queries; max 3 nesting levels; no `font-*`, `line-height`, `letter-spacing` (typography comes from atoms); animate only `transform`/`opacity`. |
+| `<PascalName>.module.css` | Tier 2 semantic tokens only (strictly no raw hex colors, use `var(--color-...)` or `currentColor`); Grid for 2D, Flex for 1D; `@container` queries; max 3 nesting levels; no `font-*`, `line-height`, `letter-spacing` (typography comes from atoms); animate only `transform`/`opacity` with `--duration-smart` / `--ease-out-smart`. |
 | `index.ts` | Barrel export of the component, its prop types and fixtures. |
 
 Run `npx vitest run src/components/organisms/<kebab-name>` until green, then `npm run lint:css`. TypeScript must be strictly typed (no `any` types; prefer `unknown` or explicit types).
@@ -90,10 +100,10 @@ Run `npx vitest run src/components/organisms/<kebab-name>` until green, then `np
 
 Read `references/cms-patterns.md`. Create only new files under `src/components/cms/components/`:
 
-1. **Child item types first:** `Esl<Child>.tsx` with `contentType({ baseType: '_component', compositionBehaviors: ['elementEnabled'], ... })`.
-2. **Parent type:** `Esl<PascalName>.tsx` with `baseType: '_component'`, `compositionBehaviors: ['sectionEnabled', 'elementEnabled']` unless the spec says otherwise, arrays referencing the child content types, and `export type Esl<PascalName>Data = Partial<ContentProps<typeof Esl<PascalName>ContentType>>`.
+1. **Child item types first:** `Esl<Child>.tsx` with `contentType({ baseType: '_component', compositionBehaviors: ['elementEnabled'], ... })`. Use standardized field DisplayNames (`'Heading'`, `'Copy'`, `'CTA Link'`, `'Image'`).
+2. **Parent type:** `Esl<PascalName>.tsx` with `baseType: '_component'`, `compositionBehaviors: ['sectionEnabled', 'elementEnabled']` unless the spec says otherwise, standardized DisplayNames, arrays referencing child content types, and `export type Esl<PascalName>Data = Partial<ContentProps<typeof Esl<PascalName>ContentType>>`.
 3. **Display template (if the spec has visual options):** export a `displayTemplate({ key: 'Esl<PascalName>Default', contentType: 'Esl<PascalName>', isDefault: true, settings: {...} })` from the same `Esl<PascalName>.tsx` so `cms:push:local` picks it up.
-4. **Renderer:** `Esl<PascalName>Renderer.tsx`, default export named `Esl<PascalName>`. It unwraps `content.component`, maps every field with the shared helpers, reads `displaySettings`, drops empty child items, and returns `null` when there is nothing meaningful to render. No copy literals. Rich text fields follow the rich text checklist in `references/graph-query-troubleshooting.md`: accept `{ json, html }` and plain strings, render `json` with the SDK `RichText` and fall back to `html`, treat empty payloads as missing, and wrap them in `<Text as="div">`. Do not write GraphQL queries for pages: the SDK builds them from the registry.
+4. **Renderer:** `Esl<PascalName>Renderer.tsx`, default export named `Esl<PascalName>`. It unwraps `const effectiveContent = content?.component ?? content`, maps every field with shared helpers, reads `displaySettings`, drops empty child items, and returns `null` when required content is missing (strict rule: zero hardcoded copy). Rich text fields follow the rich text checklist in `references/graph-query-troubleshooting.md`: accept `{ json, html }` and plain strings, render `json` with SDK `RichText` and fall back to `html`, treat empty payloads as missing, and wrap them in `<Text as="div">`. Do not write GraphQL queries for pages: the SDK builds them from the registry.
 5. **CMS test:** `Esl<PascalName>.test.tsx` covering the content type definition (key, baseType, behaviors, property types), full mapping, nested `component` unwrapping, empty/partial content returning `null` or omitting slots, display settings mapping, and that no fixture copy appears when fields are empty.
 
 **Gate 4:** CMS tests pass.

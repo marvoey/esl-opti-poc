@@ -19,7 +19,15 @@ Verified against `@optimizely/cms-sdk` 2.2.0 (`dist/esm/model/properties.d.ts`, 
 | List of short labels (filter chips, tags) | `array` with `items: { type: 'string' }` | `field` (Graph `[String]`, no sub-selection) | trim, drop empty and duplicate entries |
 | One grouped block of fields (a promo box inside a section) | `component` with `contentType: EslChildContentType` (child type without `compositionBehaviors`, like `EslMegaMenuPromo`) | `field { ...child fields }` (Graph `<Child>Property`) | arrives as a flat object; unwrap `x.component || x` |
 
-Editor experience: give every property a clear `displayName`, a `description` when the purpose is not obvious, a `sortOrder` in steps of 10 following visual order, and an existing `group` (usually `content`). Use `isRequired: true` only for fields the component cannot render without.
+Editor experience: give every property a standardized `displayName` (commit `b562370`):
+- `eyebrow` -> `displayName: 'Eyebrow'`
+- `title` -> `displayName: 'Heading'`
+- `description` -> `displayName: 'Copy'`
+- `cta` -> `displayName: 'CTA Link'`
+- `subhead` -> `displayName: 'Subheading'`
+- `image` -> `displayName: 'Image'` or `displayName: 'Background Image'`
+
+Use a `sortOrder` in steps of 10 (`10, 20, 30...`), and an existing `group` (usually `content`). Use `isRequired: true` only for fields the component cannot render without.
 
 ## Child item type (`EslMyCardItem.tsx`)
 
@@ -32,11 +40,11 @@ export const EslMyCardItemContentType = contentType({
   baseType: '_component',
   compositionBehaviors: ['elementEnabled'],
   properties: {
-    title: { type: 'string', displayName: 'Title', group: 'content', sortOrder: 10 },
-    description: { type: 'richText', displayName: 'Description', group: 'content', sortOrder: 20 },
+    title: { type: 'string', displayName: 'Heading', group: 'content', sortOrder: 10 },
+    description: { type: 'richText', displayName: 'Copy', group: 'content', sortOrder: 20 },
     image: { type: 'contentReference', allowedTypes: ['_image'], displayName: 'Image', group: 'content', sortOrder: 30 },
     imageAlt: { type: 'string', displayName: 'Image alt text', group: 'content', sortOrder: 40 },
-    cta: { type: 'link', displayName: 'Card link', group: 'content', sortOrder: 50 },
+    cta: { type: 'link', displayName: 'CTA Link', group: 'content', sortOrder: 50 },
   },
 });
 
@@ -56,8 +64,8 @@ export const EslMyComponentContentType = contentType({
   compositionBehaviors: ['sectionEnabled', 'elementEnabled'],
   properties: {
     eyebrow: { type: 'string', displayName: 'Eyebrow', group: 'content', sortOrder: 10 },
-    title: { type: 'string', displayName: 'Title', group: 'content', sortOrder: 20, isRequired: true },
-    description: { type: 'richText', displayName: 'Description', group: 'content', sortOrder: 30 },
+    title: { type: 'string', displayName: 'Heading', group: 'content', sortOrder: 20, isRequired: true },
+    description: { type: 'richText', displayName: 'Copy', group: 'content', sortOrder: 30 },
     items: {
       type: 'array',
       displayName: 'Cards',
@@ -65,7 +73,7 @@ export const EslMyComponentContentType = contentType({
       sortOrder: 40,
       items: { type: 'component', contentType: EslMyCardItemContentType },
     },
-    cta: { type: 'link', displayName: 'Primary CTA', group: 'content', sortOrder: 50 },
+    cta: { type: 'link', displayName: 'CTA Link', group: 'content', sortOrder: 50 },
   },
 });
 

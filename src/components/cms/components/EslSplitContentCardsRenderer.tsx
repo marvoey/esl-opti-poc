@@ -91,7 +91,7 @@ function buildStatCards(rawStatCards?: (EslStatCardData | null)[] | null): Split
       id: `stat-card-${index + 1}`,
       value: stat.value?.trim() || '',
       label: stat.label?.trim() || '',
-      icon: (stat as any)?.icon ?? (/satisfaction/i.test(stat.label ?? '') ? 'star' : undefined),
+      icon: (stat as { icon?: string | null })?.icon ?? (/satisfaction/i.test(stat.label ?? '') ? 'star' : undefined),
     }));
 }
 
