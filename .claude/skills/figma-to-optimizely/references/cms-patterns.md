@@ -61,7 +61,9 @@ export const EslMyComponentContentType = contentType({
   key: 'EslMyComponent',
   displayName: 'ESL My Component',
   baseType: '_component',
-  compositionBehaviors: ['sectionEnabled', 'elementEnabled'],
+  // Section only: `items` is an array of components, which the CMS refuses on an
+  // elementEnabled type (see "Composition behaviors" below).
+  compositionBehaviors: ['sectionEnabled'],
   properties: {
     eyebrow: { type: 'string', displayName: 'Eyebrow', group: 'content', sortOrder: 10 },
     title: { type: 'string', displayName: 'Heading', group: 'content', sortOrder: 20, isRequired: true },
@@ -98,7 +100,20 @@ export const EslMyComponentDefaultTemplate = displayTemplate({
 export type EslMyComponentData = Partial<ContentProps<typeof EslMyComponentContentType>>;
 ```
 
-The CLI discovers `contentType()` and `displayTemplate()` exports from every non-test, non-Renderer `.tsx` under `src/components/cms/`. Today the repo defines **no** display templates in code (the Hero Slider's `defaultVariant` template exists only in the CMS). Defining new ones in code keeps them versioned and reproducible.
+The CLI discovers `contentType()` and `displayTemplate()` exports from every non-test, non-Renderer `.tsx` under `src/components/cms/`. The first display template defined in code is `EslTableCtaLeftColumnDefault` (`EslTableCtaLeftColumn.tsx`); the Hero Slider's `defaultVariant` template exists only in the CMS. Defining new ones in code keeps them versioned and reproducible. A display template whose content type was rejected at push time fails too ("Unable to find a content type").
+
+## Composition behaviors
+
+The SDK types accept any combination, but the CMS validates it at push time:
+
+| Type has… | `compositionBehaviors` | Live examples |
+|---|---|---|
+| any `array` of `component`, or a `component` property | `['sectionEnabled']` | `EslFilterableProductCardGrid`, `EslKeyFactsRow`, `EslLongTextLeftCardsRight`, `EslTableCtaLeftColumn` |
+| only flat properties (string, richText, link, contentReference, boolean, arrays of string/link) | `['sectionEnabled', 'elementEnabled']` | `EslSideBySide`, `EslSplitContentImage` |
+| child item rendered by its parent | `['elementEnabled']` (flat properties only) | `EslKeyFactItem`, `EslTableCtaRow` |
+| block used only as a `component` property value | none | `EslMegaMenuPromo`, `EslLongTextLeftCardsRightPromo` |
+
+Breaking the first row produces `The property 'X' is not allowed when content type has ElementEnabled`, and the type is not created. The Phase 6 behaviors check catches this in the manifest before the push.
 
 ## Renderer (`EslMyComponentRenderer.tsx`)
 
@@ -131,3 +146,21 @@ Inside an experience composition, each property is wrapped in `{ "value": ... }`
 | `array` of `string` | `{ "value": ["A", "B"] }` |
 | `component` (single block) | `{ "value": { "properties": { "field": { "value": … } } } }` |
 | `array` of `component` | `{ "value": [ { "properties": { "field": { "value": … } } } ] }` |
+
+The `[WF]` experience's composition (with `Container` = the ESL Start Page for an `EslHomeExperience`; see SKILL Phase 7, step 4) always starts with an empty Blank Section, then the component. This is the Visual Builder properties-panel workaround:
+
+```json
+{
+  "composition": {
+    "displayName": "[WF] EslMyComponent preview",
+    "nodeType": "experience",
+    "layoutType": "outline",
+    "nodes": [
+      { "displayName": "Blank Section", "nodeType": "section", "layoutType": "grid", "component": { "contentType": "BlankSection" } },
+      { "displayName": "My Component", "nodeType": "component", "component": { "contentType": "EslMyComponent", "properties": { "title": { "value": "…" } } } }
+    ]
+  }
+}
+```
+
+The node shape is copied from the published Home, Product Family and Product Detail experiences, which all start with the same empty Blank Section.

@@ -15,6 +15,8 @@
 //   5. Production pushes and any use of .env.vercel from the shell are denied.
 //   6. The Optimizely server reached under any name other than config.mcpServer (for
 //      example a duplicate registration created by drive-letter casing) is denied outright.
+//   7. Test experiences are created inside the ESL Start Page site and start with an empty
+//      Blank Section (preview + Visual Builder properties-panel requirements).
 //
 // Fails closed: any internal error while evaluating an MCP call or a push denies it.
 
@@ -278,12 +280,16 @@ function preMcp(config, tool, input, sessionId) {
       if (segment && !segment.startsWith('wf-')) {
         emitPre('deny', `Test pages need a RouteSegment starting with "wf-" (e.g. "wf-my-component") so their URL cannot collide with real pages and is recognisable as test content.`);
       }
+      checkExperienceCreate(input, verified);
       process.exit(0);
     }
     if (ledgerHas(key)) process.exit(0);
     emitPre('ask', `ContentKey ${key} was not created by this workflow (not in .claude/state/optimizely-ledger.json). Editing existing CMS content needs explicit approval.`);
   }
   if (CREATE_TOOLS.has(tool)) {
+    if (EXPERIENCE_TYPE.test(stringField(input, 'ContentType', 'contentType'))) {
+      emitPre('deny', `Create test experiences with cms_update_content_item (no ContentKey), so the Container and the Blank Section node can be set and checked in the same call. See SKILL Phase 7, step 4.`);
+    }
     const name = stringField(input, 'DisplayName', 'displayName');
     if (!name.startsWith(prefix)) {
       emitPre('deny', `${tool} requires a DisplayName starting with "${prefix}" so test content is identifiable and can be cleaned up.`);
@@ -302,6 +308,48 @@ function preMcp(config, tool, input, sessionId) {
     );
   }
   emitPre('ask', `${tool} is not classified by the guard. Approve manually if it is safe for the testing instance.`);
+}
+
+const EXPERIENCE_TYPE = /Experience$/;
+const BLANK_SECTION_NODE =
+  '{ "displayName": "Blank Section", "nodeType": "section", "layoutType": "grid", "component": { "contentType": "BlankSection" } }';
+
+function asObject(value) {
+  if (typeof value === 'string') {
+    try {
+      return JSON.parse(value);
+    } catch {
+      return null;
+    }
+  }
+  return value && typeof value === 'object' ? value : null;
+}
+
+// Test experiences must live inside the Start Page site (preview is configured per site, so a
+// page at the CMS root cannot be previewed) and must carry an empty Blank Section (without a
+// section node, Visual Builder cannot open the properties panel of inline components).
+function checkExperienceCreate(input, verified) {
+  const contentType = stringField(input, 'ContentType', 'contentType');
+  if (!EXPERIENCE_TYPE.test(contentType)) return;
+
+  const container = normalizeKey(stringField(input, 'Container', 'container'));
+  if (!container) {
+    emitPre('deny', `Test experiences must be created inside the ESL Start Page site: pass Container (for ${contentType}: see SKILL Phase 7, step 4). Without it the page lands at the CMS root, where no preview is configured.`);
+  }
+  const startPageKeys = (verified?.startPageKeys || []).map(normalizeKey);
+  if (contentType === 'EslHomeExperience' && !startPageKeys.includes(container)) {
+    emitPre('deny', `An EslHomeExperience test page must be created directly under the ESL Start Page (Container = ${startPageKeys.join(' or ') || 'the _metadata.key from the fingerprint query'}).`);
+  }
+
+  const properties = asObject(input?.Properties ?? input?.properties);
+  const composition = asObject(properties?.composition ?? properties?.Composition);
+  const nodes = Array.isArray(composition?.nodes) ? composition.nodes : [];
+  const hasBlankSection = nodes.some(
+    (node) => node?.nodeType === 'section' && asObject(node?.component)?.contentType === 'BlankSection'
+  );
+  if (!hasBlankSection) {
+    emitPre('deny', `Test experiences need an empty Blank Section as the first composition node (Visual Builder properties-panel workaround). Add ${BLANK_SECTION_NODE} before the component node.`);
+  }
 }
 
 // ---------------------------------------------------------------- PostToolUse
