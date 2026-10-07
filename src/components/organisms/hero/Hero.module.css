@@ -1,0 +1,211 @@
+.hero {
+  container-type: inline-size;
+  width: 100%;
+  padding-block: var(--space-lg);
+  background: var(--gradient-hero-glow);
+}
+
+.heroContainer {
+  composes: container from "../../../styles/layout.module.css";
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "eyebrow"
+    "heading"
+    "body"
+    "media"
+    "actions";
+  row-gap: var(--space-md);
+}
+
+.textGroup {
+  display: contents;
+}
+
+@container (min-width: 860px) {
+  .content {
+    grid-template-columns: 1.15fr 0.85fr;
+    grid-template-areas: "text media";
+    align-items: center;
+    gap: var(--space-2xl);
+
+    /* A floor, never a fixed height: a hard height clips copy that runs long. */
+    min-height: 440px;
+  }
+
+  .textGroup {
+    grid-area: text;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--space-md);
+  }
+
+  .actionsArea {
+    margin-top: 0;
+  }
+}
+
+.eyebrowArea {
+  grid-area: eyebrow;
+}
+
+.headingArea {
+  grid-area: heading;
+}
+
+.bodyArea {
+  grid-area: body;
+  max-width: 540px;
+}
+
+.mediaArea {
+  grid-area: media;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-block: var(--space-md);
+}
+
+@container (min-width: 860px) {
+  .mediaArea {
+    margin-block: 0;
+  }
+}
+
+.imageWrapper {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  aspect-ratio: 1 / 1;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius-full);
+  border: 5px solid var(--color-border-accent);
+  object-fit: cover;
+  display: block;
+}
+
+.badge {
+  /* Component token */
+  --space-badge-padding: 0.9375rem; /* 15px */
+
+  display: none;
+  position: absolute;
+  top: 4%;
+  right: 2%;
+  width: 128px;
+  height: 128px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-surface-inverse);
+  color: var(--color-text-inverted);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-shadow: var(--shadow-md);
+  padding: var(--space-badge-padding);
+}
+
+@container (min-width: 860px) {
+  .badge {
+    display: flex;
+  }
+}
+
+.badgePercent {
+  font-family: var(--font-family-display);
+  font-size: 2.5rem; /* 40px, fixed per design spec — not the responsive --font-size-stat clamp */
+  line-height: 2.75rem; /* 44px */
+  letter-spacing: var(--tracking-stat);
+  font-weight: var(--font-weight-bold);
+}
+
+.badgePercentSymbol {
+  font-size: var(--font-size-h4); /* 20px, ~half the number per design */
+  vertical-align: super;
+}
+
+.badgeLabel {
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-btn);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-btn);
+  letter-spacing: var(--tracking-normal);
+  margin-top: 2px;
+  white-space: pre-line;
+}
+
+/* Squared Variant (Product Detail) */
+.imageWrapperSquared {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  aspect-ratio: 1 / 1;
+}
+
+.imageSquared {
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  border: none;
+  object-fit: cover;
+  display: block;
+  box-shadow: 0 4px 20px rgb(0 40 69 / 8%);
+}
+
+.badgeSquared {
+  display: flex;
+  position: absolute;
+  top: -12px;
+  right: -16px;
+  width: clamp(84px, 20cqi, 110px);
+  aspect-ratio: 1 / 1;
+  border-radius: var(--radius-full);
+  background-color: var(--color-surface-inverse);
+  color: var(--color-text-inverted);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-shadow: 0 8px 24px rgb(0 40 69 / 25%);
+  padding: var(--space-3xs);
+  z-index: 2;
+}
+
+.actionsArea {
+  grid-area: actions;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-top: var(--space-xs);
+  width: 100%;
+}
+
+.actionBtn {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+@container (min-width: 640px) {
+  .actionsArea {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--space-md);
+    width: auto;
+  }
+
+  .actionBtn {
+    width: fit-content;
+    display: inline-flex;
+  }
+}
