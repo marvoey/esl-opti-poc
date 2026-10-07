@@ -96,6 +96,13 @@ import { EslFilterableProductCardGridContentType } from '@/components/cms/compon
 import EslFilterableProductCardGrid from '@/components/cms/components/EslFilterableProductCardGridRenderer';
 import { EslSeoContract } from '@/components/cms/shared/EslSeoContract';
 import BlankSection from '@/components/cms/components/BlankSectionRenderer';
+import { EslTableCtaColumnContentType } from '@/components/cms/components/EslTableCtaColumn';
+import { EslTableCtaRowContentType } from '@/components/cms/components/EslTableCtaRow';
+import { EslTableCtaLeftColumnContentType } from '@/components/cms/components/EslTableCtaLeftColumn';
+import EslTableCtaLeftColumn from '@/components/cms/components/EslTableCtaLeftColumnRenderer';
+import { EslProductPathwaysRowContentType } from '@/components/cms/components/EslProductPathwaysRow';
+import { EslProductPathwaysContentType } from '@/components/cms/components/EslProductPathways';
+import EslProductPathways from '@/components/cms/components/EslProductPathwaysRenderer';
 
 export function ensureOptimizelyRegistry() {
 
@@ -161,6 +168,11 @@ export function ensureOptimizelyRegistry() {
     EslLongTextLeftCardsRightContentType,
     EslFilterableProductCardGridItemContentType,
     EslFilterableProductCardGridContentType,
+    EslTableCtaColumnContentType,
+    EslTableCtaRowContentType,
+    EslTableCtaLeftColumnContentType,
+    EslProductPathwaysRowContentType,
+    EslProductPathwaysContentType,
   ]);
 
   initReactComponentRegistry({
@@ -198,6 +210,8 @@ export function ensureOptimizelyRegistry() {
       EslIconCardSingleColumnGrid,
       EslLongTextLeftCardsRight,
       EslFilterableProductCardGrid,
+      EslTableCtaLeftColumn,
+      EslProductPathways,
       EslSiteSettings,
       EslStartPage,
     },

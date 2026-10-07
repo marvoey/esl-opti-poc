@@ -69,11 +69,13 @@ describe('EslProductFamilyPage Content Type & Renderer', () => {
       'EslIconCardSingleColumnGrid',
       'EslLongTextLeftCardsRight',
       'EslFilterableProductCardGrid',
+      'EslTableCtaLeftColumn',
+      'EslProductPathways',
     ]);
   });
 
-  it('exposes exactly 29 allowed section items', () => {
-    expect(ESL_PRODUCT_FAMILY_ALLOWED_SECTIONS).toHaveLength(29);
+  it('exposes exactly 31 allowed section items', () => {
+    expect(ESL_PRODUCT_FAMILY_ALLOWED_SECTIONS).toHaveLength(31);
     const keys = ESL_PRODUCT_FAMILY_ALLOWED_SECTIONS.map((s) => s.key);
     expect(keys).toContain('EslProductDetailExperience');
     expect(keys).toContain('EslHeroSlider');
@@ -94,6 +96,8 @@ describe('EslProductFamilyPage Content Type & Renderer', () => {
     expect(keys).toContain('EslIconCardSingleColumnGrid');
     expect(keys).toContain('EslLongTextLeftCardsRight');
     expect(keys).toContain('EslFilterableProductCardGrid');
+    expect(keys).toContain('EslTableCtaLeftColumn');
+    expect(keys).toContain('EslProductPathways');
   });
 
   it('returns null when content is missing or nodes are empty (no static fallbacks)', () => {
