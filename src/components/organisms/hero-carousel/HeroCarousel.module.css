@@ -41,7 +41,10 @@
     grid-template-areas: "text media";
     align-items: center;
     gap: var(--space-2xl);
-    height: 440px;
+
+    /* A floor, not a fixed height: the carousel viewport clips overflow, so a
+       hard height silently cut off slides whose copy ran past 440px. */
+    min-height: 440px;
   }
 
   .textGroup {
