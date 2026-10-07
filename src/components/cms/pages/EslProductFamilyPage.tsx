@@ -36,5 +36,7 @@ export const EslProductFamilyExperienceContentType = contentType({
     'EslIconCardSingleColumnGrid',
     'EslLongTextLeftCardsRight',
     'EslFilterableProductCardGrid',
+    'EslTableCtaLeftColumn',
+    'EslProductPathways',
   ],
 });

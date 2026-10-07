@@ -1,0 +1,109 @@
+.section {
+  container-type: inline-size;
+  inline-size: 100%;
+  background-color: var(--color-bg);
+}
+
+.container {
+  composes: container from "../../../styles/layout.module.css";
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  padding-block: var(--space-2xl);
+}
+
+.title {
+  margin: 0;
+  color: var(--color-text-primary);
+}
+
+.scrollRegion {
+  overflow: auto hidden;
+  overscroll-behavior-x: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border-subtle) transparent;
+  border: 1px solid var(--color-border-card);
+  border-radius: var(--radius-xl);
+  background-color: var(--color-surface-raised);
+  box-shadow: var(--shadow-elevation-md);
+}
+
+.scrollRegion:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
+/* Auto layout: columns grow to fit nowrap CTA labels instead of clipping them. */
+.table {
+  inline-size: 100%;
+  min-inline-size: 32rem;
+  table-layout: auto;
+  border-collapse: collapse;
+}
+
+.headerCell,
+.rowHeader,
+.cell,
+.ctaCell {
+  padding: var(--space-md);
+  text-align: left;
+  vertical-align: middle;
+  border-inline-end: 1px solid var(--color-border-card);
+}
+
+.headerCell:last-child,
+.cell:last-child,
+.ctaCell:last-child {
+  border-inline-end: 0;
+}
+
+.headerCell {
+  padding-block: var(--space-lg);
+  background-color: var(--color-surface-inverse);
+}
+
+.rowHeader,
+.cell {
+  border-block-end: 1px solid var(--color-border-card);
+}
+
+.labelColumn {
+  inline-size: 18%;
+}
+
+.cell {
+  transition: background-color var(--duration-smart) var(--ease-out-smart);
+}
+
+.ctaCell {
+  padding-block: var(--space-lg);
+}
+
+tr:hover > .cell {
+  background-color: var(--color-bg-subtle);
+}
+
+.visuallyHidden {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+@container (inline-size < 48rem) {
+  .container {
+    padding-block: var(--space-xl);
+  }
+
+  .headerCell,
+  .rowHeader,
+  .cell,
+  .ctaCell {
+    padding: var(--space-sm);
+  }
+}

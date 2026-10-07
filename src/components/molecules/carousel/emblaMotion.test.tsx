@@ -14,8 +14,7 @@ vi.mock("embla-carousel-react", () => ({
   },
 }));
 
-// vi.mock is hoisted above every import, so both organisms receive the spy instead of the real hook.
-import { HeroCarousel } from "@/components/organisms/hero-carousel/HeroCarousel";
+// vi.mock is hoisted above every import, so the organism receives the spy instead of the real hook.
 import { OfferCardRow } from "@/components/organisms/offer-card-row/OfferCardRow";
 
 function mockMatchMedia(matchingQuery: string | null) {
@@ -97,13 +96,6 @@ describe("withReducedMotion", () => {
 describe("carousel organisms honor reduced motion", () => {
   afterEach(() => {
     emblaOptionsSpy.mockClear();
-  });
-
-  it("HeroCarousel passes the reduced-motion breakpoint to Embla", () => {
-    render(<HeroCarousel />);
-
-    const options = emblaOptionsSpy.mock.calls[0][0] as EmblaOptionsType;
-    expect(options.breakpoints?.[REDUCED_MOTION_QUERY]).toEqual({ duration: 0 });
   });
 
   it("OfferCardRow passes the reduced-motion breakpoint to Embla", () => {

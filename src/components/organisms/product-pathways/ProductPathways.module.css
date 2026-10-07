@@ -1,0 +1,74 @@
+.section {
+  container-type: inline-size;
+  inline-size: 100%;
+  background-color: var(--color-bg);
+}
+
+.container {
+  composes: container from "../../../styles/layout.module.css";
+  padding-block: var(--space-2xl);
+}
+
+.card {
+  overflow: hidden;
+  background-color: var(--color-surface-raised);
+  border: 1px solid var(--color-border-card);
+  border-radius: var(--radius-xl);
+}
+
+/* Header and rows share one track definition so the columns line up. */
+.header,
+.row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-sm);
+  padding: var(--space-lg);
+}
+
+.header {
+  background-color: var(--color-surface-inverse);
+}
+
+.title {
+  margin: 0;
+}
+
+.copy {
+  margin: 0;
+}
+
+.copy p {
+  margin: 0;
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.row + .row {
+  border-block-start: 1px solid var(--color-border-card);
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  color: var(--color-primary);
+}
+
+.icon {
+  flex-shrink: 0;
+}
+
+@container (inline-size >= 40rem) {
+  .header,
+  .row {
+    grid-template-columns: minmax(min-content, 18rem) 1fr;
+    align-items: center;
+    column-gap: var(--space-xl);
+    padding-block: var(--space-xl);
+    padding-inline: var(--space-2xl);
+  }
+}
