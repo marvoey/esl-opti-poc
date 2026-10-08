@@ -2,7 +2,6 @@ import React from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { OptimizelyComponent } from "@optimizely/cms-sdk/react/server";
-import { Hero } from "@/components/organisms/hero/Hero";
 import { resolvePage } from "@/infrastructure/cms/resolvePage";
 import { resolveSiteByKey } from "@/infrastructure/cms/siteRouting";
 import { resolveSiteTitle } from "@/infrastructure/cms/resolveSiteTitle";
@@ -86,10 +85,6 @@ export default async function CmsPage({ params }: Props) {
           dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }}
         />
       )}
-      {/* Preview of the static Hero sitting above the hero slider. It has no CMS
-          content type yet, so it renders its own defaults; remove once the
-          renderer is wired up. */}
-      <Hero />
       <OptimizelyComponent content={context.content} />
     </main>
   );

@@ -40,5 +40,6 @@ export const EslProductFamilyExperienceContentType = contentType({
     'EslProductPathways',
     'EslGuidanceDetailPanel',
     'EslInformationalCard',
+    'EslHero',
   ],
 });

@@ -40,6 +40,7 @@ export const KNOWN_COMPONENT_NAMES: Record<string, string> = {
   EslProductPathways: 'ESL Product Pathways',
   EslGuidanceDetailPanel: 'ESL Guidance Detail Panel',
   EslInformationalCard: 'ESL Informational Card',
+  EslHero: 'ESL Hero',
 };
 
 export function getAllowedSectionsFromContentType(

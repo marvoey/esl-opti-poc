@@ -71,6 +71,7 @@ describe('EslProductDetailPageRenderer', () => {
       'EslProductPathways',
       'EslGuidanceDetailPanel',
       'EslInformationalCard',
+      'EslHero',
     ]);
   });
 

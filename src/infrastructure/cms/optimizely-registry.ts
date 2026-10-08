@@ -109,6 +109,8 @@ import { EslGuidanceDetailPanelContentType } from '@/components/cms/components/E
 import EslGuidanceDetailPanel from '@/components/cms/components/EslGuidanceDetailPanelRenderer';
 import { EslInformationalCardContentType } from '@/components/cms/components/EslInformationalCard';
 import EslInformationalCard from '@/components/cms/components/EslInformationalCardRenderer';
+import { EslHeroContentType } from '@/components/cms/components/EslHero';
+import EslHero from '@/components/cms/components/EslHeroRenderer';
 
 export function ensureOptimizelyRegistry() {
 
@@ -183,6 +185,7 @@ export function ensureOptimizelyRegistry() {
     EslGuidanceToolItemContentType,
     EslGuidanceDetailPanelContentType,
     EslInformationalCardContentType,
+    EslHeroContentType,
   ]);
 
   initReactComponentRegistry({
@@ -224,6 +227,7 @@ export function ensureOptimizelyRegistry() {
       EslProductPathways,
       EslGuidanceDetailPanel,
       EslInformationalCard,
+      EslHero,
       EslSiteSettings,
       EslStartPage,
     },

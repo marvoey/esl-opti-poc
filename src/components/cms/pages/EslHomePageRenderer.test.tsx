@@ -202,15 +202,17 @@ describe('EslHomePageRenderer', () => {
       'EslProductPathways',
       'EslGuidanceDetailPanel',
       'EslInformationalCard',
+      'EslHero',
     ]);
     expect(EslHomeExperienceContentType.mayContainTypes).toContain('EslProductFamilyExperience');
     expect(EslHomeExperienceContentType.mayContainTypes).not.toContain('EslProductDetailExperience');
   });
 
-  it('exposes exactly 33 allowed section items containing EslProductFamilyExperience and excluding EslProductDetailExperience', () => {
-    expect(ESL_HOME_ALLOWED_SECTIONS).toHaveLength(33);
+  it('exposes exactly 34 allowed section items containing EslProductFamilyExperience and excluding EslProductDetailExperience', () => {
+    expect(ESL_HOME_ALLOWED_SECTIONS).toHaveLength(34);
     const keys = ESL_HOME_ALLOWED_SECTIONS.map((s) => s.key);
     expect(keys).toContain('EslProductFamilyExperience');
+    expect(keys).toContain('EslHero');
     expect(keys).toContain('EslKeyFactsRow');
     expect(keys).toContain('EslCompareTable');
     expect(keys).toContain('EslLongTextLeftCardsRight');

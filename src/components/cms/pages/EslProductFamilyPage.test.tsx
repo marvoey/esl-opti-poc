@@ -73,13 +73,15 @@ describe('EslProductFamilyPage Content Type & Renderer', () => {
       'EslProductPathways',
       'EslGuidanceDetailPanel',
       'EslInformationalCard',
+      'EslHero',
     ]);
   });
 
-  it('exposes exactly 33 allowed section items', () => {
-    expect(ESL_PRODUCT_FAMILY_ALLOWED_SECTIONS).toHaveLength(33);
+  it('exposes exactly 34 allowed section items', () => {
+    expect(ESL_PRODUCT_FAMILY_ALLOWED_SECTIONS).toHaveLength(34);
     const keys = ESL_PRODUCT_FAMILY_ALLOWED_SECTIONS.map((s) => s.key);
     expect(keys).toContain('EslProductDetailExperience');
+    expect(keys).toContain('EslHero');
     expect(keys).toContain('EslHeroSlider');
     expect(keys).toContain('EslSnipeCta');
     expect(keys).toContain('EslTabbedSolutions');
