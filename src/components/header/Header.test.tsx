@@ -1,8 +1,17 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import React from "react";
 import { Header } from "./Header";
 import { NavigationModel } from "@/domain/models/Navigation";
+
+// The header asks the server who is signed in; tests choose the answer instead of fetching.
+const sessionUser = vi.hoisted(() => ({ current: null as { displayName: string } | null }));
+vi.mock("./useSessionUser", () => ({ useSessionUser: () => sessionUser.current, announceSignOut: vi.fn() }));
+vi.mock("@/app/sites/[site]/sign-in/actions", () => ({ signOut: vi.fn() }));
+
+beforeEach(() => {
+  sessionUser.current = null;
+});
 
 describe("Header Component", () => {
   it("renders the brand logo, default nav items, and Join/Sign in actions by default", () => {
@@ -271,5 +280,57 @@ describe("Header Component", () => {
     expect(personalTrigger.getAttribute("aria-expanded")).toBe("false");
     expect(businessTrigger.getAttribute("aria-expanded")).toBe("true");
     expect(screen.getByText("Business Growth")).toBeDefined();
+  });
+
+  describe("when a user is signed in", () => {
+    beforeEach(() => {
+      sessionUser.current = { displayName: "Alice Tester" };
+    });
+
+    it("replaces the Sign in button with the user's name and a Sign out button", () => {
+      render(<Header />);
+
+      expect(screen.queryByRole("link", { name: /sign in/i })).toBeNull();
+      expect(screen.queryByRole("link", { name: "Join" })).toBeNull();
+      expect(screen.getAllByText("Alice Tester").length).toBeGreaterThan(0);
+      expect(screen.getAllByRole("button", { name: "Sign out" }).length).toBeGreaterThan(0);
+    });
+
+    it("keeps other CMS CTAs but hides ones pointing at the join or sign-in pages, and adds the account menu", () => {
+      render(
+        <Header
+          ctaText="Join"
+          ctaHref="/join"
+          secondaryCtaText="Sign in"
+          secondaryCtaHref="/sign-in"
+        />
+      );
+
+      expect(screen.queryByRole("link", { name: "Join" })).toBeNull();
+      expect(screen.queryByRole("link", { name: "Sign in" })).toBeNull();
+      expect(screen.getAllByText("Alice Tester").length).toBeGreaterThan(0);
+      expect(screen.getAllByRole("button", { name: "Sign out" }).length).toBeGreaterThan(0);
+    });
+  });
+
+  it("keeps unrelated CMS CTAs when signed in", () => {
+    sessionUser.current = { displayName: "Alice Tester" };
+    render(<Header ctaText="Open an account" ctaHref="/open-account" />);
+
+    expect(screen.getAllByRole("link", { name: "Open an account" }).length).toBeGreaterThan(0);
+  });
+
+  it("shows Join and Sign in, and no account menu, when nobody is signed in", () => {
+    render(<Header />);
+
+    expect(screen.getAllByRole("link", { name: "Join" }).length).toBeGreaterThan(0);
+    expect(screen.queryByRole("button", { name: "Sign out" })).toBeNull();
+  });
+
+  it("shows the normal Sign in link and no account menu when nobody is signed in", () => {
+    render(<Header ctaText="Open an account" ctaHref="/open-account" secondaryCtaText="Sign in" secondaryCtaHref="/sign-in" />);
+
+    expect(screen.getAllByRole("link", { name: "Sign in" }).length).toBeGreaterThan(0);
+    expect(screen.queryByRole("button", { name: "Sign out" })).toBeNull();
   });
 });

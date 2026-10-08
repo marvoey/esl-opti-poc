@@ -90,6 +90,7 @@
   --color-accent: var(--color-aqua-500);
   --color-accent-subtle: var(--color-grey-95);
   --color-focus-ring: var(--color-aqua-500);
+  --color-error: #B42318; /* Form validation / sign-in errors; 6.5:1 on white */
 
   /* Gradients */
   --gradient-hero-glow: radial-gradient(58.07% 88.19% at 17.99% 3.33%, var(--color-sky-300) 4.85%, var(--color-aqua-100) 50%, var(--color-white) 100%);
