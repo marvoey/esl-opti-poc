@@ -38,6 +38,9 @@ export const KNOWN_COMPONENT_NAMES: Record<string, string> = {
   EslFilterableProductCardGrid: 'ESL Filterable Product Card Grid',
   EslTableCtaLeftColumn: 'ESL Table CTA Left Column',
   EslProductPathways: 'ESL Product Pathways',
+  EslGuidanceDetailPanel: 'ESL Guidance Detail Panel',
+  EslInformationalCard: 'ESL Informational Card',
+  EslHero: 'ESL Hero',
 };
 
 export function getAllowedSectionsFromContentType(

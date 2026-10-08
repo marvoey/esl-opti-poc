@@ -1,0 +1,76 @@
+.card {
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-lg);
+  inline-size: 100%;
+  max-inline-size: 28rem;
+  block-size: 100%;
+  padding: var(--space-md);
+  background-color: var(--color-card-bg);
+  border: 1px solid var(--color-border-card);
+  border-radius: var(--radius-lg);
+  color: var(--color-text-primary);
+  transition: var(--transition-ui);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-xs);
+}
+
+.title,
+.description,
+.note {
+  margin: 0;
+}
+
+.description p {
+  margin: 0;
+}
+
+.badge {
+  margin-block-end: var(--space-2xs);
+}
+
+.divider {
+  align-self: stretch;
+  margin: var(--space-2xs) 0;
+  border: 0;
+  border-block-start: 1px solid var(--color-border-subtle);
+}
+
+.cta {
+  align-self: flex-start;
+  transition: var(--transition-ui);
+}
+
+/* Stretched link: the whole card is the hit area, the link keeps its own name. */
+.interactive .cta::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+
+.interactive:hover,
+.interactive:focus-within {
+  border-color: var(--color-card-ring-hover);
+  box-shadow: var(--shadow-ring-hover);
+}
+
+.interactive:hover .cta,
+.interactive:focus-within .cta {
+  color: var(--color-accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .cta {
+    transition: none;
+  }
+}
