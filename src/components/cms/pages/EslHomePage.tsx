@@ -38,6 +38,8 @@ export const EslHomeExperienceContentType = contentType({
     'EslFilterableProductCardGrid',
     'EslTableCtaLeftColumn',
     'EslProductPathways',
+    'EslGuidanceDetailPanel',
+    'EslInformationalCard',
   ],
 });
 

@@ -200,13 +200,15 @@ describe('EslHomePageRenderer', () => {
       'EslFilterableProductCardGrid',
       'EslTableCtaLeftColumn',
       'EslProductPathways',
+      'EslGuidanceDetailPanel',
+      'EslInformationalCard',
     ]);
     expect(EslHomeExperienceContentType.mayContainTypes).toContain('EslProductFamilyExperience');
     expect(EslHomeExperienceContentType.mayContainTypes).not.toContain('EslProductDetailExperience');
   });
 
-  it('exposes exactly 31 allowed section items containing EslProductFamilyExperience and excluding EslProductDetailExperience', () => {
-    expect(ESL_HOME_ALLOWED_SECTIONS).toHaveLength(31);
+  it('exposes exactly 33 allowed section items containing EslProductFamilyExperience and excluding EslProductDetailExperience', () => {
+    expect(ESL_HOME_ALLOWED_SECTIONS).toHaveLength(33);
     const keys = ESL_HOME_ALLOWED_SECTIONS.map((s) => s.key);
     expect(keys).toContain('EslProductFamilyExperience');
     expect(keys).toContain('EslKeyFactsRow');
@@ -215,6 +217,8 @@ describe('EslHomePageRenderer', () => {
     expect(keys).toContain('EslFilterableProductCardGrid');
     expect(keys).toContain('EslTableCtaLeftColumn');
     expect(keys).toContain('EslProductPathways');
+    expect(keys).toContain('EslGuidanceDetailPanel');
+    expect(keys).toContain('EslInformationalCard');
     expect(keys).not.toContain('EslProductDetailExperience');
   });
 

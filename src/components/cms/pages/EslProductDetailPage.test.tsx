@@ -69,6 +69,8 @@ describe('EslProductDetailPageRenderer', () => {
       'EslFilterableProductCardGrid',
       'EslTableCtaLeftColumn',
       'EslProductPathways',
+      'EslGuidanceDetailPanel',
+      'EslInformationalCard',
     ]);
   });
 

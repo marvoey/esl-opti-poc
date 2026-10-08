@@ -103,6 +103,12 @@ import EslTableCtaLeftColumn from '@/components/cms/components/EslTableCtaLeftCo
 import { EslProductPathwaysRowContentType } from '@/components/cms/components/EslProductPathwaysRow';
 import { EslProductPathwaysContentType } from '@/components/cms/components/EslProductPathways';
 import EslProductPathways from '@/components/cms/components/EslProductPathwaysRenderer';
+import { EslGuidanceStartingPointItemContentType } from '@/components/cms/components/EslGuidanceStartingPointItem';
+import { EslGuidanceToolItemContentType } from '@/components/cms/components/EslGuidanceToolItem';
+import { EslGuidanceDetailPanelContentType } from '@/components/cms/components/EslGuidanceDetailPanel';
+import EslGuidanceDetailPanel from '@/components/cms/components/EslGuidanceDetailPanelRenderer';
+import { EslInformationalCardContentType } from '@/components/cms/components/EslInformationalCard';
+import EslInformationalCard from '@/components/cms/components/EslInformationalCardRenderer';
 
 export function ensureOptimizelyRegistry() {
 
@@ -173,6 +179,10 @@ export function ensureOptimizelyRegistry() {
     EslTableCtaLeftColumnContentType,
     EslProductPathwaysRowContentType,
     EslProductPathwaysContentType,
+    EslGuidanceStartingPointItemContentType,
+    EslGuidanceToolItemContentType,
+    EslGuidanceDetailPanelContentType,
+    EslInformationalCardContentType,
   ]);
 
   initReactComponentRegistry({
@@ -212,6 +222,8 @@ export function ensureOptimizelyRegistry() {
       EslFilterableProductCardGrid,
       EslTableCtaLeftColumn,
       EslProductPathways,
+      EslGuidanceDetailPanel,
+      EslInformationalCard,
       EslSiteSettings,
       EslStartPage,
     },
