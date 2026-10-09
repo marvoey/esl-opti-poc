@@ -1,0 +1,44 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  width: 100%;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
+
+.label {
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-body-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+}
+
+.input {
+  box-sizing: border-box;
+  width: 100%;
+  padding: var(--space-xs) var(--space-sm);
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-body);
+  color: var(--color-text-primary);
+  background-color: var(--color-surface-raised);
+  border: 1px solid var(--color-border-card);
+  border-radius: var(--radius-md);
+}
+
+.input:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+.input[aria-invalid="true"] {
+  border-color: var(--color-error);
+}
+
+.error {
+  color: var(--color-error);
+}

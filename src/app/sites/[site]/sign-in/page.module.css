@@ -1,0 +1,20 @@
+.main {
+  display: flex;
+  justify-content: center;
+  padding: var(--space-3xl) var(--container-gutter);
+  background-color: var(--color-bg-subtle);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 28rem;
+  padding: var(--space-xl);
+  background-color: var(--color-surface-raised);
+  border: 1px solid var(--color-border-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-elevation-sm);
+}

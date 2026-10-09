@@ -8,6 +8,8 @@ import { Button } from "@/components/atoms/button/Button";
 import { UserIcon, ChevronDownIcon, CloseIcon, Icon, type IconName } from "@/components/atoms/icons";
 import type { NavigationModel } from "@/domain/models/Navigation";
 import { MegaMenu } from "./mega-menu/MegaMenu";
+import { AccountMenu } from "./AccountMenu";
+import { useSessionUser, type SessionUserView } from "./useSessionUser";
 import { PERSONAL_MEGA_MENU, type MegaMenuData } from "./megaMenuData";
 import styles from "./Header.module.css";
 
@@ -59,6 +61,18 @@ const DEFAULT_HEADER_NAV_LINKS: HeaderNavLink[] = [
 ];
 
 const CLOSE_DELAY_MS = 150;
+
+/** True when a link goes to the given page (matching path, ignoring origin, query and trailing slash). */
+function pointsAt(href: string | undefined, target: string): boolean {
+  if (!href) return false;
+  const pathOf = (value: string) => value.replace(/^https?:\/\/[^/]+/i, "").split(/[?#]/)[0].replace(/\/+$/, "") || "/";
+  return pathOf(href) === pathOf(target);
+}
+
+/** Signed-in members don't need the "Join" or "Sign in" calls to action. */
+function isHiddenWhenSignedIn(href: string | undefined, joinHref: string, signInHref: string): boolean {
+  return pointsAt(href, joinHref) || pointsAt(href, signInHref);
+}
 
 // ---------------------------------------------------------------------------
 // Private sub-components
@@ -153,6 +167,7 @@ interface MobileDrawerProps {
   joinHref: string;
   signInText: string;
   signInHref: string;
+  sessionUser: SessionUserView | null;
 }
 
 function MobileDrawer({
@@ -160,7 +175,7 @@ function MobileDrawer({
   hasCmsActions,
   ctaText, ctaHref, ctaVariant, ctaLeftIcon, ctaRightIcon, ctaBlank,
   secondaryCtaText, secondaryCtaHref, secondaryCtaVariant, secondaryCtaLeftIcon, secondaryCtaRightIcon, secondaryCtaBlank,
-  joinText, joinHref, signInText, signInHref,
+  joinText, joinHref, signInText, signInHref, sessionUser,
 }: MobileDrawerProps) {
   return (
     <div id={id} className={styles.mobileDrawer}>
@@ -213,7 +228,7 @@ function MobileDrawer({
       <div className={styles.mobileActions}>
         {hasCmsActions ? (
           <>
-            {ctaText && ctaHref && (
+            {ctaText && ctaHref && !(sessionUser && isHiddenWhenSignedIn(ctaHref, joinHref, signInHref)) && (
               <Button
                 variant={ctaVariant}
                 size="sm"
@@ -228,7 +243,7 @@ function MobileDrawer({
                 {ctaText}
               </Button>
             )}
-            {secondaryCtaText && secondaryCtaHref && (
+            {secondaryCtaText && secondaryCtaHref && !(sessionUser && isHiddenWhenSignedIn(secondaryCtaHref, joinHref, signInHref)) && (
               <Button
                 variant={secondaryCtaVariant}
                 size="sm"
@@ -243,23 +258,30 @@ function MobileDrawer({
                 {secondaryCtaText}
               </Button>
             )}
+            {sessionUser && <AccountMenu displayName={sessionUser.displayName} variant="mobile" />}
           </>
         ) : (
           <>
-            <Button variant="outline" size="sm" shape="pill" href={joinHref} fullWidth>
-              {joinText}
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              shape="pill"
-              href={signInHref}
-              leftIcon={<UserIcon size={16} />}
-              className={styles.mobileSignInButton}
-              fullWidth
-            >
-              {signInText}
-            </Button>
+            {!sessionUser && (
+              <Button variant="outline" size="sm" shape="pill" href={joinHref} fullWidth>
+                {joinText}
+              </Button>
+            )}
+            {sessionUser ? (
+              <AccountMenu displayName={sessionUser.displayName} variant="mobile" />
+            ) : (
+              <Button
+                variant="outline"
+                size="sm"
+                shape="pill"
+                href={signInHref}
+                leftIcon={<UserIcon size={16} />}
+                className={styles.mobileSignInButton}
+                fullWidth
+              >
+                {signInText}
+              </Button>
+            )}
           </>
         )}
       </div>
@@ -285,6 +307,7 @@ interface DesktopActionsProps {
   joinHref: string;
   signInText: string;
   signInHref: string;
+  sessionUser: SessionUserView | null;
   mobileOpen: boolean;
   drawerId: string;
   onMobileToggle: () => void;
@@ -294,14 +317,14 @@ function DesktopActions({
   hasCmsActions,
   ctaText, ctaHref, ctaVariant, ctaLeftIcon, ctaRightIcon, ctaBlank,
   secondaryCtaText, secondaryCtaHref, secondaryCtaVariant, secondaryCtaLeftIcon, secondaryCtaRightIcon, secondaryCtaBlank,
-  joinText, joinHref, signInText, signInHref,
+  joinText, joinHref, signInText, signInHref, sessionUser,
   mobileOpen, drawerId, onMobileToggle,
 }: DesktopActionsProps) {
   return (
     <div className={styles.actions}>
       {hasCmsActions ? (
         <>
-          {ctaText && ctaHref && (
+          {ctaText && ctaHref && !(sessionUser && isHiddenWhenSignedIn(ctaHref, joinHref, signInHref)) && (
             <Button
               variant={ctaVariant}
               size="sm"
@@ -316,7 +339,7 @@ function DesktopActions({
               {ctaText}
             </Button>
           )}
-          {secondaryCtaText && secondaryCtaHref && (
+          {secondaryCtaText && secondaryCtaHref && !(sessionUser && isHiddenWhenSignedIn(secondaryCtaHref, joinHref, signInHref)) && (
             <Button
               variant={secondaryCtaVariant}
               size="sm"
@@ -331,22 +354,29 @@ function DesktopActions({
               {secondaryCtaText}
             </Button>
           )}
+          {sessionUser && <AccountMenu displayName={sessionUser.displayName} />}
         </>
       ) : (
         <>
-          <Button variant="outline" size="sm" shape="pill" href={joinHref} className={styles.joinButton}>
-            {joinText}
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            shape="pill"
-            href={signInHref}
-            leftIcon={<UserIcon size={16} />}
-            className={styles.signInButton}
-          >
-            {signInText}
-          </Button>
+          {!sessionUser && (
+            <Button variant="outline" size="sm" shape="pill" href={joinHref} className={styles.joinButton}>
+              {joinText}
+            </Button>
+          )}
+          {sessionUser ? (
+            <AccountMenu displayName={sessionUser.displayName} />
+          ) : (
+            <Button
+              variant="outline"
+              size="sm"
+              shape="pill"
+              href={signInHref}
+              leftIcon={<UserIcon size={16} />}
+              className={styles.signInButton}
+            >
+              {signInText}
+            </Button>
+          )}
         </>
       )}
 
@@ -493,6 +523,7 @@ export function Header(props: HeaderProps = {}) {
     useHeaderInteractions();
 
   const drawerId = `${autoId}-mobile-drawer`;
+  const sessionUser = useSessionUser();
 
   const drawerProps: MobileDrawerProps = {
     id: drawerId,
@@ -504,7 +535,7 @@ export function Header(props: HeaderProps = {}) {
     ctaLeftIcon: primaryIconProps.leftIcon, ctaRightIcon: primaryIconProps.rightIcon, ctaBlank: isCtaBlank,
     secondaryCtaText, secondaryCtaHref, secondaryCtaVariant: resolvedSecondaryVariant,
     secondaryCtaLeftIcon: secondaryIconProps.leftIcon, secondaryCtaRightIcon: secondaryIconProps.rightIcon, secondaryCtaBlank: isSecondaryCtaBlank,
-    joinText, joinHref, signInText, signInHref,
+    joinText, joinHref, signInText, signInHref, sessionUser,
   };
 
   return (
@@ -550,7 +581,7 @@ export function Header(props: HeaderProps = {}) {
             ctaLeftIcon={primaryIconProps.leftIcon} ctaRightIcon={primaryIconProps.rightIcon} ctaBlank={isCtaBlank}
             secondaryCtaText={secondaryCtaText} secondaryCtaHref={secondaryCtaHref} secondaryCtaVariant={resolvedSecondaryVariant}
             secondaryCtaLeftIcon={secondaryIconProps.leftIcon} secondaryCtaRightIcon={secondaryIconProps.rightIcon} secondaryCtaBlank={isSecondaryCtaBlank}
-            joinText={joinText} joinHref={joinHref} signInText={signInText} signInHref={signInHref}
+            joinText={joinText} joinHref={joinHref} signInText={signInText} signInHref={signInHref} sessionUser={sessionUser}
             mobileOpen={mobileOpen}
             drawerId={drawerId}
             onMobileToggle={() => setMobileOpen((open) => !open)}
