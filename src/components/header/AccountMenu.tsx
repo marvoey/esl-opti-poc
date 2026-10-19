@@ -15,7 +15,7 @@ export interface AccountMenuProps {
 
 /** Signed-in state of the header: who you are, and a sign-out button. */
 export function AccountMenu({ displayName, variant = "desktop" }: AccountMenuProps) {
-  // Clear the cookies, then do a full page load: the Optimizely snippet only evaluates its
+  // Clear the cookies, then reload the current page: the Optimizely snippet only evaluates its
   // cookie audiences on page load, so a soft navigation would leave the old variation showing.
   async function handleSignOut(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -23,7 +23,7 @@ export function AccountMenu({ displayName, variant = "desktop" }: AccountMenuPro
     try {
       await signOut();
     } finally {
-      window.location.assign("/");
+      window.location.reload();
     }
   }
 

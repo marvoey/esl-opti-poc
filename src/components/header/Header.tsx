@@ -2,6 +2,7 @@
 
 import React, { useCallback, useEffect, useId, useRef, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { BrandLogo } from "@/components/atoms/logo/BrandLogo";
 import { CmsImage } from "@/components/atoms/image/CmsImage";
 import { Button } from "@/components/atoms/button/Button";
@@ -67,6 +68,12 @@ function pointsAt(href: string | undefined, target: string): boolean {
   if (!href) return false;
   const pathOf = (value: string) => value.replace(/^https?:\/\/[^/]+/i, "").split(/[?#]/)[0].replace(/\/+$/, "") || "/";
   return pathOf(href) === pathOf(target);
+}
+
+/** Sign-in link that returns to the current page afterwards (`?next=`); the sign-in page validates it. */
+function withReturnPath(signInHref: string, pathname: string | null): string {
+  if (!pathname || pathname === "/" || pointsAt(pathname, signInHref) || signInHref.includes("next=")) return signInHref;
+  return `${signInHref}${signInHref.includes("?") ? "&" : "?"}next=${encodeURIComponent(pathname)}`;
 }
 
 /** Signed-in members don't need the "Join" or "Sign in" calls to action. */
@@ -511,10 +518,20 @@ function resolveHeaderProps(props: HeaderProps): ResolvedHeaderProps {
 export function Header(props: HeaderProps = {}) {
   const {
     logoUrl, logoAlt,
-    ctaText, ctaHref, secondaryCtaText, secondaryCtaHref,
+    ctaText, ctaHref: configuredCtaHref, secondaryCtaText, secondaryCtaHref: configuredSecondaryCtaHref,
     joinText = "Join", joinHref = "/join",
-    signInText = "Sign in", signInHref = "/sign-in",
+    signInText = "Sign in", signInHref: configuredSignInHref = "/sign-in",
   } = props;
+  // Read from the browser: server-rendered pages are cached and shared, so the server can't know the visitor's page.
+  const [pathname, setPathname] = useState<string | null>(null);
+  const routePath = usePathname(); // only to re-read after client-side navigations
+  useEffect(() => setPathname(window.location.pathname), [routePath]);
+  const signInHref = withReturnPath(configuredSignInHref, pathname);
+  // A CMS call to action can be the sign-in link too (the usual setup), so it returns to this page as well.
+  const returnHere = (href: string | undefined) =>
+    href && pointsAt(href, configuredSignInHref) ? withReturnPath(href, pathname) : href;
+  const ctaHref = returnHere(configuredCtaHref);
+  const secondaryCtaHref = returnHere(configuredSecondaryCtaHref);
 
   const {
     resolvedLinks, resolvedBrandHref, isCtaBlank, isSecondaryCtaBlank, hasCmsActions,
