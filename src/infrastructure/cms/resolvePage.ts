@@ -43,10 +43,14 @@ async function getContentByPath(client: GraphClient, cmsPath: string, origin: st
  */
 export const resolvePage = cache(async (origin: string, publicPath: string): Promise<CmsPageContent | null> => {
   const client = getGraphClient();
-  if (!client) return null;
+  if (!client) {
+    console.log('[DEBUG resolvePage] no Graph client (check OPTIMIZELY_GRAPH_SINGLE_KEY)');
+    return null;
+  }
 
   for (const cmsPath of cmsPathCandidates(publicPath)) {
     const items = await getContentByPath(client, cmsPath, origin);
+    console.log('[DEBUG resolvePage]', { publicPath, cmsPath, host: origin, hits: items?.length ?? 0, urls: items?.map((i) => i._metadata?.url) });
     if (items && items.length > 0) return items[0];
   }
 

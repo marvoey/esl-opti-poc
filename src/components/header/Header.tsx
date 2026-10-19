@@ -10,7 +10,7 @@ import type { NavigationModel } from "@/domain/models/Navigation";
 import { MegaMenu } from "./mega-menu/MegaMenu";
 import { AccountMenu } from "./AccountMenu";
 import { useSessionUser, type SessionUserView } from "./useSessionUser";
-import { PERSONAL_MEGA_MENU, type MegaMenuData } from "./megaMenuData";
+import { PERSONAL_MEGA_MENU, needsFullPageLoad, type MegaMenuData } from "./megaMenuData";
 import styles from "./Header.module.css";
 
 export interface HeaderNavLink {
@@ -204,9 +204,11 @@ function MobileDrawer({
                           <ul className={styles.mobileColumnList}>
                             {column.items.map((navItem) => (
                               <li key={navItem.label}>
-                                <Link href={navItem.href} className={styles.mobileColumnLink}>
-                                  {navItem.label}
-                                </Link>
+                                {React.createElement(
+                                  needsFullPageLoad(navItem.href) ? "a" : Link,
+                                  { href: navItem.href, className: styles.mobileColumnLink },
+                                  navItem.label
+                                )}
                               </li>
                             ))}
                           </ul>

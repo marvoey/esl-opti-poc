@@ -66,3 +66,14 @@ export const PERSONAL_MEGA_MENU: MegaMenuData = {
     ctaHref: "/financial-wellness",
   },
 };
+
+/**
+ * Public paths that must be a full page load, not a client-side navigation, so
+ * server-side personalization runs for the request.
+ */
+const FULL_PAGE_LOAD_PATHS = ["/personal/loans"];
+
+export function needsFullPageLoad(href: string): boolean {
+  const path = href.split(/[?#]/)[0].replace(/\/+$/, "") || "/";
+  return FULL_PAGE_LOAD_PATHS.includes(path);
+}

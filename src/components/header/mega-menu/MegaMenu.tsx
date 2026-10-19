@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { Button } from "@/components/atoms/button/Button";
 import { Icon, ArrowRightIcon } from "@/components/atoms/icons";
-import type { MegaMenuData } from "../megaMenuData";
+import { needsFullPageLoad, type MegaMenuData } from "../megaMenuData";
 import styles from "./MegaMenu.module.css";
 
 export interface MegaMenuProps {
@@ -45,14 +45,16 @@ export function MegaMenu({ id, label, data }: MegaMenuProps) {
                 <ul className={styles.columnList}>
                   {column.items.map((item) => (
                     <li key={item.label}>
-                      <Link href={item.href} className={styles.columnLink}>
+                      {React.createElement(
+                        needsFullPageLoad(item.href) ? "a" : Link,
+                        { href: item.href, className: styles.columnLink },
                         <Icon
                           name={item.icon}
                           size={18}
                           className={styles.columnIcon}
-                        />
+                        />,
                         <span>{item.label}</span>
-                      </Link>
+                      )}
                     </li>
                   ))}
                 </ul>
