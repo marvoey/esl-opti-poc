@@ -45,3 +45,15 @@ export function sessionCookieOptions(env: Env = process.env) {
     maxAge: SESSION_TTL_SECONDS,
   };
 }
+
+/**
+ * Signed-in flag for Optimizely Web Experimentation audiences. The snippet reads cookies through
+ * `document.cookie`, so this one is deliberately not HttpOnly. It carries no identity (just "1"),
+ * which is why the username-bearing session cookie stays HttpOnly. Not for authorization.
+ */
+export const AUDIENCE_COOKIE_NAME = 'esl_signed_in';
+export const AUDIENCE_COOKIE_VALUE = '1';
+
+export function audienceCookieOptions(env: Env = process.env) {
+  return { ...sessionCookieOptions(env), httpOnly: false };
+}

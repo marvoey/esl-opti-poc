@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useActionState, useId } from "react";
+import React, { useActionState, useEffect, useId } from "react";
 import { Button } from "@/components/atoms/button/Button";
 import { Text } from "@/components/atoms/text/Text";
 import { signIn, type SignInState } from "./actions";
@@ -14,6 +14,11 @@ export interface SignInFormProps {
 export function SignInForm({ next }: SignInFormProps) {
   const [state, formAction, pending] = useActionState<SignInState | undefined, FormData>(signIn, undefined);
   const errorId = useId();
+
+  // Full page load so the Optimizely snippet re-evaluates its audiences with the new cookie.
+  useEffect(() => {
+    if (state?.redirectTo) window.location.assign(state.redirectTo);
+  }, [state?.redirectTo]);
 
   return (
     <form action={formAction} className={styles.form} noValidate>

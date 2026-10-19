@@ -1,11 +1,13 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 import { z } from "zod";
 import { findUser } from "@/infrastructure/auth/userStore";
 import { safeRedirectPath } from "@/infrastructure/auth/safeRedirect";
 import {
+  AUDIENCE_COOKIE_NAME,
+  AUDIENCE_COOKIE_VALUE,
+  audienceCookieOptions,
   createSessionValue,
   sessionCookieName,
   sessionCookieOptions,
@@ -13,6 +15,12 @@ import {
 
 export interface SignInState {
   error?: string;
+  /**
+   * Set on success. The client navigates here with a full page load rather than the server
+   * calling redirect(): a soft navigation keeps the Optimizely snippet running, and it only
+   * evaluates its cookie audiences on page load.
+   */
+  redirectTo?: string;
 }
 
 // The password field is for show: it is never read or checked. Only the username picks the member.
@@ -36,16 +44,18 @@ export async function signIn(_previous: SignInState | undefined, formData: FormD
     return { error: UNKNOWN_MEMBER };
   }
 
-  (await cookies()).set(sessionCookieName(), createSessionValue(user), sessionCookieOptions());
+  const cookieStore = await cookies();
+  cookieStore.set(sessionCookieName(), createSessionValue(user), sessionCookieOptions());
+  cookieStore.set(AUDIENCE_COOKIE_NAME, AUDIENCE_COOKIE_VALUE, audienceCookieOptions());
   logAuthEvent("sign_in_succeeded", { username: user.username });
 
-  // redirect() throws, so it stays outside any try/catch.
-  redirect(safeRedirectPath(formData.get("next")));
+  return { redirectTo: safeRedirectPath(formData.get("next")) };
 }
 
 export async function signOut(): Promise<void> {
   // An expired cookie rather than delete(): the __Host- prefix requires the Secure attribute.
-  (await cookies()).set(sessionCookieName(), "", { ...sessionCookieOptions(), maxAge: 0 });
+  const cookieStore = await cookies();
+  cookieStore.set(sessionCookieName(), "", { ...sessionCookieOptions(), maxAge: 0 });
+  cookieStore.set(AUDIENCE_COOKIE_NAME, "", { ...audienceCookieOptions(), maxAge: 0 });
   logAuthEvent("sign_out");
-  redirect("/");
 }

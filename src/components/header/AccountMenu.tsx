@@ -15,6 +15,18 @@ export interface AccountMenuProps {
 
 /** Signed-in state of the header: who you are, and a sign-out button. */
 export function AccountMenu({ displayName, variant = "desktop" }: AccountMenuProps) {
+  // Clear the cookies, then do a full page load: the Optimizely snippet only evaluates its
+  // cookie audiences on page load, so a soft navigation would leave the old variation showing.
+  async function handleSignOut(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    announceSignOut();
+    try {
+      await signOut();
+    } finally {
+      window.location.assign("/");
+    }
+  }
+
   return (
     <div className={variant === "mobile" ? styles.mobileAccount : styles.account}>
       <span className={styles.accountName}>
@@ -24,7 +36,7 @@ export function AccountMenu({ displayName, variant = "desktop" }: AccountMenuPro
           {displayName}
         </span>
       </span>
-      <form action={signOut} onSubmit={announceSignOut}>
+      <form onSubmit={handleSignOut}>
         <Button type="submit" variant="outline" size="sm" shape="pill" fullWidth={variant === "mobile"}>
           Sign out
         </Button>
