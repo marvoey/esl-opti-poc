@@ -184,40 +184,227 @@ If you prefer configuring fields manually or reviewing them in the browser:
 
 ---
 
-## 4. ESL Segment Definitions in ODP
+## 4. ESL Segment Definitions in ODP (UI & Automated API Setup)
 
-Build these 4 segments in ODP (**Customers** > **Segments** > **Create Segment**).
+Segments (audiences) can be configured either programmatically using the **ODP Real-Time Segments REST API** or manually via the ODP Segment Builder interface.
 
-### Segment 1: "Prospective Members - High Lending Intent"
+---
+
+### Method A: Automated Segment Creation via ODP Real-Time Segments API
+
+#### API Specification
+* **Endpoint:** `POST https://api.us1.odp.optimizely.com/v3/segments`  
+  *(Use `api.eu1.odp.optimizely.com` or `api.ap1.odp.optimizely.com` for non-US regions).*
+* **Authentication Header:** `x-api-key: YOUR_PRIVATE_API_KEY`
+* **Content-Type:** `application/json`
+* **Segment ID Requirements:** Must match the case-insensitive regex `[a-z0-9_]*`.
+* **UI Behavior:** API-created segments immediately populate under **Customers > Real-Time Segments** with an "API-created" indicator.
+
+#### Automated Setup Script (`setup_esl_segments.py`)
+Run this script to provision all four core credit union audience segments automatically:
+
+```python
+#!/usr/bin/env python3
+"""
+ESL Federal Credit Union - Automated ODP Segment Setup Script
+Provisions real-time audience segments in ODP via POST /v3/segments.
+Also provisions corresponding Web Experimentation audiences via WebEx REST API.
+"""
+import requests
+import json
+
+# ==============================================================================
+# CONFIGURATION
+# ==============================================================================
+ODP_API_BASE = "https://api.us1.odp.optimizely.com/v3/segments"
+ODP_PRIVATE_KEY = "YOUR_ODP_PRIVATE_API_KEY"
+
+WEBEX_API_BASE = "https://api.optimizely.com/v2/audiences"
+WEBEX_BEARER_TOKEN = "YOUR_OPTIMIZELY_PERSONAL_ACCESS_TOKEN"  # Optional: for WebEx
+WEBEX_PROJECT_ID = 4775830914596864  # From esl-opti-poc layout.tsx
+
+ODP_HEADERS = {
+    "x-api-key": ODP_PRIVATE_KEY,
+    "Content-Type": "application/json"
+}
+
+WEBEX_HEADERS = {
+    "Authorization": f"Bearer {WEBEX_BEARER_TOKEN}",
+    "Content-Type": "application/json"
+}
+
+# ==============================================================================
+# 1. ODP REAL-TIME SEGMENT DEFINITIONS
+# ==============================================================================
+ODP_SEGMENTS = [
+    {
+        "segment_id": "esl_prospective_lending_intent",
+        "description": "Prospective members exhibiting high auto loan calculation or browsing intent",
+        "definition": {
+            "type": "customer",
+            "expression": {
+                "and": [
+                    {
+                        "field": "esl_member_status",
+                        "operator": "==",
+                        "value": "prospective"
+                    },
+                    {
+                        "field": "lending_interest",
+                        "operator": "==",
+                        "value": "auto_loan"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "segment_id": "esl_existing_members_auto_refi",
+        "description": "Existing members with credit score 720+ eligible for auto refinance",
+        "definition": {
+            "type": "customer",
+            "expression": {
+                "and": [
+                    {
+                        "field": "esl_member_status",
+                        "operator": "==",
+                        "value": "existing"
+                    },
+                    {
+                        "field": "credit_score_band",
+                        "operator": "==",
+                        "value": "720+"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "segment_id": "esl_high_balance_deposit_savers",
+        "description": "Premier and Business members for high-yield savings / CD promotions",
+        "definition": {
+            "type": "customer",
+            "expression": {
+                "and": [
+                    {
+                        "field": "esl_member_status",
+                        "operator": "==",
+                        "value": "existing"
+                    },
+                    {
+                        "or": [
+                            {"field": "relationship_tier", "operator": "==", "value": "Premier"},
+                            {"field": "relationship_tier", "operator": "==", "value": "Business"}
+                        ]
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "segment_id": "esl_mortgage_homebuyer_intent",
+        "description": "Visitors calculating mortgage payments or browsing home loans",
+        "definition": {
+            "type": "customer",
+            "expression": {
+                "field": "lending_interest",
+                "operator": "==",
+                "value": "mortgage"
+            }
+        }
+    }
+]
+
+# ==============================================================================
+# 2. WEB EXPERIMENTATION AUDIENCE DEFINITIONS (COOKIE-BASED SYNC)
+# ==============================================================================
+WEBEX_AUDIENCES = [
+    {
+        "project_id": WEBEX_PROJECT_ID,
+        "name": "ESL Existing Members (esl_signed_in)",
+        "description": "Authenticated members identified by esl_signed_in cookie",
+        "conditions": "[\"and\", {\"type\": \"cookie\", \"name\": \"esl_signed_in\", \"value\": \"1\"}]",
+        "is_classic": False,
+        "segmentation": False
+    },
+    {
+        "project_id": WEBEX_PROJECT_ID,
+        "name": "ESL Prospective Members (Anonymous)",
+        "description": "Non-authenticated visitors browsing the public website",
+        "conditions": "[\"not\", {\"type\": \"cookie\", \"name\": \"esl_signed_in\", \"value\": \"1\"}]",
+        "is_classic": False,
+        "segmentation": False
+    }
+]
+
+def create_odp_segments():
+    print("\n--- Provisioning Real-Time Segments in ODP ---")
+    for seg in ODP_SEGMENTS:
+        resp = requests.post(ODP_API_BASE, headers=ODP_HEADERS, json=seg)
+        if resp.status_code in [200, 201]:
+            print(f"  [CREATED] ODP Segment: {seg['segment_id']}")
+        elif resp.status_code == 409 or "already exists" in resp.text.lower():
+            print(f"  [EXISTS]  ODP Segment '{seg['segment_id']}' already exists.")
+        else:
+            print(f"  [FAILED]  ODP Segment '{seg['segment_id']}': {resp.status_code} - {resp.text}")
+
+def create_webex_audiences():
+    if WEBEX_BEARER_TOKEN == "YOUR_OPTIMIZELY_PERSONAL_ACCESS_TOKEN":
+        print("\n[INFO] Skipping WebEx REST API audience creation (Bearer Token not configured).")
+        return
+    print("\n--- Provisioning Audiences in Web Experimentation ---")
+    for aud in WEBEX_AUDIENCES:
+        resp = requests.post(WEBEX_API_BASE, headers=WEBEX_HEADERS, json=aud)
+        if resp.status_code in [200, 201]:
+            print(f"  [CREATED] WebEx Audience: {aud['name']}")
+        elif resp.status_code == 409 or "already exists" in resp.text.lower():
+            print(f"  [EXISTS]  WebEx Audience '{aud['name']}' already exists.")
+        else:
+            print(f"  [FAILED]  WebEx Audience '{aud['name']}': {resp.status_code} - {resp.text}")
+
+if __name__ == "__main__":
+    print("=== ESL Federal Credit Union - Automated Segment Setup ===")
+    create_odp_segments()
+    create_webex_audiences()
+    print("\nSegment setup finished. Verify segments under Customers > Real-Time Segments.")
+```
+
+---
+
+### Method B: Manual Segment Rules in ODP UI
+
+If configuring or inspecting segments within the ODP visual interface (**Customers** > **Segments** or **Real-Time Segments** > **Create Segment**):
+
+#### Segment 1: "Prospective Members - High Lending Intent"
 * **Strategic Purpose:** Feeds the acquisition variant of the SaaS CMS homepage and auto loan page.
-* **Rules:**
+* **UI Rule Configuration:**
   * `Customer Attribute: esl_member_status` equals `prospective` (or is empty)
   * **AND**
   * `Events: loan_calculator (calculate)` occurred at least `1` time in the last `30 days` WHERE `loan_type` equals `auto_loan`
   * **OR**
   * `Events: navigation (pageview)` occurred where `page_path` contains `/auto-loans` or `/membership`
 
-### Segment 2: "Existing Members - Eligible for Auto Refinance"
+#### Segment 2: "Existing Members - Eligible for Auto Refinance"
 * **Strategic Purpose:** Feeds the deep-relationship / cross-sell variant with personalized rate cards.
-* **Rules:**
+* **UI Rule Configuration:**
   * `Customer Attribute: esl_member_status` equals `existing`
   * **AND**
   * `Customer Attribute: active_products` does **not** contain `auto_loan`
   * **AND**
   * `Customer Attribute: credit_score_band` equals `720+`
 
-### Segment 3: "High-Balance Deposit Savers"
+#### Segment 3: "High-Balance Deposit Savers"
 * **Strategic Purpose:** Feeds Multi-Armed Bandit promotional CD & Certificate banners.
-* **Rules:**
+* **UI Rule Configuration:**
   * `Customer Attribute: esl_member_status` equals `existing`
   * **AND**
   * `Customer Attribute: relationship_tier` in `["Premier", "Business"]`
   * **AND**
   * `Events: navigation (pageview)` occurred on `/savings` or `/certificates` in last `14 days`
 
-### Segment 4: "Mortgage Seeker / Homebuyer"
+#### Segment 4: "Mortgage Seeker / Homebuyer"
 * **Strategic Purpose:** Trigger personalized home equity / mortgage consultative appointments.
-* **Rules:**
+* **UI Rule Configuration:**
   * `Events: loan_calculator (calculate)` WHERE `loan_type` equals `mortgage` in last `7 days`
   * **AND**
   * `Events: application (complete)` did not occur in last `30 days`
