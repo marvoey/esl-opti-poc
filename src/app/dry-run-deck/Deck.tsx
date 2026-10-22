@@ -13,6 +13,36 @@ const AMBER = "#fbbf24";
 const VIOLET = "#a78bfa";
 const BLUE = "#60a5fa";
 
+const SITE_HOME_URL = "https://esl-onsite.optimoey.com/";
+const SITE_PERSONAL_LOANS_URL = "https://esl-onsite.optimoey.com/personal/loans";
+
+const OPTI_PROJECT_ID = "4775830914596864";
+const OPTI_CAMPAIGN_LOGGED_IN_URL = `https://app.optimizely.com/v2/projects/${OPTI_PROJECT_ID}/campaigns/6504326074466304`;
+const OPTI_EXP_HOME_HERO_AB_URL = `https://app.optimizely.com/v2/projects/${OPTI_PROJECT_ID}/experiments/4520294755336192/variations`;
+const OPTI_EXP_LOANS_AB_URL = `https://app.optimizely.com/v2/projects/${OPTI_PROJECT_ID}/experiments/5060834274050048/variations`;
+const OPTI_EXP_HOME_MAB_URL = `https://app.optimizely.com/v2/projects/${OPTI_PROJECT_ID}/experiments/6613140698300416/variations`;
+
+function NewTabLink({
+  href,
+  className,
+  children,
+}: {
+  href: string;
+  className?: string;
+  children: ReactNode;
+}) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={className ?? styles.link}
+    >
+      {children}
+    </a>
+  );
+}
+
 function OverviewCard({
   color,
   title,
@@ -121,6 +151,14 @@ export function Deck() {
             <p className={styles.tagline}>
               The Golden Thread: <em>Anonymous Prospect → Verified Member Relationship</em>
             </p>
+            <div className={styles.linkRow} style={{ justifyContent: "center", marginTop: "1.2em" }}>
+              <NewTabLink href={SITE_HOME_URL} className={styles.linkPill}>
+                Home Page (/) ↗
+              </NewTabLink>
+              <NewTabLink href={SITE_PERSONAL_LOANS_URL} className={styles.linkPill}>
+                Personal Loans (/personal/loans) ↗
+              </NewTabLink>
+            </div>
             <div className={styles.hint}>
               Press <strong>ESC</strong> for Session Overview Matrix &bull; Press <strong>S</strong> for Speaker Console
             </div>
@@ -142,10 +180,14 @@ export function Deck() {
               Data architecture, profile unification, real-time segment creation without batch lag.
             </OverviewCard>
             <OverviewCard color={GREEN} title="2. Personalization" time="3:00 PM – 4:00 PM (60m)">
-              Tailoring experience for Prospects (acquisition) vs. Members (cross-sell rate cards).
+              Tailoring experience for Prospects vs. Members across{" "}
+              <NewTabLink href={SITE_HOME_URL}>Home (/)</NewTabLink> and{" "}
+              <NewTabLink href={SITE_PERSONAL_LOANS_URL}>Personal Loans</NewTabLink>.
             </OverviewCard>
             <OverviewCard color={PINK} title="3. Experimentation" time="4:00 PM – 5:00 PM (60m)">
-              Live A/B test (learning) vs. Multi-Armed Bandit (traffic shifting during promotions).
+              Live A/B tests &amp; Multi-Armed Bandit on{" "}
+              <NewTabLink href={SITE_HOME_URL}>Home (/)</NewTabLink> and{" "}
+              <NewTabLink href={SITE_PERSONAL_LOANS_URL}>Personal Loans</NewTabLink>.
             </OverviewCard>
           </div>
           <p className={styles.hint}>
@@ -234,19 +276,24 @@ export function Deck() {
             <div className={styles.runOfShow}>
               <p>
                 <strong>00–05m | Context Reset:</strong> Contrast the acquisition needs of a non-member vs.
-                pre-approved borrowing needs of an active member.
+                streamlined borrowing needs of an active member.
               </p>
               <p>
-                <strong>05–20m | Front-End Experience Walkthrough:</strong> Load live site in incognito (Prospect) vs.
-                signed-in as Maria Gonzalez (Member).
+                <strong>05–20m | Front-End Experience Walkthrough:</strong> Open{" "}
+                <NewTabLink href={SITE_HOME_URL}>Home Page (/)</NewTabLink> and{" "}
+                <NewTabLink href={SITE_PERSONAL_LOANS_URL}>Personal Loans (/personal/loans)</NewTabLink> — toggle
+                Prospective Member vs. Existing Member (Signed In).
               </p>
               <p>
-                <strong>20–40m | Marketer Authoring Workflow:</strong> Open SaaS CMS Visual Builder; showcase Blueprint
-                swapping and audience assignment without code deploys.
+                <strong>20–40m | Marketer Authoring Workflow:</strong> Inspect{" "}
+                <NewTabLink href={OPTI_CAMPAIGN_LOGGED_IN_URL}>
+                  Logged in experience (ID: 6504326074466304)
+                </NewTabLink>{" "}
+                and SaaS CMS Visual Builder; showcase audience assignment without code deploys.
               </p>
               <p>
                 <strong>40–50m | Zero-Flicker & Performance:</strong> Explain client-side cookie evaluation (
-                <code>esl_signed_in=1</code>) avoiding layout shifts.
+                <code>esl_signed_in=1</code> vs. <code>esl_signed_in=0</code>) avoiding layout shifts.
               </p>
               <p>
                 <strong>50–60m | Personalization Operations & Q&A:</strong> Avoiding personalization sprawl, content
@@ -255,25 +302,58 @@ export function Deck() {
             </div>
           </section>
 
-          <section>
-            <h3>Live Demo Inspection: Member vs. Prospect</h3>
+          <section style={accent(GREEN)}>
+            <h3>Live Demo Inspection: Logged In Experience</h3>
+            <p className={styles.lead}>
+              Campaign:{" "}
+              <NewTabLink href={OPTI_CAMPAIGN_LOGGED_IN_URL}>
+                Logged in experience (ID: 6504326074466304) ↗
+              </NewTabLink>
+            </p>
             <div className={styles.cardsTwo}>
               <div className={styles.panel}>
-                <h4 style={{ color: SKY }}>Prospective Member (Anonymous)</h4>
+                <h4 style={{ color: SKY }}>Prospective Members (esl_signed_in=0)</h4>
                 <ul>
-                  <li>Header: &quot;Join&quot; & &quot;Sign In&quot; buttons</li>
-                  <li>Hero: Trust badges & membership eligibility</li>
-                  <li>CTA: &quot;Become a Member&quot; onboarding funnel</li>
+                  <li>
+                    <NewTabLink href={SITE_HOME_URL}>Home Page (/) ↗</NewTabLink>: Default acquisition hero &amp;
+                    onboarding CTAs
+                  </li>
+                  <li>
+                    <NewTabLink href={SITE_PERSONAL_LOANS_URL}>Personal Loans (/personal/loans) ↗</NewTabLink>: H1{" "}
+                    <em>&quot;Get the Funds You Need with a Personal Loan from ESL&quot;</em>
+                  </li>
+                  <li>
+                    CTA: <em>&quot;Apply for a Personal Loan&quot;</em> with introductory rate messaging
+                  </li>
                 </ul>
               </div>
               <div className={styles.panel}>
-                <h4 style={{ color: GREEN }}>Existing Member (Signed In)</h4>
+                <h4 style={{ color: GREEN }}>Logged In Members (esl_signed_in=1)</h4>
                 <ul>
-                  <li>Header: Personalized Account Menu (&quot;Maria Gonzalez&quot;)</li>
-                  <li>Hero: Pre-approved 4.24% auto refinance rate card</li>
-                  <li>CTA: 1-click loan application with pre-filled profile data</li>
+                  <li>
+                    <NewTabLink href={SITE_HOME_URL}>Home Page (/) ↗</NewTabLink>: H1{" "}
+                    <em>&quot;Welcome back!&quot;</em> (acquisition hero &amp; snipe CTAs suppressed)
+                  </li>
+                  <li>
+                    <NewTabLink href={SITE_PERSONAL_LOANS_URL}>Personal Loans (/personal/loans) ↗</NewTabLink>: H1{" "}
+                    <em>&quot;You&apos;re Already a Member. Let&apos;s Make Borrowing Easier.&quot;</em>
+                  </li>
+                  <li>
+                    CTA: <em>&quot;View Your Loan Options&quot;</em> with streamlined member copy
+                  </li>
                 </ul>
               </div>
+            </div>
+            <div className={styles.linkRow}>
+              <NewTabLink href={SITE_HOME_URL} className={styles.linkPill}>
+                Open Home Page (/) ↗
+              </NewTabLink>
+              <NewTabLink href={SITE_PERSONAL_LOANS_URL} className={styles.linkPill}>
+                Open Personal Loans (/personal/loans) ↗
+              </NewTabLink>
+              <NewTabLink href={OPTI_CAMPAIGN_LOGGED_IN_URL} className={styles.linkPill}>
+                Optimizely Campaign 6504326074466304 ↗
+              </NewTabLink>
             </div>
           </section>
         </section>
@@ -286,7 +366,7 @@ export function Deck() {
             title="Experimentation"
             audience="CRO & Optimization Leads, Growth PMs, Analytics & Data Science"
             quote={`"Not every test has the same goal. When you need learning and statistical certainty, use A/B testing. When you have a promotional rate campaign, you cannot afford to send 50% of traffic to a losing variation for 4 weeks."`}
-            drill="↓ Press DOWN for A/B vs. MAB Strategy and Stats Engine deep-dive"
+            drill="↓ Press DOWN for A/B vs. MAB Strategy, Live Demo Links, and Stats Engine deep-dive"
           />
 
           <section style={accent(PINK)}>
@@ -297,12 +377,18 @@ export function Deck() {
                 vanity tests to revenue drivers.
               </p>
               <p>
-                <strong>05–25m | Live A/B Test Deep-Dive:</strong> Structural value proposition testing on the landing
-                page, Stats Engine sequential testing, FDR control.
+                <strong>05–25m | Live A/B Test Deep-Dive:</strong> Value proposition tests on{" "}
+                <NewTabLink href={SITE_HOME_URL}>Home Page (/)</NewTabLink> (
+                <NewTabLink href={OPTI_EXP_HOME_HERO_AB_URL}>ID: 4520294755336192</NewTabLink>) and{" "}
+                <NewTabLink href={SITE_PERSONAL_LOANS_URL}>Personal Loans (/personal/loans)</NewTabLink> (
+                <NewTabLink href={OPTI_EXP_LOANS_AB_URL}>ID: 5060834274050048</NewTabLink>), Stats Engine sequential
+                testing &amp; FDR control.
               </p>
               <p>
-                <strong>25–45m | Multi-Armed Bandit (MAB):</strong> Promotional rate banner optimization shifting
-                traffic dynamically to maximize conversions.
+                <strong>25–45m | Multi-Armed Bandit (MAB):</strong> Solutions selector optimization on{" "}
+                <NewTabLink href={SITE_HOME_URL}>Home Page (/)</NewTabLink> (
+                <NewTabLink href={OPTI_EXP_HOME_MAB_URL}>ID: 6613140698300416</NewTabLink>) shifting traffic
+                dynamically to maximize conversions.
               </p>
               <p>
                 <strong>45–55m | Closing the Loop:</strong> Promoting the winning variant into permanent SaaS CMS
@@ -312,6 +398,62 @@ export function Deck() {
                 <strong>55–60m | Stats Rigor & Q&A:</strong> Sample Ratio Mismatch (SRM), statistical power, and
                 guardrail metrics.
               </p>
+            </div>
+          </section>
+
+          <section style={accent(PINK)}>
+            <h3>Live Experimentation Demo Targets</h3>
+            <div className={styles.cards}>
+              <div className={styles.card} style={accent(PINK)}>
+                <h4>Home Page Hero (A/B)</h4>
+                <p className={styles.metaId}>ID: 4520294755336192</p>
+                <p className={styles.cardMuted}>
+                  <strong>Replace slogan H1 with member-ownership value proposition:</strong> Original vs.{" "}
+                  <em>&quot;The bank you own — and that pays you back.&quot;</em> (Owners&apos; Dividend).
+                </p>
+                <div className={styles.linkRow}>
+                  <NewTabLink href={SITE_HOME_URL} className={styles.linkPill}>
+                    Home Page (/) ↗
+                  </NewTabLink>
+                  <NewTabLink href={OPTI_EXP_HOME_HERO_AB_URL} className={styles.linkPill}>
+                    Optimizely ↗
+                  </NewTabLink>
+                </div>
+              </div>
+
+              <div className={styles.card} style={accent(PINK)}>
+                <h4>Personal Loans (A/B)</h4>
+                <p className={styles.metaId}>ID: 5060834274050048</p>
+                <p className={styles.cardMuted}>
+                  <strong>Personal Loans Page – Value Proposition &amp; CTA Test:</strong> Original vs. Variant A (
+                  <em>Speed &amp; Convenience</em>) vs. Variant B (<em>Debt Consolidation Focus</em>).
+                </p>
+                <div className={styles.linkRow}>
+                  <NewTabLink href={SITE_PERSONAL_LOANS_URL} className={styles.linkPill}>
+                    Personal Loans ↗
+                  </NewTabLink>
+                  <NewTabLink href={OPTI_EXP_LOANS_AB_URL} className={styles.linkPill}>
+                    Optimizely ↗
+                  </NewTabLink>
+                </div>
+              </div>
+
+              <div className={styles.card} style={accent(PINK)}>
+                <h4>Stage of Life (MAB)</h4>
+                <p className={styles.metaId}>ID: 6613140698300416</p>
+                <p className={styles.cardMuted}>
+                  <strong>Banking for Every Stage of Life – CTA &amp; Value Prop Bandit:</strong> Original vs.{" "}
+                  <em>Personalized Roadmap</em>, <em>Goal-Oriented Plan</em> &amp; <em>Member Guidance Focus</em>.
+                </p>
+                <div className={styles.linkRow}>
+                  <NewTabLink href={SITE_HOME_URL} className={styles.linkPill}>
+                    Home Page (/) ↗
+                  </NewTabLink>
+                  <NewTabLink href={OPTI_EXP_HOME_MAB_URL} className={styles.linkPill}>
+                    Optimizely ↗
+                  </NewTabLink>
+                </div>
+              </div>
             </div>
           </section>
         </section>
@@ -451,8 +593,15 @@ export function Deck() {
             <ol>
               <li>Campaign conception in DAM</li>
               <li>Page assembly with regulatory blueprints in SaaS CMS</li>
-              <li>Live visitor experience adapting from Anonymous Prospect to Loyal Member</li>
-              <li>Measurable loan conversion acceleration via Multi-Armed Bandit</li>
+              <li>
+                Live visitor experience adapting from Anonymous Prospect to Loyal Member on{" "}
+                <NewTabLink href={SITE_HOME_URL}>Home (/)</NewTabLink> &amp;{" "}
+                <NewTabLink href={SITE_PERSONAL_LOANS_URL}>Personal Loans (/personal/loans)</NewTabLink>
+              </li>
+              <li>
+                Measurable loan conversion acceleration via Multi-Armed Bandit (
+                <NewTabLink href={OPTI_EXP_HOME_MAB_URL}>ID: 6613140698300416</NewTabLink>)
+              </li>
             </ol>
           </div>
         </section>
