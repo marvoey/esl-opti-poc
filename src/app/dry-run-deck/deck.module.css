@@ -134,3 +134,45 @@
   margin-top: 8px;
   margin-left: 20px;
 }
+
+.link {
+  color: var(--deck-accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-weight: 500;
+}
+
+.link:hover {
+  opacity: 0.85;
+}
+
+.linkRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.linkPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  background: rgb(17 24 39);
+  border: 1px solid var(--deck-accent);
+  color: rgb(249 250 251);
+  font-size: 0.85em;
+  text-decoration: none;
+  transition: opacity 0.15s ease;
+}
+
+.linkPill:hover {
+  opacity: 0.85;
+}
+
+.metaId {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.85em;
+  color: var(--deck-muted);
+}
