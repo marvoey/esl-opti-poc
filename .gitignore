@@ -54,3 +54,6 @@ openspec/
 
 # documentation
 [Aa]ccessibility.md
+
+# Generated ODP demo data
+mo-build-instructions/scripts/output/

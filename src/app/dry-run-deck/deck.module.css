@@ -1,0 +1,136 @@
+.deck {
+  --deck-accent: rgb(56 189 248);
+  --deck-card: rgb(31 41 55);
+  --deck-muted: rgb(156 163 175);
+  --deck-subtle: rgb(107 114 128);
+  --deck-text: rgb(209 213 219);
+
+  width: 100%;
+  height: 100%;
+  color: rgb(249 250 251);
+}
+
+.center {
+  text-align: center;
+}
+
+.title {
+  font-size: 2.4em;
+  margin-bottom: 0.2em;
+  color: rgb(255 255 255);
+}
+
+.subtitle {
+  font-size: 1.2em;
+  color: var(--deck-accent);
+  font-weight: 400;
+}
+
+.tagline {
+  font-size: 0.8em;
+  margin-top: 1.5em;
+  color: var(--deck-muted);
+}
+
+.hint {
+  font-size: 0.65em;
+  margin-top: 1.5em;
+  color: var(--deck-subtle);
+}
+
+.lead {
+  color: var(--deck-muted);
+  font-size: 0.8em;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 1.5em;
+  text-align: left;
+  font-size: 0.7em;
+}
+
+.cardsTwo {
+  composes: cards;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  font-size: 0.7em;
+}
+
+.card {
+  background: var(--deck-card);
+  padding: 16px;
+  border-radius: 8px;
+  border-top: 4px solid var(--deck-accent);
+}
+
+.card h4 {
+  color: rgb(255 255 255);
+  margin-bottom: 8px;
+}
+
+.cardMuted {
+  color: var(--deck-muted);
+}
+
+.kicker {
+  font-size: 0.7em;
+  color: var(--deck-accent);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.audience {
+  font-size: 0.8em;
+  color: var(--deck-text);
+}
+
+.quote {
+  background: var(--deck-card);
+  padding: 12px 20px;
+  border-left: 4px solid var(--deck-accent);
+  font-size: 0.75em;
+  font-style: italic;
+  text-align: left;
+  margin: 1.5em auto;
+}
+
+.drill {
+  font-size: 0.65em;
+  color: var(--deck-muted);
+}
+
+.runOfShow {
+  text-align: left;
+  font-size: 0.7em;
+  line-height: 1.6;
+  margin-top: 1em;
+}
+
+.list {
+  text-align: left;
+  font-size: 0.75em;
+  line-height: 1.7;
+}
+
+.panel {
+  background: var(--deck-card);
+  padding: 14px;
+  border-radius: 6px;
+}
+
+.handoff {
+  background: var(--deck-card);
+  padding: 20px;
+  border-radius: 8px;
+  text-align: left;
+  font-size: 0.75em;
+  margin-top: 1.5em;
+}
+
+.handoff ol {
+  margin-top: 8px;
+  margin-left: 20px;
+}

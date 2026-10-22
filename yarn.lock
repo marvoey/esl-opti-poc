@@ -3399,6 +3399,7 @@ __metadata:
     next: "npm:16.3.4"
     react: "npm:19.2.8"
     react-dom: "npm:19.2.8"
+    reveal.js: "npm:^6.0.2"
     stylelint: "npm:^17.15.0"
     stylelint-config-standard: "npm:^40.0.0"
     stylelint-value-no-unknown-custom-properties: "npm:^6.1.1"
@@ -5832,6 +5833,13 @@ __metadata:
   version: 1.1.0
   resolution: "reusify@npm:1.1.0"
   checksum: 10c0/4eff0d4a5f9383566c7d7ec437b671cc51b25963bd61bf127c3f3d3f68e44a026d99b8d2f1ad344afff8d278a8fe70a8ea092650a716d22287e8bef7126bb2fa
+  languageName: node
+  linkType: hard
+
+"reveal.js@npm:^6.0.2":
+  version: 6.0.2
+  resolution: "reveal.js@npm:6.0.2"
+  checksum: 10c0/0e4d036c77597c359bbb3202fcd7581993675f5d1ddd249e16c3ba9c52c063aa690ddea60f5b78534ac67be7f73a2d9c4f168573c2a58e4b38dd34bac247b16d
   languageName: node
   linkType: hard
 
