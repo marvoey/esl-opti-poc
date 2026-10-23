@@ -1,7 +1,8 @@
 [
-  { "username": "maria.gonzalez", "displayName": "Maria Gonzalez" },
-  { "username": "james.okafor", "displayName": "James Okafor" },
-  { "username": "dorothy.klein", "displayName": "Dorothy Klein" },
-  { "username": "priya.nair", "displayName": "Priya Nair" },
-  { "username": "tyrone.bell", "displayName": "Tyrone Bell" }
+  { "username": "maria.gonzalez", "displayName": "Maria Gonzalez", "email": "demo.esl.maria.gonzalez.0@example.com" },
+  { "username": "james.okafor", "displayName": "James Okafor", "email": "demo.esl.james.okafor.0@example.com" },
+  { "username": "dorothy.klein", "displayName": "Dorothy Klein", "email": "demo.esl.dorothy.klein.0@example.com" },
+  { "username": "priya.nair", "displayName": "Priya Nair", "email": "demo.esl.priya.nair.0@example.com" },
+  { "username": "tyrone.bell", "displayName": "Tyrone Bell", "email": "demo.esl.tyrone.bell.0@example.com" },
+  { "username": "patricia.chen", "displayName": "Patricia Chen", "email": "demo.esl.patricia.chen.2003@example.com" }
 ]

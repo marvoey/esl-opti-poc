@@ -2,6 +2,7 @@ import React, { Suspense } from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Header } from "@/components/header/Header";
+import { PresenterBar } from "@/components/demo/PresenterBar";
 import { Footer } from "@/components/organisms/footer/Footer";
 import { resolveHeaderContent } from "@/infrastructure/cms/resolveHeaderContent";
 import { resolveFooterContent } from "@/infrastructure/cms/resolveFooterContent";
@@ -61,6 +62,7 @@ export default async function SiteLayout({ children, params }: Props) {
       <Suspense fallback={null}>
         <ServerFooter origin={site.origin} />
       </Suspense>
+      {process.env.NEXT_PUBLIC_DEMO_HUD === "1" && <PresenterBar />}
     </>
   );
 }

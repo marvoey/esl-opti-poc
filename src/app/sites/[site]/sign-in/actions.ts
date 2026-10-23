@@ -2,7 +2,7 @@
 
 import { cookies } from "next/headers";
 import { z } from "zod";
-import { findUser } from "@/infrastructure/auth/userStore";
+import { findUser, type UserRecord } from "@/infrastructure/auth/userStore";
 import { safeRedirectPath } from "@/infrastructure/auth/safeRedirect";
 import {
   AUDIENCE_COOKIE_NAME,
@@ -12,6 +12,7 @@ import {
   sessionCookieName,
   sessionCookieOptions,
 } from "@/infrastructure/auth/session";
+import { stitchVisitorToMember } from "@/infrastructure/odp/stitch";
 
 export interface SignInState {
   error?: string;
@@ -44,12 +45,27 @@ export async function signIn(_previous: SignInState | undefined, formData: FormD
     return { error: UNKNOWN_MEMBER };
   }
 
+  await startSession(user);
+  return { redirectTo: safeRedirectPath(formData.get("next")) };
+}
+
+/** Sets the session cookies, then stitches the visitor's anonymous ODP profile to the member. */
+async function startSession(user: UserRecord): Promise<void> {
   const cookieStore = await cookies();
   cookieStore.set(sessionCookieName(), createSessionValue(user), sessionCookieOptions());
   cookieStore.set(AUDIENCE_COOKIE_NAME, AUDIENCE_COOKIE_VALUE, audienceCookieOptions());
   logAuthEvent("sign_in_succeeded", { username: user.username });
 
-  return { redirectTo: safeRedirectPath(formData.get("next")) };
+  const stitch = await stitchVisitorToMember(user);
+  if (stitch) logAuthEvent("identity_stitch", { odpStatus: stitch.status ?? 0, ok: stitch.success ? 1 : 0 });
+}
+
+/** One-click sign-in for the presenter HUD (Act 3). Same effect as the sign-in form. */
+export async function signInAs(username: string): Promise<{ ok: boolean }> {
+  const user = findUser(String(username));
+  if (!user) return { ok: false };
+  await startSession(user);
+  return { ok: true };
 }
 
 export async function signOut(): Promise<void> {

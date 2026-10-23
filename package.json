@@ -11,6 +11,8 @@
     "lint:all": "eslint && stylelint \"src/**/*.css\"",
     "check": "eslint && stylelint \"src/**/*.css\" && tsc --noEmit && vitest run",
     "test": "vitest run",
+    "odp:act2": "node --env-file=.env scripts/odp-demo-events.mjs act2",
+    "odp:act3": "node --env-file=.env scripts/odp-demo-events.mjs act3",
     "cms:push": "optimizely-cms-cli config push --force",
     "cms:push:local": "node --env-file=.env ./node_modules/@optimizely/cms-cli/bin/run.js config push --force",
     "cms:push:vercel": "node --env-file=.env.vercel ./node_modules/@optimizely/cms-cli/bin/run.js config push --force"

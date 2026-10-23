@@ -3,12 +3,15 @@ import usersFile from '../../../data/users.json';
 
 /**
  * Demo members: `data/users.json` is bundled at build time. Each entry is
- * `{ "username", "displayName" }`; usernames are matched case-insensitively.
+ * `{ "username", "displayName" }`; usernames are matched case-insensitively. An entry may also carry
+ * an `email`, used server-side only to stitch the visitor's ODP profile on sign-in. It is never
+ * sent to the browser.
  * There are no passwords: the sign-in only picks who the site is personalized for.
  */
 const UserRecordSchema = z.object({
   username: z.string().trim().min(1).max(64),
   displayName: z.string().trim().min(1).max(100),
+  email: z.email().optional(),
 });
 
 export type UserRecord = z.infer<typeof UserRecordSchema>;
