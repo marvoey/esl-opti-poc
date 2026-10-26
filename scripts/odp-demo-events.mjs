@@ -30,7 +30,7 @@ const acts = {
       identifiers: { vuid },
       data: {
         ts: now - 120,
-        page_path: "/loans/auto-loans",
+        page_path: "/personal/auto-loans",
         page_title: "ESL - Auto Loans & Refinancing",
       },
     },

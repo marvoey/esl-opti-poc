@@ -6,7 +6,7 @@ const pageview = {
   type: 'navigation',
   action: 'pageview',
   identifiers: { vuid },
-  data: { page_path: '/loans/auto-loans', page_title: 'Auto Loans' },
+  data: { page_path: '/personal/auto-loans', page_title: 'Auto Loans' },
 };
 
 describe('ClientEventsSchema', () => {

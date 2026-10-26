@@ -10,11 +10,11 @@ const TITLE = "Auto Loans & Refinancing";
 
 export const metadata: Metadata = { title: TITLE };
 
-/** Demo page for ODP identity resolution. Declared here so `/loans/auto-loans` is not looked up as a CMS page. */
+/** Demo page for ODP identity resolution. Declared here so `/personal/auto-loans` is not looked up as a CMS page. */
 export default function AutoLoansPage() {
   return (
     <main id="main-content" className={styles.main}>
-      <PageviewBeacon path="/loans/auto-loans" title={`ESL - ${TITLE}`} />
+      <PageviewBeacon path="/personal/auto-loans" title={`ESL - ${TITLE}`} />
       <header className={styles.intro}>
         <Text as="p" variant="eyebrow" color="brand">
           Borrowing solutions

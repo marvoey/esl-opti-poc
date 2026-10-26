@@ -57,7 +57,7 @@ def main():
     now = int(time.time())
     status, detail = post([
         {"type": "navigation", "action": "pageview", "identifiers": {"vuid": DEMO_VUID},
-         "data": {"ts": now - 120, "page_path": "/loans/auto-loans", "page_title": "ESL - Auto Loans & Refinancing"}},
+         "data": {"ts": now - 120, "page_path": "/personal/auto-loans", "page_title": "ESL - Auto Loans & Refinancing"}},
         {"type": "loan_calculator", "action": "calculate", "identifiers": {"vuid": DEMO_VUID},
          "data": {"ts": now - 60, "loan_type": "auto_loan", "borrow_amount": 32000, "loan_term_months": 60,
                   "interest_rate": 5.49, "calculated_monthly_payment": 611.09}},

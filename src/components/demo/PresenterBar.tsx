@@ -27,7 +27,7 @@ export function PresenterBar() {
   async function fireAct2() {
     setMessage("Firing Act 2 ($32,000 calculation)...");
     const ok = await trackEvents([
-      pageviewEvent("/loans/auto-loans", "ESL - Auto Loans & Refinancing"),
+      pageviewEvent("/personal/auto-loans", "ESL - Auto Loans & Refinancing"),
       loanCalculatorEvent({
         borrow_amount: 32000,
         loan_term_months: 60,
