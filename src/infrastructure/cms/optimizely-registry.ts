@@ -34,6 +34,8 @@ import { EslSiteSettingsContentType } from '@/components/cms/pages/EslSiteSettin
 import EslSiteSettings from '@/components/cms/pages/EslSiteSettingsRenderer';
 import { EslStartPageContentType } from '@/components/cms/pages/EslStartPage';
 import EslStartPage from '@/components/cms/pages/EslStartPageRenderer';
+import { EslContentPageContentType } from '@/components/cms/pages/EslContentPage';
+import EslContentPage from '@/components/cms/pages/EslContentPageRenderer';
 import {
   EslVerticalSelectorFeatureCardContentType,
 } from '@/components/cms/components/EslVerticalSelectorFeatureCard';
@@ -141,6 +143,7 @@ export function ensureOptimizelyRegistry() {
     EslMegaMenuPromoContentType,
     EslSiteSettingsContentType,
     EslStartPageContentType,
+    EslContentPageContentType,
     EslVerticalSelectorFeatureCardContentType,
     EslCircularImageMetricRowContentType,
     EslCircularImageMetricItemContentType,
@@ -230,6 +233,7 @@ export function ensureOptimizelyRegistry() {
       EslHero,
       EslSiteSettings,
       EslStartPage,
+      EslContentPage,
     },
   });
 }

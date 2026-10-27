@@ -13,12 +13,13 @@ describe('EslStartPage', () => {
     expect(EslStartPageContentType.mayContainTypes).toEqual([
       'EslHomeExperience',
       'EslHomePage',
+      'EslContentPage',
     ]);
   });
 
-  it('resolves exactly 2 allowed section types with friendly display names', () => {
+  it('resolves exactly 3 allowed section types with friendly display names', () => {
     const { allowedKeys, allowedSections } = getAllowedSectionsFromContentType(EslStartPageContentType);
-    expect(allowedKeys.size).toBe(2);
+    expect(allowedKeys.size).toBe(3);
     expect(allowedKeys.has('EslHomeExperience')).toBe(true);
     expect(allowedKeys.has('EslHomePage')).toBe(true);
     expect(allowedKeys.has('EslProductDetailExperience')).toBe(false);
@@ -27,6 +28,7 @@ describe('EslStartPage', () => {
     expect(allowedSections).toEqual([
       { key: 'EslHomeExperience', displayName: 'ESL Home Experience' },
       { key: 'EslHomePage', displayName: 'ESL Home Page (Legacy)' },
+      { key: 'EslContentPage', displayName: 'ESL Content Page' },
     ]);
   });
 
