@@ -85,6 +85,9 @@
       font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 40;
       vertical-align: middle;
     }
+    section[id] { scroll-margin-top: 96px; }
+    .side-link { display:flex; align-items:center; gap:10px; }
+    .side-link[aria-current="true"] { background-color:#ABFF44; color:#08251A; font-weight:700; }
     .tab-active {
       background-color: #ABFF44 !important;
       color: #08251A !important;
@@ -92,7 +95,7 @@
     }
   </style>
 </head>
-<body class="bg-neutral1 text-darkfir min-h-screen pb-20">
+<body class="bg-neutral1 text-darkfir min-h-screen pb-20 lg:pl-64">
 
   <!-- TOP NAVIGATION BAR -->
   <header class="sticky top-0 z-50 bg-darkfir text-neutral1 border-b-2 border-darkfir px-6 py-4">
@@ -110,7 +113,7 @@
         </div>
       </div>
 
-      <nav class="flex flex-wrap gap-2">
+      <nav class="flex flex-wrap gap-2 lg:hidden">
         <a href="#architecture" class="px-4 py-2 opal-pill bg-lightfir text-neutral1 hover:bg-lfgreen hover:text-darkfir transition text-sm font-medium">1. Pricing Architecture</a>
         <a href="#levers" class="px-4 py-2 opal-pill bg-lightfir text-neutral1 hover:bg-lfgreen hover:text-darkfir transition text-sm font-medium">2. The 5 Pricing Levers</a>
         <a href="#preframe" class="px-4 py-2 opal-pill bg-lightfir text-neutral1 hover:bg-lfgreen hover:text-darkfir transition text-sm font-medium">3. Slides 5–14 Pre-Frame</a>
@@ -118,6 +121,18 @@
       </nav>
     </div>
   </header>
+
+  <!-- SIDE NAVIGATION (desktop; the header nav covers smaller screens) -->
+  <aside id="sideNav" class="hidden lg:block fixed left-0 top-[73px] bottom-0 w-64 overflow-y-auto bg-neutral2 border-r-2 border-darkfir px-4 pt-6 pb-20 z-40" aria-label="Page sections">
+    <span class="font-mono-caption text-xs uppercase font-semibold text-lightfir block px-3 mb-3">On this page</span>
+    <nav class="flex flex-col gap-1.5">
+      <a href="#architecture" class="side-link px-3 py-2.5 opal-pill bg-neutral1 hover:bg-lfgreen text-sm font-medium transition"><span class="font-mono-caption text-xs">1</span>Pricing Architecture</a>
+      <a href="#levers" class="side-link px-3 py-2.5 opal-pill bg-neutral1 hover:bg-lfgreen text-sm font-medium transition"><span class="font-mono-caption text-xs">2</span>The 5 Pricing Levers</a>
+      <a href="#preframe" class="side-link px-3 py-2.5 opal-pill bg-neutral1 hover:bg-lfgreen text-sm font-medium transition"><span class="font-mono-caption text-xs">3</span>Slides 5–14 Pre-Frame</a>
+      <a href="#core-pricing" class="side-link px-3 py-2.5 opal-pill bg-neutral1 hover:bg-lfgreen text-sm font-medium transition"><span class="font-mono-caption text-xs">4</span>Slides 15–20 Execution</a>
+      <a href="#cheat-sheet" class="side-link px-3 py-2.5 opal-pill bg-neutral1 hover:bg-lfgreen text-sm font-medium transition"><span class="font-mono-caption text-xs">5</span>Cheat Sheet</a>
+    </nav>
+  </aside>
 
   <!-- HERO BANNER -->
   <section class="bg-darkfir text-neutral1 pt-12 pb-14 px-6 border-b-2 border-darkfir">
@@ -791,7 +806,7 @@
     </section>
 
     <!-- SECTION 5: QUICK-REFERENCE OBJECTION & FOMU PLAYBOOK -->
-    <section class="bg-neutral2 opal-card p-6 sm:p-8 space-y-6">
+    <section id="cheat-sheet" class="bg-neutral2 opal-card p-6 sm:p-8 space-y-6">
       <div class="flex flex-wrap items-center justify-between gap-4">
         <div>
           <span class="font-mono-caption text-xs uppercase font-semibold px-3 py-1 opal-pill bg-lfgreen text-darkfir">Cheat Sheet · In-the-Room Responses</span>
@@ -936,5 +951,22 @@
       }
     });
   </script>
+  <script>
+    // Side nav scroll-spy: highlight the section nearest the top of the viewport.
+    (function () {
+      var links = Array.prototype.slice.call(document.querySelectorAll('#sideNav a[href^="#"]'));
+      var targets = links.map(function (a) { return document.querySelector(a.getAttribute('href')); });
+      function update() {
+        var current = 0;
+        targets.forEach(function (t, i) { if (t && t.getBoundingClientRect().top <= 140) current = i; });
+        links.forEach(function (a, i) {
+          if (i === current) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
+        });
+      }
+      window.addEventListener('scroll', update, { passive: true });
+      update();
+    })();
+  </script>
+  <script src="/pages-widget.js" defer></script>
 </body>
 </html>
