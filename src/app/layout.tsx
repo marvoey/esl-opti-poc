@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import { Albert_Sans, League_Spartan } from "next/font/google";
 import { WebVitals } from "@/components/diagnostics/WebVitals";
+import { UtilityTray } from "@/components/utility/UtilityTray";
 import "@/infrastructure/cms/optimizely-registry";
 import "./globals.css";
 
@@ -57,6 +58,7 @@ export default function RootLayout({
       <body>
         <WebVitals />
         {children}
+        <UtilityTray />
         <Script
           src="https://cdn.optimizely.com/js/4775830914596864.js"
           strategy="afterInteractive"

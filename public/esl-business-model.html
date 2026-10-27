@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ESL Federal Credit Union: Business Model | Optimizely Strategic Brief</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@600;700;800&family=Roboto+Mono:wght@400;500;600&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            opti: {
+              lfgreen: '#ABFF44',
+              grass: '#7DDD3D',
+              goodtogo: '#3AB533',
+              neutral1: '#FFFFFF',
+              neutral2: '#EFF6E9',
+              neutral3: '#E4F0DA',
+              lightblue: '#91DBDA',
+              darkfir: '#08251A',
+              darkblue: '#007B79',
+              lightfir: '#197050',
+              midfir: '#0D3A29',
+              ext1: '#ABFF44',
+              ext2: '#3AB533',
+              ext4: '#2E8C45',
+              ext6: '#166E49',
+              ext8: '#0D593E'
+            }
+          },
+          fontFamily: {
+            heading: ["'VC Nudge'", "'Roboto Condensed'", "sans-serif"],
+            body: ["'Die Grotesk'", "'Roboto'", "-apple-system", "BlinkMacSystemFont", "sans-serif"],
+            mono: ["'Roboto Mono'", "monospace"]
+          },
+          borderRadius: {
+            'opal': '32px',
+            'opal-md': '24px',
+            'opal-sm': '16px'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Die Grotesk', 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: #08251A;
+      background-color: #E4F0DA;
+      -webkit-font-smoothing: antialiased;
+    }
+    h1, h2, h3, h4, .font-heading {
+      font-family: 'VC Nudge', 'Roboto Condensed', sans-serif;
+      letter-spacing: -0.02em;
+    }
+    .font-mono-custom {
+      font-family: 'Roboto Mono', monospace;
+    }
+    /* Hard constraint: Dark Fir is the only permitted stroke */
+    .stroke-darkfir {
+      border-color: #08251A;
+    }
+    .card-pillow {
+      border-radius: 28px;
+      border: 1.5px solid #08251A;
+      background-color: #FFFFFF;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .card-pillow:hover {
+      transform: translateY(-2px);
+    }
+    .badge-pill {
+      border-radius: 9999px;
+      padding: 0.35rem 0.85rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      border: 1.5px solid #08251A;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    /* Optimizely AI Lightning Bolt Glow & Shimmer */
+    .mark-bolt {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    /* Side menu links */
+    .side-link {
+      display: flex;
+      align-items: baseline;
+      gap: 0.6rem;
+      margin-left: -2px;
+      padding: 0.45rem 0.9rem;
+      border-left: 2px solid transparent;
+      font-size: 0.875rem;
+      font-weight: 500;
+      line-height: 1.3;
+      color: #0D3A29;
+      transition: background-color 0.15s ease, border-color 0.15s ease;
+    }
+    .side-link:hover {
+      background-color: #EFF6E9;
+    }
+    .side-link.active {
+      border-left-color: #08251A;
+      background-color: #ABFF44;
+      font-weight: 700;
+      color: #08251A;
+    }
+    .side-num {
+      font-family: 'Roboto Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    /* Custom scrollbar matching Dark Fir */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #E4F0DA;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #08251A;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body class="bg-opti-neutral3 text-opti-darkfir min-h-screen flex flex-col">
+
+  <!-- Top Navigation Bar -->
+  <header class="bg-opti-darkfir text-opti-neutral1 border-b-2 border-opti-darkfir sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <!-- Optimizely Logo -->
+      <div class="flex items-center gap-4">
+        <div class="flex items-center">
+          <svg class="h-8 w-auto" id="Optimizely_Primary_Logo_Medium" data-name="Optimizely Primary Logo Medium" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 254">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #abff44;
+      }
+
+      .cls-2 {
+        fill: #0d3a29;
+      }
+    </style>
+  </defs>
+  <path class="cls-1" d="M267.653,62.0583h-27.0992v18.9211h-9.5222v19.6536h9.5222v38.9407c0,14.2815,6.1031,20.1418,20.1417,20.1418h17.5784v-19.6536h-7.5691c-2.0752,0-3.0518-.7324-3.0518-2.8075v-36.6215h10.6208v-19.6536h-10.6208v-18.9211Z"/>
+  <path class="cls-1" d="M396.0726,79.6367c-7.2029,0-14.0386,2.8076-19.7755,8.6665-2.6866-6.2251-7.9354-8.6665-15.6254-8.6665-6.5928,0-12.8179,2.8076-18.3108,8.6665v-7.3237h-25.7566v78.7361h27.0992v-57.8619c.8545-1.2206,2.4413-1.953,4.3943-1.953,2.6854,0,3.9061,1.0985,3.9061,3.906v55.9089h27.1006v-57.8619c.8544-1.2206,2.4412-1.953,4.3943-1.953,2.6853,0,3.906,1.0985,3.906,3.906v55.9089h27.0994v-59.8149c0-13.5503-6.4694-20.2639-18.4316-20.2639Z"/>
+  <path class="cls-1" d="M300.4906,54.7346h-6.2264c-6.2252,0-10.8636,4.8826-10.8636,10.9856,0,5.9812,4.6384,10.9871,10.8636,10.9871h6.2264c6.2253,0,10.8638-5.0059,10.8638-10.9871,0-6.103-4.6384-10.9856-10.8638-10.9856Z"/>
+  <rect class="cls-1" x="283.8888" y="80.9795" width="27.0994" height="78.736"/>
+  <path class="cls-1" d="M202.7116,79.5146c-6.8357,0-12.3297,3.1737-16.2358,8.7886-.1221-2.6853-.3661-5.1266-.6102-7.3237h-26.4891c.2441,6.1031.3662,12.0842.3662,18.1887v85.3274h27.0994v-29.9067c4.0281,4.1501,9.156,6.3472,15.2593,6.3472,17.3342,0,27.0994-14.7708,27.0994-40.2834,0-25.8787-9.521-41.1379-26.489-41.1379ZM193.7997,141.5267c-4.8826-.1219-7.5681-7.8134-7.5681-20.63,0-12.9399,2.6855-21.4844,7.5681-21.4844,5.0057-.1221,7.8132,8.4224,7.8132,21.4844,0,12.6947-2.8075,20.5081-7.8132,20.63Z"/>
+  <path class="cls-1" d="M112.0121,60.2274c-25.8788,0-42.6028,19.4093-42.6028,50.0486,0,31.1288,16.724,50.7821,42.6028,50.7821,25.7578,0,42.4805-19.6533,42.4805-50.7821,0-30.6393-16.7227-50.0486-42.4805-50.0486ZM111.89,138.2311c-7.6901,0-12.8167-10.7428-12.8167-27.9551,0-16.724,5.1266-27.2214,12.8167-27.2214,7.5691,0,12.8179,10.4974,12.8179,27.2214,0,17.2123-5.2488,27.9551-12.8179,27.9551Z"/>
+  <rect class="cls-1" x="420.1205" y="80.9795" width="27.0994" height="78.736"/>
+  <path class="cls-1" d="M654.7404,103.5625l-2.8074,21.6064-3.2959-21.2402-4.8826-22.9492h-27.5876l22.2168,78.4919-.7322,3.1736c-.2441,1.3428-1.2207,2.0751-2.4414,2.0751h-14.8928v19.7755h19.2871c13.427,0,20.1418-5.859,23.4375-18.5549l22.0947-84.9612h-26.3669l-4.0293,22.583Z"/>
+  <rect class="cls-1" x="583.9397" y="62.0583" width="27.0994" height="97.6571"/>
+  <path class="cls-1" d="M544.6327,79.5146c-21.8506,0-36.3774,16.1138-36.3774,40.7717,0,25.1465,14.0386,40.7717,36.2554,40.7717,18.5549,0,31.739-12.3296,33.9363-29.908h-26.8564c-.9766,6.8368-4.1503,10.8649-7.8123,10.8649-5.0045,0-7.812-6.1031-8.3003-16.8461h43.213c3.0516-26.6111-11.109-45.6543-34.0582-45.6543ZM535.4779,110.5201c1.3428-7.568,4.5164-12.0844,8.5444-12.0844s6.9578,4.3943,8.1783,12.0844h-16.7228Z"/>
+  <polygon class="cls-1" points="505.692 99.9006 505.692 80.9795 452.8347 80.9795 452.8347 100.6331 475.9072 100.6331 452.8347 141.6488 452.8347 159.7156 506.1802 159.7156 506.1802 140.062 483.109 140.062 505.692 99.9006"/>
+  <path class="cls-1" d="M436.7223,54.7346h-6.2264c-6.2252,0-10.8636,4.8826-10.8636,10.9856,0,5.9812,4.6384,10.9871,10.8636,10.9871h6.2264c6.2253,0,10.8636-5.0059,10.8636-10.9871,0-6.103-4.6383-10.9856-10.8636-10.9856Z"/>
+  <path class="cls-2" d="M685.1366,76.3411h-26.3669c-1.7087,0-2.5632.4883-3.4177,1.3428l-6.1045,6.3472-.8545-4.0281c-.6104-2.4412-2.197-3.6619-4.6384-3.6619h-28.0759v-14.2827c0-2.6853-2.3203-4.7605-4.6395-4.7605h-27.0994c-1.4647,0-2.4413.6104-3.2958,1.4648l-14.7709,14.7698c-.7323.7335-1.3427,1.9541-1.3427,3.2969v3.2957c-5.2488-3.2957-12.2076-5.3708-19.8977-5.3708-11.8413,0-23.9257,3.9061-33.4478,16.7229l-.7324.9764v-11.474c0-2.3192-2.0752-4.6384-4.7605-4.6384h-57.4957c2.6854-3.1748,3.9061-6.4706,3.9061-10.6208,0-8.9106-6.9578-15.6252-15.9905-15.6252h-5.1279c-4.7604,0-8.6665,1.8308-11.9622,5.1279l-15.8695,15.8682c-1.2206,1.2207-2.1971,2.5634-2.9296,4.0293-1.2207-.1221-2.6853-.2441-4.1501-.2441-6.4706,0-13.062,2.0752-18.677,6.5916-3.9072-4.7605-9.0339-6.5916-15.8694-6.5916-5.4929,0-10.865,1.5869-15.5034,5.3708-.2441-2.8074-1.4647-3.906-4.0281-3.906h-30.0302c2.6854-3.1748,3.9073-6.4706,3.9073-10.6208,0-8.9106-6.959-15.6252-15.9917-15.6252h-5.1278c-4.7605,0-8.6666,1.8308-11.9623,5.1279l-10.3766,10.2533v-3.4178c0-2.4412-2.0751-4.6384-4.7606-4.6384h-27.0992c-1.4647,0-2.5634.6104-3.2958,1.4648l-14.7709,14.6477c-.4883.4894-1.3427,1.9541-1.3427,3.2969v5.0046c-5.1267-4.7605-11.1091-7.0798-18.0667-7.0798-4.5165,0-10.0105,1.4648-13.9165,5.3708-.4883-3.1736-1.5869-3.7839-3.662-3.7839h-26.1229c-1.3427,0-2.4412.4883-3.2957,1.3428l-3.0527,3.0515c-7.8121-16.1136-22.583-25.2684-41.0159-25.2684-12.8168,0-24.1699,4.2723-36.01,15.9904l-9.7664,9.7664c-10.8638,10.8636-16.2357,26.1228-16.2357,43.8232,0,33.448,18.5549,55.5427,47.2423,55.5427,12.8167,0,24.1699-4.7605,32.9585-13.5503l10.1324-10.2534v42.3586c0,2.6853,2.0751,4.7605,4.7605,4.7605h26.9773c1.5868,0,2.6854-.6104,3.4191-1.3428l14.6476-14.7709c.9764-.9766,1.4647-2.0751,1.4647-3.2958v-4.3943c6.5928-.8545,11.9635-3.5398,16.3578-8.1794l13.3063-13.3049c1.5867,13.7932,10.4973,20.5078,26.7332,20.5078h243.4097c1.7089,0,2.6853-.6102,3.4177-1.3427l7.4473-7.5692c7.3237,6.959,16.8459,10.3767,27.5874,10.3767,10.865,0,20.7522-4.1501,27.589-10.9869l7.0797-7.2018v12.0854c0,2.5635,2.0751,4.6384,4.6384,4.6384h33.0817v20.0198c0,2.6853,2.0751,4.7605,4.7605,4.7605h17.9445c8.5444,0,15.7476-2.6854,20.2639-7.2018l14.5269-14.5267c3.4177-3.5399,6.2253-8.5458,7.9341-14.8931l22.0947-85.0833c.8545-3.2958-.7324-5.8591-4.6384-5.8591ZM112.0121,161.0581c-25.8788,0-42.6028-19.6533-42.6028-50.7821,0-30.6393,16.724-50.0486,42.6028-50.0486,25.7578,0,42.4805,19.4093,42.4805,50.0486,0,31.1288-16.7227,50.7821-42.4805,50.7821ZM202.1012,160.936c-6.1033,0-11.2312-2.197-15.2593-6.3472v29.9067h-27.0994v-85.3274c0-6.1045-.1221-12.0856-.3662-18.1887h26.4891c.2441,2.1971.4882,4.6384.6102,7.3237,3.9061-5.6149,9.4001-8.7886,16.2358-8.7886,16.968,0,26.489,15.2593,26.489,41.1379,0,25.5127-9.7651,40.2834-27.0994,40.2834ZM278.2738,100.6331h-10.6208v36.6215c0,2.0751.9766,2.8075,3.0518,2.8075h7.5691v19.6536h-17.5784c-14.0386,0-20.1417-5.8604-20.1417-20.1418v-38.9407h-9.5222v-19.6536h9.5222v-18.9211h27.0992v18.9211h10.6208v19.6536ZM310.9882,159.7155h-27.0994v-78.736h27.0994v78.736ZM300.4906,76.7073h-6.2264c-6.2252,0-10.8636-5.0059-10.8636-10.9871,0-6.103,4.6384-10.9856,10.8636-10.9856h6.2264c6.2253,0,10.8638,4.8826,10.8638,10.9856,0,5.9812-4.6384,10.9871-10.8638,10.9871ZM414.5043,159.7156h-27.0994v-55.9089c0-2.8075-1.2207-3.906-3.906-3.906-1.9531,0-3.5399.7324-4.3943,1.953v57.8619h-27.1006v-55.9089c0-2.8075-1.2207-3.906-3.9061-3.906-1.953,0-3.5398.7324-4.3943,1.953v57.8619h-27.0992v-78.7361h25.7566v7.3237c5.4929-5.8589,11.718-8.6665,18.3108-8.6665,7.6899,0,12.9387,2.4414,15.6254,8.6665,5.7369-5.8589,12.5726-8.6665,19.7755-8.6665,11.9623,0,18.4316,6.7136,18.4316,20.2639v59.8149ZM447.2199,159.7155h-27.0994v-78.736h27.0994v78.736ZM436.7223,76.7073h-6.2264c-6.2252,0-10.8636-5.0059-10.8636-10.9871,0-6.103,4.6384-10.9856,10.8636-10.9856h6.2264c6.2253,0,10.8636,4.8826,10.8636,10.9856,0,5.9812-4.6383,10.9871-10.8636,10.9871ZM506.1802,159.7156h-53.3455v-18.0668l23.0725-41.0157h-23.0725v-19.6536h52.8573v18.9211l-22.583,40.1614h23.0712v19.6536ZM578.6909,125.1689h-43.213c.4883,10.7429,3.2958,16.8461,8.3003,16.8461,3.662,0,6.8357-4.0281,7.8123-10.8649h26.8564c-2.1973,17.5784-15.3813,29.908-33.9363,29.908-22.2168,0-36.2554-15.6252-36.2554-40.7717,0-24.658,14.5269-40.7717,36.3774-40.7717,22.9492,0,37.1099,19.0432,34.0582,45.6543ZM611.0391,159.7155h-27.0994V62.0583h27.0994v97.6571ZM663.0419,165.9407c-3.2957,12.6959-10.0105,18.5549-23.4375,18.5549h-19.2871v-19.7755h14.8928c1.2207,0,2.1973-.7323,2.4414-2.0751l.7322-3.1736-22.2168-78.4919h27.5876l4.8826,22.9492,3.2959,21.2402,2.8074-21.6064,4.0293-22.583h26.3669l-22.0947,84.9612Z"/>
+  <path class="cls-2" d="M544.0223,98.4358c-4.0281,0-7.2017,4.5164-8.5444,12.0844h16.7228c-1.2206-7.6901-4.1503-12.0844-8.1783-12.0844Z"/>
+  <path class="cls-2" d="M193.7997,99.4124c-4.8826,0-7.5681,8.5444-7.5681,21.4844,0,12.8167,2.6855,20.5081,7.5681,20.63,5.0057-.1219,7.8132-7.9353,7.8132-20.63,0-13.062-2.8075-21.6064-7.8132-21.4844Z"/>
+  <path class="cls-2" d="M111.89,83.0546c-7.6901,0-12.8167,10.4974-12.8167,27.2214,0,17.2123,5.1266,27.9551,12.8167,27.9551,7.5691,0,12.8179-10.7428,12.8179-27.9551,0-16.724-5.2488-27.2214-12.8179-27.2214Z"/>
+</svg>
+        </div>
+        <div class="hidden sm:block h-6 w-px bg-opti-neutral3/30"></div>
+        <span class="hidden sm:inline-block font-mono-custom text-xs uppercase tracking-wider text-opti-lfgreen font-semibold">
+          Account Intelligence & Strategy
+        </span>
+      </div>
+
+      <!-- Header Meta & AI Badge -->
+      <div class="flex items-center gap-3">
+        <span class="badge-pill bg-opti-neutral2 text-opti-darkfir border-opti-darkfir">
+          <span class="w-2 h-2 rounded-full bg-opti-goodtogo"></span>
+          CONFIDENTIAL STRATEGY BRIEF
+        </span>
+        <div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-opti-midfir text-opti-lfgreen border border-opti-lfgreen text-xs font-mono-custom font-semibold">
+          <!-- Mark Lightning Bolt Icon -->
+          <svg class="w-3.5 h-3.5 fill-current text-opti-lfgreen" viewBox="0 0 24 24">
+            <path d="M13 2L3 14h8l-2 8 10-12h-8l2-8z"/>
+          </svg>
+          Mark AI Analysis
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Layout: Side Menu + Main Content -->
+  <div class="flex-grow w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex gap-10">
+
+    <!-- Side Menu (desktop) -->
+    <aside class="hidden lg:block w-64 shrink-0">
+      <nav aria-label="Page sections" class="sticky top-28 py-10">
+        <span class="text-xs font-mono-custom uppercase tracking-wider text-opti-darkfir font-bold">On this page</span>
+        <ul class="mt-4 space-y-1 border-l-2 border-opti-darkfir/20">
+          <li><a href="#overview" class="side-link">Overview</a></li>
+          <li><a href="#revenue" class="side-link"><span class="side-num">1</span>How ESL Makes Money</a></li>
+          <li><a href="#scale" class="side-link"><span class="side-num">2</span>A Substantial Institution</a></li>
+          <li><a href="#profit" class="side-link"><span class="side-num">3</span>Where the Profit Goes</a></li>
+          <li><a href="#vs-banks" class="side-link"><span class="side-num">4</span>ESL vs. a Commercial Bank</a></li>
+          <li><a href="#strategy" class="side-link"><span class="side-num">5</span>Competitive Strategy</a></li>
+          <li><a href="#risks" class="side-link"><span class="side-num">6</span>Risks to the Model</a></li>
+          <li><a href="#takeaway" class="side-link"><span class="side-num">7</span>Strategic Takeaway</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+  <!-- Main Container -->
+  <main class="flex-grow min-w-0 py-10 space-y-12">
+
+    <!-- Hero / Title Section -->
+    <section id="overview" class="scroll-mt-28 card-pillow p-8 sm:p-12 relative overflow-hidden bg-opti-neutral1">
+      <div class="max-w-4xl space-y-6">
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="badge-pill bg-opti-lfgreen text-opti-darkfir">ESL Federal Credit Union</span>
+          <span class="badge-pill bg-opti-lightblue text-opti-darkfir">Rochester, New York</span>
+          <span class="badge-pill bg-opti-neutral3 text-opti-darkfir">Financial Reporting: June 2026</span>
+        </div>
+
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-opti-darkfir leading-tight tracking-tight">
+          Understanding ESL Federal Credit Union's Business Model
+        </h1>
+
+        <p class="text-xl sm:text-2xl text-opti-darkfir font-medium leading-relaxed">
+          ESL operates much like a traditional bank, but with one fundamental difference: it is a <strong class="bg-opti-neutral3 px-2 py-0.5 rounded-lg border border-opti-darkfir">member-owned, not-for-profit financial cooperative</strong> rather than a shareholder-owned bank.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
+          <div class="p-6 rounded-2xl bg-opti-neutral2 border border-opti-darkfir">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="w-3 h-3 rounded-full bg-opti-darkfir"></span>
+              <span class="text-xs font-mono-custom font-bold uppercase tracking-wider text-opti-darkfir">What Looks the Same</span>
+            </div>
+            <p class="text-base text-opti-darkfir font-medium">
+              A <strong class="underline decoration-opti-darkfir decoration-2">banking balance sheet</strong>: deposits funding loans and investments, earning a margin after credit losses and operating costs.
+            </p>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-opti-neutral3 border border-opti-darkfir">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="w-3 h-3 rounded-full bg-opti-goodtogo"></span>
+              <span class="text-xs font-mono-custom font-bold uppercase tracking-wider text-opti-darkfir">What Is Different</span>
+            </div>
+            <p class="text-base text-opti-darkfir font-medium">
+              <strong class="underline decoration-opti-goodtogo decoration-2">No conventional shareholders</strong>. That affects how ESL earns revenue, distributes benefits, manages risk, and competes.
+            </p>
+          </div>
+        </div>
+
+        <div class="p-5 rounded-2xl bg-opti-neutral1 border border-opti-darkfir text-sm text-opti-darkfir leading-relaxed">
+          <strong>Why it is interesting:</strong> ESL shows how a financial institution can <span class="bg-opti-lfgreen px-1.5 py-0.5 rounded border border-opti-darkfir font-semibold">operate at considerable scale without conventional shareholders</span>.
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 1: How ESL makes money -->
+    <section id="revenue" class="scroll-mt-28 space-y-6">
+      <div class="flex items-center justify-between">
+        <div>
+          <span class="text-xs font-mono-custom uppercase tracking-wider text-opti-darkfir font-bold">Section 1</span>
+          <h2 class="text-3xl font-extrabold text-opti-darkfir mt-1">1. How ESL Makes Money</h2>
+        </div>
+        <span class="badge-pill bg-opti-lfgreen text-opti-darkfir">Revenue Engine</span>
+      </div>
+
+      <div class="card-pillow p-8 sm:p-10 space-y-8 bg-opti-neutral1">
+        <p class="text-base sm:text-lg text-opti-darkfir leading-relaxed max-w-4xl">
+          ESL's underlying business model is <strong>remarkably similar to that of a commercial bank</strong>.
+        </p>
+
+        <!-- Simplified credit union economics -->
+        <div class="space-y-4">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-mono-custom uppercase tracking-wider text-opti-midfir font-bold">Simplified Credit Union Economics</span>
+            <span class="text-xs font-mono-custom text-opti-goodtogo font-semibold">Earnings Cycle</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-4 gap-3">
+            <div class="p-5 rounded-2xl bg-opti-neutral3 border border-opti-darkfir flex flex-col justify-between">
+              <div>
+                <span class="text-xs font-mono-custom font-bold text-opti-midfir block mb-1">STEP 01</span>
+                <div class="font-heading font-bold text-base text-opti-darkfir mb-2">Members Deposit Money</div>
+                <p class="text-xs text-opti-darkfir/85">Checking, savings, certificates.</p>
+              </div>
+              <div class="mt-4 text-center font-bold text-opti-darkfir text-sm sm:hidden">&darr;</div>
+              <div class="mt-4 text-right font-bold text-opti-darkfir text-sm hidden sm:block">&rarr;</div>
+            </div>
+
+            <div class="p-5 rounded-2xl bg-opti-neutral3 border border-opti-darkfir flex flex-col justify-between">
+              <div>
+                <span class="text-xs font-mono-custom font-bold text-opti-midfir block mb-1">STEP 02</span>
+                <div class="font-heading font-bold text-base text-opti-darkfir mb-2">ESL Lends &amp; Invests</div>
+                <p class="text-xs text-opti-darkfir/85">Mortgages, auto loans, business loans, securities.</p>
+              </div>
+              <div class="mt-4 text-center font-bold text-opti-darkfir text-sm sm:hidden">&darr;</div>
+              <div class="mt-4 text-right font-bold text-opti-darkfir text-sm hidden sm:block">&rarr;</div>
+            </div>
+
+            <div class="p-5 rounded-2xl bg-opti-lfgreen border-2 border-opti-darkfir flex flex-col justify-between shadow-sm">
+              <div>
+                <span class="text-xs font-mono-custom font-bold text-opti-darkfir block mb-1">STEP 03</span>
+                <div class="font-heading font-bold text-base text-opti-darkfir mb-2">Interest Income + Fees</div>
+                <p class="text-xs text-opti-darkfir font-medium">Minus deposit interest, credit losses, and operating expenses.</p>
+              </div>
+              <div class="mt-4 text-center font-bold text-opti-darkfir text-sm sm:hidden">&darr;</div>
+              <div class="mt-4 text-right font-bold text-opti-darkfir text-sm hidden sm:block">&rarr;</div>
+            </div>
+
+            <div class="p-5 rounded-2xl bg-opti-darkfir text-opti-neutral1 border border-opti-darkfir flex flex-col justify-between">
+              <div>
+                <span class="text-xs font-mono-custom font-bold text-opti-lfgreen block mb-1">STEP 04</span>
+                <div class="font-heading font-bold text-base text-opti-neutral1 mb-2">Earnings Reinvested</div>
+                <p class="text-xs text-opti-neutral3">Capital, technology, service, competitive rates, and member benefits.</p>
+              </div>
+              <div class="mt-4 text-xs font-mono-custom text-opti-lfgreen text-right">↺ Cycles Back</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Revenue sources -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4 border-t border-opti-darkfir/15">
+          <div class="p-6 rounded-2xl bg-opti-neutral2 border border-opti-darkfir space-y-2">
+            <div class="w-8 h-8 rounded-xl bg-opti-lfgreen text-opti-darkfir border border-opti-darkfir flex items-center justify-center font-mono-custom font-bold text-sm">A</div>
+            <h4 class="font-bold text-base text-opti-darkfir">Net Interest Income</h4>
+            <p class="text-xs text-opti-darkfir/85 leading-relaxed">
+              The difference between interest earned on loans and investments and interest paid on deposits and other funding.
+            </p>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-opti-neutral2 border border-opti-darkfir space-y-2">
+            <div class="w-8 h-8 rounded-xl bg-opti-lfgreen text-opti-darkfir border border-opti-darkfir flex items-center justify-center font-mono-custom font-bold text-sm">B</div>
+            <h4 class="font-bold text-base text-opti-darkfir">Fees &amp; Service Income</h4>
+            <p class="text-xs text-opti-darkfir/85 leading-relaxed">
+              Certain account, payment, loan, and other financial service fees.
+            </p>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-opti-neutral2 border border-opti-darkfir space-y-2">
+            <div class="w-8 h-8 rounded-xl bg-opti-lfgreen text-opti-darkfir border border-opti-darkfir flex items-center justify-center font-mono-custom font-bold text-sm">C</div>
+            <h4 class="font-bold text-base text-opti-darkfir">Investment Income</h4>
+            <p class="text-xs text-opti-darkfir/85 leading-relaxed">
+              Returns from its investment portfolio, subject to the cost of funding and market conditions.
+            </p>
+          </div>
+        </div>
+
+        <div class="p-5 rounded-2xl bg-opti-neutral2 border border-opti-darkfir text-sm text-opti-darkfir">
+          <strong>The primary economic engine</strong> is the <em>net interest margin</em>, adjusted for credit risk and operating costs.
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: A substantial financial institution -->
+    <section id="scale" class="scroll-mt-28 space-y-6">
+      <div class="flex items-center justify-between">
+        <div>
+          <span class="text-xs font-mono-custom uppercase tracking-wider text-opti-darkfir font-bold">Section 2</span>
+          <h2 class="text-3xl font-extrabold text-opti-darkfir mt-1">2. ESL is a Substantial Financial Institution</h2>
+        </div>
+        <span class="badge-pill bg-opti-neutral2 text-opti-darkfir">Balance Sheet</span>
+      </div>
+
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-5">
+        <div class="card-pillow p-6 text-center">
+          <div class="text-xs font-mono-custom uppercase tracking-wider text-opti-midfir mb-1 font-semibold">Total Assets</div>
+          <div class="text-4xl sm:text-5xl font-extrabold text-opti-darkfir tracking-tight font-heading">$10.8B</div>
+        </div>
+        <div class="card-pillow p-6 text-center">
+          <div class="text-xs font-mono-custom uppercase tracking-wider text-opti-midfir mb-1 font-semibold">Members</div>
+          <div class="text-4xl sm:text-5xl font-extrabold text-opti-darkfir tracking-tight font-heading">485K+</div>
+        </div>
+        <div class="card-pillow p-6 text-center">
+          <div class="text-xs font-mono-custom uppercase tracking-wider text-opti-midfir mb-1 font-semibold">Deposits</div>
+          <div class="text-4xl sm:text-5xl font-extrabold text-opti-darkfir tracking-tight font-heading">$6.25B</div>
+        </div>
+        <div class="card-pillow p-6 text-center bg-opti-neutral2">
+          <div class="text-xs font-mono-custom uppercase tracking-wider text-opti-midfir mb-1 font-semibold">Loans</div>
+          <div class="text-4xl sm:text-5xl font-extrabold text-opti-goodtogo tracking-tight font-heading">$4.64B</div>
+        </div>
+      </div>
+
+      <div class="p-4 rounded-2xl bg-opti-neutral1 border border-opti-darkfir flex flex-col sm:flex-row items-center justify-between text-xs text-opti-darkfir font-mono-custom gap-2">
+        <div class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-opti-goodtogo"></span>
+          <span>Source: June 30, 2026 financial reporting (iBankNet)</span>
+        </div>
+        <span class="text-opti-midfir font-semibold">Multibillion-Dollar Institution</span>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div class="lg:col-span-7 card-pillow p-6 sm:p-8 space-y-4">
+          <div>
+            <h3 class="text-xl font-bold text-opti-darkfir">What Is Particularly Interesting: The Asset Mix</h3>
+            <p class="text-sm text-opti-darkfir/80 mt-1">
+              Unlike a bank primarily concentrated in lending, ESL has a substantial investment portfolio.
+            </p>
+          </div>
+          <p class="text-base text-opti-darkfir leading-relaxed">
+            As of March 2026, investments represented approximately <strong>52%</strong> of its assets, compared with <strong>42%</strong> in net loans.
+          </p>
+          <div class="p-4 rounded-2xl bg-opti-neutral2 border border-opti-darkfir text-sm text-opti-darkfir">
+            <strong>Why it matters:</strong> that makes <span class="font-semibold underline decoration-opti-goodtogo decoration-2">investment yields, interest-rate exposure, and funding costs</span> especially important to understanding its profitability.
+          </div>
+        </div>
+
+        <div class="lg:col-span-5 card-pillow p-6 sm:p-8 space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="text-xl font-bold text-opti-darkfir">Asset Composition</h3>
+            <span class="badge-pill bg-opti-neutral3 text-opti-darkfir">March 31, 2026</span>
+          </div>
+          <p class="text-xs text-opti-darkfir/80">Approximately $10.61 billion in total assets.</p>
+
+          <div class="relative w-full h-64 sm:h-72">
+            <canvas id="assetMixChart"></canvas>
+          </div>
+
+          <p class="text-xs text-opti-darkfir/70 font-mono-custom">
+            Investments (~52%) and net loans (~42%) as reported; "Other assets" is the remainder (~6%).
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: Where does the profit go -->
+    <section id="profit" class="scroll-mt-28 space-y-6">
+      <div class="flex items-center justify-between">
+        <div>
+          <span class="text-xs font-mono-custom uppercase tracking-wider text-opti-darkfir font-bold">Section 3</span>
+          <h2 class="text-3xl font-extrabold text-opti-darkfir mt-1">3. If ESL is Not-for-Profit, Where Does the Profit Go?</h2>
+        </div>
+        <span class="badge-pill bg-opti-lfgreen text-opti-darkfir">Member Value</span>
+      </div>
+
+      <div class="card-pillow p-8 sm:p-10 space-y-8 bg-opti-neutral1">
+        <p class="text-base sm:text-lg text-opti-darkfir leading-relaxed max-w-4xl">
+          Not-for-profit does not mean ESL cannot generate profits. It means there are <strong>no outside equity shareholders</strong> expecting dividends or capital appreciation. ESL can use earnings to <span class="font-semibold underline decoration-opti-goodtogo decoration-2">strengthen capital, invest in operations, improve member benefits, and support its community</span>.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="p-6 rounded-2xl bg-opti-lfgreen border-2 border-opti-darkfir text-center space-y-1 shadow-sm">
+            <span class="text-xs font-mono-custom uppercase tracking-wider text-opti-darkfir font-bold">2025 Owners' Dividend</span>
+            <div class="text-4xl sm:text-5xl font-extrabold text-opti-darkfir font-heading tracking-tight">$30M</div>
+            <span class="text-xs text-opti-darkfir font-mono-custom font-bold">Returned to members</span>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-opti-neutral2 border border-opti-darkfir text-center space-y-1">
+            <span class="text-xs font-mono-custom uppercase tracking-wider text-opti-midfir font-bold">Cumulative Since 1996</span>
+            <div class="text-4xl sm:text-5xl font-extrabold text-opti-darkfir font-heading tracking-tight">$350M+</div>
+            <span class="text-xs text-opti-darkfir/70 font-mono-custom">Owners' Dividends</span>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-opti-neutral2 border border-opti-darkfir text-center space-y-1">
+            <span class="text-xs font-mono-custom uppercase tracking-wider text-opti-midfir font-bold">2025 Philanthropic Grants</span>
+            <div class="text-4xl sm:text-5xl font-extrabold text-opti-darkfir font-heading tracking-tight">$28M+</div>
+            <span class="text-xs text-opti-darkfir/70 font-mono-custom">Community investment</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="p-5 rounded-2xl bg-opti-neutral2 border border-opti-darkfir text-sm text-opti-darkfir">
+            <strong>Not an equal split:</strong> individual payouts depend on ESL's dividend program criteria; they are not equal distributions to every member.
+          </div>
+          <div class="p-5 rounded-2xl bg-opti-neutral2 border border-opti-darkfir text-sm text-opti-darkfir">
+            <strong>Two separate things:</strong> the philanthropic grants are a community investment, not member dividends.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: How ESL differs from a commercial bank -->
+    <section id="vs-banks" class="scroll-mt-28 space-y-6">
+      <div class="flex items-center justify-between">
+        <div>
+          <span class="text-xs font-mono-custom uppercase tracking-wider text-opti-darkfir font-bold">Section 4</span>
+          <h2 class="text-3xl font-extrabold text-opti-darkfir mt-1">4. How ESL Differs from a Commercial Bank</h2>
+        </div>
+        <span class="badge-pill bg-opti-lightblue text-opti-darkfir">Structure</span>
+      </div>
+
+      <div class="card-pillow p-6 sm:p-8 space-y-6">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-sm border-collapse">
+            <thead>
+              <tr class="border-b-2 border-opti-darkfir bg-opti-neutral3">
+                <th class="py-3 px-4 font-heading font-bold text-opti-darkfir text-sm">Dimension</th>
+                <th class="py-3 px-4 font-heading font-bold text-opti-darkfir text-sm bg-opti-lfgreen/40">ESL Credit Union</th>
+                <th class="py-3 px-4 font-heading font-bold text-opti-darkfir text-sm">Traditional Bank</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-opti-darkfir/15">
+              <tr class="hover:bg-opti-neutral2">
+                <td class="py-3.5 px-4 font-semibold text-opti-darkfir">Ownership</td>
+                <td class="py-3.5 px-4 bg-opti-neutral3/50 font-medium text-opti-darkfir">Members</td>
+                <td class="py-3.5 px-4 text-opti-darkfir/80">Shareholders</td>
+              </tr>
+              <tr class="hover:bg-opti-neutral2">
+                <td class="py-3.5 px-4 font-semibold text-opti-darkfir">Primary objective</td>
+                <td class="py-3.5 px-4 bg-opti-neutral3/50 font-medium text-opti-darkfir">Member value and financial sustainability</td>
+                <td class="py-3.5 px-4 text-opti-darkfir/80">Shareholder returns and financial sustainability</td>
+              </tr>
+              <tr class="hover:bg-opti-neutral2">
+                <td class="py-3.5 px-4 font-semibold text-opti-darkfir">Profits</td>
+                <td class="py-3.5 px-4 bg-opti-neutral3/50 font-medium text-opti-darkfir">Retained or used for member/community benefits</td>
+                <td class="py-3.5 px-4 text-opti-darkfir/80">Retained or distributed to shareholders</td>
+              </tr>
+              <tr class="hover:bg-opti-neutral2">
+                <td class="py-3.5 px-4 font-semibold text-opti-darkfir">Governance</td>
+                <td class="py-3.5 px-4 bg-opti-neutral3/50 font-medium text-opti-darkfir">Member-elected board</td>
+                <td class="py-3.5 px-4 text-opti-darkfir/80">Shareholder-elected board</td>
+              </tr>
+              <tr class="hover:bg-opti-neutral2">
+                <td class="py-3.5 px-4 font-semibold text-opti-darkfir">Federal regulator</td>
+                <td class="py-3.5 px-4 bg-opti-neutral3/50 font-medium text-opti-darkfir">NCUA</td>
+                <td class="py-3.5 px-4 text-opti-darkfir/80">Depends on charter; OCC, FDIC, Federal Reserve</td>
+              </tr>
+              <tr class="hover:bg-opti-neutral2">
+                <td class="py-3.5 px-4 font-semibold text-opti-darkfir">Taxation</td>
+                <td class="py-3.5 px-4 bg-opti-neutral3/50 font-medium text-opti-darkfir">Generally exempt from federal corporate income tax</td>
+                <td class="py-3.5 px-4 text-opti-darkfir/80">Generally subject to corporate income tax</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="p-5 rounded-2xl bg-opti-neutral2 border border-opti-darkfir text-sm text-opti-darkfir">
+          <strong>A meaningful structural advantage:</strong> the federal tax exemption, although ESL still faces regulatory, operating, and other tax obligations.
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 5: Competitive strategy -->
+    <section id="strategy" class="scroll-mt-28 space-y-6">
+      <div class="flex items-center justify-between">
+        <div>
+          <span class="text-xs font-mono-custom uppercase tracking-wider text-opti-darkfir font-bold">Section 5</span>
+          <h2 class="text-3xl font-extrabold text-opti-darkfir mt-1">5. ESL's Competitive Strategy</h2>
+        </div>
+        <span class="badge-pill bg-opti-lfgreen text-opti-darkfir">Reinforcing Advantages</span>
+      </div>
+
+      <p class="text-base text-opti-darkfir leading-relaxed max-w-4xl">
+        ESL has developed a business model built around several reinforcing advantages.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div class="card-pillow p-6 flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-2xl bg-opti-neutral3 border border-opti-darkfir flex items-center justify-center font-mono-custom font-bold text-opti-darkfir text-lg mb-4">01</div>
+            <h3 class="text-lg font-bold text-opti-darkfir mb-2">Local Market Concentration</h3>
+            <p class="text-sm text-opti-darkfir/90 leading-relaxed">
+              Founded in 1920 when George Eastman created Eastman Savings &amp; Loan to help Kodak employees save and buy homes. Converted to a federal credit union in 1996 and now serves the wider Rochester and Finger Lakes region.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-opti-darkfir/20 text-xs font-mono-custom text-opti-midfir">Since 1920</div>
+        </div>
+
+        <div class="card-pillow p-6 flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-2xl bg-opti-neutral3 border border-opti-darkfir flex items-center justify-center font-mono-custom font-bold text-opti-darkfir text-lg mb-4">02</div>
+            <h3 class="text-lg font-bold text-opti-darkfir mb-2">Broad Financial Relationships</h3>
+            <p class="text-sm text-opti-darkfir/90 leading-relaxed">
+              Personal banking, mortgages, business banking, investments, and wealth management. More products can deepen relationships, generate additional revenue, and reduce customer acquisition costs.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-opti-darkfir/20 text-xs font-mono-custom text-opti-midfir">Multi-Product Depth</div>
+        </div>
+
+        <div class="card-pillow p-6 flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-2xl bg-opti-neutral3 border border-opti-darkfir flex items-center justify-center font-mono-custom font-bold text-opti-darkfir text-lg mb-4">03</div>
+            <h3 class="text-lg font-bold text-opti-darkfir mb-2">Expansion Through Acquisition</h3>
+            <p class="text-sm text-opti-darkfir/90 leading-relaxed">
+              In 2026, ESL completed its acquisition of nearly all Generations Bank assets and liabilities, expanding its footprint to 33 branch locations. A credit union can grow through acquisitions much like a commercial bank.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-opti-darkfir/20 text-xs font-mono-custom text-opti-midfir">33 Branches</div>
+        </div>
+
+        <div class="card-pillow p-6 bg-opti-lfgreen border-2 border-opti-darkfir flex flex-col justify-between shadow-sm">
+          <div>
+            <div class="w-10 h-10 rounded-2xl bg-opti-darkfir text-opti-lfgreen border border-opti-darkfir flex items-center justify-center font-mono-custom font-bold text-lg mb-4">04</div>
+            <h3 class="text-lg font-extrabold text-opti-darkfir mb-2">Wealth Management Diversification</h3>
+            <p class="text-sm text-opti-darkfir font-medium leading-relaxed">
+              More than $10.8 billion in assets under advisement following the 2025 Alesco Advisors acquisition. These are client assets under advisement, not ESL's own balance-sheet assets.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-opti-darkfir/30 text-xs font-mono-custom text-opti-darkfir font-bold">$10.8B+ AUA</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 6: Risks -->
+    <section id="risks" class="scroll-mt-28 space-y-6">
+      <div class="flex items-center justify-between">
+        <div>
+          <span class="text-xs font-mono-custom uppercase tracking-wider text-opti-darkfir font-bold">Section 6</span>
+          <h2 class="text-3xl font-extrabold text-opti-darkfir mt-1">6. What Are the Risks to ESL's Model?</h2>
+        </div>
+        <span class="badge-pill bg-opti-neutral2 text-opti-darkfir">Risk Profile</span>
+      </div>
+
+      <div class="card-pillow p-8 sm:p-10 space-y-8 bg-opti-neutral1">
+        <p class="text-base sm:text-lg text-opti-darkfir leading-relaxed max-w-4xl">
+          The risks are familiar to banking, but their <strong>relative importance differs</strong>.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="p-6 rounded-2xl bg-opti-neutral2 border border-opti-darkfir space-y-2">
+            <div class="w-10 h-10 rounded-2xl bg-opti-darkfir text-opti-lfgreen flex items-center justify-center font-mono-custom font-bold text-sm">01</div>
+            <h3 class="text-lg font-bold text-opti-darkfir">Interest-Rate Risk</h3>
+            <p class="text-sm text-opti-darkfir/90 leading-relaxed">Changes in rates can compress the spread between investment/loan yields and funding costs.</p>
+          </div>
+          <div class="p-6 rounded-2xl bg-opti-neutral2 border border-opti-darkfir space-y-2">
+            <div class="w-10 h-10 rounded-2xl bg-opti-darkfir text-opti-lfgreen flex items-center justify-center font-mono-custom font-bold text-sm">02</div>
+            <h3 class="text-lg font-bold text-opti-darkfir">Credit Risk</h3>
+            <p class="text-sm text-opti-darkfir/90 leading-relaxed">Borrowers may default, particularly during an economic downturn.</p>
+          </div>
+          <div class="p-6 rounded-2xl bg-opti-neutral2 border border-opti-darkfir space-y-2">
+            <div class="w-10 h-10 rounded-2xl bg-opti-darkfir text-opti-lfgreen flex items-center justify-center font-mono-custom font-bold text-sm">03</div>
+            <h3 class="text-lg font-bold text-opti-darkfir">Funding Risk</h3>
+            <p class="text-sm text-opti-darkfir/90 leading-relaxed">Depositors can move money to institutions offering better rates.</p>
+          </div>
+          <div class="p-6 rounded-2xl bg-opti-neutral2 border border-opti-darkfir space-y-2 md:col-span-1">
+            <div class="w-10 h-10 rounded-2xl bg-opti-darkfir text-opti-lfgreen flex items-center justify-center font-mono-custom font-bold text-sm">04</div>
+            <h3 class="text-lg font-bold text-opti-darkfir">Concentration Risk</h3>
+            <p class="text-sm text-opti-darkfir/90 leading-relaxed">Strong exposure to the economic conditions of Greater Rochester and its surrounding markets.</p>
+          </div>
+          <div class="p-6 rounded-2xl bg-opti-lfgreen border-2 border-opti-darkfir space-y-2 md:col-span-2 shadow-sm">
+            <div class="w-10 h-10 rounded-2xl bg-opti-darkfir text-opti-lfgreen flex items-center justify-center font-mono-custom font-bold text-sm">05</div>
+            <h3 class="text-lg font-extrabold text-opti-darkfir">Technology Competition</h3>
+            <p class="text-sm text-opti-darkfir font-medium leading-relaxed">Large banks and fintech companies can compete aggressively on convenience, digital experiences, and customer acquisition.</p>
+          </div>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-opti-neutral3 border-2 border-opti-darkfir flex flex-col sm:flex-row items-start sm:items-center gap-5">
+          <div class="text-center flex-shrink-0 min-w-[140px]">
+            <span class="text-xs font-mono-custom uppercase tracking-wider text-opti-midfir font-bold">Net Worth Ratio</span>
+            <div class="text-4xl font-extrabold text-opti-goodtogo font-heading">~16.4%</div>
+            <span class="text-xs text-opti-darkfir/70 font-mono-custom">June 2026</span>
+          </div>
+          <p class="text-sm text-opti-darkfir leading-relaxed">
+            ESL's reported June 2026 net worth ratio was approximately 16.4%, classified as <strong>well capitalized</strong>. That is an important financial-strength indicator, although it does not eliminate those risks.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 7: Strategic takeaway -->
+    <section id="takeaway" class="scroll-mt-28 space-y-6">
+      <div class="flex items-center justify-between">
+        <div>
+          <span class="text-xs font-mono-custom uppercase tracking-wider text-opti-darkfir font-bold">Section 7</span>
+          <h2 class="text-3xl font-extrabold text-opti-darkfir mt-1">7. The Strategic Takeaway</h2>
+        </div>
+        <span class="badge-pill bg-opti-darkfir text-opti-lfgreen">Summary</span>
+      </div>
+
+      <div class="card-pillow p-8 sm:p-12 space-y-8 bg-opti-neutral1">
+        <div class="p-8 rounded-2xl bg-opti-neutral3 border-2 border-opti-darkfir relative space-y-3">
+          <span class="badge-pill bg-opti-darkfir text-opti-lfgreen">In One Sentence</span>
+          <blockquote class="text-xl sm:text-2xl font-bold text-opti-darkfir leading-relaxed">
+            &ldquo;A regional, member-owned financial services enterprise with a banking balance sheet and a community reinvestment model.&rdquo;
+          </blockquote>
+        </div>
+
+        <p class="text-base text-opti-darkfir leading-relaxed max-w-4xl">
+          It is not simply a small credit union providing low-cost checking accounts. It is a <strong>multibillion-dollar financial institution</strong> with lending, investment management, wealth services, acquisitions, and a sizable local distribution network.
+        </p>
+
+        <div class="space-y-4">
+          <h3 class="text-xl font-bold text-opti-darkfir">The Fundamental Business Challenge: Balancing Three Objectives</h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="p-6 rounded-2xl bg-opti-neutral2 border border-opti-darkfir space-y-2">
+              <div class="w-8 h-8 rounded-xl bg-opti-lfgreen text-opti-darkfir border border-opti-darkfir flex items-center justify-center font-mono-custom font-bold text-sm">1</div>
+              <h4 class="font-bold text-base text-opti-darkfir">Remain Financially Strong</h4>
+              <p class="text-xs text-opti-darkfir/85 leading-relaxed">Generate enough earnings to remain financially strong.</p>
+            </div>
+            <div class="p-6 rounded-2xl bg-opti-neutral2 border border-opti-darkfir space-y-2">
+              <div class="w-8 h-8 rounded-xl bg-opti-lfgreen text-opti-darkfir border border-opti-darkfir flex items-center justify-center font-mono-custom font-bold text-sm">2</div>
+              <h4 class="font-bold text-base text-opti-darkfir">Return Value to Members</h4>
+              <p class="text-xs text-opti-darkfir/85 leading-relaxed">Return economic value through rates, services, and dividends.</p>
+            </div>
+            <div class="p-6 rounded-2xl bg-opti-neutral2 border border-opti-darkfir space-y-2">
+              <div class="w-8 h-8 rounded-xl bg-opti-lfgreen text-opti-darkfir border border-opti-darkfir flex items-center justify-center font-mono-custom font-bold text-sm">3</div>
+              <h4 class="font-bold text-base text-opti-darkfir">Invest in the Community</h4>
+              <p class="text-xs text-opti-darkfir/85 leading-relaxed">Invest in the regional community while continuing to grow.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-opti-darkfir text-opti-neutral1 border border-opti-darkfir flex items-start gap-4">
+          <div class="w-10 h-10 rounded-xl bg-opti-lfgreen text-opti-darkfir flex-shrink-0 flex items-center justify-center font-bold text-xl">&ldquo;</div>
+          <div>
+            <div class="text-xs font-mono-custom text-opti-lfgreen uppercase tracking-wider font-bold mb-1">Why It Is Different</div>
+            <p class="text-base sm:text-lg text-opti-neutral1 font-medium leading-relaxed">
+              That balance is what makes ESL's business model different from a <strong>shareholder-owned bank</strong>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+  </div>
+
+  <!-- Branded Footer -->
+  <footer class="bg-opti-darkfir text-opti-neutral1 border-t-2 border-opti-darkfir mt-16 py-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-3">
+        <svg class="h-8 w-auto" id="Optimizely_Primary_Logo_Medium" data-name="Optimizely Primary Logo Medium" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 254">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #abff44;
+      }
+
+      .cls-2 {
+        fill: #0d3a29;
+      }
+    </style>
+  </defs>
+  <path class="cls-1" d="M267.653,62.0583h-27.0992v18.9211h-9.5222v19.6536h9.5222v38.9407c0,14.2815,6.1031,20.1418,20.1417,20.1418h17.5784v-19.6536h-7.5691c-2.0752,0-3.0518-.7324-3.0518-2.8075v-36.6215h10.6208v-19.6536h-10.6208v-18.9211Z"/>
+  <path class="cls-1" d="M396.0726,79.6367c-7.2029,0-14.0386,2.8076-19.7755,8.6665-2.6866-6.2251-7.9354-8.6665-15.6254-8.6665-6.5928,0-12.8179,2.8076-18.3108,8.6665v-7.3237h-25.7566v78.7361h27.0992v-57.8619c.8545-1.2206,2.4413-1.953,4.3943-1.953,2.6854,0,3.9061,1.0985,3.9061,3.906v55.9089h27.1006v-57.8619c.8544-1.2206,2.4412-1.953,4.3943-1.953,2.6853,0,3.906,1.0985,3.906,3.906v55.9089h27.0994v-59.8149c0-13.5503-6.4694-20.2639-18.4316-20.2639Z"/>
+  <path class="cls-1" d="M300.4906,54.7346h-6.2264c-6.2252,0-10.8636,4.8826-10.8636,10.9856,0,5.9812,4.6384,10.9871,10.8636,10.9871h6.2264c6.2253,0,10.8638-5.0059,10.8638-10.9871,0-6.103-4.6384-10.9856-10.8638-10.9856Z"/>
+  <rect class="cls-1" x="283.8888" y="80.9795" width="27.0994" height="78.736"/>
+  <path class="cls-1" d="M202.7116,79.5146c-6.8357,0-12.3297,3.1737-16.2358,8.7886-.1221-2.6853-.3661-5.1266-.6102-7.3237h-26.4891c.2441,6.1031.3662,12.0842.3662,18.1887v85.3274h27.0994v-29.9067c4.0281,4.1501,9.156,6.3472,15.2593,6.3472,17.3342,0,27.0994-14.7708,27.0994-40.2834,0-25.8787-9.521-41.1379-26.489-41.1379ZM193.7997,141.5267c-4.8826-.1219-7.5681-7.8134-7.5681-20.63,0-12.9399,2.6855-21.4844,7.5681-21.4844,5.0057-.1221,7.8132,8.4224,7.8132,21.4844,0,12.6947-2.8075,20.5081-7.8132,20.63Z"/>
+  <path class="cls-1" d="M112.0121,60.2274c-25.8788,0-42.6028,19.4093-42.6028,50.0486,0,31.1288,16.724,50.7821,42.6028,50.7821,25.7578,0,42.4805-19.6533,42.4805-50.7821,0-30.6393-16.7227-50.0486-42.4805-50.0486ZM111.89,138.2311c-7.6901,0-12.8167-10.7428-12.8167-27.9551,0-16.724,5.1266-27.2214,12.8167-27.2214,7.5691,0,12.8179,10.4974,12.8179,27.2214,0,17.2123-5.2488,27.9551-12.8179,27.9551Z"/>
+  <rect class="cls-1" x="420.1205" y="80.9795" width="27.0994" height="78.736"/>
+  <path class="cls-1" d="M654.7404,103.5625l-2.8074,21.6064-3.2959-21.2402-4.8826-22.9492h-27.5876l22.2168,78.4919-.7322,3.1736c-.2441,1.3428-1.2207,2.0751-2.4414,2.0751h-14.8928v19.7755h19.2871c13.427,0,20.1418-5.859,23.4375-18.5549l22.0947-84.9612h-26.3669l-4.0293,22.583Z"/>
+  <rect class="cls-1" x="583.9397" y="62.0583" width="27.0994" height="97.6571"/>
+  <path class="cls-1" d="M544.6327,79.5146c-21.8506,0-36.3774,16.1138-36.3774,40.7717,0,25.1465,14.0386,40.7717,36.2554,40.7717,18.5549,0,31.739-12.3296,33.9363-29.908h-26.8564c-.9766,6.8368-4.1503,10.8649-7.8123,10.8649-5.0045,0-7.812-6.1031-8.3003-16.8461h43.213c3.0516-26.6111-11.109-45.6543-34.0582-45.6543ZM535.4779,110.5201c1.3428-7.568,4.5164-12.0844,8.5444-12.0844s6.9578,4.3943,8.1783,12.0844h-16.7228Z"/>
+  <polygon class="cls-1" points="505.692 99.9006 505.692 80.9795 452.8347 80.9795 452.8347 100.6331 475.9072 100.6331 452.8347 141.6488 452.8347 159.7156 506.1802 159.7156 506.1802 140.062 483.109 140.062 505.692 99.9006"/>
+  <path class="cls-1" d="M436.7223,54.7346h-6.2264c-6.2252,0-10.8636,4.8826-10.8636,10.9856,0,5.9812,4.6384,10.9871,10.8636,10.9871h6.2264c6.2253,0,10.8636-5.0059,10.8636-10.9871,0-6.103-4.6383-10.9856-10.8636-10.9856Z"/>
+  <path class="cls-2" d="M685.1366,76.3411h-26.3669c-1.7087,0-2.5632.4883-3.4177,1.3428l-6.1045,6.3472-.8545-4.0281c-.6104-2.4412-2.197-3.6619-4.6384-3.6619h-28.0759v-14.2827c0-2.6853-2.3203-4.7605-4.6395-4.7605h-27.0994c-1.4647,0-2.4413.6104-3.2958,1.4648l-14.7709,14.7698c-.7323.7335-1.3427,1.9541-1.3427,3.2969v3.2957c-5.2488-3.2957-12.2076-5.3708-19.8977-5.3708-11.8413,0-23.9257,3.9061-33.4478,16.7229l-.7324.9764v-11.474c0-2.3192-2.0752-4.6384-4.7605-4.6384h-57.4957c2.6854-3.1748,3.9061-6.4706,3.9061-10.6208,0-8.9106-6.9578-15.6252-15.9905-15.6252h-5.1279c-4.7604,0-8.6665,1.8308-11.9622,5.1279l-15.8695,15.8682c-1.2206,1.2207-2.1971,2.5634-2.9296,4.0293-1.2207-.1221-2.6853-.2441-4.1501-.2441-6.4706,0-13.062,2.0752-18.677,6.5916-3.9072-4.7605-9.0339-6.5916-15.8694-6.5916-5.4929,0-10.865,1.5869-15.5034,5.3708-.2441-2.8074-1.4647-3.906-4.0281-3.906h-30.0302c2.6854-3.1748,3.9073-6.4706,3.9073-10.6208,0-8.9106-6.959-15.6252-15.9917-15.6252h-5.1278c-4.7605,0-8.6666,1.8308-11.9623,5.1279l-10.3766,10.2533v-3.4178c0-2.4412-2.0751-4.6384-4.7606-4.6384h-27.0992c-1.4647,0-2.5634.6104-3.2958,1.4648l-14.7709,14.6477c-.4883.4894-1.3427,1.9541-1.3427,3.2969v5.0046c-5.1267-4.7605-11.1091-7.0798-18.0667-7.0798-4.5165,0-10.0105,1.4648-13.9165,5.3708-.4883-3.1736-1.5869-3.7839-3.662-3.7839h-26.1229c-1.3427,0-2.4412.4883-3.2957,1.3428l-3.0527,3.0515c-7.8121-16.1136-22.583-25.2684-41.0159-25.2684-12.8168,0-24.1699,4.2723-36.01,15.9904l-9.7664,9.7664c-10.8638,10.8636-16.2357,26.1228-16.2357,43.8232,0,33.448,18.5549,55.5427,47.2423,55.5427,12.8167,0,24.1699-4.7605,32.9585-13.5503l10.1324-10.2534v42.3586c0,2.6853,2.0751,4.7605,4.7605,4.7605h26.9773c1.5868,0,2.6854-.6104,3.4191-1.3428l14.6476-14.7709c.9764-.9766,1.4647-2.0751,1.4647-3.2958v-4.3943c6.5928-.8545,11.9635-3.5398,16.3578-8.1794l13.3063-13.3049c1.5867,13.7932,10.4973,20.5078,26.7332,20.5078h243.4097c1.7089,0,2.6853-.6102,3.4177-1.3427l7.4473-7.5692c7.3237,6.959,16.8459,10.3767,27.5874,10.3767,10.865,0,20.7522-4.1501,27.589-10.9869l7.0797-7.2018v12.0854c0,2.5635,2.0751,4.6384,4.6384,4.6384h33.0817v20.0198c0,2.6853,2.0751,4.7605,4.7605,4.7605h17.9445c8.5444,0,15.7476-2.6854,20.2639-7.2018l14.5269-14.5267c3.4177-3.5399,6.2253-8.5458,7.9341-14.8931l22.0947-85.0833c.8545-3.2958-.7324-5.8591-4.6384-5.8591ZM112.0121,161.0581c-25.8788,0-42.6028-19.6533-42.6028-50.7821,0-30.6393,16.724-50.0486,42.6028-50.0486,25.7578,0,42.4805,19.4093,42.4805,50.0486,0,31.1288-16.7227,50.7821-42.4805,50.7821ZM202.1012,160.936c-6.1033,0-11.2312-2.197-15.2593-6.3472v29.9067h-27.0994v-85.3274c0-6.1045-.1221-12.0856-.3662-18.1887h26.4891c.2441,2.1971.4882,4.6384.6102,7.3237,3.9061-5.6149,9.4001-8.7886,16.2358-8.7886,16.968,0,26.489,15.2593,26.489,41.1379,0,25.5127-9.7651,40.2834-27.0994,40.2834ZM278.2738,100.6331h-10.6208v36.6215c0,2.0751.9766,2.8075,3.0518,2.8075h7.5691v19.6536h-17.5784c-14.0386,0-20.1417-5.8604-20.1417-20.1418v-38.9407h-9.5222v-19.6536h9.5222v-18.9211h27.0992v18.9211h10.6208v19.6536ZM310.9882,159.7155h-27.0994v-78.736h27.0994v78.736ZM300.4906,76.7073h-6.2264c-6.2252,0-10.8636-5.0059-10.8636-10.9871,0-6.103,4.6384-10.9856,10.8636-10.9856h6.2264c6.2253,0,10.8638,4.8826,10.8638,10.9856,0,5.9812-4.6384,10.9871-10.8638,10.9871ZM414.5043,159.7156h-27.0994v-55.9089c0-2.8075-1.2207-3.906-3.906-3.906-1.9531,0-3.5399.7324-4.3943,1.953v57.8619h-27.1006v-55.9089c0-2.8075-1.2207-3.906-3.9061-3.906-1.953,0-3.5398.7324-4.3943,1.953v57.8619h-27.0992v-78.7361h25.7566v7.3237c5.4929-5.8589,11.718-8.6665,18.3108-8.6665,7.6899,0,12.9387,2.4414,15.6254,8.6665,5.7369-5.8589,12.5726-8.6665,19.7755-8.6665,11.9623,0,18.4316,6.7136,18.4316,20.2639v59.8149ZM447.2199,159.7155h-27.0994v-78.736h27.0994v78.736ZM436.7223,76.7073h-6.2264c-6.2252,0-10.8636-5.0059-10.8636-10.9871,0-6.103,4.6384-10.9856,10.8636-10.9856h6.2264c6.2253,0,10.8636,4.8826,10.8636,10.9856,0,5.9812-4.6383,10.9871-10.8636,10.9871ZM506.1802,159.7156h-53.3455v-18.0668l23.0725-41.0157h-23.0725v-19.6536h52.8573v18.9211l-22.583,40.1614h23.0712v19.6536ZM578.6909,125.1689h-43.213c.4883,10.7429,3.2958,16.8461,8.3003,16.8461,3.662,0,6.8357-4.0281,7.8123-10.8649h26.8564c-2.1973,17.5784-15.3813,29.908-33.9363,29.908-22.2168,0-36.2554-15.6252-36.2554-40.7717,0-24.658,14.5269-40.7717,36.3774-40.7717,22.9492,0,37.1099,19.0432,34.0582,45.6543ZM611.0391,159.7155h-27.0994V62.0583h27.0994v97.6571ZM663.0419,165.9407c-3.2957,12.6959-10.0105,18.5549-23.4375,18.5549h-19.2871v-19.7755h14.8928c1.2207,0,2.1973-.7323,2.4414-2.0751l.7322-3.1736-22.2168-78.4919h27.5876l4.8826,22.9492,3.2959,21.2402,2.8074-21.6064,4.0293-22.583h26.3669l-22.0947,84.9612Z"/>
+  <path class="cls-2" d="M544.0223,98.4358c-4.0281,0-7.2017,4.5164-8.5444,12.0844h16.7228c-1.2206-7.6901-4.1503-12.0844-8.1783-12.0844Z"/>
+  <path class="cls-2" d="M193.7997,99.4124c-4.8826,0-7.5681,8.5444-7.5681,21.4844,0,12.8167,2.6855,20.5081,7.5681,20.63,5.0057-.1219,7.8132-7.9353,7.8132-20.63,0-13.062-2.8075-21.6064-7.8132-21.4844Z"/>
+  <path class="cls-2" d="M111.89,83.0546c-7.6901,0-12.8167,10.4974-12.8167,27.2214,0,17.2123,5.1266,27.9551,12.8167,27.9551,7.5691,0,12.8179-10.7428,12.8179-27.9551,0-16.724-5.2488-27.2214-12.8179-27.2214Z"/>
+</svg>
+        <span class="text-xs font-mono-custom text-opti-neutral3/60">
+          | Digital Experience Platform &bull; Opal
+        </span>
+      </div>
+
+      <div class="flex items-center gap-4 text-xs font-mono-custom text-opti-neutral3/70">
+        <span>ESL Account Strategy Brief</span>
+        <span>&bull;</span>
+        <span>Confidential</span>
+        <span>&bull;</span>
+        <span class="text-opti-lfgreen">2026</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Chart.js Initialization Script (Animated & On-Brand) -->
+  <script>
+    // Side menu scroll-spy: highlight the link for the section in view
+    document.addEventListener('DOMContentLoaded', function() {
+      const links = document.querySelectorAll('.side-link');
+      const sections = Array.from(links).map(function(a) {
+        return document.querySelector(a.getAttribute('href'));
+      });
+      function setActive() {
+        let current = 0;
+        sections.forEach(function(s, i) {
+          if (s && s.getBoundingClientRect().top <= 140) current = i;
+        });
+        links.forEach(function(a, i) { a.classList.toggle('active', i === current); });
+      }
+      window.addEventListener('scroll', setActive, { passive: true });
+      setActive();
+    });
+  </script>
+  <!-- Chart.js Initialization Script (Animated & On-Brand) -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const ctx = document.getElementById('assetMixChart');
+      if (ctx) {
+        new Chart(ctx, {
+          type: 'doughnut',
+          data: {
+            labels: ['Investments', 'Loans (net)', 'Other assets'],
+            datasets: [{
+              data: [52, 42, 6],
+              backgroundColor: ['#ABFF44', '#08251A', '#91DBDA'],
+              borderColor: '#08251A',
+              borderWidth: 2
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '58%',
+            animation: { duration: 1200, easing: 'easeOutQuart' },
+            plugins: {
+              legend: {
+                position: 'bottom',
+                labels: {
+                  color: '#08251A',
+                  usePointStyle: true,
+                  font: { family: "'Roboto Condensed', sans-serif", weight: 'bold', size: 12 }
+                }
+              },
+              tooltip: {
+                backgroundColor: '#08251A',
+                titleColor: '#ABFF44',
+                bodyColor: '#FFFFFF',
+                borderColor: '#08251A',
+                borderWidth: 1,
+                padding: 10,
+                displayColors: false,
+                callbacks: {
+                  label: function(context) {
+                    return '~' + context.parsed + '% of total assets';
+                  }
+                }
+              }
+            }
+          }
+        });
+      }
+    });
+  </script>
+  <script src="/pages-widget.js" defer></script>
+</body>
+</html>

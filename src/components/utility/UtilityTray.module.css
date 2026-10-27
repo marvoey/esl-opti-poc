@@ -1,0 +1,130 @@
+.tray {
+  position: fixed;
+  inset: auto 0 0;
+  /* Below the presenter bar (z-index 50), which floats over the tray's right end when both show. */
+  z-index: 40;
+  transform: translateY(100%);
+  transition: transform 0.25s ease;
+}
+
+.tray[data-open="true"] {
+  transform: translateY(0);
+}
+
+/* The tab rides on the tray's top edge, so it stays visible while the tray is slid away. */
+.tab {
+  position: absolute;
+  bottom: 100%;
+  right: var(--space-md);
+  padding: var(--space-2xs) var(--space-md);
+  color: var(--color-text-inverted);
+  background-color: var(--color-navy-950);
+  border: 1px solid var(--color-white-alpha-25);
+  border-bottom: 0;
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  cursor: pointer;
+}
+
+.chevron {
+  display: block;
+  width: 0.45rem;
+  height: 0.45rem;
+  border: solid currentcolor;
+  border-width: 2px 2px 0 0;
+  transform: translateY(15%) rotate(-45deg);
+  transition: transform 0.25s ease;
+}
+
+.tray[data-open="true"] .chevron {
+  transform: translateY(-15%) rotate(135deg);
+}
+
+.bar {
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  padding: var(--space-xs) var(--space-md);
+  background-color: var(--color-navy-950);
+  border-top: 1px solid var(--color-white-alpha-25);
+  box-shadow: var(--shadow-elevation-md);
+}
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  padding: var(--space-xs) var(--space-md);
+  color: var(--color-text-inverted);
+  background-color: var(--color-white-alpha-10);
+  border: 1px solid var(--color-white-alpha-25);
+  border-radius: 9999px;
+  font-size: var(--font-size-micro);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.panel {
+  position: absolute;
+  right: var(--space-md);
+  bottom: 100%;
+  margin-block-end: var(--space-2xs);
+  box-sizing: border-box;
+  width: min(20rem, calc(100vw - 2 * var(--space-md)));
+  max-height: 60vh;
+  overflow-y: auto;
+  padding: var(--space-2xs);
+  color: var(--color-text-inverted);
+  background-color: var(--color-navy-950);
+  border: 1px solid var(--color-white-alpha-25);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-elevation-md);
+}
+
+.message {
+  padding: var(--space-xs) var(--space-sm);
+  font-size: var(--font-size-body-sm);
+  color: var(--color-text-inverted-muted);
+}
+
+.list {
+  list-style: none;
+}
+
+.link {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3xs);
+  padding: var(--space-xs) var(--space-sm);
+  color: var(--color-text-inverted);
+  border-radius: var(--radius-xl);
+  text-decoration: none;
+}
+
+.link:hover,
+.link:focus-visible {
+  background-color: var(--color-white-alpha-10);
+}
+
+.link[aria-current="page"] {
+  background-color: var(--color-white-alpha-10);
+  box-shadow: inset 0 0 0 1px var(--color-accent);
+}
+
+.title {
+  font-size: var(--font-size-body-sm);
+  font-weight: 600;
+}
+
+.path {
+  font-size: var(--font-size-micro);
+  color: var(--color-text-inverted-muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tray,
+  .chevron {
+    transition: none;
+  }
+}

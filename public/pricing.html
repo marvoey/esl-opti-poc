@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ESL Federal Credit Union — Sandler + JOLT Pricing Playbook (Slides 5–20)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700;800&family=Roboto+Mono:wght@400;500;600&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@40,300,0,0" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            lfgreen: '#ABFF44',
+            grass: '#7DDD3D',
+            goodtogo: '#3AB533',
+            neutral1: '#FFFFFF',
+            neutral2: '#EFF6E9',
+            neutral3: '#E4F0DA',
+            lightblue: '#91DBDA',
+            darkfir: '#08251A',
+            lightfir: '#197050',
+            midfir: '#0D3A29',
+            ext1: '#ABFF44',
+            ext2: '#3AB533',
+            ext4: '#2E8C45',
+            ext6: '#166E49',
+            ext8: '#0D593E',
+          },
+          fontFamily: {
+            heading: ['"VC Nudge SemiNormal"', '"Roboto Condensed"', 'sans-serif'],
+            body: ['"Die Grotesk B"', 'Roboto', 'sans-serif'],
+            mono: ['"Roboto Mono"', 'monospace'],
+          },
+          borderRadius: {
+            opal: '32px',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #FFFFFF;
+      color: #08251A;
+      font-family: "Die Grotesk B", Roboto, sans-serif;
+      line-height: 1.28;
+    }
+    h1, h2, h3, .font-heading {
+      font-family: "VC Nudge SemiNormal", "Roboto Condensed", sans-serif;
+      line-height: 1.06;
+      letter-spacing: 0;
+    }
+    .font-mono-caption {
+      font-family: "Roboto Mono", monospace;
+      letter-spacing: 0.03em;
+      line-height: 1.25;
+    }
+    .opal-card {
+      border-radius: 32px;
+      border: 2px solid #08251A;
+    }
+    .opal-pill {
+      border-radius: 32px;
+      border: 1.5px solid #08251A;
+    }
+    /* Level 02 Playful Upwards Extrusion Effect — strictly applied to ONE celebratory word in main hero */
+    .upwards-word {
+      position: relative;
+      display: inline-block;
+      color: #ABFF44;
+      -webkit-text-stroke: 2px #0D3A29;
+      text-shadow:
+        -2px 2px 0 #3AB533,
+        -4px 4px 0 #2E8C45,
+        -6px 6px 0 #166E49,
+        -8px 8px 0 #0D593E;
+      padding-left: 8px;
+    }
+    .material-symbols-rounded {
+      font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 40;
+      vertical-align: middle;
+    }
+    .tab-active {
+      background-color: #ABFF44 !important;
+      color: #08251A !important;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body class="bg-neutral1 text-darkfir min-h-screen pb-20">
+
+  <!-- TOP NAVIGATION BAR -->
+  <header class="sticky top-0 z-50 bg-darkfir text-neutral1 border-b-2 border-darkfir px-6 py-4">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <!-- Mark Lightning Bolt SVG (Unaltered Bolt Icon in Mark Context) -->
+        <div class="w-10 h-10 rounded-opal bg-lfgreen flex items-center justify-center border-2 border-darkfir">
+          <svg class="w-6 h-6 text-darkfir" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M13 2L4 14h7l-2 8 9-12h-7l2-8z"/>
+          </svg>
+        </div>
+        <div>
+          <span class="font-mono-caption text-xs uppercase text-lfgreen block">Optimizely × ESL Federal Credit Union</span>
+          <span class="font-heading text-xl font-extrabold tracking-tight text-neutral1">Sandler + JOLT Pricing & Overage Playbook</span>
+        </div>
+      </div>
+
+      <nav class="flex flex-wrap gap-2">
+        <a href="#architecture" class="px-4 py-2 opal-pill bg-lightfir text-neutral1 hover:bg-lfgreen hover:text-darkfir transition text-sm font-medium">1. Pricing Architecture</a>
+        <a href="#levers" class="px-4 py-2 opal-pill bg-lightfir text-neutral1 hover:bg-lfgreen hover:text-darkfir transition text-sm font-medium">2. The 5 Pricing Levers</a>
+        <a href="#preframe" class="px-4 py-2 opal-pill bg-lightfir text-neutral1 hover:bg-lfgreen hover:text-darkfir transition text-sm font-medium">3. Slides 5–14 Pre-Frame</a>
+        <a href="#core-pricing" class="px-4 py-2 opal-pill bg-lightfir text-neutral1 hover:bg-lfgreen hover:text-darkfir transition text-sm font-medium">4. Slides 15–20 Execution</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO BANNER -->
+  <section class="bg-darkfir text-neutral1 pt-12 pb-14 px-6 border-b-2 border-darkfir">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+      <div class="lg:col-span-8 space-y-5">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 opal-pill bg-neutral3 text-darkfir font-mono-caption text-xs font-semibold">
+          <span class="material-symbols-rounded text-base">event</span>
+          ONSITE PLAYBOOK · OCTOBER 27–28, 2026 · SLIDES 5–20
+        </div>
+        <h1 class="font-heading text-4xl sm:text-6xl font-extrabold text-neutral1 uppercase">
+          Built for Price <span class="upwards-word">Certainty</span>
+        </h1>
+        <p class="text-lg sm:text-xl text-neutral2 max-w-3xl font-normal">
+          High-stakes buyers rarely hesitate because of the base subscription alone—they hesitate out of <strong>FOMU (Fear of Messing Up)</strong>: the fear of surprise overages, runaway AI consumption, or hidden fee triggers. Here is the step-by-step Sandler + JOLT system to explain the pricing architecture, demystify the 5 pricing levers, and put ESL in full control.
+        </p>
+        <div class="flex flex-wrap gap-3 pt-2">
+          <div class="px-4 py-2.5 opal-pill bg-lfgreen text-darkfir font-mono-caption text-xs font-semibold">
+            3-YEAR TOTAL: $648,524.92
+          </div>
+          <div class="px-4 py-2.5 opal-pill bg-lightblue text-darkfir font-mono-caption text-xs font-semibold">
+            ANNUAL LOCKED (Y1–Y3): $200,841.64 / YR
+          </div>
+          <div class="px-4 py-2.5 opal-pill bg-neutral3 text-darkfir font-mono-caption text-xs font-semibold">
+            YEAR 1 ONBOARDING: $46,000 (ONE-TIME)
+          </div>
+        </div>
+      </div>
+
+      <!-- Summary Methodology Card -->
+      <div class="lg:col-span-4 bg-neutral3 text-darkfir opal-card p-6 space-y-4">
+        <div class="flex items-center justify-between">
+          <span class="font-mono-caption text-xs uppercase font-semibold text-darkfir">Core Methodology</span>
+          <span class="material-symbols-rounded text-darkfir">verified_user</span>
+        </div>
+        <div class="space-y-3">
+          <div class="p-4 bg-neutral1 opal-card">
+            <p class="font-heading text-lg font-extrabold text-darkfir">Sandler Discipline</p>
+            <p class="text-sm mt-1">Upfront Contracts, No Mutual Mystification, and Negative Reverse ("Thermometer") checks so ESL validates the scope before seeing the price.</p>
+          </div>
+          <div class="p-4 bg-neutral1 opal-card">
+            <p class="font-heading text-lg font-extrabold text-darkfir">The JOLT Effect</p>
+            <p class="text-sm mt-1">Offer a clear recommendation, take risk off the table with hard admin caps, and proactively name "Overage FOMU" to disarm it immediately.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main class="max-w-7xl mx-auto px-6 space-y-16 mt-12">
+
+    <!-- SECTION 1: HIGH-LEVEL PRICING ARCHITECTURE (3 BUCKETS + CHART) -->
+    <section id="architecture" class="space-y-8">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div>
+          <span class="font-mono-caption text-xs uppercase font-semibold px-3 py-1 opal-pill bg-neutral3 text-darkfir">Part 1 · Structural Clarity</span>
+          <h2 class="font-heading text-3xl sm:text-4xl font-extrabold mt-3">How the Pricing Is Structured: The 3-Bucket Architecture</h2>
+          <p class="text-base mt-2 max-w-3xl">
+            Before showing ESL a single dollar figure on Slide 16, give them a 30-second mental model of how Optimizely commercial agreements work. When executives see that <strong>100% of recurring software + Premium Support is locked flat for 36 months</strong>, their anxiety drops immediately.
+          </p>
+        </div>
+      </div>
+
+      <!-- Verbal Frame Callout -->
+      <div class="bg-neutral3 opal-card p-6 sm:p-8">
+        <div class="flex items-start gap-4">
+          <div class="w-12 h-12 rounded-opal bg-lfgreen border-2 border-darkfir flex items-center justify-center shrink-0">
+            <span class="material-symbols-rounded text-darkfir">record_voice_over</span>
+          </div>
+          <div class="space-y-2">
+            <span class="font-mono-caption text-xs uppercase font-semibold text-darkfir">Erlin's 30-Second Architecture Frame (Say Before Slide 16)</span>
+            <p class="text-base sm:text-lg font-medium text-darkfir">
+              "Before we look at the numbers, it helps to understand how Optimizely structures pricing so there are no surprises down the road. Often, teams evaluating a DXP worry about hidden meters or surprise overages in Year 2. So we separated your agreement into three simple buckets: <strong>1) A Fixed 36-Month Core Subscription</strong> that cannot change for your committed scope, <strong>2) A One-Time Year 1 Onboarding</strong> that drops off completely in Years 2 and 3, and <strong>3) Deliberate Expansion Levers</strong> that only move if ESL actively chooses to scale. Nothing auto-upgrades behind your back."
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 Bucket Cards + Visual Chart -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+        <div class="lg:col-span-7 grid grid-cols-1 gap-4">
+          <!-- Bucket 1 -->
+          <div class="bg-neutral2 opal-card p-6 flex flex-col justify-between">
+            <div class="flex items-center justify-between gap-2">
+              <span class="font-mono-caption text-xs font-semibold px-3 py-1 opal-pill bg-lfgreen text-darkfir">BUCKET 01 · FIXED RECURRING CORE</span>
+              <span class="font-heading text-2xl font-extrabold">$200,841.64 / yr</span>
+            </div>
+            <h3 class="font-heading text-xl font-extrabold mt-3">36-Month Locked Software + Premium Support</h3>
+            <p class="text-sm mt-1">
+              Includes core software subscription (<strong>$156,547/yr</strong>, unchanged from the Sept 28 submission) plus <strong>Premium Support</strong> (99.9% SLA, 24/7 coverage, 15-min P1 target initial response, and TAM access via 10 Expert Services credits/yr). Fixed across Years 1, 2, and 3.
+            </p>
+          </div>
+
+          <!-- Bucket 2 -->
+          <div class="bg-neutral2 opal-card p-6 flex flex-col justify-between">
+            <div class="flex items-center justify-between gap-2">
+              <span class="font-mono-caption text-xs font-semibold px-3 py-1 opal-pill bg-lightblue text-darkfir">BUCKET 02 · YEAR 1 LAUNCH ENABLEMENT</span>
+              <span class="font-heading text-2xl font-extrabold">$46,000 (Year 1 Only)</span>
+            </div>
+            <h3 class="font-heading text-xl font-extrabold mt-3">One-Time Guided Onboarding (280 Hours Total)</h3>
+            <p class="text-sm mt-1">
+              Dedicated Optimizely enablement across SaaS CMS (150 hrs), Web Experimentation (90 hrs), and Agent Platform (40 hrs), available for 365 days. Drops to <strong>$0 in Years 2 and 3</strong>. (Implementation partner delivery is contracted separately by ESL).
+            </p>
+          </div>
+
+          <!-- Bucket 3 -->
+          <div class="bg-neutral2 opal-card p-6 flex flex-col justify-between">
+            <div class="flex items-center justify-between gap-2">
+              <span class="font-mono-caption text-xs font-semibold px-3 py-1 opal-pill bg-neutral1 text-darkfir">BUCKET 03 · DELIBERATE PHASE-2 OPTIONS</span>
+              <span class="font-heading text-2xl font-extrabold">Pre-Priced Menu</span>
+            </div>
+            <h3 class="font-heading text-xl font-extrabold mt-3">Customer-Controlled Growth Levers</h3>
+            <p class="text-sm mt-1">
+              Every scale-up or scale-back option (such as ODP at +$24,525/yr held for 12 months, or Optimizely Front-End Hosting at +$39,600/yr) is pre-priced in writing today. ESL only pays for Phase 2 capabilities when ESL decides to turn them on.
+            </p>
+          </div>
+        </div>
+
+        <!-- Chart Card -->
+        <div class="lg:col-span-5 bg-neutral1 opal-card p-6 flex flex-col justify-between">
+          <div>
+            <span class="font-mono-caption text-xs uppercase font-semibold text-darkfir">3-Year Predictability Curve</span>
+            <h3 class="font-heading text-2xl font-extrabold mt-1">Year-Over-Year Investment Profile</h3>
+            <p class="text-xs mt-1">Total 3-Year Investment: <strong>$648,524.92</strong>. Notice how Years 2 & 3 flatten completely to the locked subscription rate.</p>
+          </div>
+          <div class="my-4" style="max-height: 320px;">
+            <canvas id="investmentChart" height="260"></canvas>
+          </div>
+          <div class="p-3 bg-neutral3 opal-pill text-xs font-mono-caption text-center">
+            0% Annual Escalation during the 36-Month Initial Term
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: THE 5 PRICING LEVERS & OVERAGE PROTECTION MATRIX -->
+    <section id="levers" class="space-y-8">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div>
+          <span class="font-mono-caption text-xs uppercase font-semibold px-3 py-1 opal-pill bg-lfgreen text-darkfir">Part 2 · Disarming Overage FOMU</span>
+          <h2 class="font-heading text-3xl sm:text-4xl font-extrabold mt-3">The 5 Pricing Levers: What Drives Cost & How ESL Controls It</h2>
+          <p class="text-base mt-2 max-w-3xl">
+            Buyers fear "black-box" usage meters where a traffic spike or an enthusiastic marketer accidentally triggers a $50,000 bill. Click any lever below or review the complete matrix to see how each metric is governed and how to explain it in plain, candid language.
+          </p>
+        </div>
+        <!-- Filter Buttons -->
+        <div class="flex flex-wrap gap-2">
+          <button onclick="filterLevers('all')" id="btn-all" class="lever-btn tab-active px-4 py-2 opal-pill bg-neutral2 text-xs font-mono-caption font-semibold">ALL 5 LEVERS</button>
+          <button onclick="filterLevers('admin')" id="btn-admin" class="lever-btn px-4 py-2 opal-pill bg-neutral2 text-xs font-mono-caption font-semibold">ADMIN-GATED (ZERO OVERAGE RISK)</button>
+          <button onclick="filterLevers('traffic')" id="btn-traffic" class="lever-btn px-4 py-2 opal-pill bg-neutral2 text-xs font-mono-caption font-semibold">TRAFFIC / USAGE LEVERS</button>
+        </div>
+      </div>
+
+      <!-- Interactive Lever Cards Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="leversGrid">
+
+        <!-- Lever 1 -->
+        <div class="lever-card bg-neutral2 opal-card p-6 flex flex-col justify-between" data-type="admin">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="font-mono-caption text-xs font-semibold px-3 py-1 opal-pill bg-lfgreen text-darkfir">LEVER 01 · ADMIN-GATED</span>
+              <span class="material-symbols-rounded">group</span>
+            </div>
+            <h3 class="font-heading text-2xl font-extrabold">CMS Users & Environments</h3>
+            <div class="p-3 bg-neutral1 opal-card text-xs font-mono-caption">
+              <strong>COMMITTED ALLOWANCE:</strong><br/>33 Users · 3 Environments · Content Graph Included
+            </div>
+            <p class="text-sm">
+              <strong>What drives it:</strong> Named admin/author seats inside SaaS CMS and provisioned environments (Dev / Test / Prod).
+            </p>
+            <p class="text-sm">
+              <strong>Why ESL can't accidentally over-spend:</strong> Seat and environment provisioning are 100% controlled by ESL's system administrators. Website visitors never consume a seat.
+            </p>
+          </div>
+          <div class="mt-4 pt-4 border-t border-darkfir/20">
+            <span class="font-mono-caption text-xs uppercase font-semibold block">JOLT Comfort Frame:</span>
+            <p class="text-xs italic mt-1">"An author cannot accidentally create a 34th seat—your admins hold the keys."</p>
+          </div>
+        </div>
+
+        <!-- Lever 2 -->
+        <div class="lever-card bg-neutral2 opal-card p-6 flex flex-col justify-between" data-type="admin">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="font-mono-caption text-xs font-semibold px-3 py-1 opal-pill bg-lfgreen text-darkfir">LEVER 02 · PUBLISHING-GATED</span>
+              <span class="material-symbols-rounded">article</span>
+            </div>
+            <h3 class="font-heading text-2xl font-extrabold">Published Content Items</h3>
+            <div class="p-3 bg-neutral1 opal-card text-xs font-mono-caption">
+              <strong>COMMITTED ALLOWANCE:</strong><br/>2,250 Content Items + Built-in DAM
+            </div>
+            <p class="text-sm">
+              <strong>What drives it:</strong> Structured content items actively published and managed by ESL's marketing team.
+            </p>
+            <p class="text-sm">
+              <strong>Why ESL can't accidentally over-spend:</strong> Content volume only grows as fast as your own team authors pages. Reusing shared components and governed DAM assets across pages does not multiply your core item count uncontrollably.
+            </p>
+          </div>
+          <div class="mt-4 pt-4 border-t border-darkfir/20">
+            <span class="font-mono-caption text-xs uppercase font-semibold block">JOLT Comfort Frame:</span>
+            <p class="text-xs italic mt-1">"Sized with headroom above your current footprint, and it only changes when your editors publish new content."</p>
+          </div>
+        </div>
+
+        <!-- Lever 3 -->
+        <div class="lever-card bg-neutral2 opal-card p-6 flex flex-col justify-between" data-type="traffic">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="font-mono-caption text-xs font-semibold px-3 py-1 opal-pill bg-lightblue text-darkfir">LEVER 03 · EXPERIMENTATION SCOPE</span>
+              <span class="material-symbols-rounded">science</span>
+            </div>
+            <h3 class="font-heading text-2xl font-extrabold">Web Experimentation MAUs</h3>
+            <div class="p-3 bg-neutral1 opal-card text-xs font-mono-caption">
+              <strong>COMMITTED ALLOWANCE:</strong><br/>250,000 Monthly Active Users (Enhanced + Personalization Essential)
+            </div>
+            <p class="text-sm">
+              <strong>What drives it:</strong> Unique monthly visitors who enter an active experiment or targeted experience.
+            </p>
+            <p class="text-sm">
+              <strong>Why ESL can't accidentally over-spend:</strong> ESL controls traffic allocation and page targeting. Running a test on the Personal Loans page only counts visitors to that page—not your entire site. And if overages ever occur, rates are pre-quoted in writing.
+            </p>
+          </div>
+          <div class="mt-4 pt-4 border-t border-darkfir/20">
+            <span class="font-mono-caption text-xs uppercase font-semibold block">JOLT Comfort Frame:</span>
+            <p class="text-xs italic mt-1">"You control the throttle—you choose which pages run tests and what percentage of traffic enters an experiment."</p>
+          </div>
+        </div>
+
+        <!-- Lever 4 -->
+        <div class="lever-card bg-neutral2 opal-card p-6 flex flex-col justify-between" data-type="traffic">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="font-mono-caption text-xs font-semibold px-3 py-1 opal-pill bg-lightblue text-darkfir">LEVER 04 · AI CONSUMPTION</span>
+              <span class="material-symbols-rounded">bolt</span>
+            </div>
+            <h3 class="font-heading text-2xl font-extrabold">Agent Platform Credits</h3>
+            <div class="p-3 bg-neutral1 opal-card text-xs font-mono-caption">
+              <strong>COMMITTED ALLOWANCE:</strong><br/>100,000 Credits / Yr (Enhanced — Upgraded at $0 Extra Cost)
+            </div>
+            <p class="text-sm">
+              <strong>What drives it:</strong> Internal team usage of AI agents and workflows inside the platform.
+            </p>
+            <p class="text-sm">
+              <strong>Why ESL can't accidentally over-spend:</strong> Underlying LLM model costs sit <em>inside</em> the credits (no external token bills), and ESL has <strong>admin access controls and usage alerts</strong> (Slide 20) plus 2.5x the Essential credit pool at the exact same annual software price.
+            </p>
+          </div>
+          <div class="mt-4 pt-4 border-t border-darkfir/20">
+            <span class="font-mono-caption text-xs uppercase font-semibold block">JOLT Comfort Frame:</span>
+            <p class="text-xs italic mt-1">"We upgraded you to 100,000 credits at no additional cost, and gave your admins alerts and role controls so AI usage never runs wild."</p>
+          </div>
+        </div>
+
+        <!-- Lever 5 -->
+        <div class="lever-card bg-neutral2 opal-card p-6 flex flex-col justify-between" data-type="traffic">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="font-mono-caption text-xs font-semibold px-3 py-1 opal-pill bg-neutral3 text-darkfir">LEVER 05 · DELIVERY & API CALLS</span>
+              <span class="material-symbols-rounded">cloud_done</span>
+            </div>
+            <h3 class="font-heading text-2xl font-extrabold">API Calls & Hosting Options</h3>
+            <div class="p-3 bg-neutral1 opal-card text-xs font-mono-caption">
+              <strong>COMMITTED ALLOWANCE:</strong><br/>API Calls Included · Optional Front-End Hosting (+$39,600/yr for 5M visits)
+            </div>
+            <p class="text-sm">
+              <strong>What drives it:</strong> Content delivery requests via Content Graph and front-end page visits (if Optimizely hosts the front end).
+            </p>
+            <p class="text-sm">
+              <strong>Why ESL can't accidentally over-spend:</strong> API calls are included in the committed scope, and any usage above contracted allowances follows pre-negotiated, written overage rates—never punitive spot pricing.
+            </p>
+          </div>
+          <div class="mt-4 pt-4 border-t border-darkfir/20">
+            <span class="font-mono-caption text-xs uppercase font-semibold block">JOLT Comfort Frame:</span>
+            <p class="text-xs italic mt-1">"API calls are included, and every future rate is locked in writing before you sign."</p>
+          </div>
+        </div>
+
+        <!-- Summary Guarantee Card -->
+        <div class="lever-card bg-darkfir text-neutral1 opal-card p-6 flex flex-col justify-between" data-type="admin traffic">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="font-mono-caption text-xs font-semibold px-3 py-1 opal-pill bg-lfgreen text-darkfir">CONTRACTUAL PROTECTION</span>
+              <span class="material-symbols-rounded text-lfgreen">lock</span>
+            </div>
+            <h3 class="font-heading text-2xl font-extrabold text-neutral1">Renewal & Notice Guardrail</h3>
+            <div class="p-3 bg-midfir opal-card text-xs font-mono-caption text-lfgreen border border-lfgreen/30">
+              <strong>SLIDE 20 COMMITMENT:</strong><br/>36 Months Fixed · 120 Days' Advance Notice Before Renewal
+            </div>
+            <p class="text-sm text-neutral2">
+              Subscription fees are fixed for the committed scope for 3 full years. Renewal pricing can only change after Month 36, and Optimizely must provide <strong>120 days' advance notice</strong>.
+            </p>
+          </div>
+          <div class="mt-4 pt-4 border-t border-neutral1/20">
+            <span class="font-mono-caption text-xs uppercase text-lfgreen block">Sandler Temperature Check:</span>
+            <p class="text-xs italic text-neutral2 mt-1">"Knowing that 3 of the 5 levers are admin-locked and the other 2 have built-in alerts and pre-quoted rates, where do you still see risk?"</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 3: STEP-BY-STEP PRE-FRAMING (SLIDES 5–14) -->
+    <section id="preframe" class="space-y-8">
+      <div>
+        <span class="font-mono-caption text-xs uppercase font-semibold px-3 py-1 opal-pill bg-neutral3 text-darkfir">Part 3 · Pre-Framing Value & Levers (Slides 5–14)</span>
+        <h2 class="font-heading text-3xl sm:text-4xl font-extrabold mt-3">Step-by-Step: Planting "Lever Comfort" in the Breakout Sessions</h2>
+        <p class="text-base mt-2 max-w-3xl">
+          In Sandler + JOLT, the pricing session (Slide 15) is won <em>before</em> Wednesday at 11:00 AM. During the working sessions on Slides 5–14, Erlin and Marvin plant micro-anchors showing that every capability is already included in the base scope or controlled by ESL's admins.
+        </p>
+      </div>
+
+      <div class="space-y-4">
+        <!-- Step 1: Slides 5-6 -->
+        <div class="bg-neutral2 opal-card p-6">
+          <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-darkfir/20">
+            <div class="flex items-center gap-3">
+              <span class="px-3 py-1 opal-pill bg-lfgreen text-darkfir font-mono-caption text-xs font-bold">STEP 1 · SLIDES 5–6</span>
+              <h3 class="font-heading text-2xl font-extrabold">Personalization Working Session (Tue 3:00 PM)</h3>
+            </div>
+            <span class="font-mono-caption text-xs">Included: Personalization Essential</span>
+          </div>
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 pt-4">
+            <div>
+              <span class="font-mono-caption text-xs uppercase font-semibold text-lightfir">Current State & Buyer FOMU</span>
+              <p class="text-sm mt-1">Rachel Pikas, Matt, and Megan may worry that personalization requires a massive data integration on Day 1 or triggers a separate per-campaign meter.</p>
+            </div>
+            <div>
+              <span class="font-mono-caption text-xs uppercase font-semibold text-lightfir">Sandler + JOLT Modification</span>
+              <p class="text-sm mt-1"><strong>JOLT "Start Simple" Recommendation + Sandler Disarming:</strong> Explicitly tell them Personalization Essential is built into their base tier and uses the same content they already publish—zero extra license triggers to start.</p>
+            </div>
+            <div class="bg-neutral1 p-4 opal-card">
+              <span class="font-mono-caption text-xs uppercase font-semibold text-darkfir">Modified Script (Erlin)</span>
+              <p class="text-xs mt-1 italic">"Teams often worry that turning on personalization means either boiling the ocean on Day 1 or triggering a new pricing meter. Because Personalization Essential is already included in your base proposal, you can start with two high-confidence audiences—like current members vs. prospectivepersonal loan shoppers—at zero additional software cost. On a scale of 1 to 10, how comfortable would the team feel starting with two simple member experiences like this?"</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2: Slides 7-8 -->
+        <div class="bg-neutral2 opal-card p-6">
+          <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-darkfir/20">
+            <div class="flex items-center gap-3">
+              <span class="px-3 py-1 opal-pill bg-lfgreen text-darkfir font-mono-caption text-xs font-bold">STEP 2 · SLIDES 7–8</span>
+              <h3 class="font-heading text-2xl font-extrabold">Experimentation Working Session (Tue 4:00 PM)</h3>
+            </div>
+            <span class="font-mono-caption text-xs">Lever 3: Web Experimentation Enhanced (250k MAU)</span>
+          </div>
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 pt-4">
+            <div>
+              <span class="font-mono-caption text-xs uppercase font-semibold text-lightfir">Current State & Buyer FOMU</span>
+              <p class="text-sm mt-1">Buyers fear that if ESL gets a seasonal traffic surge, their 250,000 MAU allowance will blow up and trigger surprise overages.</p>
+            </div>
+            <div>
+              <span class="font-mono-caption text-xs uppercase font-semibold text-lightfir">Sandler + JOLT Modification</span>
+              <p class="text-sm mt-1"><strong>Demystify the MAU Lever:</strong> Explain that MAUs only count visitors who enter an active experiment, and ESL controls page targeting and traffic allocation percentages.</p>
+            </div>
+            <div class="bg-neutral1 p-4 opal-card">
+              <span class="font-mono-caption text-xs uppercase font-semibold text-darkfir">Modified Script (Erlin)</span>
+              <p class="text-xs mt-1 italic">"You have 250,000 Monthly Active Users included in Web Experimentation Enhanced. And here is how you control that lever: MAUs only count on the pages where you actively run a test, and you control the traffic allocation. So a sitewide traffic spike doesn't automatically burn your allowance."</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3: Slides 9-12 -->
+        <div class="bg-neutral2 opal-card p-6">
+          <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-darkfir/20">
+            <div class="flex items-center gap-3">
+              <span class="px-3 py-1 opal-pill bg-lfgreen text-darkfir font-mono-caption text-xs font-bold">STEP 3 · SLIDES 9–12</span>
+              <h3 class="font-heading text-2xl font-extrabold">DAM & Governance Working Sessions (Wed 9:00–10:30 AM)</h3>
+            </div>
+            <span class="font-mono-caption text-xs">Levers 1, 2 & 4: 33 Users · 2,250 Items · 100k AI Credits</span>
+          </div>
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 pt-4">
+            <div>
+              <span class="font-mono-caption text-xs uppercase font-semibold text-lightfir">Current State & Buyer FOMU</span>
+              <p class="text-sm mt-1">In banking/credit unions, compliance fears rogue publishing and procurement fears "per-asset" DAM storage fees or runaway AI token bills.</p>
+            </div>
+            <div>
+              <span class="font-mono-caption text-xs uppercase font-semibold text-lightfir">Sandler + JOLT Modification</span>
+              <p class="text-sm mt-1"><strong>Connect Governance to Cost Control:</strong> Show that the same role permissions that protect brand compliance also govern seat counts (33 users) and Agent Platform credits (100,000/yr).</p>
+            </div>
+            <div class="bg-neutral1 p-4 opal-card">
+              <span class="font-mono-caption text-xs uppercase font-semibold text-darkfir">Modified Script (Erlin)</span>
+              <p class="text-xs mt-1 italic">"Notice how governance does double duty here: it protects ESL's compliance rules, and it also locks down your cost levers. DAM is built in, your 33 user seats are admin-assigned, and your 100,000 Agent Platform credits have admin controls and usage alerts built right in."</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 4: Slides 13-14 -->
+        <div class="bg-neutral2 opal-card p-6">
+          <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-darkfir/20">
+            <div class="flex items-center gap-3">
+              <span class="px-3 py-1 opal-pill bg-lfgreen text-darkfir font-mono-caption text-xs font-bold">STEP 4 · SLIDES 13–14</span>
+              <h3 class="font-heading text-2xl font-extrabold">SDLC & How the PoC Informs Delivery (Wed 10:30–11:00 AM)</h3>
+            </div>
+            <span class="font-mono-caption text-xs">De-Risking Year 1 Implementation</span>
+          </div>
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 pt-4">
+            <div>
+              <span class="font-mono-caption text-xs uppercase font-semibold text-lightfir">Current State & Buyer FOMU</span>
+              <p class="text-sm mt-1">Right before the 11:00 AM pricing session, executives worry that implementation will drag out and burn extra services budget.</p>
+            </div>
+            <div>
+              <span class="font-mono-caption text-xs uppercase font-semibold text-lightfir">Sandler + JOLT Modification</span>
+              <p class="text-sm mt-1"><strong>Bridge PoC Proof to Commercial Confidence:</strong> Highlight how Brink's design system was already turned into reusable components during the PoC, reducing implementation ambiguity (without over-promising production readiness).</p>
+            </div>
+            <div class="bg-neutral1 p-4 opal-card">
+              <span class="font-mono-caption text-xs uppercase font-semibold text-darkfir">Modified Script (Erlin)</span>
+              <p class="text-xs mt-1 italic">"Seeing how Brink's design system already translated into reusable components in the PoC, we're not starting from a blank sheet of paper at kickoff. That's what keeps Year 1 delivery focused before we look at the commercial structure next."</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: CORE PRICING DISCUSSION EXECUTION (SLIDES 15–20) -->
+    <section id="core-pricing" class="space-y-8">
+      <div>
+        <span class="font-mono-caption text-xs uppercase font-semibold px-3 py-1 opal-pill bg-lfgreen text-darkfir">Part 4 · The 11:00 AM Pricing Session (Slides 15–20)</span>
+        <h2 class="font-heading text-3xl sm:text-4xl font-extrabold mt-3">Slide-by-Slide Sandler + JOLT Playbook (Slides 15–20)</h2>
+        <p class="text-base mt-2 max-w-3xl">
+          Here is the exact sequence for Wednesday, 11:00–11:30 AM. Crucially, we recommend <strong>unhiding Slide 20 ("What stays fixed, and what can change")</strong> or weaving its exact talking points directly after Slide 17 so overage FOMU is neutralized proactively rather than defensively.
+        </p>
+      </div>
+
+      <!-- Slide Tabs -->
+      <div class="flex flex-wrap gap-2 border-b-2 border-darkfir pb-4">
+        <button onclick="showSlide(15)" id="sbtn-15" class="slide-tab tab-active px-5 py-2.5 opal-pill bg-neutral2 text-sm font-heading font-bold">SLIDE 15 · Upfront Contract</button>
+        <button onclick="showSlide(16)" id="sbtn-16" class="slide-tab px-5 py-2.5 opal-pill bg-neutral2 text-sm font-heading font-bold">SLIDE 16 · 3-Year Investment</button>
+        <button onclick="showSlide(17)" id="sbtn-17" class="slide-tab px-5 py-2.5 opal-pill bg-neutral2 text-sm font-heading font-bold">SLIDE 17 · Scope & Levers</button>
+        <button onclick="showSlide(20)" id="sbtn-20" class="slide-tab px-5 py-2.5 opal-pill bg-neutral2 text-sm font-heading font-bold">SLIDE 20 · Overage Shield (Promote!)</button>
+        <button onclick="showSlide(18)" id="sbtn-18" class="slide-tab px-5 py-2.5 opal-pill bg-neutral2 text-sm font-heading font-bold">SLIDE 18 · What Changed (If Asked)</button>
+        <button onclick="showSlide(19)" id="sbtn-19" class="slide-tab px-5 py-2.5 opal-pill bg-neutral2 text-sm font-heading font-bold">SLIDE 19 · Options Menu (If Asked)</button>
+      </div>
+
+      <!-- Slide Panels -->
+      <div id="slidePanels">
+
+        <!-- SLIDE 15 PANEL -->
+        <div id="panel-15" class="slide-panel bg-neutral3 opal-card p-6 sm:p-8 space-y-6">
+          <div class="flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <span class="font-mono-caption text-xs uppercase font-semibold px-3 py-1 opal-pill bg-lfgreen text-darkfir">SLIDE 15 · OPENING THE ROOM</span>
+              <h3 class="font-heading text-3xl font-extrabold mt-2">"Pricing Discussion" — The Overage-Disarming Upfront Contract</h3>
+            </div>
+            <div class="font-mono-caption text-xs bg-neutral1 px-4 py-2 opal-pill">Time: 2 Minutes · Owner: Erlin</div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-neutral1 opal-card p-6 space-y-3">
+              <span class="font-mono-caption text-xs uppercase font-semibold text-lightfir">Why Current Notes Need Adjusting</span>
+              <p class="text-sm">
+                The current notes say: <em>"Here's the number, here's what it gets you, and then it's your call how deep we go."</em> Jumping straight to a $648K total without explaining the <strong>pricing architecture and levers</strong> triggers sticker shock and leaves executives wondering where the hidden usage traps are.
+              </p>
+              <div class="p-3 bg-neutral2 opal-card text-xs">
+                <strong>Sandler + JOLT Fix:</strong> Name "Overage FOMU" in the first 45 seconds so the room relaxes and knows you are going to explain the exact levers.
+              </div>
+            </div>
+
+            <div class="bg-darkfir text-neutral1 opal-card p-6 space-y-3">
+              <span class="font-mono-caption text-xs uppercase font-semibold text-lfgreen">New Spoken Talk Track (Erlin)</span>
+              <p class="text-sm text-neutral2 leading-relaxed">
+                "Thanks for making time for this. We have 30 minutes, and our goal is to make sure you walk out with 100% clarity on the investment and how it's governed.<br/><br/>
+                In our experience, when leadership teams look at a platform agreement like this, the biggest concern usually isn't just the starting number—it's <strong>fear of surprise overages</strong> or not knowing what the pricing levers are in Year 2 and Year 3.<br/><br/>
+                So I'm going to take 3 minutes to walk through four things:
+                <br/>1) How our pricing is structured at a high level,
+                <br/>2) Your three-year investment,
+                <br/>3) What's included and what the 5 pricing levers are, and
+                <br/>4) How we lock in overage protection so you're always in control.
+                <br/><br/>Before I jump in, what is the #1 question on your mind that we need to make sure we answer today?"
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- SLIDE 16 PANEL -->
+        <div id="panel-16" class="slide-panel hidden bg-neutral3 opal-card p-6 sm:p-8 space-y-6">
+          <div class="flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <span class="font-mono-caption text-xs uppercase font-semibold px-3 py-1 opal-pill bg-lfgreen text-darkfir">SLIDE 16 · THE NUMBERS</span>
+              <h3 class="font-heading text-3xl font-extrabold mt-2">"Your Three-Year Investment" — Architecture First, Numbers Second</h3>
+            </div>
+            <div class="font-mono-caption text-xs bg-neutral1 px-4 py-2 opal-pill">Time: 1.5 Minutes · Owner: Erlin</div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-neutral1 opal-card p-6 space-y-3">
+              <span class="font-mono-caption text-xs uppercase font-semibold text-lightfir">Key Commercial Figures (Know Cold)</span>
+              <ul class="text-sm space-y-2">
+                <li>• <strong>3-Year Total Optimizely Investment:</strong> <span class="font-mono-caption font-bold">$648,524.92</span></li>
+                <li>• <strong>Annual Subscription (Years 1–3 Fixed):</strong> <span class="font-mono-caption font-bold">$200,841.64 / yr</span></li>
+                <li>• <strong>One-Time Year 1 Onboarding:</strong> <span class="font-mono-caption font-bold">$46,000.00</span></li>
+                <li>• <strong>Year 1 Total:</strong> <span class="font-mono-caption font-bold">$246,841.64</span> → <strong>Years 2 & 3:</strong> <span class="font-mono-caption font-bold">$200,841.64 / yr</span></li>
+                <li>• <strong>Implementation Partner Fees:</strong> Contracted separately.</li>
+              </ul>
+              <div class="p-3 bg-neutral2 opal-card text-xs">
+                <strong>Sandler Move:</strong> Pause after stating the numbers and ask a open-ended reaction question instead of rushing defensively into Slide 17.
+              </div>
+            </div>
+
+            <div class="bg-darkfir text-neutral1 opal-card p-6 space-y-3">
+              <span class="font-mono-caption text-xs uppercase font-semibold text-lfgreen">New Spoken Talk Track (Erlin)</span>
+              <p class="text-sm text-neutral2 leading-relaxed">
+                "At a high level, our pricing is built in two parts here: a <strong>fixed annual subscription</strong> that is locked flat for 36 months, and a <strong>one-time onboarding fee</strong> that only happens in Year 1.<br/><br/>
+                Your annual subscription—which includes both all core software and 24/7 Premium Support—is <strong>$200,841.64 per year</strong>, fixed across Years 1, 2, and 3 with zero annual escalation.<br/><br/>
+                In Year 1, there is a one-time onboarding investment of <strong>$46,000</strong> to work alongside your team and your implementation partner—bringing Year 1 to <strong>$246,841.64</strong>, and dropping to <strong>$200,841.64</strong> in Years 2 and 3, for a three-year total of <strong>$648,524.92</strong>.<br/><br/>
+                <em>[Sandler Pause]</em> Looking at how Year 1 steps down into a flat locked rate for Years 2 and 3, how does that structure align with how you've budgeted for the program?"
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- SLIDE 17 PANEL -->
+        <div id="panel-17" class="slide-panel hidden bg-neutral3 opal-card p-6 sm:p-8 space-y-6">
+          <div class="flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <span class="font-mono-caption text-xs uppercase font-semibold px-3 py-1 opal-pill bg-lfgreen text-darkfir">SLIDE 17 · SCOPE & LEVERS</span>
+              <h3 class="font-heading text-3xl font-extrabold mt-2">"What's Included" — Explaining the 5 Pricing Levers</h3>
+            </div>
+            <div class="font-mono-caption text-xs bg-neutral1 px-4 py-2 opal-pill">Time: 2 Minutes · Owner: Erlin</div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-neutral1 opal-card p-6 space-y-3">
+              <span class="font-mono-caption text-xs uppercase font-semibold text-lightfir">How to Frame the Levers on Slide 17</span>
+              <p class="text-sm">
+                Instead of reading Slide 17 like a grocery list of SKUs, group the inclusions into <strong>Admin-Controlled Levers</strong> vs. <strong>Traffic/Usage Levers</strong> so ESL sees why they won't accidentally trip an overage:
+              </p>
+              <ul class="text-xs space-y-1.5 font-mono-caption">
+                <li>1. SaaS CMS: 33 Users, 2,250 Content Items, 3 Environments (Admin-controlled)</li>
+                <li>2. Agent Platform Enhanced: 100,000 Credits/yr (Admin-controlled + Alerts)</li>
+                <li>3. DAM: Built-in for approved reusable assets</li>
+                <li>4. Web Exp Enhanced (250k MAU) + Personalization Essential (Page/Traffic-controlled)</li>
+                <li>5. Premium Support + 280 Onboarding Hours (150 CMS / 90 Exp / 40 Agent)</li>
+              </ul>
+            </div>
+
+            <div class="bg-darkfir text-neutral1 opal-card p-6 space-y-3">
+              <span class="font-mono-caption text-xs uppercase font-semibold text-lfgreen">New Spoken Talk Track (Erlin)</span>
+              <p class="text-sm text-neutral2 leading-relaxed">
+                "Here is what that investment gets you—and more importantly, what the <strong>pricing levers</strong> are behind each piece:<br/><br/>
+                First, in <strong>SaaS CMS and DAM</strong>, your levers are <strong>33 users, 2,250 content items, and 3 environments</strong>. None of those can spike unexpectedly from website traffic—your own admins control who gets a seat and what gets published.<br/><br/>
+                Second, for AI, we included <strong>Agent Platform Enhanced with 100,000 credits a year</strong>, and for testing, <strong>Web Experimentation Enhanced with 250,000 Monthly Active Users and Personalization Essential</strong>. Even on those usage levers, ESL controls which pages run experiments and which users have AI access.<br/><br/>
+                And third, we included <strong>Premium Support</strong>—99.9% SLA, 24/7 support, and a Technical Account Manager—plus <strong>280 hours of Year 1 onboarding</strong>.<br/><br/>
+                <em>[Sandler Negative Reverse Check]</em> Looking at those allowances—33 users, 2,250 items, 250k MAUs, and 100k AI credits—do any of those feel tight for Year 1, or do they give you the breathing room you need?"
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- SLIDE 20 PANEL (PROMOTED TO MAIN FLOW) -->
+        <div id="panel-20" class="slide-panel hidden bg-neutral3 opal-card p-6 sm:p-8 space-y-6">
+          <div class="flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <span class="font-mono-caption text-xs uppercase font-semibold px-3 py-1 opal-pill bg-lfgreen text-darkfir">SLIDE 20 · PROACTIVE OVERAGE SHIELD</span>
+              <h3 class="font-heading text-3xl font-extrabold mt-2">"What Stays Fixed, and What Can Change" — Promote from Backup!</h3>
+            </div>
+            <div class="font-mono-caption text-xs bg-neutral1 px-4 py-2 opal-pill">Recommendation: Show Immediately After Slide 17</div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-neutral1 opal-card p-6 space-y-3">
+              <span class="font-mono-caption text-xs uppercase font-semibold text-lightfir">Why You Should Unhide Slide 20</span>
+              <p class="text-sm">
+                In the original deck, Slide 20 is hidden as a backup ("only if asked"). <strong>JOLT research shows that many buyers who fear overages won't ask out loud—they just quietly score the vendor lower on commercial risk.</strong>
+              </p>
+              <p class="text-sm">
+                Showing Slide 20 proactively right after Slide 17 proves you have nothing to hide:
+              </p>
+              <ul class="text-xs space-y-1.5 font-mono-caption">
+                <li>• <strong>FIXED (36 Months):</strong> Subscription locked; renewal changes only after Month 36 with 120 days' notice.</li>
+                <li>• <strong>USAGE ABOVE ALLOWANCES:</strong> API calls included; any overage follows pre-quoted written rates.</li>
+                <li>• <strong>AI CREDITS WITH CONTROLS:</strong> Model costs sit inside credits, with admin access controls and usage alerts.</li>
+              </ul>
+            </div>
+
+            <div class="bg-darkfir text-neutral1 opal-card p-6 space-y-3">
+              <span class="font-mono-caption text-xs uppercase font-semibold text-lfgreen">New Spoken Talk Track (Erlin)</span>
+              <p class="text-sm text-neutral2 leading-relaxed">
+                "I want to show this slide proactively because every smart procurement and digital team asks: <em>'What happens if we grow faster than expected, or what happens with AI consumption?'</em><br/><br/>
+                On the left: your subscription is fixed for <strong>36 months</strong>, and we cannot adjust renewal pricing until after Month 36—with <strong>120 days' advance notice</strong>.<br/><br/>
+                On the right: if ESL ever exceeds an allowance, <strong>API calls are already included</strong>, and any usage above contracted allowances follows the exact overage rates already quoted in your written proposal—never a surprise penalty. And for AI, underlying model costs sit inside your 100,000 credits, with <strong>admin access controls and automated usage alerts</strong> so your team always sees consumption in real time.<br/><br/>
+                Does having those caps, alerts, and pre-quoted rates in writing take the 'surprise overage' worry off the table?"
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- SLIDE 18 PANEL -->
+        <div id="panel-18" class="slide-panel hidden bg-neutral3 opal-card p-6 sm:p-8 space-y-6">
+          <div class="flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <span class="font-mono-caption text-xs uppercase font-semibold px-3 py-1 opal-pill bg-lightblue text-darkfir">SLIDE 18 · BACKUP ("WHAT CHANGED")</span>
+              <h3 class="font-heading text-3xl font-extrabold mt-2">"What Changed in the Proposal" — The "One Team" Co-Creation Frame</h3>
+            </div>
+            <div class="font-mono-caption text-xs bg-neutral1 px-4 py-2 opal-pill">Use If Asked About Proposal Updates</div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-neutral1 opal-card p-6 space-y-3">
+              <span class="font-mono-caption text-xs uppercase font-semibold text-lightfir">Sandler + JOLT Guardrail</span>
+              <p class="text-sm">
+                Never mention Alacrity. Frame the October 23 updates as a direct response to feedback from the ESL team to eliminate risk:
+              </p>
+              <ul class="text-xs space-y-1.5 font-mono-caption">
+                <li>1. <strong>Price Certainty:</strong> 3 years of fixed subscription fees.</li>
+                <li>2. <strong>Premium Support Included:</strong> 99.9% SLA, 15-min P1 target initial response, TAM via 10 Expert Services credits/yr (Total recurring: $200,841.64).</li>
+                <li>3. <strong>Enhanced Agent Platform:</strong> Upgraded from Essential (40k → 100k credits) while keeping Annual Software Subscription unchanged at <strong>$156,547</strong>.</li>
+              </ul>
+            </div>
+
+            <div class="bg-darkfir text-neutral1 opal-card p-6 space-y-3">
+              <span class="font-mono-caption text-xs uppercase font-semibold text-lfgreen">Spoken Talk Track (Erlin)</span>
+              <p class="text-sm text-neutral2 leading-relaxed">
+                "When we worked with the team after our initial September 28 submission, you gave us great feedback on where you wanted more certainty. So we made three updates:<br/><br/>
+                First, we locked subscription fees flat for all three years.<br/>
+                Second, we included <strong>Premium Support</strong> so you have a 99.9% SLA, a 15-minute P1 target initial response, and a Technical Account Manager.<br/>
+                And third—to make sure your team never felt constrained experimenting with AI—we upgraded the <strong>Agent Platform from Essential to Enhanced (100,000 credits)</strong> while keeping the annual software subscription completely unchanged at <strong>$156,547</strong>."
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- SLIDE 19 PANEL -->
+        <div id="panel-19" class="slide-panel hidden bg-neutral3 opal-card p-6 sm:p-8 space-y-6">
+          <div class="flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <span class="font-mono-caption text-xs uppercase font-semibold px-3 py-1 opal-pill bg-lightblue text-darkfir">SLIDE 19 · BACKUP ("OPTIONS PRICED TODAY")</span>
+              <h3 class="font-heading text-3xl font-extrabold mt-2">"Options, Priced Today" — JOLT Bounded Choice</h3>
+            </div>
+            <div class="font-mono-caption text-xs bg-neutral1 px-4 py-2 opal-pill">Use If Asked About Scaling Up or Down</div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-neutral1 opal-card p-6 space-y-3">
+              <span class="font-mono-caption text-xs uppercase font-semibold text-lightfir">Preventing Choice Overload (JOLT)</span>
+              <p class="text-sm">
+                Slide 19 has 7 rows of add/remove options. If you read all 7 rows without a recommendation, executives suffer "choice overload" and stall the decision. Anchor firmly on the Base Proposal as the right Day-1 fit, and treat Slide 19 as a transparent "Menu of Levers" ESL can pull later.
+              </p>
+              <div class="overflow-x-auto pt-2">
+                <table class="w-full text-left text-xs font-mono-caption border-collapse">
+                  <thead>
+                    <tr class="border-b-2 border-darkfir">
+                      <th class="py-1.5">Option Lever</th>
+                      <th class="py-1.5">Annual Change</th>
+                      <th class="py-1.5">Notes</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-darkfir/20">
+                    <tr><td class="py-1.5">Web Exp Essential (Keep Pers)</td><td>-$6,014</td><td>Scale back</td></tr>
+                    <tr><td class="py-1.5">Web Exp Essential (No Pers)</td><td>-$34,514</td><td>Removes Pers</td></tr>
+                    <tr><td class="py-1.5">Personalization Enhanced</td><td>+$22,011</td><td>Keeps Web Enh</td></tr>
+                    <tr><td class="py-1.5">Web Exp Advanced</td><td>+$41,052</td><td>Req. Pers Enh</td></tr>
+                    <tr><td class="py-1.5">Agent Platform Advanced</td><td>+$104,000</td><td>Larger onboarding</td></tr>
+                    <tr><td class="py-1.5">ODP (Level 2)</td><td>+$24,525</td><td>+$15.6k onb (12m hold)</td></tr>
+                    <tr><td class="py-1.5">Optimizely Front-End Hosting</td><td>+$39,600</td><td>5M visits, 99.9% SLA</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="bg-darkfir text-neutral1 opal-card p-6 space-y-3">
+              <span class="font-mono-caption text-xs uppercase font-semibold text-lfgreen">Spoken Talk Track (Erlin)</span>
+              <p class="text-sm text-neutral2 leading-relaxed">
+                "Our strong recommendation is to launch with the base proposal we just reviewed—it gives you everything you need for a clean, high-velocity Year 1 launch without paying for shelfware before your team is ready.<br/><br/>
+                We put this table in writing so you can see the exact price of every lever today. For instance, when you're ready to add the Customer Data Platform (ODP), we've locked that option at <strong>+$24,525/year</strong> (with $15,600 onboarding) for 12 months so you don't have to buy it on Day 1 just to protect the price.<br/><br/>
+                <em>[Transition to Slide 21]</em> Now that we've covered the commercial structure and the levers, Audrey and I are going to show you in the next session at 11:30 how we put those 280 onboarding hours and your Technical Account Manager to work."
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 5: QUICK-REFERENCE OBJECTION & FOMU PLAYBOOK -->
+    <section class="bg-neutral2 opal-card p-6 sm:p-8 space-y-6">
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <span class="font-mono-caption text-xs uppercase font-semibold px-3 py-1 opal-pill bg-lfgreen text-darkfir">Cheat Sheet · In-the-Room Responses</span>
+          <h2 class="font-heading text-2xl sm:text-3xl font-extrabold mt-2">3 Common "Overage & Lever" Questions — And How to Answer Them</h2>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-neutral1 opal-card p-5 space-y-2">
+          <span class="font-mono-caption text-xs font-bold text-lightfir">QUESTION 01 · AI TOKEN ANXIETY</span>
+          <h3 class="font-heading text-xl font-extrabold">"What if our marketers use the AI agents heavily and blow past 100k credits?"</h3>
+          <p class="text-sm">
+            <strong>Sandler + JOLT Answer:</strong> "First, we bumped you from 40,000 (Essential) to 100,000 credits (Enhanced) at zero extra software cost so you have a 2.5x buffer. Second, model costs are included inside those credits, and your admins get usage alerts and role controls so you can throttle or reallocate before you ever hit 100%. And if you ever want more, extra credit packs are pre-priced in the written proposal."
+          </p>
+        </div>
+
+        <div class="bg-neutral1 opal-card p-5 space-y-2">
+          <span class="font-mono-caption text-xs font-bold text-lightfir">QUESTION 02 · TRAFFIC SPIKE ANXIETY</span>
+          <h3 class="font-heading text-xl font-extrabold">"What if ESL runs a big member campaign and traffic spikes past 250,000 MAUs?"</h3>
+          <p class="text-sm">
+            <strong>Sandler + JOLT Answer:</strong> "Two protections: First, the 250,000 MAU allowance in Web Experimentation only counts visitors on pages where an experiment is actively running, and your team controls the traffic allocation percentage on every test. Second, API calls are included in the committed scope, and any usage above contracted allowances follows the written overage schedule—no surprise rate hikes."
+          </p>
+        </div>
+
+        <div class="bg-neutral1 opal-card p-5 space-y-2">
+          <span class="font-mono-caption text-xs font-bold text-lightfir">QUESTION 03 · RENEWAL ANXIETY</span>
+          <h3 class="font-heading text-xl font-extrabold">"How do we know the price won't jump in Year 2, Year 3, or at renewal?"</h3>
+          <p class="text-sm">
+            <strong>Sandler + JOLT Answer:</strong> "Years 1, 2, and 3 are contractually fixed at $200,841.64/year for your committed scope—zero annual escalation. In fact, your total cash outlay drops by $46,000 after Year 1 once onboarding completes. And at the end of Month 36, any renewal adjustment requires 120 days' advance written notice."
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    // Filter Pricing Levers
+    function filterLevers(type) {
+      const cards = document.querySelectorAll('.lever-card');
+      const btns = document.querySelectorAll('.lever-btn');
+      btns.forEach(b => b.classList.remove('tab-active'));
+      document.getElementById('btn-' + type).classList.add('tab-active');
+
+      cards.forEach(card => {
+        const cardTypes = card.getAttribute('data-type');
+        if (type === 'all' || cardTypes.includes(type)) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    }
+
+    // Switch Slide Tabs
+    function showSlide(slideNum) {
+      const panels = document.querySelectorAll('.slide-panel');
+      const tabs = document.querySelectorAll('.slide-tab');
+      panels.forEach(p => p.classList.add('hidden'));
+      tabs.forEach(t => t.classList.remove('tab-active'));
+
+      document.getElementById('panel-' + slideNum).classList.remove('hidden');
+      document.getElementById('sbtn-' + slideNum).classList.add('tab-active');
+    }
+
+    // Render 3-Year Investment Chart (using Optimizely Extrusion & Primary Palette)
+    const ctx = document.getElementById('investmentChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Year 1 ($246,841.64)', 'Year 2 ($200,841.64)', 'Year 3 ($200,841.64)'],
+        datasets: [
+          {
+            label: 'Locked Software Subscription ($156,547/yr)',
+            data: [156547, 156547, 156547],
+            backgroundColor: '#166E49',
+            borderColor: '#08251A',
+            borderWidth: 2,
+            borderRadius: 8
+          },
+          {
+            label: 'Locked Premium Support + TAM ($44,294.64/yr)',
+            data: [44294.64, 44294.64, 44294.64],
+            backgroundColor: '#3AB533',
+            borderColor: '#08251A',
+            borderWidth: 2,
+            borderRadius: 8
+          },
+          {
+            label: 'One-Time Year 1 Onboarding ($46,000)',
+            data: [46000, 0, 0],
+            backgroundColor: '#ABFF44',
+            borderColor: '#08251A',
+            borderWidth: 2,
+            borderRadius: 8
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        animation: {
+          duration: 900,
+          easing: 'easeOutQuart'
+        },
+        scales: {
+          x: {
+            stacked: true,
+            ticks: { color: '#08251A', font: { family: 'Roboto Mono', size: 11, weight: '600' } },
+            grid: { display: false }
+          },
+          y: {
+            stacked: true,
+            beginAtZero: true,
+            max: 280000,
+            ticks: {
+              color: '#08251A',
+              font: { family: 'Roboto Mono', size: 11 },
+              callback: function(value) { return '$' + (value / 1000) + 'k'; }
+            },
+            grid: { color: '#E4F0DA' }
+          }
+        },
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: {
+              color: '#08251A',
+              font: { family: 'Roboto', size: 11, weight: '500' },
+              boxWidth: 14,
+              padding: 12
+            }
+          },
+          tooltip: {
+            backgroundColor: '#08251A',
+            titleColor: '#ABFF44',
+            bodyColor: '#FFFFFF',
+            borderColor: '#ABFF44',
+            borderWidth: 1
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
