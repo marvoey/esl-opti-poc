@@ -1,0 +1,1858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ESL Federal Credit Union — Optimizely Onsite Breakouts 1–6</title>
+  <!-- Google Fonts: Optimizely Brand Stack (Roboto Condensed, Roboto, Roboto Mono) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@600;700;900&family=Roboto+Mono:wght@400;500;600&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <!-- Material Symbols Rounded (Weight 300, Optimizely Brand Standard) -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@40,300,0,0" />
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Reveal.js CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.0.4/reveal.min.css" />
+  <!-- Highlight.js for code snippets -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.0.4/plugin/highlight/monokai.min.css" />
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            lfgreen: '#ABFF44',
+            grass: '#7DDD3D',
+            goodtogo: '#3AB533',
+            neutral1: '#FFFFFF',
+            neutral2: '#EFF6E9',
+            neutral3: '#E4F0DA',
+            neutral4: '#D8E4CB',
+            lightblue: '#91DBDA',
+            darkblue: '#007B79',
+            darkfir: '#08251A',
+            midfir: '#0D3A29',
+            lightfir: '#197050',
+          },
+          fontFamily: {
+            heading: ['"Roboto Condensed"', 'sans-serif'],
+            body: ['Roboto', 'sans-serif'],
+            mono: ['"Roboto Mono"', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --r-background-color: #08251A;
+      --r-main-font: 'Roboto', sans-serif;
+      --r-main-font-size: 24px;
+      --r-main-color: #FFFFFF;
+      --r-heading-font: 'Roboto Condensed', sans-serif;
+      --r-heading-color: #FFFFFF;
+      --r-heading-line-height: 1.04;
+      --r-heading-letter-spacing: -0.02em;
+      --r-heading-text-transform: none;
+      --r-link-color: #ABFF44;
+    }
+
+    body {
+      background-color: #08251A;
+      font-family: 'Roboto', sans-serif;
+      overflow: hidden;
+    }
+
+    .reveal .slides {
+      text-align: left;
+    }
+
+    .reveal .slides section {
+      height: 100%;
+      padding: 40px 56px !important;
+      box-sizing: border-box;
+      display: flex !important;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .reveal .slides section.stack {
+      padding: 0 !important;
+    }
+
+    /* Optimizely Upwards Type Extrusion Effect */
+    .extrude-upwards {
+      color: #ABFF44;
+      -webkit-text-stroke: 1.5px #08251A;
+      text-shadow:
+        -3px 3px 0 #08251A,
+        -2px 2px 0 #40A142,
+        -5px 5px 0 #08251A,
+        -4px 4px 0 #2E8C45,
+        -7px 7px 0 #08251A,
+        -6px 6px 0 #166E49,
+        -9px 9px 0 #08251A,
+        -8px 8px 0 #0D593E;
+    }
+
+    /* Optimizely 32px Pillow Corner Radius & 2px Dark Fir Stroke */
+    .opti-card-dark {
+      background: #0D3A29;
+      border: 2px solid #197050;
+      border-radius: 32px;
+      padding: 28px 32px;
+    }
+
+    .opti-card-light {
+      background: #FFFFFF;
+      color: #08251A;
+      border: 2px solid #08251A;
+      border-radius: 32px;
+      padding: 28px 32px;
+      box-shadow: -6px 6px 0px #08251A;
+    }
+
+    .opti-card-green {
+      background: #ABFF44;
+      color: #08251A;
+      border: 2px solid #08251A;
+      border-radius: 32px;
+      padding: 28px 32px;
+      box-shadow: -6px 6px 0px #08251A;
+    }
+
+    .opti-card-blue {
+      background: #91DBDA;
+      color: #08251A;
+      border: 2px solid #08251A;
+      border-radius: 32px;
+      padding: 28px 32px;
+      box-shadow: -6px 6px 0px #08251A;
+    }
+
+    .opti-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 9999px;
+      padding: 6px 18px;
+      font-family: 'Roboto Mono', monospace;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    /* Opal AI Shimmer Texture */
+    .opal-shimmer {
+      background: linear-gradient(125deg, #0D3A29 0%, #197050 35%, #007B79 65%, #ABFF44 100%);
+      background-size: 220% 220%;
+      animation: opalShift 7s ease infinite;
+      border: 2px solid #ABFF44;
+      border-radius: 32px;
+    }
+
+    @keyframes opalShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .material-symbols-rounded {
+      font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 40;
+      font-size: 36px;
+      line-height: 1;
+    }
+
+    /* Top HUD / Pacing Bar */
+    .hud-bar {
+      position: fixed;
+      top: 14px;
+      left: 56px;
+      right: 56px;
+      z-index: 40;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      pointer-events: none;
+    }
+
+    .hud-bar > * {
+      pointer-events: auto;
+    }
+
+    /* Word count badge */
+    .wc-badge {
+      font-family: 'Roboto Mono', monospace;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: rgba(171, 255, 68, 0.14);
+      color: #ABFF44;
+      border: 1px solid rgba(171, 255, 68, 0.35);
+    }
+
+    .slide-light .wc-badge {
+      background: #08251A;
+      color: #ABFF44;
+    }
+
+    /* Quick Launcher Modal */
+    #launcherModal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(8, 37, 26, 0.92);
+      backdrop-filter: blur(8px);
+      padding: 48px;
+      overflow-y: auto;
+    }
+
+    #launcherModal.active {
+      display: block;
+    }
+
+    .reveal pre {
+      width: 100%;
+      margin: 0;
+      box-shadow: none;
+      border-radius: 24px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Persistent Presenter Top Bar -->
+  <div class="hud-bar">
+    <div class="flex items-center gap-3">
+      <!-- Optimizely Brand Mark + Lightning Bolt -->
+      <div class="flex items-center gap-2 bg-[#08251A]/90 border border-[#197050] px-4 py-1.5 rounded-full shadow-lg">
+        <span class="inline-block w-3 h-3 rounded-full bg-[#ABFF44]"></span>
+        <span class="font-heading font-black tracking-tight text-white text-base">Optimizely</span>
+        <span class="text-[#91DBDA] font-mono text-xs">× ESL Onsite</span>
+      </div>
+      <span id="currentBreakoutBadge" class="opti-pill bg-[#0D3A29] text-[#ABFF44] border border-[#197050]">
+        Master Deck • Breakouts 1–6
+      </span>
+    </div>
+
+    <div class="flex items-center gap-2">
+      <span id="wordCountHud" class="wc-badge">≤ 40 words/slide</span>
+      <button onclick="toggleLauncher()" class="bg-[#ABFF44] text-[#08251A] font-heading font-bold text-xs uppercase px-3.5 py-1.5 rounded-full border-2 border-[#08251A] hover:bg-[#7DDD3D] transition flex items-center gap-1 shadow">
+        <span class="material-symbols-rounded" style="font-size:16px;">bolt</span>
+        Live Links & Pre-Flight (L)
+      </button>
+      <button onclick="Reveal.triggerKey(83)" class="bg-[#0D3A29] text-white font-mono text-xs px-3 py-1.5 rounded-full border border-[#197050] hover:border-[#ABFF44] transition">
+        Notes (S)
+      </button>
+    </div>
+  </div>
+
+  <!-- Live Links & Collision Pre-Flight Drawer (Toggle with 'L' or Button) -->
+  <div id="launcherModal">
+    <div class="max-w-6xl mx-auto bg-[#0D3A29] border-2 border-[#ABFF44] rounded-[32px] p-8 text-white shadow-2xl">
+      <div class="flex justify-between items-center border-b border-[#197050] pb-4 mb-6">
+        <div>
+          <span class="font-mono text-xs uppercase text-[#ABFF44]">Project 4775830914596864 • Snippet s3-4775830914596864</span>
+          <h2 class="font-heading font-black text-3xl text-white mt-1">Onsite Live Environment Launcher & Collision Checklist</h2>
+        </div>
+        <button onclick="toggleLauncher()" class="bg-[#08251A] text-[#ABFF44] px-4 py-2 rounded-full font-mono text-sm border border-[#ABFF44]">
+          Close (ESC / L)
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Left: Instant Share / Preview Links -->
+        <div class="space-y-3">
+          <h3 class="font-heading font-bold text-xl text-[#ABFF44]">1-Click Live Demo & Fallback Share Links</h3>
+          <div class="grid grid-cols-1 gap-2 text-xs font-mono">
+            <a href="https://esl-onsite.optimoey.com/" target="_blank" rel="noopener noreferrer" class="p-2.5 rounded-2xl bg-[#08251A] hover:bg-[#197050] border border-[#197050] flex justify-between items-center">
+              <span>🏠 Home Page (esl-onsite.optimoey.com)</span>
+              <span class="text-[#ABFF44]">Open ↗</span>
+            </a>
+            <a href="https://esl-onsite.optimoey.com/personal/loans" target="_blank" rel="noopener noreferrer" class="p-2.5 rounded-2xl bg-[#08251A] hover:bg-[#197050] border border-[#197050] flex justify-between items-center">
+              <span>💳 Personal Loans (/personal/loans)</span>
+              <span class="text-[#ABFF44]">Open ↗</span>
+            </a>
+            <a href="https://esl-onsite.optimoey.com/sign-in" target="_blank" rel="noopener noreferrer" class="p-2.5 rounded-2xl bg-[#08251A] hover:bg-[#197050] border border-[#197050] flex justify-between items-center">
+              <span>🔐 Member Sign-In Toggle (esl_signed_in=1)</span>
+              <span class="text-[#ABFF44]">Open ↗</span>
+            </a>
+            <a href="https://esl-onsite.optimoey.com/?optimizely_token=a5ba656a5bb9dc3ff513e450bd9ca2ba8189db110a2bcef256acec99118f2e1b&optimizely_x=5318764307152896&optimizely_x_audiences=6051496498823168&optimizely_preview_layer_ids=6504326074466304&optimizely_snippet=s3-4775830914596864" target="_blank" rel="noopener noreferrer" class="p-2.5 rounded-2xl bg-[#08251A] hover:bg-[#197050] border border-[#197050] flex justify-between items-center">
+              <span>👤 [6504326074466304] Exp 1: Member on Home (/)</span>
+              <span class="text-[#91DBDA]">Preview ↗</span>
+            </a>
+            <a href="https://esl-onsite.optimoey.com/personal/loans?optimizely_token=a5ba656a5bb9dc3ff513e450bd9ca2ba8189db110a2bcef256acec99118f2e1b&optimizely_x=5318764307152896&optimizely_x_audiences=6051496498823168&optimizely_preview_layer_ids=6504326074466304&optimizely_snippet=s3-4775830914596864" target="_blank" rel="noopener noreferrer" class="p-2.5 rounded-2xl bg-[#08251A] hover:bg-[#197050] border border-[#197050] flex justify-between items-center">
+              <span>👤 [6504326074466304] Exp 1: Member on /personal/loans</span>
+              <span class="text-[#91DBDA]">Preview ↗</span>
+            </a>
+            <a href="https://esl-onsite.optimoey.com/personal/loans?optimizely_token=a5ba656a5bb9dc3ff513e450bd9ca2ba8189db110a2bcef256acec99118f2e1b&optimizely_x=4526703551184896&optimizely_x_audiences=&optimizely_preview_layer_ids=6504326074466304&optimizely_snippet=s3-4775830914596864" target="_blank" rel="noopener noreferrer" class="p-2.5 rounded-2xl bg-[#08251A] hover:bg-[#197050] border border-[#197050] flex justify-between items-center">
+              <span>🆕 [6504326074466304] Exp 2: Prospect on /personal/loans</span>
+              <span class="text-[#91DBDA]">Preview ↗</span>
+            </a>
+            <a href="https://esl-onsite.optimoey.com/?optimizely_token=a5ba656a5bb9dc3ff513e450bd9ca2ba8189db110a2bcef256acec99118f2e1b&optimizely_x=4650151514472448&optimizely_x_audiences=&optimizely_preview_layer_ids=4844370086592512&optimizely_snippet=s3-4775830914596864" target="_blank" rel="noopener noreferrer" class="p-2.5 rounded-2xl bg-[#08251A] hover:bg-[#197050] border border-[#197050] flex justify-between items-center">
+              <span>⚡ [4520294755336192] Opal AI Owners' Dividend on /</span>
+              <span class="text-[#ABFF44]">Preview ↗</span>
+            </a>
+            <a href="https://esl-onsite.optimoey.com/personal/loans?optimizely_token=a5ba656a5bb9dc3ff513e450bd9ca2ba8189db110a2bcef256acec99118f2e1b&optimizely_x=5828135919288320&optimizely_x_audiences=&optimizely_preview_layer_ids=5070120815427584&optimizely_snippet=s3-4775830914596864" target="_blank" rel="noopener noreferrer" class="p-2.5 rounded-2xl bg-[#08251A] hover:bg-[#197050] border border-[#197050] flex justify-between items-center">
+              <span>🧪 [5060834274050048] A/B Var A: Speed & Convenience</span>
+              <span class="text-[#91DBDA]">Preview ↗</span>
+            </a>
+            <a href="https://esl-onsite.optimoey.com/personal/loans?optimizely_token=a5ba656a5bb9dc3ff513e450bd9ca2ba8189db110a2bcef256acec99118f2e1b&optimizely_x=5740748098764800&optimizely_x_audiences=&optimizely_preview_layer_ids=5070120815427584&optimizely_snippet=s3-4775830914596864" target="_blank" rel="noopener noreferrer" class="p-2.5 rounded-2xl bg-[#08251A] hover:bg-[#197050] border border-[#197050] flex justify-between items-center">
+              <span>🧪 [5060834274050048] A/B Var B: Debt Consolidation</span>
+              <span class="text-[#91DBDA]">Preview ↗</span>
+            </a>
+            <a href="https://esl-onsite.optimoey.com/?optimizely_token=a5ba656a5bb9dc3ff513e450bd9ca2ba8189db110a2bcef256acec99118f2e1b&optimizely_x=4772624922836992&optimizely_x_audiences=&optimizely_preview_layer_ids=5656166955483136&optimizely_snippet=s3-4775830914596864" target="_blank" rel="noopener noreferrer" class="p-2.5 rounded-2xl bg-[#08251A] hover:bg-[#197050] border border-[#197050] flex justify-between items-center">
+              <span>🎰 [6613140698300416] MAB Var 1: Personalized Roadmap</span>
+              <span class="text-[#ABFF44]">Preview ↗</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Right: Pre-Flight Checklist & Session Jumper -->
+        <div class="space-y-4">
+          <h3 class="font-heading font-bold text-xl text-[#91DBDA]">Pre-Flight Collision Checklist</h3>
+          <div class="space-y-2 text-xs bg-[#08251A] p-4 rounded-2xl border border-[#197050]">
+            <label class="flex items-start gap-2 cursor-pointer">
+              <input type="checkbox" checked class="mt-1 accent-[#ABFF44]" />
+              <span><strong>1. /personal/loans Collision:</strong> Pause <code>5060834274050048</code> during Breakout 2 OR scope to Prospective Members (<code>6102578658803712</code>).</span>
+            </label>
+            <label class="flex items-start gap-2 cursor-pointer">
+              <input type="checkbox" checked class="mt-1 accent-[#ABFF44]" />
+              <span><strong>2. Home Page (/) H1 Collision:</strong> Scope Opal AI test <code>4520294755336192</code> to Anonymous Prospects (<code>5523290582679552</code>) so Members always see "Welcome back!".</span>
+            </label>
+            <label class="flex items-start gap-2 cursor-pointer">
+              <input type="checkbox" checked class="mt-1 accent-[#ABFF44]" />
+              <span><strong>3. Strip MS Word Tags:</strong> Confirm <code>&lt;p class="MsoNormal"&gt;</code> is removed in Campaign <code>6504326074466304</code>.</span>
+            </label>
+          </div>
+
+          <h3 class="font-heading font-bold text-xl text-[#ABFF44] pt-2">Jump to Breakout Module</h3>
+          <div class="grid grid-cols-2 gap-2 text-xs font-heading font-bold">
+            <button onclick="jumpToSlide(1,0)" class="p-3 rounded-2xl bg-[#08251A] hover:bg-[#ABFF44] hover:text-[#08251A] border border-[#197050] text-left transition">01 • CDP / ODP (60m)</button>
+            <button onclick="jumpToSlide(2,0)" class="p-3 rounded-2xl bg-[#08251A] hover:bg-[#ABFF44] hover:text-[#08251A] border border-[#197050] text-left transition">02 • Personalization (60m)</button>
+            <button onclick="jumpToSlide(3,0)" class="p-3 rounded-2xl bg-[#08251A] hover:bg-[#ABFF44] hover:text-[#08251A] border border-[#197050] text-left transition">03 • Experimentation (60m)</button>
+            <button onclick="jumpToSlide(4,0)" class="p-3 rounded-2xl bg-[#08251A] hover:bg-[#ABFF44] hover:text-[#08251A] border border-[#197050] text-left transition">04 • DAM (60m)</button>
+            <button onclick="jumpToSlide(5,0)" class="p-3 rounded-2xl bg-[#08251A] hover:bg-[#ABFF44] hover:text-[#08251A] border border-[#197050] text-left transition">05 • Governance (30m)</button>
+            <button onclick="jumpToSlide(6,0)" class="p-3 rounded-2xl bg-[#08251A] hover:bg-[#ABFF44] hover:text-[#08251A] border border-[#197050] text-left transition">06 • Product + SDLC (30m)</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reveal.js Presentation -->
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- ===================================================================
+           COLUMN 0: MASTER TITLE & GOLDEN THREAD (2 SLIDES)
+           =================================================================== -->
+      <section>
+        <!-- Slide 0.1: Cover -->
+        <section data-background-color="#08251A" data-breakout="Master Overview • Two-Day Onsite">
+          <div class="pt-8">
+            <span class="opti-pill bg-[#0D3A29] text-[#ABFF44] border border-[#197050]">
+              ESL Federal Credit Union • Alacrity Partners • Oshyn
+            </span>
+          </div>
+
+          <div class="my-auto">
+            <h1 class="font-heading font-black text-7xl leading-none tracking-tight text-white mb-6">
+              Why Optimizely:<br>
+              <span class="extrude-upwards">Free to Grow.</span>
+            </h1>
+            <p class="font-body text-2xl text-[#E4F0DA] max-w-3xl">
+              From Anonymous Prospect to Loyal Member—Six Modular Breakouts Live on Your Environment.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-3 gap-6 pt-4">
+            <div class="opti-card-dark flex items-center gap-4">
+              <span class="material-symbols-rounded text-[#ABFF44]">verified</span>
+              <div>
+                <div class="font-heading font-black text-2xl text-white">14 Use Cases</div>
+                <div class="font-mono text-xs text-[#91DBDA]">Proven in &lt;10 Days</div>
+              </div>
+            </div>
+            <div class="opti-card-dark flex items-center gap-4">
+              <span class="material-symbols-rounded text-[#91DBDA]">bolt</span>
+              <div>
+                <div class="font-heading font-black text-2xl text-white">Live Extended POC</div>
+                <div class="font-mono text-xs text-[#ABFF44]">esl-onsite.optimoey.com</div>
+              </div>
+            </div>
+            <div class="opti-card-dark flex items-center gap-4">
+              <span class="material-symbols-rounded text-[#ABFF44]">rocket_launch</span>
+              <div>
+                <div class="font-heading font-black text-2xl text-white">Start at Day 45</div>
+                <div class="font-mono text-xs text-[#91DBDA]">&lt;6-Month MVP Certainty</div>
+              </div>
+            </div>
+          </div>
+
+          <aside class="notes">
+            <h4>[MASTER WELCOME & NAVIGATION]</h4>
+            <p><strong>Use arrow keys:</strong> Right/Left switches between Breakout Sessions (1 through 6). Down/Up steps through the 4-part structure within each breakout.</p>
+            <p><strong>Press 'L' at any time</strong> to open the Live Environment & Fallback Preview Link Drawer.</p>
+            <p><strong>Golden Rule:</strong> Every slide is strictly capped at &le;40 words so you never read off slides. Everything you need to say, show, and guard against is right here in Speaker View (press 'S').</p>
+          </aside>
+        </section>
+
+        <!-- Slide 0.2: The 6-Breakout Golden Thread -->
+        <section class="slide-light" data-background-color="#E4F0DA" data-breakout="The Golden Thread • Breakouts 1–6">
+          <div class="pt-8 flex justify-between items-center">
+            <span class="opti-pill bg-[#08251A] text-[#ABFF44]">Two-Day Onsite Architecture</span>
+            <span class="font-mono text-xs text-[#08251A] font-semibold">Press ↓ for Map • Press → for Breakout 1</span>
+          </div>
+
+          <div class="my-auto">
+            <h2 class="font-heading font-black text-5xl text-[#08251A] mb-6">
+              Six Modular Sessions. One Unified Member Journey.
+            </h2>
+
+            <div class="grid grid-cols-3 gap-5">
+              <div onclick="jumpToSlide(1,0)" class="opti-card-light cursor-pointer hover:bg-[#ABFF44] transition">
+                <div class="flex justify-between items-center mb-2">
+                  <span class="font-mono text-xs font-bold uppercase text-[#197050]">Day 1 • 2:00 PM (60m)</span>
+                  <span class="material-symbols-rounded text-[#08251A]">hub</span>
+                </div>
+                <div class="font-heading font-black text-2xl text-[#08251A]">1. CDP (ODP)</div>
+                <div class="text-sm text-[#0D3A29] mt-1">Real-Time Identity & Segments</div>
+              </div>
+
+              <div onclick="jumpToSlide(2,0)" class="opti-card-light cursor-pointer hover:bg-[#ABFF44] transition">
+                <div class="flex justify-between items-center mb-2">
+                  <span class="font-mono text-xs font-bold uppercase text-[#197050]">Day 1 • 3:00 PM (60m)</span>
+                  <span class="material-symbols-rounded text-[#08251A]">person_check</span>
+                </div>
+                <div class="font-heading font-black text-2xl text-[#08251A]">2. Personalization</div>
+                <div class="text-sm text-[#0D3A29] mt-1">Single-URL Tailoring & Opal AI</div>
+              </div>
+
+              <div onclick="jumpToSlide(3,0)" class="opti-card-light cursor-pointer hover:bg-[#ABFF44] transition">
+                <div class="flex justify-between items-center mb-2">
+                  <span class="font-mono text-xs font-bold uppercase text-[#197050]">Day 1 • 4:00 PM (60m)</span>
+                  <span class="material-symbols-rounded text-[#08251A]">science</span>
+                </div>
+                <div class="font-heading font-black text-2xl text-[#08251A]">3. Experimentation</div>
+                <div class="text-sm text-[#0D3A29] mt-1">3-Way A/B & 4-Arm Bandit</div>
+              </div>
+
+              <div onclick="jumpToSlide(4,0)" class="opti-card-light cursor-pointer hover:bg-[#91DBDA] transition">
+                <div class="flex justify-between items-center mb-2">
+                  <span class="font-mono text-xs font-bold uppercase text-[#007B79]">Day 2 • 9:00 AM (60m)</span>
+                  <span class="material-symbols-rounded text-[#08251A]">photo_library</span>
+                </div>
+                <div class="font-heading font-black text-2xl text-[#08251A]">4. DAM</div>
+                <div class="text-sm text-[#0D3A29] mt-1">AI Asset Supply Chain</div>
+              </div>
+
+              <div onclick="jumpToSlide(5,0)" class="opti-card-light cursor-pointer hover:bg-[#91DBDA] transition">
+                <div class="flex justify-between items-center mb-2">
+                  <span class="font-mono text-xs font-bold uppercase text-[#007B79]">Day 2 • 10:00 AM (30m)</span>
+                  <span class="material-symbols-rounded text-[#08251A]">verified_user</span>
+                </div>
+                <div class="font-heading font-black text-2xl text-[#08251A]">5. Governance</div>
+                <div class="text-sm text-[#0D3A29] mt-1">Guardrails, Approvals & Rollback</div>
+              </div>
+
+              <div onclick="jumpToSlide(6,0)" class="opti-card-light cursor-pointer hover:bg-[#91DBDA] transition">
+                <div class="flex justify-between items-center mb-2">
+                  <span class="font-mono text-xs font-bold uppercase text-[#007B79]">Day 2 • 10:30 AM (30m)</span>
+                  <span class="material-symbols-rounded text-[#08251A]">terminal</span>
+                </div>
+                <div class="font-heading font-black text-2xl text-[#08251A]">6. Product + SDLC</div>
+                <div class="text-sm text-[#0D3A29] mt-1">Headless Graph & Hexagonal ACL</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex justify-between items-center text-xs font-mono text-[#08251A]">
+            <span>Day 1: Front-Stage Execution (Relevance & Optimization)</span>
+            <span>Day 2 AM: Back-Stage Foundation (Scale, Compliance & Code)</span>
+          </div>
+
+          <aside class="notes">
+            <h4>[STRATEGIC GOLDEN THREAD]</h4>
+            <p><strong>1. Modular Independence:</strong> Every breakout follows the exact 4-part structure (1. 90-Second Reset & Context, 2. Persona Challenge, 3. Targeted Live Demo, 4. Business Impact & Q&A). Never assume the room saw the prior session.</p>
+            <p><strong>2. Protecting the Day 2 Executive PoC Demo (1:40 PM):</strong> In these 6 breakouts, treat the platform as a <em>modular workbench</em>—pull back the curtain on rules, metrics, and code. Save the uninterrupted consumer story for Orals.</p>
+          </aside>
+        </section>
+      </section>
+
+      <!-- ===================================================================
+           COLUMN 1: BREAKOUT 1 — CUSTOMER DATA PLATFORM (ODP)
+           =================================================================== -->
+      <section>
+        <!-- Slide 1.1: 90-Second Alignment & Day 1 Kickoff -->
+        <section data-background-color="#08251A" data-breakout="Breakout 1 • CDP (ODP) • 00–05m">
+          <div class="pt-8 flex justify-between items-center">
+            <span class="opti-pill bg-[#ABFF44] text-[#08251A]">Breakout 1 • Day 1 • 2:00 PM – 3:00 PM (60m)</span>
+            <span class="font-mono text-xs text-[#91DBDA]">Part 1/4 • 90-Second Stage Setter</span>
+          </div>
+
+          <div class="my-auto">
+            <div class="font-mono text-sm uppercase text-[#ABFF44] mb-2">90-Second Alignment • Data & Lifecycle Room</div>
+            <h2 class="font-heading font-black text-6xl text-white mb-6">
+              Customer Data Platform:<br>
+              <span class="extrude-upwards">Real-Time</span> Member Signal
+            </h2>
+
+            <div class="grid grid-cols-3 gap-6">
+              <div class="opti-card-green">
+                <span class="material-symbols-rounded text-[#08251A]">person_search</span>
+                <div class="font-heading font-black text-2xl mt-2">Two Core Audiences</div>
+                <p class="text-sm mt-1">Prospective borrowers vs. Existing ESL members.</p>
+              </div>
+              <div class="opti-card-dark">
+                <span class="material-symbols-rounded text-[#ABFF44]">bolt</span>
+                <div class="font-heading font-black text-2xl text-white mt-2">Millisecond Signal</div>
+                <p class="text-sm text-[#E4F0DA] mt-1">Unify anonymous loan browsing with signed-in state.</p>
+              </div>
+              <div class="opti-card-dark">
+                <span class="material-symbols-rounded text-[#91DBDA]">shield_lock</span>
+                <div class="font-heading font-black text-2xl text-white mt-2">Zero PII Exposure</div>
+                <p class="text-sm text-[#E4F0DA] mt-1">Warehouse-friendly events without SQL bottlenecks.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="font-mono text-xs text-[#91DBDA]">
+            Use Case #6 • Project ID: 4775830914596864 • Live on esl-onsite.optimoey.com
+          </div>
+
+          <aside class="notes">
+            <h4>[00–05m] SPOKEN DAY 1 KICKOFF + 90-SECOND RESET SCRIPT</h4>
+            <p><strong>1. Day 1 Kickoff (60 sec):</strong> "Before we jump into our first breakout on the Customer Data Platform, we want to say a sincere thank you to the ESL team, Oshyn, and Alacrity. Over the last two weeks, we've had an open Teams channel, a shared GitHub repo, and daily hands-on testing windows. What stood out immediately was how fast ESL's team moved through the 14 POC use cases—and with how few questions. Because you checked off those 14 baseline requirements so quickly with Oshyn, we used the rest of our two-week window to build a live glimpse of where ESL can go next on <code>esl-onsite.optimoey.com</code>. Over today's breakouts, we aren't showing slideware promises—we're walking through what is already running live."</p>
+            <p><strong>2. 90-Second Reset Script (30 sec):</strong> "Welcome! Today's scenario centers on ESL's digital experience and our two core audiences: Prospective Members looking to join and borrow, and Existing Members looking to manage and expand their relationship. In this session, we are specifically focusing on real-time behavioral data and audience unification in ODP."</p>
+          </aside>
+        </section>
+
+        <!-- Slide 1.2: Persona Challenge -->
+        <section class="slide-light" data-background-color="#E4F0DA" data-breakout="Breakout 1 • CDP (ODP) • 05–15m">
+          <div class="pt-8 flex justify-between items-center">
+            <span class="opti-pill bg-[#08251A] text-[#ABFF44]">Part 2/4 • The Data Challenge</span>
+            <span class="font-mono text-xs text-[#08251A]">Batch Delay vs. Live Banking Intent</span>
+          </div>
+
+          <div class="my-auto grid grid-cols-12 gap-8 items-center">
+            <div class="col-span-5 space-y-4">
+              <h2 class="font-heading font-black text-5xl text-[#08251A]">
+                24-Hour Batch Syncs Miss the Borrowing Moment.
+              </h2>
+              <div class="opti-card-light">
+                <div class="font-heading font-bold text-xl text-[#08251A]">Room Skepticism We Answer Today:</div>
+                <p class="text-sm text-[#0D3A29] mt-2">
+                  "Does this duplicate Snowflake, create sync lag, or expose member PII on the client?"
+                </p>
+              </div>
+            </div>
+
+            <div class="col-span-7 opti-card-light">
+              <div class="font-mono text-xs uppercase text-[#197050] mb-2">Signal Activation Latency (Hours vs. Sub-Second)</div>
+              <div style="height: 290px;">
+                <canvas id="cdpLatencyChart"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <div class="font-mono text-xs text-[#08251A]">
+            Takeaway: ODP acts as a real-time activation layer—not a competing data warehouse.
+          </div>
+
+          <aside class="notes">
+            <h4>[05–15m] ADDRESSING DATA ARCHITECT SKEPTICISM</h4>
+            <p><strong>Target Audience in Room:</strong> Data Architects, Analytics Leads, BI & Data Engineering, Lifecycle Marketing Managers.</p>
+            <p><strong>Key Point:</strong> Traditional core banking and warehouse batch syncs run overnight (24h). By the time a segment updates, the member has already left <code>/personal/loans</code>.</p>
+            <p><strong>Architecture Reassurance:</strong> Optimizely Data Platform (ODP) pairs bi-directionally with Snowflake/Databricks while capturing millisecond web signals via zero-PII tokens.</p>
+          </aside>
+        </section>
+
+        <!-- Slide 1.3: Live Demo Workbench -->
+        <section data-background-color="#08251A" data-breakout="Breakout 1 • CDP (ODP) • 15–50m">
+          <div class="pt-8 flex justify-between items-center">
+            <span class="opti-pill bg-[#ABFF44] text-[#08251A]">Part 3/4 • Live Workbench (35 Mins)</span>
+            <span class="font-mono text-xs text-[#ABFF44]">Use Case #6 • Project 4775830914596864</span>
+          </div>
+
+          <div class="my-auto">
+            <h2 class="font-heading font-black text-5xl text-white mb-6">
+              Live Workbench: Unified Identity & Segments
+            </h2>
+
+            <div class="grid grid-cols-3 gap-6">
+              <div class="opti-card-dark border-t-4 border-t-[#ABFF44]">
+                <div class="font-mono text-xs text-[#ABFF44]">05–20m • Step 1</div>
+                <div class="font-heading font-black text-2xl text-white mt-1">Identity Resolution</div>
+                <p class="text-sm text-[#E4F0DA] mt-2">
+                  Browse <code>/personal/loans</code> anonymously, then authenticate via <code>/sign-in</code> (<code>esl_signed_in=1</code>).
+                </p>
+              </div>
+
+              <div class="opti-card-dark border-t-4 border-t-[#91DBDA]">
+                <div class="font-mono text-xs text-[#91DBDA]">20–40m • Step 2</div>
+                <div class="font-heading font-black text-2xl text-white mt-1">Live Audiences (#6)</div>
+                <p class="text-sm text-[#E4F0DA] mt-2">
+                  Inspect Members (<code>6051496498823168</code>) vs. Prospects (<code>6102578658803712</code>) with zero SQL.
+                </p>
+              </div>
+
+              <div class="opti-card-dark border-t-4 border-t-[#ABFF44]">
+                <div class="font-mono text-xs text-[#ABFF44]">40–50m • Step 3</div>
+                <div class="font-heading font-black text-2xl text-white mt-1">Downstream Sync</div>
+                <p class="text-sm text-[#E4F0DA] mt-2">
+                  Verify native audience availability inside WebEx & SaaS CMS with fallback rules.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex justify-between items-center font-mono text-xs text-[#91DBDA]">
+            <span>Endpoint: a4775830914596864.cdn.optimizely.com</span>
+            <span class="text-[#ABFF44]">⚠️ Stop at audience sync—save Visual Editor for Breakout 2</span>
+          </div>
+
+          <aside class="notes">
+            <h4>[15–50m] LIVE DEMO STEP-BY-STEP</h4>
+            <ul>
+              <li><strong>05–20m (Unified Profile):</strong> Open <code>https://esl-onsite.optimoey.com/personal/loans</code> in an incognito window. Show event streaming to <code>a4775830914596864.cdn.optimizely.com</code>. Then click <code>/sign-in</code> to set <code>esl_signed_in = 1</code>. Show the profile Stitch/Merge with zero client-side PII.</li>
+              <li><strong>20–40m (Hands-On Use Case #6):</strong> Open Audiences in Project <code>4775830914596864</code>:
+                <ul>
+                  <li><strong>Members (<code>6051496498823168</code>) / ESL Existing Members (<code>5641632366723072</code>):</strong> <code>esl_signed_in = 1</code></li>
+                  <li><strong>Prospective Members (<code>6102578658803712</code>) / Anonymous (<code>5523290582679552</code>):</strong> <code>esl_signed_in = 0 / NOT 1</code></li>
+                </ul>
+                Show real-time size estimation, qualification criteria, and fallback handling.
+              </li>
+              <li><strong>40–50m (Activation):</strong> Show how those exact segments appear natively in WebEx and CMS without a single engineering ticket.</li>
+              <li><strong>DRY-RUN SAFEGUARD:</strong> Do NOT open the WebEx Visual Editor or experiment results here!</li>
+            </ul>
+          </aside>
+        </section>
+
+        <!-- Slide 1.4: Business Impact & Q&A -->
+        <section class="slide-light" data-background-color="#FFFFFF" data-breakout="Breakout 1 • CDP (ODP) • 50–60m">
+          <div class="pt-8 flex justify-between items-center">
+            <span class="opti-pill bg-[#08251A] text-[#ABFF44]">Part 4/4 • Business Impact & Q&A (10 Mins)</span>
+            <span class="font-mono text-xs text-[#08251A]">50–60m • Wrap & Bridge</span>
+          </div>
+
+          <div class="my-auto">
+            <h2 class="font-heading font-black text-5xl text-[#08251A] mb-6">
+              Data Governance Intact. Marketing Self-Sufficient.
+            </h2>
+
+            <div class="grid grid-cols-3 gap-6">
+              <div class="opti-card-green">
+                <div class="font-heading font-black text-5xl text-[#08251A]">0 SQL</div>
+                <div class="font-heading font-bold text-xl mt-2">Self-Service Segments</div>
+                <p class="text-sm mt-1">Marketers build & preview criteria safely.</p>
+              </div>
+
+              <div class="opti-card-light">
+                <div class="font-heading font-black text-5xl text-[#197050]">&lt;50ms</div>
+                <div class="font-heading font-bold text-xl mt-2">Edge Qualification</div>
+                <p class="text-sm mt-1">Instant member recognition on page load.</p>
+              </div>
+
+              <div class="opti-card-blue">
+                <div class="font-heading font-black text-5xl text-[#08251A]">100%</div>
+                <div class="font-heading font-bold text-xl mt-2">Fallback Coverage</div>
+                <p class="text-sm mt-1">Unidentified visitors always see governed default.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="opti-card-dark py-3 px-6 flex justify-between items-center">
+            <span class="font-mono text-xs text-[#ABFF44]">Next Up • Breakout 2 (3:00 PM): Personalization</span>
+            <span class="font-body text-sm text-white">"Now let's see how marketers activate these audiences in under 3 minutes."</span>
+          </div>
+
+          <aside class="notes">
+            <h4>[50–60m] TECHNICAL Q&A & BRIDGE TO BREAKOUT 2</h4>
+            <p><strong>Key Q&A Topics Ready:</strong> Ingestion latency, data retention controls, Snowflake/core banking warehouse sync, and cookie/token privacy compliance.</p>
+            <p><strong>Alacrity Use Case #6 Check:</strong> Confirm evaluators saw understandable data sources, previewable criteria, and explicit fallback behavior.</p>
+          </aside>
+        </section>
+      </section>
+
+      <!-- ===================================================================
+           COLUMN 2: BREAKOUT 2 — PERSONALIZATION
+           =================================================================== -->
+      <section>
+        <!-- Slide 2.1: 90-Second Alignment -->
+        <section data-background-color="#08251A" data-breakout="Breakout 2 • Personalization • 00–05m">
+          <div class="pt-8 flex justify-between items-center">
+            <span class="opti-pill bg-[#ABFF44] text-[#08251A]">Breakout 2 • Day 1 • 3:00 PM – 4:00 PM (60m)</span>
+            <span class="font-mono text-xs text-[#91DBDA]">Part 1/4 • 90-Second Stage Setter</span>
+          </div>
+
+          <div class="my-auto">
+            <div class="font-mono text-sm uppercase text-[#ABFF44] mb-2">90-Second Alignment • Digital Experience & Growth Room</div>
+            <h2 class="font-heading font-black text-6xl text-white mb-6">
+              Personalization:<br>
+              One URL. <span class="extrude-upwards">Zero Cloning.</span>
+            </h2>
+
+            <div class="grid grid-cols-3 gap-6">
+              <div class="opti-card-dark">
+                <span class="material-symbols-rounded text-[#91DBDA]">person_add</span>
+                <div class="font-heading font-black text-2xl text-white mt-2">Prospective Members</div>
+                <p class="text-sm text-[#E4F0DA] mt-1">Need competitive rates, eligibility clarity, and fast application.</p>
+              </div>
+              <div class="opti-card-green">
+                <span class="material-symbols-rounded text-[#08251A]">verified</span>
+                <div class="font-heading font-black text-2xl mt-2">Existing Members</div>
+                <p class="text-sm mt-1">Recognized instantly—no "Can you join?" hurdles.</p>
+              </div>
+              <div class="opti-card-dark">
+                <span class="material-symbols-rounded text-[#ABFF44]">bolt</span>
+                <div class="font-heading font-black text-2xl text-white mt-2">Opal AI Authoring</div>
+                <p class="text-sm text-[#E4F0DA] mt-1">Generate on-brand copy variations in under 15 minutes.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="font-mono text-xs text-[#91DBDA]">
+            Use Cases #1 & #7 • Campaign 6504326074466304 • Opal AI Optimization 4520294755336192
+          </div>
+
+          <aside class="notes">
+            <h4>[00–05m] 90-SECOND RESET SCRIPT & CONTEXT SETTER</h4>
+            <p><strong>Reset Script (First 90 Seconds):</strong> "Welcome! Today's scenario centers on ESL's digital experience and our two core audiences: Prospective Members looking to join and borrow, and Existing Members looking to manage and expand their relationship. In this session, we are specifically focusing on Experience Personalization and Opal AI authoring."</p>
+            <p><strong>3-Minute Context Setter:</strong> "A prospective member researching a personal loan needs rates, speed, and a frictionless 'Apply for a Personal Loan' CTA. An existing member looking at the exact same URL needs to feel recognized with streamlined borrowing—not subjected to 'Can you join?' hurdles. Showing both the same generic hero banner costs ESL conversions every day. But if personalizing requires managing two separate pages, marketing will abandon it within six months."</p>
+          </aside>
+        </section>
+
+        <!-- Slide 2.2: Persona Challenge -->
+        <section class="slide-light" data-background-color="#E4F0DA" data-breakout="Breakout 2 • Personalization • 05–10m">
+          <div class="pt-8 flex justify-between items-center">
+            <span class="opti-pill bg-[#08251A] text-[#ABFF44]">Part 2/4 • The Marketer Challenge</span>
+            <span class="font-mono text-xs text-[#08251A]">Escaping the Page-Duplication Trap</span>
+          </div>
+
+          <div class="my-auto">
+            <h2 class="font-heading font-black text-5xl text-[#08251A] mb-6">
+              Personalize High-Impact Components—Never Clone Pages.
+            </h2>
+
+            <div class="grid grid-cols-2 gap-8">
+              <div class="opti-card-light border-l-8 border-l-[#8F4764]">
+                <div class="font-mono text-xs uppercase text-[#8F4764] font-bold">Legacy CMS Trap</div>
+                <div class="font-heading font-black text-3xl text-[#08251A] mt-1">Full-Page Duplication</div>
+                <ul class="text-base text-[#0D3A29] mt-3 space-y-2 list-disc pl-5">
+                  <li>2× pages per audience = broken compliance updates</li>
+                  <li>Wasted screen space showing "Can you join?" to members</li>
+                  <li>Layout shift (flicker) damages financial brand trust</li>
+                </ul>
+              </div>
+
+              <div class="opti-card-green">
+                <div class="font-mono text-xs uppercase text-[#08251A] font-bold">Optimizely Unified Workflow</div>
+                <div class="font-heading font-black text-3xl text-[#08251A] mt-1">Component-Level Targeting</div>
+                <ul class="text-base text-[#08251A] mt-3 space-y-2 list-disc pl-5 font-medium">
+                  <li>Single URL (<code>/personal/loans</code>) & single content model</li>
+                  <li>&lt;15 mins marketer setup • 0 developer hours</li>
+                  <li>Zero-flicker edge snippet (<code>s3-4775830914596864</code>)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="font-mono text-xs text-[#08251A]">
+            Pre-Flight Check: Ensure A/B Test 5060834274050048 is paused or scoped to Prospects during Breakout 2.
+          </div>
+
+          <aside class="notes">
+            <h4>[05–10m] THE PERSONALIZATION SPRAWL PROBLEM</h4>
+            <p><strong>Target Audience in Room:</strong> Digital Experience Managers, Acquisition & Retention Marketing Leads, Web Strategists, Content Leads.</p>
+            <p><strong>Core Skepticism:</strong> "Personalization sounds great in theory, but it usually creates a content maintenance nightmare and breaks page layouts."</p>
+            <p><strong>Pre-Flight Reminder:</strong> Confirm <code>5060834274050048</code> is paused or scoped so Campaign <code>6504326074466304</code> renders cleanly on <code>/personal/loans</code>.</p>
+          </aside>
+        </section>
+
+        <!-- Slide 2.3: Live Demo Workbench -->
+        <section data-background-color="#08251A" data-breakout="Breakout 2 • Personalization • 10–50m">
+          <div class="pt-8 flex justify-between items-center">
+            <span class="opti-pill bg-[#ABFF44] text-[#08251A]">Part 3/4 • Live Workbench (40 Mins)</span>
+            <span class="font-mono text-xs text-[#ABFF44]">Campaign 6504326074466304 + Opal 4520294755336192</span>
+          </div>
+
+          <div class="my-auto">
+            <h2 class="font-heading font-black text-5xl text-white mb-6">
+              Live Comparison: Prospect vs. Member + Opal AI
+            </h2>
+
+            <div class="grid grid-cols-3 gap-6">
+              <div class="opti-card-dark">
+                <span class="opti-pill bg-[#197050] text-white mb-2">Priority 2 • Exp 5474977032437760</span>
+                <div class="font-heading font-black text-2xl text-[#91DBDA]">Prospective Member</div>
+                <p class="text-sm text-[#E4F0DA] mt-2">
+                  <strong>/personal/loans:</strong> "Get the Funds You Need..." + "Apply for a Personal Loan" CTA. Eligibility visible.
+                </p>
+              </div>
+
+              <div class="opti-card-green">
+                <span class="opti-pill bg-[#08251A] text-[#ABFF44] mb-2">Priority 1 • Exp 4570486582018048</span>
+                <div class="font-heading font-black text-2xl text-[#08251A]">Logged-In Member</div>
+                <p class="text-sm text-[#08251A] mt-2">
+                  <strong>Home:</strong> "Welcome back!"<br>
+                  <strong>Loans:</strong> "You're Already a Member. Let's Make Borrowing Easier." Eligibility hidden.
+                </p>
+              </div>
+
+              <div class="opal-shimmer p-7">
+                <span class="opti-pill bg-[#08251A] text-[#ABFF44] mb-2">⚡ Opal AI • 4520294755336192</span>
+                <div class="font-heading font-black text-2xl text-white">Owners' Dividend Copy</div>
+                <p class="text-sm text-white mt-2">
+                  "The bank you own — and that pays you back." Authored live in Visual Editor.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex justify-between items-center font-mono text-xs text-[#91DBDA]">
+            <span>Toggle state live via /sign-in (esl_signed_in=1)</span>
+            <span class="text-[#ABFF44]">Press 'L' for 1-click fallback preview links</span>
+          </div>
+
+          <aside class="notes">
+            <h4>[10–50m] LIVE WALKTHROUGH SCRIPT</h4>
+            <ul>
+              <li><strong>05–20m (Live Customer View):</strong>
+                <ul>
+                  <li>Load <code>https://esl-onsite.optimoey.com/personal/loans</code> as a Prospect (<code>5474977032437760</code>): H1 is <em>"Get the Funds You Need with a Personal Loan from ESL"</em>, CTA is <em>"Apply for a Personal Loan"</em>, and the "Can you join?" eligibility block is visible.</li>
+                  <li>Navigate to <code>/sign-in</code> and sign in (sets <code>esl_signed_in = 1</code>, Experience <code>4570486582018048</code>).</li>
+                  <li>On Home (<code>/</code>): H1 updates to <strong>"Welcome back!"</strong>, hero buttons ("Become a member" / "Sign in") and "Can you join?" banner are removed.</li>
+                  <li>On <code>/personal/loans</code>: H1 updates to <strong>"You're Already a Member. Let's Make Borrowing Easier."</strong>, CTA becomes <strong>"View Your Loan Options"</strong>, and eligibility section is hidden.</li>
+                </ul>
+              </li>
+              <li><strong>20–40m (Marketer Workflow & Opal AI):</strong> Open Campaign <code>6504326074466304</code> in WebEx Visual Editor. Then open Optimization <code>4520294755336192</code> (Var <code>4650151514472448</code>, <code>isOpalManaged: true</code>) showing Opal AI generating the credit-union ownership value prop.</li>
+              <li><strong>40–50m (Zero-Flicker):</strong> Highlight snippet <code>s3-4775830914596864</code> edge delivery preventing layout shift (CLS).</li>
+              <li><strong>DRY-RUN SAFEGUARD:</strong> Save Stats Engine, 33/33/34 splits, and Multi-Armed Bandits for Breakout 3!</li>
+            </ul>
+          </aside>
+        </section>
+
+        <!-- Slide 2.4: Business Impact & Q&A -->
+        <section class="slide-light" data-background-color="#FFFFFF" data-breakout="Breakout 2 • Personalization • 50–60m">
+          <div class="pt-8 flex justify-between items-center">
+            <span class="opti-pill bg-[#08251A] text-[#ABFF44]">Part 4/4 • Business Impact & Q&A (10 Mins)</span>
+            <span class="font-mono text-xs text-[#08251A]">50–60m • Operational Velocity</span>
+          </div>
+
+          <div class="my-auto">
+            <h2 class="font-heading font-black text-5xl text-[#08251A] mb-6">
+              High-Impact Relevance Without Operational Sprawl.
+            </h2>
+
+            <div class="grid grid-cols-3 gap-6">
+              <div class="opti-card-green">
+                <div class="font-heading font-black text-5xl text-[#08251A]">&lt;15 Min</div>
+                <div class="font-heading font-bold text-xl mt-2">Marketer Setup</div>
+                <p class="text-sm mt-1">Visual Editor + Opal AI copy generation.</p>
+              </div>
+
+              <div class="opti-card-light">
+                <div class="font-heading font-black text-5xl text-[#197050]">0 Hrs</div>
+                <div class="font-heading font-bold text-xl mt-2">Developer Effort</div>
+                <p class="text-sm mt-1">No code deploys or template forks required.</p>
+              </div>
+
+              <div class="opti-card-blue">
+                <div class="font-heading font-black text-5xl text-[#08251A]">1 URL</div>
+                <div class="font-heading font-bold text-xl mt-2">Zero Page Cloning</div>
+                <p class="text-sm mt-1">Single source of truth for rates and disclosures.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="opti-card-dark py-3 px-6 flex justify-between items-center">
+            <span class="font-mono text-xs text-[#ABFF44]">Next Up • Breakout 3 (4:00 PM): Experimentation</span>
+            <span class="font-body text-sm text-white">"Now let's prove which personalized message actually drives loan completions."</span>
+          </div>
+
+          <aside class="notes">
+            <h4>[50–60m] OPERATIONAL STRATEGY & Q&A</h4>
+            <p><strong>Key Discussion Points:</strong> Audience-level engagement reporting, how ESL avoids "personalization sprawl" by focusing on hero/CTA/calculator blocks rather than cloning pages, and Alacrity Use Case #7 scoring criteria.</p>
+          </aside>
+        </section>
+      </section>
+
+      <!-- ===================================================================
+           COLUMN 3: BREAKOUT 3 — EXPERIMENTATION
+           =================================================================== -->
+      <section>
+        <!-- Slide 3.1: 90-Second Alignment -->
+        <section data-background-color="#08251A" data-breakout="Breakout 3 • Experimentation • 00–05m">
+          <div class="pt-8 flex justify-between items-center">
+            <span class="opti-pill bg-[#ABFF44] text-[#08251A]">Breakout 3 • Day 1 • 4:00 PM – 5:00 PM (60m)</span>
+            <span class="font-mono text-xs text-[#91DBDA]">Part 1/4 • 90-Second Stage Setter</span>
+          </div>
+
+          <div class="my-auto">
+            <div class="font-mono text-sm uppercase text-[#ABFF44] mb-2">90-Second Alignment • Growth, CRO & Analytics Room</div>
+            <h2 class="font-heading font-black text-6xl text-white mb-6">
+              Experimentation:<br>
+              <span class="extrude-upwards">Rigorous</span> Learning & Velocity
+            </h2>
+
+            <div class="grid grid-cols-3 gap-6">
+              <div class="opti-card-dark">
+                <span class="material-symbols-rounded text-[#ABFF44]">science</span>
+                <div class="font-heading font-black text-2xl text-white mt-2">3-Way A/B Test</div>
+                <p class="text-sm text-[#E4F0DA] mt-1">Statistical certainty on Personal Loan value props.</p>
+              </div>
+              <div class="opti-card-green">
+                <span class="material-symbols-rounded text-[#08251A]">auto_graph</span>
+                <div class="font-heading font-black text-2xl mt-2">4-Arm Bandit (MAB)</div>
+                <p class="text-sm mt-1">Auto-route traffic to top life-stage journeys.</p>
+              </div>
+              <div class="opti-card-dark">
+                <span class="material-symbols-rounded text-[#91DBDA]">publish</span>
+                <div class="font-heading font-black text-2xl text-white mt-2">1-Click Promotion</div>
+                <p class="text-sm text-[#E4F0DA] mt-1">Push winning variants straight into SaaS CMS.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="font-mono text-xs text-[#91DBDA]">
+            Use Cases #8, #9 & #14 • A/B Test 5060834274050048 • Bandit 6613140698300416
+          </div>
+
+          <aside class="notes">
+            <h4>[00–05m] 90-SECOND RESET SCRIPT & STRATEGIC FORK</h4>
+            <p><strong>Reset Script (First 90 Seconds):</strong> "Welcome! Today's scenario centers on ESL's digital experience and our two core audiences: Prospective Members looking to join and borrow, and Existing Members looking to manage and expand their relationship. In this session, we are specifically focusing on statistical Experimentation and Multi-Armed Bandit optimization."</p>
+            <p><strong>3-Minute Context Setter:</strong> "In financial services, testing isn't about button colors. It's about verifying lending value propositions without risking compliance, and maximizing conversion velocity across life-stage journeys."</p>
+          </aside>
+        </section>
+
+        <!-- Slide 3.2: Strategy Fork + MAB Chart -->
+        <section class="slide-light" data-background-color="#E4F0DA" data-breakout="Breakout 3 • Experimentation • 05–15m">
+          <div class="pt-8 flex justify-between items-center">
+            <span class="opti-pill bg-[#08251A] text-[#ABFF44]">Part 2/4 • A/B vs. Multi-Armed Bandit</span>
+            <span class="font-mono text-xs text-[#08251A]">Statistical Certainty vs. Regret Minimization</span>
+          </div>
+
+          <div class="my-auto grid grid-cols-12 gap-8 items-center">
+            <div class="col-span-5 space-y-4">
+              <h2 class="font-heading font-black text-4xl text-[#08251A]">
+                Two Engines Built for Financial Services.
+              </h2>
+              <div class="opti-card-light">
+                <div class="font-heading font-bold text-lg text-[#08251A]">A/B Testing (<code>5060834274050048</code>)</div>
+                <p class="text-xs text-[#0D3A29] mt-1">Fixed 33/33/34 split + sequential Stats Engine for permanent structural learning.</p>
+              </div>
+              <div class="opti-card-green">
+                <div class="font-heading font-bold text-lg text-[#08251A]">Multi-Armed Bandit (<code>6613140698300416</code>)</div>
+                <p class="text-xs text-[#08251A] mt-1">Dynamic <code>min-regret</code> routing shifts traffic to winning life-stage CTAs automatically.</p>
+              </div>
+            </div>
+
+            <div class="col-span-7 opti-card-light">
+              <div class="font-mono text-xs uppercase text-[#197050] mb-2">Bandit 6613140698300416 • Dynamic Traffic Shift (Min-Regret)</div>
+              <div style="height: 280px;">
+                <canvas id="mabAllocationChart"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <div class="font-mono text-xs text-[#08251A]">
+            Stats Engine: Always-valid sequential testing + automated Sample Ratio Mismatch (SRM) detection.
+          </div>
+
+          <aside class="notes">
+            <h4>[05–15m] THE STRATEGIC FORK: A/B VS. MAB</h4>
+            <p><strong>Target Audience in Room:</strong> CRO & Experimentation Leads, Growth PMs, Performance Marketers, Data Analysts.</p>
+            <p><strong>Core Skepticism:</strong> "Does this have real statistical rigor, or is it a vanity testing tool? Can it handle high-velocity promotional windows without wasting traffic on losing variants?"</p>
+          </aside>
+        </section>
+
+        <!-- Slide 3.3: Live Demo Workbench -->
+        <section data-background-color="#08251A" data-breakout="Breakout 3 • Experimentation • 15–55m">
+          <div class="pt-8 flex justify-between items-center">
+            <span class="opti-pill bg-[#ABFF44] text-[#08251A]">Part 3/4 • Live Workbench (40 Mins)</span>
+            <span class="font-mono text-xs text-[#ABFF44]">Use Cases #8, #9 & #14</span>
+          </div>
+
+          <div class="my-auto">
+            <h2 class="font-heading font-black text-5xl text-white mb-6">
+              Two Live Optimizations Running on ESL Today
+            </h2>
+
+            <div class="grid grid-cols-2 gap-6">
+              <div class="opti-card-dark border-l-8 border-l-[#ABFF44]">
+                <div class="font-mono text-xs text-[#ABFF44]">05–25m • 3-Way A/B Test (5060834274050048)</div>
+                <div class="font-heading font-black text-2xl text-white mt-1">/personal/loans (33.3% Split)</div>
+                <ul class="text-sm text-[#E4F0DA] mt-2 space-y-1">
+                  <li>• <strong>Control:</strong> Default Hero</li>
+                  <li>• <strong>Var A (Speed):</strong> "Get Access to Funds Faster"</li>
+                  <li>• <strong>Var B (Consolidation):</strong> "Simplify Your Finances..."</li>
+                  <li>• <strong>4 Metrics:</strong> CTA Click → App Start → Completion + Bounce Guardrail</li>
+                </ul>
+              </div>
+
+              <div class="opti-card-dark border-l-8 border-l-[#91DBDA]">
+                <div class="font-mono text-xs text-[#91DBDA]">25–45m • 4-Arm Bandit (6613140698300416)</div>
+                <div class="font-heading font-black text-2xl text-white mt-1">/#solutions-selector (25% Start)</div>
+                <ul class="text-sm text-[#E4F0DA] mt-2 space-y-1">
+                  <li>• <strong>Original:</strong> Banking for Every Stage of Life</li>
+                  <li>• <strong>Var 1:</strong> "Financial Guidance Built for Your Next Milestone"</li>
+                  <li>• <strong>Var 2:</strong> "Ready for What's Next? Let's Plan Together."</li>
+                  <li>• <strong>Var 3:</strong> "Smart Banking Solutions for Every Chapter"</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex justify-between items-center font-mono text-xs text-[#91DBDA]">
+            <span>45–55m (Use Case #9): Scope A/B to Prospects + 1-Click Winner Promotion to CMS</span>
+            <span class="text-[#ABFF44]">Press 'L' to launch all variant previews</span>
+          </div>
+
+          <aside class="notes">
+            <h4>[15–55m] LIVE DEMO DETAIL & METRIC IDs</h4>
+            <ul>
+              <li><strong>05–25m — 3-Way A/B Test <code>5060834274050048</code> (Layer <code>5070120815427584</code> on Page <code>6471796898136064</code>):</strong>
+                <ul>
+                  <li>Original (<code>6468209157603328</code>, 33.34%)</li>
+                  <li>Variant A: Speed & Convenience (<code>5828135919288320</code>, 33.33%) — CTA: <em>"Start Your Application"</em></li>
+                  <li>Variant B: Debt Consolidation (<code>5740748098764800</code>, 33.33%) — CTA: <em>"Check Your Options"</em></li>
+                  <li><strong>4 Bound Metrics:</strong> Primary = <code>personal loan cta click</code> (<code>4536124226404352</code>); Secondary = <code>loan application starts</code> (<code>5925339619131392</code>) & <code>application completion</code> (<code>5464295314554880</code>); Guardrail = <code>Bounce Rate</code> (decreasing).</li>
+                </ul>
+              </li>
+              <li><strong>25–45m — 4-Arm Bandit <code>6613140698300416</code> (Layer <code>5656166955483136</code> on <code>/#solutions-selector</code>):</strong>
+                <ul>
+                  <li>Original (<code>5407134131683328</code>), Var 1 Personalized Roadmap (<code>4772624922836992</code>), Var 2 Goal-Oriented Plan (<code>5505664439549952</code>), Var 3 Member Guidance Focus (<code>5667961019564032</code>).</li>
+                  <li>Primary Metric: <code>banking stage of life cta click</code> (<code>4638785017741312</code>).</li>
+                </ul>
+              </li>
+              <li><strong>45–55m — Use Case #9 (Combine Personalization + Testing):</strong> Show how Campaign <code>6504326074466304</code> serves Existing Members while A/B Test <code>5060834274050048</code> tests Prospects on <code>/personal/loans</code> without collision—then promote the winner to permanent CMS content in 1 click.</li>
+            </ul>
+          </aside>
+        </section>
+
+        <!-- Slide 3.4: Business Impact & Day 1 Close -->
+        <section class="slide-light" data-background-color="#FFFFFF" data-breakout="Breakout 3 • Experimentation • 55–60m">
+          <div class="pt-8 flex justify-between items-center">
+            <span class="opti-pill bg-[#08251A] text-[#ABFF44]">Part 4/4 • Statistical Q&A & Day 1 Wrap (5 Mins)</span>
+            <span class="font-mono text-xs text-[#08251A]">55–60m • End of Day 1 Breakouts</span>
+          </div>
+
+          <div class="my-auto">
+            <h2 class="font-heading font-black text-5xl text-[#08251A] mb-6">
+              From Hypothesis to Permanent CMS Winner in One Click.
+            </h2>
+
+            <div class="grid grid-cols-3 gap-6">
+              <div class="opti-card-green">
+                <div class="font-heading font-black text-5xl text-[#08251A]">4 Metrics</div>
+                <div class="font-heading font-bold text-xl mt-2">Full-Funnel Guardrails</div>
+                <p class="text-sm mt-1">Track CTA click through loan completion + bounce rate.</p>
+              </div>
+
+              <div class="opti-card-light">
+                <div class="font-heading font-black text-5xl text-[#197050]">FDR</div>
+                <div class="font-heading font-bold text-xl mt-2">Sequential Stats Engine</div>
+                <p class="text-sm mt-1">Peek anytime without inflating false positives.</p>
+              </div>
+
+              <div class="opti-card-blue">
+                <div class="font-heading font-black text-5xl text-[#08251A]">1-Click</div>
+                <div class="font-heading font-bold text-xl mt-2">Publish to SaaS CMS</div>
+                <p class="text-sm mt-1">Winning copy promotes without engineering backlog.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="opti-card-dark py-3 px-6 flex justify-between items-center">
+            <span class="font-mono text-xs text-[#ABFF44]">Next: Post-Session Dinner (5:30 PM) • Day 2 Starts 9:00 AM (DAM)</span>
+            <span class="font-body text-sm text-white">Celebrate POC velocity with ESL, Alacrity & Oshyn!</span>
+          </div>
+
+          <aside class="notes">
+            <h4>[55–60m] STATISTICAL Q&A & DINNER TRANSITION</h4>
+            <p><strong>Statistical Topics Ready:</strong> Sequential testing math, False Discovery Rate (FDR) control, automated Sample Ratio Mismatch (SRM) alerts, and mutually exclusive experiment layers.</p>
+            <p><strong>Post-Session Dinner (5:30 PM – 8:00 PM):</strong> Deepen personal relationships with ESL executives, Alacrity Partners (Joseph Fain & SP Simon), and Oshyn leadership. Gather informal pulse check ahead of Day 2 morning sessions.</p>
+          </aside>
+        </section>
+      </section>
+
+      <!-- ===================================================================
+           COLUMN 4: BREAKOUT 4 — DIGITAL ASSET MANAGEMENT (DAM)
+           =================================================================== -->
+      <section>
+        <!-- Slide 4.1: 90-Second Alignment -->
+        <section data-background-color="#08251A" data-breakout="Breakout 4 • DAM • 00–05m">
+          <div class="pt-8 flex justify-between items-center">
+            <span class="opti-pill bg-[#91DBDA] text-[#08251A]">Breakout 4 • Day 2 • 9:00 AM – 10:00 AM (60m)</span>
+            <span class="font-mono text-xs text-[#ABFF44]">Part 1/4 • 90-Second Stage Setter</span>
+          </div>
+
+          <div class="my-auto">
+            <div class="font-mono text-sm uppercase text-[#91DBDA] mb-2">90-Second Alignment • Creative, Brand & Content Ops Room</div>
+            <h2 class="font-heading font-black text-6xl text-white mb-6">
+              Digital Asset Management:<br>
+              <span class="extrude-upwards">Governed</span> Creative Supply Chain
+            </h2>
+
+            <div class="grid grid-cols-3 gap-6">
+              <div class="opti-card-dark">
+                <span class="material-symbols-rounded text-[#ABFF44]">auto_awesome</span>
+                <div class="font-heading font-black text-2xl text-white mt-2">AI Auto-Tagging</div>
+                <p class="text-sm text-[#E4F0DA] mt-1">Instant taxonomy by product, audience, and WCAG alt-text.</p>
+              </div>
+              <div class="opti-card-green">
+                <span class="material-symbols-rounded text-[#08251A]">crop</span>
+                <div class="font-heading font-black text-2xl mt-2">Native CMS Picker</div>
+                <p class="text-sm mt-1">Dynamic mobile/desktop renditions—zero re-uploading.</p>
+              </div>
+              <div class="opti-card-dark">
+                <span class="material-symbols-rounded text-[#91DBDA]">event_busy</span>
+                <div class="font-heading font-black text-2xl text-white mt-2">Auto-Expiration</div>
+                <p class="text-sm text-[#E4F0DA] mt-1">Retire promotional rate graphics on schedule.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="font-mono text-xs text-[#91DBDA]">
+            Use Cases #3, #10 & #13 • Back-Stage Foundation for ESL's 39 Contributors
+          </div>
+
+          <aside class="notes">
+            <h4>[00–05m] 90-SECOND RESET SCRIPT & CONTEXT SETTER</h4>
+            <p><strong>Reset Script (First 90 Seconds):</strong> "Welcome! Today's scenario centers on ESL's digital experience and our two core audiences: Prospective Members looking to join and borrow, and Existing Members looking to manage and expand their relationship. In this session, we are specifically focusing on Digital Asset Management (DAM) and content reuse."</p>
+            <p><strong>3-Minute Context Setter:</strong> "Every personalized variation and experiment we run across members and prospects requires approved imagery, iconography, and promotional badges. Without a streamlined content supply chain, creative teams become the bottleneck for digital agility."</p>
+          </aside>
+        </section>
+
+        <!-- Slide 4.2: Creative Bottlenecks -->
+        <section class="slide-light" data-background-color="#E4F0DA" data-breakout="Breakout 4 • DAM • 05–15m">
+          <div class="pt-8 flex justify-between items-center">
+            <span class="opti-pill bg-[#08251A] text-[#ABFF44]">Part 2/4 • Creative Bottlenecks in Banking</span>
+            <span class="font-mono text-xs text-[#08251A]">Eliminating Shared-Drive Chaos</span>
+          </div>
+
+          <div class="my-auto">
+            <h2 class="font-heading font-black text-5xl text-[#08251A] mb-6">
+              Stop Downloading, Cropping, and Re-Uploading Assets.
+            </h2>
+
+            <div class="grid grid-cols-4 gap-5">
+              <div class="opti-card-light">
+                <span class="material-symbols-rounded text-[#8F4764]">folder_off</span>
+                <div class="font-heading font-bold text-xl text-[#08251A] mt-2">Asset Sprawl</div>
+                <p class="text-xs text-[#0D3A29] mt-1">Duplicates scattered across Adobe, local drives, and CMS folders.</p>
+              </div>
+
+              <div class="opti-card-light">
+                <span class="material-symbols-rounded text-[#197050]">sell</span>
+                <div class="font-heading font-bold text-xl text-[#08251A] mt-2">Banking Taxonomy</div>
+                <p class="text-xs text-[#0D3A29] mt-1">Filter by <code>Audience: Member</code> or <code>Product: Lending</code>.</p>
+              </div>
+
+              <div class="opti-card-light">
+                <span class="material-symbols-rounded text-[#007B79]">devices</span>
+                <div class="font-heading font-bold text-xl text-[#08251A] mt-2">Smart Renditions</div>
+                <p class="text-xs text-[#0D3A29] mt-1">Focal-point crops for desktop, tablet, and mobile viewports.</p>
+              </div>
+
+              <div class="opti-card-green">
+                <span class="material-symbols-rounded text-[#08251A]">account_tree</span>
+                <div class="font-heading font-bold text-xl text-[#08251A] mt-2">Where-Used Graph</div>
+                <p class="text-xs text-[#08251A] mt-1">Track every page using a promo graphic or disclosure block.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="font-mono text-xs text-[#08251A]">
+            Mindset Answered: Seamless bridge from Adobe Creative Cloud to SaaS CMS Visual Builder.
+          </div>
+
+          <aside class="notes">
+            <h4>[05–15m] CREATIVE & MARKETING OPS CHALLENGE</h4>
+            <p><strong>Target Audience in Room:</strong> Creative Directors, Studio/Production Teams, Brand Managers, Marketing Operations.</p>
+            <p><strong>Core Skepticism:</strong> "Our creatives work in Adobe, marketers work in CMS, and assets get scattered across shared drives. Does this actually fit our creative workflow?"</p>
+          </aside>
+        </section>
+
+        <!-- Slide 4.3: Live Demo Workbench -->
+        <section data-background-color="#08251A" data-breakout="Breakout 4 • DAM • 15–55m">
+          <div class="pt-8 flex justify-between items-center">
+            <span class="opti-pill bg-[#ABFF44] text-[#08251A]">Part 3/4 • Live Workbench (40 Mins)</span>
+            <span class="font-mono text-xs text-[#ABFF44]">Use Cases #3, #10 & #13</span>
+          </div>
+
+          <div class="my-auto">
+            <h2 class="font-heading font-black text-5xl text-white mb-6">
+              Live Workbench: Ingest, Rendition & Propagate
+            </h2>
+
+            <div class="grid grid-cols-3 gap-6">
+              <div class="opti-card-dark border-t-4 border-t-[#ABFF44]">
+                <div class="font-mono text-xs text-[#ABFF44]">05–25m • Use Case #10</div>
+                <div class="font-heading font-black text-2xl text-white mt-1">AI Ingest & Search</div>
+                <p class="text-sm text-[#E4F0DA] mt-2">
+                  Ingest lending imagery, auto-generate tags & WCAG alt-text, and filter by ESL metadata.
+                </p>
+              </div>
+
+              <div class="opti-card-dark border-t-4 border-t-[#91DBDA]">
+                <div class="font-mono text-xs text-[#91DBDA]">25–45m • Use Cases #10 & #13</div>
+                <div class="font-heading font-black text-2xl text-white mt-1">Native Picker & Crops</div>
+                <p class="text-sm text-[#E4F0DA] mt-2">
+                  Pick directly inside Visual Builder. Apply mobile vs. desktop focal crops with zero local downloads.
+                </p>
+              </div>
+
+              <div class="opti-card-dark border-t-4 border-t-[#ABFF44]">
+                <div class="font-mono text-xs text-[#ABFF44]">45–55m • Use Case #3</div>
+                <div class="font-heading font-black text-2xl text-white mt-1">Expiration & Reuse</div>
+                <p class="text-sm text-[#E4F0DA] mt-2">
+                  Set 4.99% promo banner expiration and inspect "Where-Used" across <code>/</code> and <code>/personal/loans</code>.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="font-mono text-xs text-[#91DBDA]">
+            Shared Blocks: Rates at a Glance, Eligibility Bar, and Loan Disclosures update everywhere at once.
+          </div>
+
+          <aside class="notes">
+            <h4>[15–55m] LIVE DAM & REUSE WALKTHROUGH</h4>
+            <ul>
+              <li><strong>05–25m (Use Case #10 — Central Asset Repository):</strong> Upload an ESL image, show automated AI tagging, WCAG alt-text generation, and search by <code>Audience: Member</code> and <code>Product: Lending</code>.</li>
+              <li><strong>25–45m (Direct CMS Integration & Use Case #13 Form-Factor Variants):</strong> Open SaaS CMS Visual Builder, click an image slot, launch the native DAM picker, and select mobile vs. desktop renditions without duplicating the page.</li>
+              <li><strong>45–55m (Rights Expiration & Use Case #3 Content Reuse):</strong> Set an expiration date on a promotional rate graphic (e.g., 4.99% auto/personal loan badge) and show the "Where-Used" dependency graph for shared disclosure blocks across <code>/</code> and <code>/personal/loans</code>.</li>
+            </ul>
+          </aside>
+        </section>
+
+        <!-- Slide 4.4: Business Impact & Q&A -->
+        <section class="slide-light" data-background-color="#FFFFFF" data-breakout="Breakout 4 • DAM • 55–60m">
+          <div class="pt-8 flex justify-between items-center">
+            <span class="opti-pill bg-[#08251A] text-[#ABFF44]">Part 4/4 • Business Impact & Q&A (5 Mins)</span>
+            <span class="font-mono text-xs text-[#08251A]">55–60m • Content Supply Chain Velocity</span>
+          </div>
+
+          <div class="my-auto">
+            <h2 class="font-heading font-black text-5xl text-[#08251A] mb-6">
+              Single Source of Truth for Every Visual & Disclosure.
+            </h2>
+
+            <div class="grid grid-cols-3 gap-6">
+              <div class="opti-card-green">
+                <div class="font-heading font-black text-5xl text-[#08251A]">0</div>
+                <div class="font-heading font-bold text-xl mt-2">Orphaned Assets</div>
+                <p class="text-sm mt-1">Full "Where-Used" visibility before editing or deleting.</p>
+              </div>
+
+              <div class="opti-card-light">
+                <div class="font-heading font-black text-5xl text-[#197050]">100%</div>
+                <div class="font-heading font-bold text-xl mt-2">Rate Expiry Safety</div>
+                <p class="text-sm mt-1">Promotional badges auto-retire on campaign end date.</p>
+              </div>
+
+              <div class="opti-card-blue">
+                <div class="font-heading font-black text-5xl text-[#08251A]">1 Update</div>
+                <div class="font-heading font-bold text-xl mt-2">Everywhere Propagated</div>
+                <p class="text-sm mt-1">Shared Rates & Disclosures sync across all pages.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="opti-card-dark py-3 px-6 flex justify-between items-center">
+            <span class="font-mono text-xs text-[#ABFF44]">Next Up • Breakout 5 (10:00 AM): Governance (30m Sprint)</span>
+            <span class="font-body text-sm text-white">"Now let's see how compliance guardrails protect every publish."</span>
+          </div>
+
+          <aside class="notes">
+            <h4>[55–60m] DAM Q&A & BRIDGE TO GOVERNANCE</h4>
+            <p><strong>Q&A Topics Ready:</strong> Adobe Creative Cloud connector, bulk asset migration from legacy storage, and metadata taxonomy governance.</p>
+          </aside>
+        </section>
+      </section>
+
+      <!-- ===================================================================
+           COLUMN 5: BREAKOUT 5 — GOVERNANCE (30-MINUTE SPRINT)
+           =================================================================== -->
+      <section>
+        <!-- Slide 5.1: 90-Second Alignment -->
+        <section data-background-color="#08251A" data-breakout="Breakout 5 • Governance • 00–05m">
+          <div class="pt-8 flex justify-between items-center">
+            <span class="opti-pill bg-[#ABFF44] text-[#08251A]">Breakout 5 • Day 2 • 10:00 AM – 10:30 AM (30m Sprint)</span>
+            <span class="font-mono text-xs text-[#91DBDA]">⏱️ 5m Stage • 15m Demo • 10m Q&A</span>
+          </div>
+
+          <div class="my-auto">
+            <div class="font-mono text-sm uppercase text-[#ABFF44] mb-2">90-Second Alignment • Legal, Compliance & Risk Room</div>
+            <h2 class="font-heading font-black text-6xl text-white mb-6">
+              Governance by Design:<br>
+              Speed <span class="extrude-upwards">With Guardrails</span>
+            </h2>
+
+            <div class="grid grid-cols-3 gap-6">
+              <div class="opti-card-dark">
+                <span class="material-symbols-rounded text-[#ABFF44]">design_services</span>
+                <div class="font-heading font-black text-2xl text-white mt-2">1. Structural</div>
+                <p class="text-sm text-[#E4F0DA] mt-1">Blueprints & design tokens lock brand layout.</p>
+              </div>
+              <div class="opti-card-green">
+                <span class="material-symbols-rounded text-[#08251A]">gavel</span>
+                <div class="font-heading font-black text-2xl mt-2">2. Regulatory</div>
+                <p class="text-sm mt-1">Mandatory NCUA/loan disclosures cannot be deleted.</p>
+              </div>
+              <div class="opti-card-dark">
+                <span class="material-symbols-rounded text-[#91DBDA]">fact_check</span>
+                <div class="font-heading font-black text-2xl text-white mt-2">3. Operational</div>
+                <p class="text-sm text-[#E4F0DA] mt-1">Author → Approver → Publisher separation of duties.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="font-mono text-xs text-[#91DBDA]">
+            Use Cases #5, #11 & #12 • Strict 30-Minute High-Impact Format
+          </div>
+
+          <aside class="notes">
+            <h4>[00–05m] 90-SECOND RESET SCRIPT & 30-MINUTE TIMEKEEPING RULE</h4>
+            <p><strong>⏱️ STRICT 30-MINUTE SPRINT RULE:</strong> Spend max 5 minutes setting the stage, 15 minutes live in software, and protect the final 10 minutes for Compliance Q&A.</p>
+            <p><strong>Reset Script (First 90 Seconds):</strong> "Welcome! Today's scenario centers on ESL's digital experience and our two core audiences: Prospective Members looking to join and borrow, and Existing Members looking to manage and expand their relationship. In this session, we are specifically focusing on Regulatory Compliance, Architectural Guardrails, and Approval Governance."</p>
+            <p><strong>Context Setter:</strong> "In a financial institution, agility cannot come at the expense of regulatory compliance. Governance in Optimizely isn't an afterthought—it is enforced directly through our component architecture and approval workflows."</p>
+          </aside>
+        </section>
+
+        <!-- Slide 5.2: Compliance Challenge -->
+        <section class="slide-light" data-background-color="#E4F0DA" data-breakout="Breakout 5 • Governance • 05–10m">
+          <div class="pt-8 flex justify-between items-center">
+            <span class="opti-pill bg-[#08251A] text-[#ABFF44]">Part 2/4 • The Compliance Mandate</span>
+            <span class="font-mono text-xs text-[#08251A]">Preventing Non-Compliant Releases</span>
+          </div>
+
+          <div class="my-auto">
+            <h2 class="font-heading font-black text-5xl text-[#08251A] mb-6">
+              How 39 Marketers Move Fast Without Compliance Risk.
+            </h2>
+
+            <div class="grid grid-cols-3 gap-6">
+              <div class="opti-card-light">
+                <div class="font-mono text-xs uppercase text-[#197050] font-bold">Risk #1: Missing Footnotes</div>
+                <div class="font-heading font-black text-2xl text-[#08251A] mt-2">Locked Disclosures</div>
+                <p class="text-sm text-[#0D3A29] mt-2">Loan rate blocks auto-attach required legal disclosures.</p>
+              </div>
+
+              <div class="opti-card-light">
+                <div class="font-mono text-xs uppercase text-[#197050] font-bold">Risk #2: Accessibility Gaps</div>
+                <div class="font-heading font-black text-2xl text-[#08251A] mt-2">WCAG 2.1 AA + Schema</div>
+                <p class="text-sm text-[#0D3A29] mt-2">Governed SEO, <code>FinancialProduct</code> schema & contrast checks.</p>
+              </div>
+
+              <div class="opti-card-green">
+                <div class="font-mono text-xs uppercase text-[#08251A] font-bold">Risk #3: Unapproved Edits</div>
+                <div class="font-heading font-black text-2xl text-[#08251A] mt-2">Blocked Publish</div>
+                <p class="text-sm text-[#08251A] mt-2">Authors cannot self-publish; full visual diff audit trail.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="font-mono text-xs text-[#08251A]">
+            Skepticism Answered: Marketers never touch raw HTML or bypass required legal sign-off.
+          </div>
+
+          <aside class="notes">
+            <h4>[05–10m] ADDRESSING LEGAL & RISK SKEPTICISM</h4>
+            <p><strong>Target Audience in Room:</strong> Legal, Regulatory & Compliance Officers, Risk Management, Brand Custodians, Content Ops Leads.</p>
+            <p><strong>Core Skepticism:</strong> "If marketers and growth teams can change pages and test variations freely, how do we prevent someone from publishing non-compliant rates or deleting required NCUA disclosures?"</p>
+          </aside>
+        </section>
+
+        <!-- Slide 5.3: Live Demo Workbench -->
+        <section data-background-color="#08251A" data-breakout="Breakout 5 • Governance • 05–20m">
+          <div class="pt-8 flex justify-between items-center">
+            <span class="opti-pill bg-[#ABFF44] text-[#08251A]">Part 3/4 • Live Workbench (15 Mins)</span>
+            <span class="font-mono text-xs text-[#ABFF44]">Use Cases #5, #11 & #12</span>
+          </div>
+
+          <div class="my-auto">
+            <h2 class="font-heading font-black text-5xl text-white mb-6">
+              15-Minute Live Compliance Walkthrough
+            </h2>
+
+            <div class="grid grid-cols-2 gap-6">
+              <div class="opti-card-dark border-l-8 border-l-[#ABFF44]">
+                <div class="font-mono text-xs text-[#ABFF44]">05–13m • Use Case #11</div>
+                <div class="font-heading font-black text-2xl text-white mt-1">Visual Builder & SEO/WCAG Guardrails</div>
+                <ul class="text-sm text-[#E4F0DA] mt-2 space-y-1.5">
+                  <li>• Show locked mandatory disclosure blocks on loan pages</li>
+                  <li>• Inspect governed Title, Canonical, OG & <code>FinancialProduct</code> JSON-LD</li>
+                  <li>• Run built-in WCAG 2.1 AA accessibility check</li>
+                </ul>
+              </div>
+
+              <div class="opti-card-dark border-l-8 border-l-[#91DBDA]">
+                <div class="font-mono text-xs text-[#91DBDA]">13–20m • Use Cases #5 & #12</div>
+                <div class="font-heading font-black text-2xl text-white mt-1">3-Tier Approval, Schedule & Rollback</div>
+                <ul class="text-sm text-[#E4F0DA] mt-2 space-y-1.5">
+                  <li>• <strong>Author</strong> submits rate edit (Publish button locked)</li>
+                  <li>• <strong>Approver</strong> inspects side-by-side visual diff</li>
+                  <li>• <strong>Publisher</strong> schedules ET release + 1-click historical rollback</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="font-mono text-xs text-[#91DBDA]">
+            ⏱️ Stop demo at 20-minute mark to protect 10 full minutes for Compliance Q&A.
+          </div>
+
+          <aside class="notes">
+            <h4>[05–20m] HIGH-VELOCITY 15-MINUTE DEMO</h4>
+            <ul>
+              <li><strong>05–13m (Use Case #11):</strong> Open SaaS CMS Visual Builder. Attempt to remove a required disclosure or violate a blueprint constraint—show how the schema blocks it. Open metadata settings to show governed SEO/GEO, Schema.org <code>FinancialProduct</code>, and WCAG validation.</li>
+              <li><strong>13–20m (Use Cases #5 & #12):</strong> Walk through Opti ID role separation (Author &rarr; Approver &rarr; Publisher). Show visual version diffing, minute-level Eastern Time (ET) campaign scheduling, and instant 1-click version rollback.</li>
+            </ul>
+          </aside>
+        </section>
+
+        <!-- Slide 5.4: Business Impact & Q&A -->
+        <section class="slide-light" data-background-color="#FFFFFF" data-breakout="Breakout 5 • Governance • 20–30m">
+          <div class="pt-8 flex justify-between items-center">
+            <span class="opti-pill bg-[#08251A] text-[#ABFF44]">Part 4/4 • Compliance Q&A (10 Mins Protected)</span>
+            <span class="font-mono text-xs text-[#08251A]">20–30m • Audit & Risk Assurance</span>
+          </div>
+
+          <div class="my-auto">
+            <h2 class="font-heading font-black text-5xl text-[#08251A] mb-6">
+              Complete Auditability. Instant Rollback Recovery.
+            </h2>
+
+            <div class="grid grid-cols-3 gap-6">
+              <div class="opti-card-green">
+                <div class="font-heading font-black text-5xl text-[#08251A]">3-Tier</div>
+                <div class="font-heading font-bold text-xl mt-2">Opti ID RBAC</div>
+                <p class="text-sm mt-1">Strict Author, Approver, and Publisher separation.</p>
+              </div>
+
+              <div class="opti-card-light">
+                <div class="font-heading font-black text-5xl text-[#197050]">1-Click</div>
+                <div class="font-heading font-bold text-xl mt-2">Instant Rollback</div>
+                <p class="text-sm mt-1">Restore any prior approved version in seconds.</p>
+              </div>
+
+              <div class="opti-card-blue">
+                <div class="font-heading font-black text-5xl text-[#08251A]">100%</div>
+                <div class="font-heading font-bold text-xl mt-2">Audit Log Trail</div>
+                <p class="text-sm mt-1">Timestamped record of every edit, diff, and approval.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="opti-card-dark py-3 px-6 flex justify-between items-center">
+            <span class="font-mono text-xs text-[#ABFF44]">Next Up • Breakout 6 (10:30 AM): Product Lifecycle + SDLC (30m)</span>
+            <span class="font-body text-sm text-white">"Now let's look under the hood at the Next.js & Graph architecture."</span>
+          </div>
+
+          <aside class="notes">
+            <h4>[20–30m] COMPLIANCE Q&A</h4>
+            <p><strong>Key Q&A Topics Ready:</strong> Audit trail exportability for regulatory exams, legal preview share links (without requiring a CMS login), and disaster-recovery rollback procedures.</p>
+          </aside>
+        </section>
+      </section>
+
+      <!-- ===================================================================
+           COLUMN 6: BREAKOUT 6 — PRODUCT LIFECYCLE + SDLC (30-MINUTE SPRINT)
+           =================================================================== -->
+      <section>
+        <!-- Slide 6.1: 90-Second Alignment -->
+        <section data-background-color="#08251A" data-breakout="Breakout 6 • Product + SDLC • 00–05m">
+          <div class="pt-8 flex justify-between items-center">
+            <span class="opti-pill bg-[#91DBDA] text-[#08251A]">Breakout 6 • Day 2 • 10:30 AM – 11:00 AM (30m Sprint)</span>
+            <span class="font-mono text-xs text-[#ABFF44]">⏱️ 5m Stage • 15m Code/Arch • 10m Q&A</span>
+          </div>
+
+          <div class="my-auto">
+            <div class="font-mono text-sm uppercase text-[#91DBDA] mb-2">90-Second Alignment • Architecture, Engineering & DevOps Room</div>
+            <h2 class="font-heading font-black text-6xl text-white mb-6">
+              Product Lifecycle & SDLC:<br>
+              <span class="extrude-upwards">Decoupled</span> Engineering Velocity
+            </h2>
+
+            <div class="grid grid-cols-3 gap-6">
+              <div class="opti-card-dark">
+                <span class="material-symbols-rounded text-[#ABFF44]">hub</span>
+                <div class="font-heading font-black text-2xl text-white mt-2">Optimizely Graph</div>
+                <p class="text-sm text-[#E4F0DA] mt-1">Headless GraphQL CDN decouples CMS from Next.js.</p>
+              </div>
+              <div class="opti-card-green">
+                <span class="material-symbols-rounded text-[#08251A]">layers</span>
+                <div class="font-heading font-black text-2xl mt-2">Hexagonal + ACL</div>
+                <p class="text-sm mt-1">Anti-Corruption Layer shields frontend from schema changes.</p>
+              </div>
+              <div class="opti-card-dark">
+                <span class="material-symbols-rounded text-[#91DBDA]">speed</span>
+                <div class="font-heading font-black text-2xl text-white mt-2">Zero CLS Edge</div>
+                <p class="text-sm text-[#E4F0DA] mt-1">Webhook cache invalidation + sub-second Core Web Vitals.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="font-mono text-xs text-[#91DBDA]">
+            Use Case #4 • Proven in &lt;2 Weeks with Oshyn & ESL Engineering
+          </div>
+
+          <aside class="notes">
+            <h4>[00–05m] 90-SECOND RESET SCRIPT & 30-MINUTE TIMEKEEPING RULE</h4>
+            <p><strong>⏱️ STRICT 30-MINUTE SPRINT RULE:</strong> 5 minutes architecture framing, 15 minutes live code/pipeline walkthrough, 10 minutes Engineering & Security Q&A.</p>
+            <p><strong>Reset Script (First 90 Seconds):</strong> "Welcome! Today's scenario centers on ESL's digital experience and our two core audiences: Prospective Members looking to join and borrow, and Existing Members looking to manage and expand their relationship. In this session, we are specifically focusing on Headless Architecture, CI/CD, and the SDLC."</p>
+            <p><strong>3-Minute Context Setter:</strong> "Optimizely's SaaS CMS and Web Experimentation are built on a headless, API-first foundation. Engineering maintains full control of code, components, and deployment pipelines, while liberating marketing to manage content and targeting."</p>
+          </aside>
+        </section>
+
+        <!-- Slide 6.2: Decoupled Architecture Blueprint -->
+        <section class="slide-light" data-background-color="#E4F0DA" data-breakout="Breakout 6 • Product + SDLC • 05–10m">
+          <div class="pt-8 flex justify-between items-center">
+            <span class="opti-pill bg-[#08251A] text-[#ABFF44]">Part 2/4 • Decoupled Architecture Blueprint</span>
+            <span class="font-mono text-xs text-[#08251A]">Separating Code Releases from Content Publishing</span>
+          </div>
+
+          <div class="my-auto">
+            <h2 class="font-heading font-black text-5xl text-[#08251A] mb-6">
+              Engineering Owns Code. Marketing Owns Experience.
+            </h2>
+
+            <div class="grid grid-cols-4 gap-4 items-stretch">
+              <div class="opti-card-light flex flex-col justify-between">
+                <span class="font-mono text-xs font-bold text-[#197050]">LAYER 1 • AUTHORING</span>
+                <div class="font-heading font-black text-2xl text-[#08251A] my-2">SaaS CMS + DAM</div>
+                <p class="text-xs text-[#0D3A29]">Visual Builder blueprints, structured types & approval workflows.</p>
+              </div>
+
+              <div class="opti-card-light flex flex-col justify-between">
+                <span class="font-mono text-xs font-bold text-[#007B79]">LAYER 2 • DELIVERY</span>
+                <div class="font-heading font-black text-2xl text-[#08251A] my-2">Optimizely Graph</div>
+                <p class="text-xs text-[#0D3A29]">Global GraphQL edge CDN with instant webhook invalidation.</p>
+              </div>
+
+              <div class="opti-card-green flex flex-col justify-between">
+                <span class="font-mono text-xs font-bold text-[#08251A]">LAYER 3 • SHIELD</span>
+                <div class="font-heading font-black text-2xl text-[#08251A] my-2">Hexagonal ACL</div>
+                <p class="text-xs text-[#08251A]">Anti-Corruption Layer + intrinsic CSS design tokens.</p>
+              </div>
+
+              <div class="opti-card-light flex flex-col justify-between">
+                <span class="font-mono text-xs font-bold text-[#197050]">LAYER 4 • EDGE RUNTIME</span>
+                <div class="font-heading font-black text-2xl text-[#08251A] my-2">Next.js + WebEx</div>
+                <p class="text-xs text-[#0D3A29]">Vercel CI/CD + zero-CLS personalization & experimentation.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="font-mono text-xs text-[#08251A]">
+            Zero monolithic lock-in • Zero impact on CI/CD velocity or Core Web Vitals.
+          </div>
+
+          <aside class="notes">
+            <h4>[05–10m] ADDRESSING ARCHITECT & DEVOPS SKEPTICISM</h4>
+            <p><strong>Target Audience in Room:</strong> Enterprise Architects, VP/Director of Engineering, Lead Developers, DevOps & Security Engineers.</p>
+            <p><strong>Core Skepticism:</strong> "Does this lock us into proprietary monolithic hosting, slow down CI/CD, introduce client-side security risks, or hurt Core Web Vitals?"</p>
+          </aside>
+        </section>
+
+        <!-- Slide 6.3: Live Code & Architecture Workbench -->
+        <section data-background-color="#08251A" data-breakout="Breakout 6 • Product + SDLC • 10–23m">
+          <div class="pt-8 flex justify-between items-center">
+            <span class="opti-pill bg-[#ABFF44] text-[#08251A]">Part 3/4 • Live Code Workbench (15 Mins)</span>
+            <span class="font-mono text-xs text-[#ABFF44]">The Engineering Behind the &lt;2-Week POC</span>
+          </div>
+
+          <div class="my-auto grid grid-cols-12 gap-6 items-center">
+            <div class="col-span-5 space-y-4">
+              <h2 class="font-heading font-black text-4xl text-white">
+                Pragmatic Hexagonal ACL + Graph Query
+              </h2>
+              <div class="opti-card-dark">
+                <div class="font-heading font-bold text-lg text-[#ABFF44]">Why We Built So Fast</div>
+                <p class="text-xs text-[#E4F0DA] mt-1">
+                  Hero, Snipe CTA, Key Facts, FAQ, Split Content, and Disclosures map cleanly through typed adapters.
+                </p>
+              </div>
+            </div>
+
+            <div class="col-span-7">
+              <pre><code class="language-typescript" data-trim data-noescape>
+// CMS Anti-Corruption Layer (ACL) — Shields Next.js Domain
+export function toLoanHeroModel(raw: GraphHeroFragment): LoanHeroProps {
+  return {
+    eyebrow: raw.eyebrow?.trim() ?? 'ESL Personal Loans',
+    heading: raw.heading,
+    subhead: raw.subheading,
+    cta: { label: raw.primaryCta?.text, href: raw.primaryCta?.url },
+    disclosureId: raw.mandatoryDisclosure?.contentLink.guid, // Enforced
+    designToken: raw.surfaceTheme ?? 'neutral-3', // Intrinsic CSS guard
+  };
+}
+              </code></pre>
+            </div>
+          </div>
+
+          <div class="flex justify-between items-center font-mono text-xs text-[#91DBDA]">
+            <span>Shared GitHub Repo • Daily 12–4 PM Testing Windows with ESL & Oshyn</span>
+            <span class="text-[#ABFF44]">⏱️ Stop at 23m for Engineering Q&A</span>
+          </div>
+
+          <aside class="notes">
+            <h4>[10–23m] WALKING THROUGH THE &lt;2-WEEK BUILD</h4>
+            <ul>
+              <li><strong>05–15m (Code Architecture):</strong> Show how <code>esl-onsite.optimoey.com</code> and Oshyn's 14-use-case baseline (<code>opti-1920.move-esl-forward.org</code>) use a Pragmatic Hexagonal Design, CMS Anti-Corruption Layer (ACL), and Intrinsic CSS Tokens so marketers can compose pages (Use Case #4) without breaking layouts.</li>
+              <li><strong>15–23m (Edge Performance & Zero CLS):</strong> Walk through Optimizely Graph querying, webhook cache invalidation, and how WebEx delivers variations without Cumulative Layout Shift (CLS).</li>
+            </ul>
+          </aside>
+        </section>
+
+        <!-- Slide 6.4: Business Impact & Transition to Commercials/Orals -->
+        <section class="slide-light" data-background-color="#FFFFFF" data-breakout="Breakout 6 • Product + SDLC • 23–30m">
+          <div class="pt-8 flex justify-between items-center">
+            <span class="opti-pill bg-[#08251A] text-[#ABFF44]">Part 4/4 • Engineering Q&A & Morning Wrap (7 Mins)</span>
+            <span class="font-mono text-xs text-[#08251A]">23–30m • Starting at Day 45</span>
+          </div>
+
+          <div class="my-auto">
+            <h2 class="font-heading font-black text-5xl text-[#08251A] mb-6">
+              You Aren't Starting at Day Zero. You Are at Day 45.
+            </h2>
+
+            <div class="grid grid-cols-3 gap-6">
+              <div class="opti-card-green">
+                <div class="font-heading font-black text-5xl text-[#08251A]">Day 45</div>
+                <div class="font-heading font-bold text-xl mt-2">Head Start Proven</div>
+                <p class="text-sm mt-1">POC repo, content models, and ACL ready for MVP.</p>
+              </div>
+
+              <div class="opti-card-light">
+                <div class="font-heading font-black text-5xl text-[#197050]">&lt;6 Mos</div>
+                <div class="font-heading font-bold text-xl mt-2">MVP Go-Live</div>
+                <p class="text-sm mt-1">6 weeks of discovery already retired in the POC.</p>
+              </div>
+
+              <div class="opti-card-blue">
+                <div class="font-heading font-black text-5xl text-[#08251A]">SOC 2</div>
+                <div class="font-heading font-bold text-xl mt-2">Enterprise Security</div>
+                <p class="text-sm mt-1">Multi-environment promotion (Dev → Stage → Prod).</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="opti-card-dark py-3 px-6 flex justify-between items-center">
+            <span class="font-mono text-xs text-[#ABFF44]">All 6 Technical Breakouts Complete!</span>
+            <span class="font-body text-sm text-white">Next: Pricing (11:00) → Implementation (11:30) → Lunch Pitch → Orals & Exec Demo (1:00 PM)</span>
+          </div>
+
+          <aside class="notes">
+            <h4>[23–30m] ENGINEERING & SECURITY Q&A + BRIDGE TO COMMERCIALS</h4>
+            <p><strong>Q&A Topics Ready:</strong> API rate limits, multi-environment schema promotion (Dev &rarr; Stage &rarr; Prod), SOC 2 Type II compliance, and custom core banking integration extensibility.</p>
+            <p><strong>Bridge to Remainder of Day 2:</strong> With all 6 practitioner breakouts complete, we transition to Pricing (11:00 AM), Implementation starting at Day 45 (11:30 AM), Product Roadmap & Challenger Lunch Pitch (12:10 PM), and the Orals + 60-minute Executive PoC Demo (1:00 PM).</p>
+          </aside>
+        </section>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Reveal.js Scripts & Plugins -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.0.4/reveal.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.0.4/plugin/notes/notes.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.0.4/plugin/highlight/highlight.min.js"></script>
+
+  <script>
+    // Initialize Reveal.js with 16:9 widescreen dimensions
+    Reveal.initialize({
+      width: 1440,
+      height: 810,
+      margin: 0.04,
+      minScale: 0.2,
+      maxScale: 2.0,
+      hash: true,
+      controls: true,
+      progress: true,
+      slideNumber: 'c/t',
+      transition: 'slide',
+      plugins: [ RevealNotes, RevealHighlight ]
+    });
+
+    // Toggle Quick Launcher & Pre-Flight Modal
+    function toggleLauncher() {
+      const modal = document.getElementById('launcherModal');
+      modal.classList.toggle('active');
+    }
+
+    function jumpToSlide(h, v) {
+      document.getElementById('launcherModal').classList.remove('active');
+      Reveal.slide(h, v);
+    }
+
+    // Keyboard shortcut 'L' for Live Launcher
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'l' || e.key === 'L') {
+        toggleLauncher();
+      } else if (e.key === 'Escape') {
+        document.getElementById('launcherModal').classList.remove('active');
+      }
+    });
+
+    // Update Top HUD Breakout Label + Live On-Slide Word Count Verification
+    function updateHud(slide) {
+      if (!slide) return;
+      const breakoutAttr = slide.getAttribute('data-breakout') || 'ESL Onsite Breakouts';
+      document.getElementById('currentBreakoutBadge').textContent = breakoutAttr;
+
+      // Clone slide, remove speaker notes, and count visible words
+      const clone = slide.cloneNode(true);
+      const notes = clone.querySelectorAll('aside.notes');
+      notes.forEach(n => n.remove());
+      const text = clone.innerText.replace(/\s+/g, ' ').trim();
+      const words = text ? text.split(' ').length : 0;
+      const wcHud = document.getElementById('wordCountHud');
+      wcHud.textContent = `${words} / 40 words`;
+    }
+
+    Reveal.on('ready', event => {
+      updateHud(event.currentSlide);
+      initCharts();
+    });
+
+    Reveal.on('slidechanged', event => {
+      updateHud(event.currentSlide);
+    });
+
+    // Chart.js Visualizations (Optimizely Brand Palette)
+    let cdpChartInstance = null;
+    let mabChartInstance = null;
+
+    function initCharts() {
+      const cdpCtx = document.getElementById('cdpLatencyChart');
+      if (cdpCtx && !cdpChartInstance) {
+        cdpChartInstance = new Chart(cdpCtx, {
+          type: 'bar',
+          data: {
+            labels: ['Legacy Batch Warehouse Sync', 'Manual SQL List Pull', 'Optimizely ODP Real-Time Edge'],
+            datasets: [{
+              label: 'Time to Activate Member Signal (Hours - Lower is Better)',
+              data: [24, 12, 0.01],
+              backgroundColor: ['#8F4764', '#A1AC8D', '#3AB533'],
+              borderColor: '#08251A',
+              borderWidth: 2,
+              borderRadius: 12
+            }]
+          },
+          options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            animation: { duration: 1200 },
+            plugins: {
+              legend: {
+                labels: { color: '#08251A', font: { family: 'Roboto', weight: 'bold', size: 12 } }
+              },
+              title: {
+                display: true,
+                text: 'Audience Qualification Latency (24 Hours vs. <50 Milliseconds)',
+                color: '#08251A',
+                font: { family: 'Roboto Condensed', weight: 'bold', size: 16 }
+              }
+            },
+            scales: {
+              x: {
+                ticks: { color: '#08251A', font: { family: 'Roboto Mono' } },
+                grid: { color: 'rgba(8,37,26,0.1)' }
+              },
+              y: {
+                ticks: { color: '#08251A', font: { family: 'Roboto', weight: 'bold', size: 13 } },
+                grid: { display: false }
+              }
+            }
+          }
+        });
+      }
+
+      const mabCtx = document.getElementById('mabAllocationChart');
+      if (mabCtx && !mabChartInstance) {
+        mabChartInstance = new Chart(mabCtx, {
+          type: 'line',
+          data: {
+            labels: ['Day 1 (Launch)', 'Day 3', 'Day 7', 'Day 10', 'Day 14 (Onsite)'],
+            datasets: [
+              {
+                label: 'Var 1: Personalized Roadmap (Winner)',
+                data: [25, 34, 46, 55, 62],
+                borderColor: '#197050',
+                backgroundColor: 'rgba(58, 181, 51, 0.2)',
+                borderWidth: 3,
+                tension: 0.35,
+                fill: true
+              },
+              {
+                label: 'Var 2: Goal-Oriented Plan',
+                data: [25, 26, 22, 19, 17],
+                borderColor: '#007B79',
+                borderWidth: 2,
+                tension: 0.35
+              },
+              {
+                label: 'Var 3: Member Guidance',
+                data: [25, 22, 18, 15, 12],
+                borderColor: '#8F4764',
+                borderWidth: 2,
+                tension: 0.35
+              },
+              {
+                label: 'Original Control',
+                data: [25, 18, 14, 11, 9],
+                borderColor: '#A1AC8D',
+                borderDash: [5, 5],
+                borderWidth: 2,
+                tension: 0.35
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            animation: { duration: 1400 },
+            plugins: {
+              legend: {
+                position: 'bottom',
+                labels: { color: '#08251A', font: { family: 'Roboto', size: 11 }, boxWidth: 14 }
+              },
+              title: {
+                display: true,
+                text: 'Multi-Armed Bandit Traffic Allocation (%) on #solutions-selector',
+                color: '#08251A',
+                font: { family: 'Roboto Condensed', weight: 'bold', size: 15 }
+              }
+            },
+            scales: {
+              y: {
+                min: 0,
+                max: 75,
+                ticks: { color: '#08251A', font: { family: 'Roboto Mono', size: 11 }, callback: v => v + '%' },
+                grid: { color: 'rgba(8,37,26,0.1)' }
+              },
+              x: {
+                ticks: { color: '#08251A', font: { family: 'Roboto Mono', size: 11 } },
+                grid: { display: false }
+              }
+            }
+          }
+        });
+      }
+    }
+  </script>
+</body>
+</html>
